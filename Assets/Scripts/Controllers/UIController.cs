@@ -15,6 +15,9 @@ public class UIController : MonoBehaviour
     public TextMeshProUGUI fpsLine;
     public TextMeshProUGUI debugLine;
 
+    [Space(10f)]
+    public float delay = .5f;
+
     private static LinkedList<string> groupsForActivation = new LinkedList<string>();
     private static LinkedList<string> groupsForDeactivation = new LinkedList<string>();
     private static bool showRightPanel = false;
@@ -36,7 +39,7 @@ public class UIController : MonoBehaviour
         }
         if (groupsForDeactivation.First != null) {
             for(LinkedListNode<string> node = groupsForDeactivation.First; node != null; node = node.Next) {
-                uiGroups.Find(group => group.name.Equals(node.Value)).SetActive(false);
+                StartCoroutine(HideUIGroup(uiGroups.Find(group => group.name.Equals(node.Value))));
             }
             groupsForDeactivation.Clear();
         }
@@ -56,5 +59,10 @@ public class UIController : MonoBehaviour
 
     public static void DeactivateUIGroup(string name) {
         groupsForDeactivation.AddLast(name);
+    }
+
+    IEnumerator HideUIGroup(GameObject obj) {
+        yield return new WaitForSeconds(delay);
+        obj.SetActive(false);
     }
 }

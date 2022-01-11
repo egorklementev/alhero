@@ -75,6 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  item_id: meat
   uiVersion: {fileID: 2647117813052276098, guid: 2319398eeee1e6c46885c4c4dd0982fa,
     type: 3}
 --- !u!1001 &5267771800501293303
@@ -92,17 +93,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: ae21ac16162c77342bf8c629d32214bc,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ae21ac16162c77342bf8c629d32214bc,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ae21ac16162c77342bf8c629d32214bc,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: ae21ac16162c77342bf8c629d32214bc,
         type: 3}

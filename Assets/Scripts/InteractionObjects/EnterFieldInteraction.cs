@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class EnterFieldInteraction : MonoBehaviour
 {
+    public string groupToActivate = "none";
     public float enterTime = 1f;
 
     private float currentTimer = 1f;
@@ -26,7 +27,7 @@ public class EnterFieldInteraction : MonoBehaviour
             {
                 isActivated = true;
                 UIController.TriggerRightPanel();
-                UIController.ActivateUIGroup("barrel_group");
+                UIController.ActivateUIGroup(groupToActivate);
                 LogicController.currentBarrel = transform.parent.gameObject;
             }
         }
@@ -38,8 +39,9 @@ public class EnterFieldInteraction : MonoBehaviour
         {
             if (isActivated)
             {
+                LogicController.currentBarrel.GetComponentInChildren<Barrel>().ResetSelection();
                 UIController.TriggerRightPanel();
-                UIController.DeactivateUIGroup("barrel_group");
+                UIController.DeactivateUIGroup(groupToActivate);
                 isActivated = false;
                 LogicController.currentBarrel = null;
             }

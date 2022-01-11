@@ -2,6 +2,9 @@ using UnityEngine;
 
 public class LogicController : MonoBehaviour
 {
+    public GameObject player;
+    public GameObject itemsGroup;
+
     private static int invSize = 3; // Inverntory size
 
     public static GameObject currentBarrel { get; set; } = null;
@@ -32,5 +35,32 @@ public class LogicController : MonoBehaviour
             PickedItems[i] = PickedItems[i - 1];
         }
         PickedItems[1] = temp;
+    }
+
+    public void TakeItemFromBarrel()
+    {
+        int slot = GetFreeInvSlot();
+        if (currentBarrel != null && slot != -1)
+        {
+            Barrel b = currentBarrel.GetComponentInChildren<Barrel>();
+            GameObject selected = b.GetSelectedItem();
+            if (selected != null)
+            {
+                selected.GetComponent<Animator>().SetBool("Destroy", true);
+                GameObject newWorldItem = Instantiate(selected.GetComponent<ItemUI>().worldItem, itemsGroup.transform);
+                ItemWorld newItem = newWorldItem.GetComponent<ItemWorld>();
+                newItem.SetPickedUp(true, slot, player);
+                PickedItems[slot] = newItem;
+                b.ResetSelection();
+            }
+        }
+    }
+
+    public void SelectItemInBarrel(int slot)
+    {
+        if (currentBarrel != null)
+        {
+            currentBarrel.GetComponentInChildren<Barrel>().OnItemSelected(slot);
+        }
     }
 }

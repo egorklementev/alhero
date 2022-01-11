@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 2647117813052276096}
   - component: {fileID: 2647117813052276102}
   - component: {fileID: 6081319506042412209}
-  m_Layer: 5
+  - component: {fileID: 2341945816938905521}
+  m_Layer: 0
   m_Name: item_meat_ui
-  m_TagString: ItemUI
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36,7 +37,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 10}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &2647117813052276103
@@ -119,3 +120,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2341945816938905521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2647117813052276098}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  worldItem: {fileID: 5267771800730489255, guid: a546a4e0585c77a40ad1bf74b0e06d9c,
+    type: 3}

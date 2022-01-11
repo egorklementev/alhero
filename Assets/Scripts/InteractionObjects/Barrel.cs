@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Barrel : MonoBehaviour
 {
     public int invSize = 4;
     public GameObject[] slots;
+    public TextMeshProUGUI ingredientLine;
 
     private GameObject[] inventory;
     private int selectedItem = -1;
@@ -15,61 +17,50 @@ public class Barrel : MonoBehaviour
         inventory = new GameObject[invSize];
     }
 
-    private void Update()
+    public void OnItemSelected(int slotNum)
     {
-        // UI item tap
-        foreach (Touch touch in Input.touches)
+        GameObject item = inventory[slotNum];
+
+        if (item != null)
         {
-            if (touch.phase == TouchPhase.Ended)
+            // When selected already - deselect 
+            if (selectedItem == slotNum)
             {
-                Ray raycast = Camera.main.ScreenPointToRay(touch.position);
-                RaycastHit raycastHit;
-                if (Physics.Raycast(raycast, out raycastHit))
-                {
-                    if (raycastHit.collider.CompareTag("ItemUI"))
-                    {
-                        for (int i = 0; i < invSize; i++)
-                        {
-                            GameObject item = raycastHit.collider.gameObject;
-                            if (item.transform.parent.gameObject == slots[i])
-                            {
-                                // When selected already - deselect 
-                                if (selectedItem == i)
-                                {
-                                    selectedItem = -1;
-                                    item.GetComponent<Animator>().SetBool("IsSelected", false);
-                                }
-                                // When other is selected - deselect other and select new
-                                else if (selectedItem > -1)
-                                {
-                                    slots[selectedItem].GetComponentInChildren<Animator>().SetBool("IsSelected", false);
-                                    selectedItem = i;
-                                    item.GetComponent<Animator>().SetBool("IsSelected", true);
-                                }
-                                // When no item is selected - select
-                                else
-                                {
-                                    selectedItem = i;
-                                    item.GetComponent<Animator>().SetBool("IsSelected", true);
-                                }
-                            }
-                        }
-                    }
-                }
+                selectedItem = -1;
+                item.GetComponent<Animator>().SetBool("IsSelected", false);
+                ingredientLine.text = "";
             }
-            break;
+            // When other is selected - deselect other and select new
+            else if (selectedItem > -1)
+            {
+                inventory[selectedItem].GetComponent<Animator>().SetBool("IsSelected", false);
+                selectedItem = slotNum;
+                item.GetComponent<Animator>().SetBool("IsSelected", true);
+                ingredientLine.text = item.GetComponent<ItemUI>().worldItem.GetComponent<ItemWorld>().item_id;
+            }
+            // When no item is selected - select
+            else
+            {
+                selectedItem = slotNum;
+                item.GetComponent<Animator>().SetBool("IsSelected", true);
+                ingredientLine.text = item.GetComponent<ItemUI>().worldItem.GetComponent<ItemWorld>().item_id;
+            }
         }
     }
 
-    private void OnCollisionEnter(Collision other)
+    private void OnCollisionExit(Collision other)
+    {
+        TryToTakeItem(other);
+    }
+
+    private void TryToTakeItem(Collision other)
     {
         int freeSlot = GetFreeSlot();
         if (other.gameObject.CompareTag("Item") && freeSlot != -1)
         {
             other.gameObject.GetComponentInChildren<Animator>().SetBool("Destroy", true);
-            inventory[freeSlot] = other.gameObject;
             GameObject uiItem = other.gameObject.GetComponent<ItemWorld>().uiVersion;
-            Instantiate(uiItem, slots[freeSlot].transform);
+            inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
         }
     }
 
@@ -83,5 +74,24 @@ public class Barrel : MonoBehaviour
             }
         }
         return -1;
+    }
+
+    public GameObject GetSelectedItem()
+    {
+        if (selectedItem > -1)
+        {
+            return inventory[selectedItem];
+        }
+        return null;
+    }
+
+    public void ResetSelection()
+    {
+        if (selectedItem > -1)
+        {
+            inventory[selectedItem].GetComponent<Animator>().SetBool("IsSelected", false);
+            ingredientLine.text = "";
+        }
+        selectedItem = -1;
     }
 }
