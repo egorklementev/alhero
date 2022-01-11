@@ -39,7 +39,7 @@ public class EnterFieldInteraction : MonoBehaviour
         {
             if (isActivated)
             {
-                LogicController.currentBarrel.GetComponentInChildren<Barrel>().ResetSelection();
+                LogicController.currentBarrel.GetComponentInChildren<Container>().ResetSelection();
                 UIController.TriggerRightPanel();
                 UIController.DeactivateUIGroup(groupToActivate);
                 isActivated = false;

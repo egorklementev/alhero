@@ -4,11 +4,20 @@ public class LogicController : MonoBehaviour
 {
     public GameObject player;
     public GameObject itemsGroup;
+    public GameObject staticObjsGroup;
+
+    [Space(15f)]
+    public SpawnController spawner;
 
     private static int invSize = 3; // Inverntory size
 
     public static GameObject currentBarrel { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[invSize];
+
+    private void Awake()
+    {
+        spawner.SpawnContainer(1, new Vector3(-2f, -.5f, 2f), Quaternion.Euler(0f, 0f, 0f), staticObjsGroup);
+    }
 
     public static int GetFreeInvSlot()
     {
@@ -42,7 +51,7 @@ public class LogicController : MonoBehaviour
         int slot = GetFreeInvSlot();
         if (currentBarrel != null && slot != -1)
         {
-            Barrel b = currentBarrel.GetComponentInChildren<Barrel>();
+            Container b = currentBarrel.GetComponentInChildren<Container>();
             GameObject selected = b.GetSelectedItem();
             if (selected != null)
             {
@@ -60,7 +69,7 @@ public class LogicController : MonoBehaviour
     {
         if (currentBarrel != null)
         {
-            currentBarrel.GetComponentInChildren<Barrel>().OnItemSelected(slot);
+            currentBarrel.GetComponentInChildren<Container>().OnItemSelected(slot);
         }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Barrel : MonoBehaviour
+public class Container : MonoBehaviour
 {
     public int invSize = 4;
     public GameObject[] slots;

@@ -10,6 +10,7 @@ public class HeroMoveController : MonoBehaviour
     public Animator anim;
     public Rigidbody body;
 
+    [Header("Controls")]
     [Space(20f)]
     public float fingerEpsilon = 100f;
     [Range(0f, 100f)]
@@ -17,6 +18,7 @@ public class HeroMoveController : MonoBehaviour
     [Range(1f, 100f)]
     public float maxSpeed = 5f;
     
+    [Header("Item throwing")]
     [Range(0f, 1f)]
     public float minTapTime = .444f;
     [Range(0f, 1f)]
@@ -25,6 +27,8 @@ public class HeroMoveController : MonoBehaviour
 
     [Space(20f)]
     public UIController ui;
+    public LogicController logic;
+
     [Space(20f)]
     public Vector3 cameraOffset = new Vector3(-2f, 10f, -2f);
 
@@ -145,6 +149,12 @@ public class HeroMoveController : MonoBehaviour
                         },
                         ForceMode.Impulse);
                     LogicController.PickedItems[0] = null;
+
+                    // Try to rotate items for better UX
+                    logic.RotateItems();
+                    if (LogicController.PickedItems[0] == null) {
+                        logic.RotateItems();
+                    }
                 }
                 tapCounter = 0f;
             }
