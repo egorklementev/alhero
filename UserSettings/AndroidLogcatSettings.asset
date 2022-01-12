@@ -3,75 +3,69 @@
     "m_SelectedPackage": {
         "deviceId": "7afc6a600404",
         "name": "com.erked.AlHero",
-        "processId": 1371,
+        "processId": 700,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "7afc6a600404",
-            "name": "com.DefaultCompany.AlHero",
-            "processId": 29341,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.DefaultCompany.AlHero",
-            "processId": 9289,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.DefaultCompany.AlHero",
-            "processId": 20137,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 29339,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 31508,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 32399,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 4584,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 28369,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 13130,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 28998,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 1371,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 22970,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 23448,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 27098,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 28557,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 30133,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 700,
             "exited": false
         }
     ],

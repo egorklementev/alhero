@@ -16,7 +16,7 @@ public class LogicController : MonoBehaviour
 
     private void Awake()
     {
-        spawner.SpawnContainer(1, new Vector3(-2f, -.5f, 2f), Quaternion.Euler(0f, 0f, 0f), staticObjsGroup);
+        // spawner.SpawnContainer(1, new Vector3(-2f, -.5f, 2f), Quaternion.Euler(0f, 0f, 0f), staticObjsGroup);
     }
 
     public static int GetFreeInvSlot()
@@ -46,7 +46,7 @@ public class LogicController : MonoBehaviour
         PickedItems[1] = temp;
     }
 
-    public void TakeItemFromBarrel()
+    public void TakeItemFromContainer()
     {
         int slot = GetFreeInvSlot();
         if (currentBarrel != null && slot != -1)
@@ -70,6 +70,20 @@ public class LogicController : MonoBehaviour
         if (currentBarrel != null)
         {
             currentBarrel.GetComponentInChildren<Container>().OnItemSelected(slot);
+        }
+    }
+
+    public void SpawnIngredientsDebug()
+    {
+        string[] items = new string[] 
+        {
+            "flower", "horseshoe", "meat", "salt", "wine"
+        };
+        Vector3 start = new Vector3(10f, 1f, 1f * items.Length / 2f);
+        foreach (string id in items)
+        {
+            spawner.SpawnItem(id, start, Quaternion.identity, itemsGroup);
+            start -= new Vector3(0f, 0f, 2f);
         }
     }
 }

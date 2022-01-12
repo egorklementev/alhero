@@ -6,6 +6,11 @@ using TMPro;
 
 public class SpawnController : MonoBehaviour
 {
+
+    [Header("Items")]
+    [Space(5f)]
+    public List<GameObject> items;
+
     [Header("Containers")]
     [Space(5f)]
     public GameObject sidePanel; // For corresponding UI panels
@@ -18,7 +23,7 @@ public class SpawnController : MonoBehaviour
 
     private static int containersSpawned = 0;
 
-    public void SpawnContainer(int containerID, Vector3 pos, Quaternion rot, GameObject owner)
+    public GameObject SpawnContainer(int containerID, Vector3 pos, Quaternion rot, GameObject owner)
     {
         containersSpawned++;
 
@@ -44,7 +49,7 @@ public class SpawnController : MonoBehaviour
 
         // Enable 'take' button logic
         GameObject takeBtn = uiGroup.transform.Find("TakeButton").gameObject;
-        takeBtn.GetComponent<Button>().onClick.AddListener(logic.TakeItemFromBarrel);
+        takeBtn.GetComponent<Button>().onClick.AddListener(logic.TakeItemFromContainer);
 
         // Connect enter field to UI
         container.GetComponentInChildren<EnterFieldInteraction>().groupToActivate = uiGroup.name;
@@ -57,5 +62,17 @@ public class SpawnController : MonoBehaviour
             contScript.slots[i] = slots.transform.Find("slot" + i).gameObject;
         }
         contScript.ingredientLine = ingredientTitle.GetComponent<TextMeshProUGUI>();
+
+        return container;
+    }
+
+    public GameObject SpawnItem(string itemID, Vector3 pos, Quaternion rot, GameObject owner)
+    {
+        return Instantiate(
+            items.Find(i => i.GetComponent<ItemWorld>().item_id.Equals(itemID)),
+            pos,
+            rot,
+            owner.transform
+            );
     }
 }

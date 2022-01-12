@@ -50,11 +50,6 @@ public class Container : MonoBehaviour
 
     private void OnCollisionExit(Collision other)
     {
-        TryToTakeItem(other);
-    }
-
-    private void TryToTakeItem(Collision other)
-    {
         int freeSlot = GetFreeSlot();
         if (other.gameObject.CompareTag("Item") && freeSlot != -1)
         {
