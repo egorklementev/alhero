@@ -36,26 +36,47 @@ public class Container : MonoBehaviour
                 inventory[selectedItem].GetComponent<Animator>().SetBool("IsSelected", false);
                 selectedItem = slotNum;
                 item.GetComponent<Animator>().SetBool("IsSelected", true);
-                ingredientLine.text = item.GetComponent<ItemUI>().worldItem.GetComponent<ItemWorld>().item_id;
+                ingredientLine.text = item.GetComponent<ItemUI>().worldItem.GetComponent<ItemWorld>().itemID;
             }
             // When no item is selected - select
             else
             {
                 selectedItem = slotNum;
                 item.GetComponent<Animator>().SetBool("IsSelected", true);
-                ingredientLine.text = item.GetComponent<ItemUI>().worldItem.GetComponent<ItemWorld>().item_id;
+                ingredientLine.text = item.GetComponent<ItemUI>().worldItem.GetComponent<ItemWorld>().itemID;
             }
         }
     }
 
     private void OnCollisionExit(Collision other)
     {
+        TryToPutItem(other.gameObject);
+    }
+
+    public void TryToPutItem(GameObject item)
+    {
         int freeSlot = GetFreeSlot();
-        if (other.gameObject.CompareTag("Item") && freeSlot != -1)
+        if (item.CompareTag("Item") && freeSlot != -1)
         {
-            other.gameObject.GetComponentInChildren<Animator>().SetBool("Destroy", true);
-            GameObject uiItem = other.gameObject.GetComponent<ItemWorld>().uiVersion;
-            inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
+            GameObject uiItem;
+            item.GetComponentInChildren<Animator>().SetBool("Destroy", true);
+            PotionWorld pWorld = item.GetComponent<PotionWorld>();
+            if (pWorld != null)
+            {
+                uiItem = pWorld.uiVersion;
+
+                // Set potion data
+                PotionUI pUI = uiItem.GetComponent<PotionUI>();
+                pUI.potionData = new Potion(pWorld.potionData);
+
+                inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
+                inventory[freeSlot].GetComponent<Renderer>().materials[2].SetColor("_Color", pWorld.GetColor());
+            }
+            else 
+            {
+                uiItem = item.GetComponent<ItemWorld>().uiVersion;
+                inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
+            }
         }
     }
 

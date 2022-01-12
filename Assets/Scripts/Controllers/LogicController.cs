@@ -56,11 +56,34 @@ public class LogicController : MonoBehaviour
             if (selected != null)
             {
                 selected.GetComponent<Animator>().SetBool("Destroy", true);
-                GameObject newWorldItem = Instantiate(selected.GetComponent<ItemUI>().worldItem, itemsGroup.transform);
-                ItemWorld newItem = newWorldItem.GetComponent<ItemWorld>();
-                newItem.SetPickedUp(true, slot, player);
-                PickedItems[slot] = newItem;
-                b.ResetSelection();
+
+                PotionUI pUI = selected.GetComponent<PotionUI>();
+                if (pUI != null)
+                {
+                    GameObject newPotion = Instantiate(selected.GetComponent<ItemUI>().worldItem, itemsGroup.transform);
+
+                    PotionWorld newPotionScript = newPotion.GetComponent<PotionWorld>();
+                    newPotionScript.potionData = new Potion(pUI.potionData); // Perform potion data copy
+
+                    string newPotionID = newPotionScript.potionData.GetID();
+                    newPotion.name = newPotionID;
+                    newPotionScript.itemID = newPotionID;
+
+                    newPotion.GetComponentInChildren<Renderer>().materials[2].SetColor("_Color", newPotionScript.GetColor());
+
+                    newPotionScript.SetPickedUp(true, slot, player);
+                    PickedItems[slot] = newPotionScript;
+
+                    b.ResetSelection();
+                }
+                else
+                {
+                    GameObject newWorldItem = Instantiate(selected.GetComponent<ItemUI>().worldItem, itemsGroup.transform);
+                    ItemWorld newItem = newWorldItem.GetComponent<ItemWorld>();
+                    newItem.SetPickedUp(true, slot, player);
+                    PickedItems[slot] = newItem;
+                    b.ResetSelection();
+                }
             }
         }
     }
@@ -79,11 +102,11 @@ public class LogicController : MonoBehaviour
         {
             "flower", "horseshoe", "meat", "salt", "wine"
         };
-        Vector3 start = new Vector3(10f, 1f, 1f * items.Length / 2f);
+        Vector3 start = new Vector3(11f, 1f, 1.5f * items.Length / 2f);
         foreach (string id in items)
         {
             spawner.SpawnItem(id, start, Quaternion.identity, itemsGroup);
-            start -= new Vector3(0f, 0f, 2f);
+            start -= new Vector3(0f, 0f, 3f);
         }
     }
 }

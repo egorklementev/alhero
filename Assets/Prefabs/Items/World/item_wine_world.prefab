@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_id: wine
+  itemID: wine
   uiVersion: {fileID: 2647117813052276098, guid: 46d1ee2f50ff1a04daf23a14d336faff,
     type: 3}
 --- !u!1001 &4495063081575623953

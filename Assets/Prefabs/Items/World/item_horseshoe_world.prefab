@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_id: horseshoe
+  itemID: horseshoe
   uiVersion: {fileID: 2647117813052276098, guid: 6db9c513922f6764083dc55e00dd3a7c,
     type: 3}
 --- !u!1001 &7574376273299708692

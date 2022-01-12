@@ -12,6 +12,9 @@ public class DataController : MonoBehaviour
     public static List<Recipe> recipes;
     public static List<Ingredient> ingredients;
 
+
+    public const int bootleShapesNumber = 2;
+
     private float autosaveTimer = 60f;
     private float currentTimer = 0f;
 
@@ -35,6 +38,43 @@ public class DataController : MonoBehaviour
     {
         Debug.Log("Autosaving...");
         // TODO: Some savings...
+    }
+
+    public static void AddNewIngredient(
+        string id, 
+        float cooldown, 
+        float breakChance, 
+        float r, 
+        float g, 
+        float b, 
+        float a)
+    {
+        ingredients.Add(new Ingredient(id, cooldown, breakChance, r, g, b, a));
+
+        /*
+        Debug.Log("---");
+        Debug.Log("Ingredients: ");
+        foreach (Ingredient i in ingredients)
+        {
+            Debug.Log(i.id);
+        }
+        Debug.Log("---");
+        */
+    }
+
+    public static void CreateNewRecipe(int mistakesAllowed, params string[] ingredients)
+    {
+        recipes.Add(new Recipe(mistakesAllowed, ingredients));
+
+        /*
+        Debug.Log("---");
+        Debug.Log("Recipes: ");
+        foreach (Recipe r in recipes)
+        {
+            Debug.Log(r.GetID());
+        }
+        Debug.Log("---");
+        */
     }
 
     private List<Ingredient> LoadIngredients()
@@ -116,18 +156,14 @@ public class DataController : MonoBehaviour
         File.WriteAllText(Path.Combine(Application.streamingAssetsPath, Path.Combine(path)), jsonData);
     }
 
-    public void SaveIngredientsDebug()
+    public void SaveGameDataDebruh()
     {
         int index = 0;
         foreach (Ingredient i in debugIngredients)
         {
             SaveToDataFile<Ingredient>(i, "Ingredients", "ingredient_" + (index++) + ".json");
         }
-    }
-
-    public void SaveRecipesDebug()
-    {
-        int index = 0;
+        index = 0;
         foreach (Recipe r in debugRecipes)
         {
             SaveToDataFile<Recipe>(r, "Recipes", "recipe_" + (index++) + ".json");

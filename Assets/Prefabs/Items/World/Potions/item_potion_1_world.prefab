@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5267771800730489256}
   - component: {fileID: 5267771800730489258}
   - component: {fileID: 5267771800730489257}
-  - component: {fileID: 3639953085000846316}
+  - component: {fileID: 60106001407238391}
   m_Layer: 0
   m_Name: item_potion_1_world
   m_TagString: Item
@@ -63,7 +63,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &3639953085000846316
+--- !u!114 &60106001407238391
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -72,12 +72,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 5267771800730489255}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
+  m_Script: {fileID: 11500000, guid: d0621fad78b5e4a4dbf43647a2a733d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_id: potion_1
+  itemID: potion_1
   uiVersion: {fileID: 2647117813052276098, guid: 070118a1ad6f22944b8543345236b316,
     type: 3}
+  potionData:
+    recipe_id: 
+    bottle_shape: 0
+    ingredients: []
+    color_r: 0
+    color_g: 0
+    color_b: 0
+    color_a: 0
 --- !u!1001 &7678112798012042996
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -160,6 +168,21 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: cf1080c7f72fbd94a8010b29f2d61818,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7aa8ce474e9ac3840b2da4dd78e51b7a, type: 2}
+    - target: {fileID: -7511558181221131132, guid: cf1080c7f72fbd94a8010b29f2d61818,
+        type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: b6800d519e8fcd147a5f57e62849b213, type: 2}
+    - target: {fileID: -7511558181221131132, guid: cf1080c7f72fbd94a8010b29f2d61818,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: cb988aeaced7d6a409eaed71ccf23079, type: 2}
     - target: {fileID: 919132149155446097, guid: cf1080c7f72fbd94a8010b29f2d61818,
         type: 3}
       propertyPath: m_Name

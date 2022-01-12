@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2647117813052276096}
   - component: {fileID: 2647117813052276102}
   - component: {fileID: 6081319506042412209}
-  - component: {fileID: 6062436867045801678}
+  - component: {fileID: 5511476690681119585}
   m_Layer: 0
-  m_Name: item_potion_1_ui
+  m_Name: item_potion_2_ui
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2647117813052276098}
-  m_Mesh: {fileID: -9222383953780143212, guid: cf1080c7f72fbd94a8010b29f2d61818, type: 3}
+  m_Mesh: {fileID: 8826647978251146624, guid: 6dbac6fbabd77ac4cafc9cf40f922d44, type: 3}
 --- !u!23 &2647117813052276096
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &6062436867045801678
+--- !u!114 &5511476690681119585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -134,7 +134,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae7644bfecb7ce4aa66342a199ffa11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldItem: {fileID: 5267771800730489255, guid: c75003aae10b5a045a209b812e24e3fa,
+  worldItem: {fileID: 5267771800730489255, guid: 97771820b91343948a6553ac7182d015,
     type: 3}
   itemID: 
   recipeID: 

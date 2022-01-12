@@ -141,10 +141,10 @@ public class HeroMoveController : MonoBehaviour
                     LogicController.PickedItems[0].GetBody().AddRelativeForce(
                         faceDir switch
                         {
-                            Direction.NORTH => new Vector3(0f, throwForce, throwForce * 1.33f),
-                            Direction.SOUTH => new Vector3(0f, throwForce, -throwForce * 1.33f),
-                            Direction.WEST => new Vector3(-throwForce * 1.33f, throwForce, 0f),
-                            Direction.EAST => new Vector3(throwForce * 1.33f, throwForce, 0f),
+                            Direction.NORTH => new Vector3(0f, .25f * throwForce, throwForce * 1.5f),
+                            Direction.SOUTH => new Vector3(0f, .25f * throwForce, -throwForce * 1.5f),
+                            Direction.WEST => new Vector3(-throwForce * 1.5f, .25f * throwForce, 0f),
+                            Direction.EAST => new Vector3(throwForce * 1.5f, .25f * throwForce, 0f),
                             _ => new Vector3(0f, 0f, 0f)
                         },
                         ForceMode.Impulse);

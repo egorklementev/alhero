@@ -69,7 +69,7 @@ public class SpawnController : MonoBehaviour
     public GameObject SpawnItem(string itemID, Vector3 pos, Quaternion rot, GameObject owner)
     {
         return Instantiate(
-            items.Find(i => i.GetComponent<ItemWorld>().item_id.Equals(itemID)),
+            items.Find(i => i.GetComponent<ItemWorld>().itemID.Equals(itemID)),
             pos,
             rot,
             owner.transform

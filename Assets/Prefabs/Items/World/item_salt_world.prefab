@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_id: salt
+  itemID: salt
   uiVersion: {fileID: 2647117813052276098, guid: 3c223369ec3a7894eace0c5ebec72fb7,
     type: 3}
 --- !u!1001 &2582332431101220435

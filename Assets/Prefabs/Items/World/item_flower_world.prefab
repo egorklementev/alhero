@@ -75,7 +75,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  item_id: flower
+  itemID: flower
   uiVersion: {fileID: 2647117813052276098, guid: 211988769aca3d846aa363b74de601d1,
     type: 3}
 --- !u!1001 &9028070017475962630

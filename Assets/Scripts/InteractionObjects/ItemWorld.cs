@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ItemWorld : MonoBehaviour
 {
-    public string item_id = "none";
+    public string itemID = "none";
     public GameObject uiVersion;
 
     private bool isPickedUp = false;
