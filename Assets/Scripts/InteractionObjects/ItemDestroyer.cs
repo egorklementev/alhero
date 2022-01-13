@@ -4,11 +4,13 @@ using UnityEngine;
 
 public class ItemDestroyer : MonoBehaviour
 {
-    public void DestroyParentObj() {
+    public void DestroyParentObj()
+    {
         Destroy(transform.parent.gameObject);
     }
 
-    public void DestroySelfObj() {
+    public void DestroySelfObj()
+    {
         Destroy(gameObject);
     }
 }

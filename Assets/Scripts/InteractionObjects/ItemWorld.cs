@@ -15,7 +15,7 @@ public class ItemWorld : MonoBehaviour
     private Rigidbody body;
     private BoxCollider bCollider;
 
-    private void Awake()
+    private void OnEnable()
     {
         anim = GetComponentInChildren<Animator>();
         body = GetComponent<Rigidbody>();
@@ -26,7 +26,8 @@ public class ItemWorld : MonoBehaviour
     {
         if (isPickedUp && owner != null)
         {
-            switch (slot) {
+            switch (slot)
+            {
                 case 0:
                     transform.position = owner.transform.position + new Vector3(0f, 2.5f, 0f); // Center
                     break;
@@ -58,7 +59,8 @@ public class ItemWorld : MonoBehaviour
         slot = newSlot;
     }
 
-    public void SetSlot(int newSlot) {
+    public void SetSlot(int newSlot)
+    {
         slot = newSlot;
     }
 

@@ -31,37 +31,46 @@ public class UIController : MonoBehaviour
         rightPanelAnim.SetBool("DoShow", showRightPanel);
 
         // Checking whether UI group activation/deactivation was scheduled
-        if (groupsForActivation.First != null) {
-            for(LinkedListNode<string> node = groupsForActivation.First; node != null; node = node.Next) {
+        if (groupsForActivation.First != null)
+        {
+            for (LinkedListNode<string> node = groupsForActivation.First; node != null; node = node.Next)
+            {
                 uiGroups.Find(group => group.name.Equals(node.Value)).SetActive(true);
             }
             groupsForActivation.Clear();
         }
-        if (groupsForDeactivation.First != null) {
-            for(LinkedListNode<string> node = groupsForDeactivation.First; node != null; node = node.Next) {
+        if (groupsForDeactivation.First != null)
+        {
+            for (LinkedListNode<string> node = groupsForDeactivation.First; node != null; node = node.Next)
+            {
                 StartCoroutine(HideUIGroup(uiGroups.Find(group => group.name.Equals(node.Value))));
             }
             groupsForDeactivation.Clear();
         }
     }
 
-    public void SetDebugLine(string message) {
+    public void SetDebugLine(string message)
+    {
         debugLine.text = "Debug: " + message;
     }
 
-    public static void TriggerRightPanel() {
+    public static void TriggerRightPanel()
+    {
         showRightPanel = !showRightPanel;
     }
 
-    public static void ActivateUIGroup(string name) {
+    public static void ActivateUIGroup(string name)
+    {
         groupsForActivation.AddLast(name);
     }
 
-    public static void DeactivateUIGroup(string name) {
+    public static void DeactivateUIGroup(string name)
+    {
         groupsForDeactivation.AddLast(name);
     }
 
-    IEnumerator HideUIGroup(GameObject obj) {
+    IEnumerator HideUIGroup(GameObject obj)
+    {
         yield return new WaitForSeconds(delay);
         obj.SetActive(false);
     }

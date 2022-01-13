@@ -10,6 +10,8 @@ public class Potion
     public float color_b;
     public float color_a;
 
+    public Potion() {}
+
     public Potion(Potion other)
     {
         recipe_id = other.recipe_id;
@@ -25,7 +27,7 @@ public class Potion
     /// We need this to generate new recipes with other potions
     public string GetID()
     {
-        string newPotionName = "potion("; 
+        string newPotionName = "potion(";
         foreach (string ing in DataController.recipes.Find(recipe => recipe.GetID().Equals(recipe_id)).ingredient_seq)
         {
             newPotionName += ing + "_";

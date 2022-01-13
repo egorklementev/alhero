@@ -17,7 +17,7 @@ public class HeroMoveController : MonoBehaviour
     public float movementSpeed = 1.5f;
     [Range(1f, 100f)]
     public float maxSpeed = 5f;
-    
+
     [Header("Item throwing")]
     [Range(0f, 1f)]
     public float minTapTime = .444f;
@@ -28,6 +28,7 @@ public class HeroMoveController : MonoBehaviour
     [Space(20f)]
     public UIController ui;
     public LogicController logic;
+    public DataController data;
 
     [Space(20f)]
     public Vector3 cameraOffset = new Vector3(-2f, 10f, -2f);
@@ -40,7 +41,7 @@ public class HeroMoveController : MonoBehaviour
     private Direction faceDir = Direction.NORTH;
     private const string walkParam = "IsWalking"; // Animation parameter
 
-    void Start()
+    void Awake()
     {
         Application.targetFrameRate = 60;
         dragStart = new Vector2(0f, 0f);
@@ -152,7 +153,8 @@ public class HeroMoveController : MonoBehaviour
 
                     // Try to rotate items for better UX
                     logic.RotateItems();
-                    if (LogicController.PickedItems[0] == null) {
+                    if (LogicController.PickedItems[0] == null)
+                    {
                         logic.RotateItems();
                     }
                 }
@@ -173,6 +175,7 @@ public class HeroMoveController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.Escape))
         {
+            data.Autosave();
             Application.Quit();
         }
     }

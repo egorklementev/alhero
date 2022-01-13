@@ -5,6 +5,8 @@ using TMPro;
 
 public class Container : MonoBehaviour
 {
+    public string id;
+    public bool isUnlocked;
     public int invSize = 4;
     public GameObject[] slots;
     public TextMeshProUGUI ingredientLine;
@@ -12,9 +14,10 @@ public class Container : MonoBehaviour
     private GameObject[] inventory;
     private int selectedItem = -1;
 
-    private void Awake()
+    private void Start()
     {
         inventory = new GameObject[invSize];
+        transform.parent.Find("EnterField").gameObject.SetActive(isUnlocked);
     }
 
     public void OnItemSelected(int slotNum)
@@ -53,29 +56,36 @@ public class Container : MonoBehaviour
         TryToPutItem(other.gameObject);
     }
 
-    public void TryToPutItem(GameObject item)
+    public void TryToPutItem(GameObject item, int slot = -1)
     {
-        int freeSlot = GetFreeSlot();
-        if (item.CompareTag("Item") && freeSlot != -1)
+        if (item != null && isUnlocked)
         {
-            GameObject uiItem;
-            item.GetComponentInChildren<Animator>().SetBool("Destroy", true);
-            PotionWorld pWorld = item.GetComponent<PotionWorld>();
-            if (pWorld != null)
+            int freeSlot = slot == -1 ? GetFreeSlot() : slot;
+            if (item.CompareTag("Item") && freeSlot != -1)
             {
-                uiItem = pWorld.uiVersion;
+                item.GetComponentInChildren<Animator>().SetBool("Destroy", true);
+                PotionWorld pWorld = item.GetComponent<PotionWorld>();
+                if (pWorld != null)
+                {
+                    GameObject uiItem = pWorld.uiVersion;
 
-                // Set potion data
-                PotionUI pUI = uiItem.GetComponent<PotionUI>();
-                pUI.potionData = new Potion(pWorld.potionData);
+                    // Set potion data
+                    PotionUI pUI = uiItem.GetComponent<PotionUI>();
+                    pUI.potionData = new Potion(pWorld.potionData);
 
-                inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
-                inventory[freeSlot].GetComponent<Renderer>().materials[2].SetColor("_Color", pWorld.GetColor());
-            }
-            else 
-            {
-                uiItem = item.GetComponent<ItemWorld>().uiVersion;
-                inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
+                    inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
+                    inventory[freeSlot].GetComponent<Renderer>().materials[2].SetColor("_Color", pWorld.GetColor());
+
+                    DataController.containers[id].items[freeSlot].itemID = pWorld.itemID;
+                    DataController.containers[id].items[freeSlot].potionData = new Potion(pWorld.potionData);
+                }
+                else
+                {
+                    ItemWorld itemScript = item.GetComponent<ItemWorld>();
+                    inventory[freeSlot] = Instantiate(itemScript.uiVersion, slots[freeSlot].transform);
+
+                    DataController.containers[id].items[freeSlot].itemID = itemScript.itemID;
+                }
             }
         }
     }
@@ -99,6 +109,10 @@ public class Container : MonoBehaviour
             return inventory[selectedItem];
         }
         return null;
+    }
+
+    public int GetSelectedItemSlot() {
+        return selectedItem;
     }
 
     public void ResetSelection()

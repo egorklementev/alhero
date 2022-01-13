@@ -21,7 +21,7 @@ public class SpawnController : MonoBehaviour
     public LogicController logic;
     public UIController ui;
 
-    private static int containersSpawned = 0;
+    private static int containersSpawned = 0; // Increase me if there are already prefab containers in a scene
 
     public GameObject SpawnContainer(int containerID, Vector3 pos, Quaternion rot, GameObject owner)
     {
@@ -62,17 +62,19 @@ public class SpawnController : MonoBehaviour
             contScript.slots[i] = slots.transform.Find("slot" + i).gameObject;
         }
         contScript.ingredientLine = ingredientTitle.GetComponent<TextMeshProUGUI>();
+        contScript.isUnlocked = true;
+        contScript.id = "spawned_" + containersSpawned.ToString();
 
         return container;
     }
 
     public GameObject SpawnItem(string itemID, Vector3 pos, Quaternion rot, GameObject owner)
     {
-        return Instantiate(
-            items.Find(i => i.GetComponent<ItemWorld>().itemID.Equals(itemID)),
-            pos,
-            rot,
-            owner.transform
-            );
+        GameObject obj = items.Find(i => i.GetComponent<ItemWorld>().itemID.Equals(itemID));
+        if (obj != null)
+        {
+            return Instantiate(obj, pos, rot, owner.transform);
+        }
+        return null;
     }
 }

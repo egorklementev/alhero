@@ -6,22 +6,28 @@ using System.IO;
 
 public class DataController : MonoBehaviour
 {
+    public General debugGeneral;
     public List<Recipe> debugRecipes;
     public List<Ingredient> debugIngredients;
+    public string debugContainerID;
+    public ContainerItems debugContainerItems;
 
+    public static General genData;
     public static List<Recipe> recipes;
     public static List<Ingredient> ingredients;
-
+    public static Dictionary<string, ContainerItems> containers;
 
     public const int bootleShapesNumber = 2;
 
     private float autosaveTimer = 60f;
     private float currentTimer = 0f;
 
-    void Start()
+    void Awake()
     {
+        genData = LoadDataFile<General>("general.json");
         ingredients = LoadIngredients();
         recipes = LoadRecipes();
+        containers = LoadContainers();
     }
 
     void Update()
@@ -33,20 +39,28 @@ public class DataController : MonoBehaviour
             Autosave();
         }
     }
+    
+    private void OnDestroy() {
+        Autosave();
+    }
 
-    void Autosave()
+    public void Autosave()
     {
         Debug.Log("Autosaving...");
-        // TODO: Some savings...
+
+        SaveToDataFile<General>(genData, "general.json");
+        SaveIngredients();
+        SaveRecipes();
+        SaveContainers();
     }
 
     public static void AddNewIngredient(
-        string id, 
-        float cooldown, 
-        float breakChance, 
-        float r, 
-        float g, 
-        float b, 
+        string id,
+        float cooldown,
+        float breakChance,
+        float r,
+        float g,
+        float b,
         float a)
     {
         ingredients.Add(new Ingredient(id, cooldown, breakChance, r, g, b, a));
@@ -105,6 +119,43 @@ public class DataController : MonoBehaviour
         return list;
     }
 
+    private Dictionary<string, ContainerItems> LoadContainers()
+    {
+        Dictionary<string, ContainerItems> dict = new Dictionary<string, ContainerItems>();
+        for (int i = 0; i < genData.labContainerIDs.Length; i++)
+        {
+            string containerID = genData.labContainerIDs[i];
+            ContainerItems contItems = LoadDataFile<ContainerItems>("LabContainers", "container_" + containerID + ".json");
+            dict.Add(containerID, contItems);
+        }
+        Debug.Log("[DataController]: Loaded " + genData.labContainerIDs.Length + " containers.");
+        return dict;
+    }
+
+    private void SaveIngredients()
+    {
+        for (int i = 0; i < ingredients.Count; i++)
+        {
+            SaveToDataFile<Ingredient>(ingredients[i], "Ingredients", "ingredient_" + i + ".json");
+        }
+    }
+
+    private void SaveRecipes()
+    {
+        for (int i = 0; i < recipes.Count; i++)
+        {
+            SaveToDataFile<Recipe>(recipes[i], "Recipes", "recipe_" + i + ".json");
+        }
+    }
+
+    private void SaveContainers()
+    {
+        foreach (var contItems in containers)
+        {
+            SaveToDataFile<ContainerItems>(contItems.Value, "LabContainers", "container_" + contItems.Key + ".json");
+        }
+    }
+
     public T LoadDataFile<T>(params string[] path)
     {
         string jsonData;
@@ -120,6 +171,7 @@ public class DataController : MonoBehaviour
                     }
                     else
                     {
+                        Debug.LogWarning("Unable to read data file: " + absPath);
                         return default(T);
                     }
                     break;
@@ -128,7 +180,7 @@ public class DataController : MonoBehaviour
                     request.SendWebRequest();
                     while (!request.isDone)
                     {
-                        if (request.result == UnityWebRequest.Result.ConnectionError || 
+                        if (request.result == UnityWebRequest.Result.ConnectionError ||
                         request.result == UnityWebRequest.Result.DataProcessingError)
                         {
                             Debug.LogError("What a fuck!?");
@@ -158,7 +210,10 @@ public class DataController : MonoBehaviour
 
     public void SaveGameDataDebruh()
     {
+        Debug.Log("Debug saving...");
+
         int index = 0;
+        SaveToDataFile<General>(debugGeneral, "general.json");
         foreach (Ingredient i in debugIngredients)
         {
             SaveToDataFile<Ingredient>(i, "Ingredients", "ingredient_" + (index++) + ".json");
@@ -168,5 +223,6 @@ public class DataController : MonoBehaviour
         {
             SaveToDataFile<Recipe>(r, "Recipes", "recipe_" + (index++) + ".json");
         }
+        //SaveToDataFile<ContainerItems>(debugContainerItems, "LabContainers", "container_" + debugContainerID + ".json");
     }
 }

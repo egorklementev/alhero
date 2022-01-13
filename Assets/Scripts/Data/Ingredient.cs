@@ -6,18 +6,18 @@ public class Ingredient
     public float breakChance; // How likely is that this ingredient will break the recipe
 
     // Used to calculate potion's color
-    public float color_r; 
-    public float color_g; 
-    public float color_b; 
-    public float color_a; 
+    public float color_r;
+    public float color_g;
+    public float color_b;
+    public float color_a;
 
     public Ingredient(
-        string id, 
-        float cooldown, 
-        float breakChance, 
-        float r, 
-        float g, 
-        float b, 
+        string id,
+        float cooldown,
+        float breakChance,
+        float r,
+        float g,
+        float b,
         float a)
     {
         this.id = id;
