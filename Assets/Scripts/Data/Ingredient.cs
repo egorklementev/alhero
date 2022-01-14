@@ -4,6 +4,9 @@ public class Ingredient
     public string id; // Corresponds to World Item id
     public float cooldown; // How much of a delay adds this ingredient to the cauldron
     public float breakChance; // How likely is that this ingredient will break the recipe
+    public bool hasBeenDiscovered;
+
+    public Potion potionData; // In case this ingredient is potion
 
     // Used to calculate potion's color
     public float color_r;
@@ -18,7 +21,8 @@ public class Ingredient
         float r,
         float g,
         float b,
-        float a)
+        float a,
+        Potion potionData = null)
     {
         this.id = id;
         this.cooldown = cooldown;
@@ -27,5 +31,6 @@ public class Ingredient
         color_g = g;
         color_b = b;
         color_a = a;
+        this.potionData = potionData;
     }
 }

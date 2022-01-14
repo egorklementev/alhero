@@ -4,16 +4,20 @@ public class PotionWorld : ItemWorld
 {
     public Potion potionData;
 
-    public Color GetColor()
+    public static Color GetColor(Potion pData)
     {
         // Based on ingredients & mistakes
         float r = 0f;
         float g = 0f;
         float b = 0f;
         float a = 0f;
-        foreach (string ingID in potionData.ingredients)
+        foreach (string ingID in pData.ingredients)
         {
-            Ingredient ing = DataController.ingredients.Find(some => some.id.Equals(ingID));
+            Ingredient ing = DataController.ingredients[ingID];
+            if (ing == null)
+            {
+                Debug.LogError("No ingredient found with ID: " + ingID + "!");
+            }
             r += ing.color_r;
             g += ing.color_g;
             b += ing.color_b;

@@ -14,7 +14,7 @@ public class Container : MonoBehaviour
     private GameObject[] inventory;
     private int selectedItem = -1;
 
-    private void Start()
+    private void Awake()
     {
         inventory = new GameObject[invSize];
         transform.parent.Find("EnterField").gameObject.SetActive(isUnlocked);
@@ -74,7 +74,7 @@ public class Container : MonoBehaviour
                     pUI.potionData = new Potion(pWorld.potionData);
 
                     inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
-                    inventory[freeSlot].GetComponent<Renderer>().materials[2].SetColor("_Color", pWorld.GetColor());
+                    inventory[freeSlot].GetComponent<Renderer>().materials[2].SetColor("_Color", PotionWorld.GetColor(pUI.potionData));
 
                     DataController.containers[id].items[freeSlot].itemID = pWorld.itemID;
                     DataController.containers[id].items[freeSlot].potionData = new Potion(pWorld.potionData);

@@ -1,3 +1,5 @@
+using UnityEngine;
+
 [System.Serializable]
 public class Potion
 {
@@ -27,8 +29,13 @@ public class Potion
     /// We need this to generate new recipes with other potions
     public string GetID()
     {
-        string newPotionName = "potion(";
-        foreach (string ing in DataController.recipes.Find(recipe => recipe.GetID().Equals(recipe_id)).ingredient_seq)
+        string newPotionName = "potion_" + bottle_shape + "(";
+        Recipe r = DataController.recipes[recipe_id];
+        if (r == null)
+        {
+            Debug.LogError("No recipe found with ID: " + recipe_id + "!");
+        }
+        foreach (string ing in r.ingredient_seq)
         {
             newPotionName += ing + "_";
         }

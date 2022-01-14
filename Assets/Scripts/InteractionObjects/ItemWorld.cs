@@ -74,8 +74,18 @@ public class ItemWorld : MonoBehaviour
         int slot = LogicController.GetFreeInvSlot();
         if (other.gameObject.CompareTag("Player") && slot != -1)
         {
+            TryToUnlockIngredient();
             SetPickedUp(true, slot, other.gameObject);
             LogicController.PickedItems[slot] = this;
+        }
+    }
+
+    private void TryToUnlockIngredient()
+    {
+        Ingredient i = DataController.ingredients[itemID];
+        if (i != null)
+        {
+            i.hasBeenDiscovered = true;
         }
     }
 

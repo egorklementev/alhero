@@ -37,14 +37,7 @@ public class EnterFieldInteraction : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            if (isActivated)
-            {
-                LogicController.currentBarrel.GetComponentInChildren<Container>().ResetSelection();
-                UIController.TriggerRightPanel();
-                UIController.DeactivateUIGroup(groupToActivate);
-                isActivated = false;
-                LogicController.currentBarrel = null;
-            }
+            isActivated = false;
         }
     }
 }

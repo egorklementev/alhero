@@ -7,27 +7,38 @@ using System.IO;
 public class DataController : MonoBehaviour
 {
     public General debugGeneral;
-    public List<Recipe> debugRecipes;
-    public List<Ingredient> debugIngredients;
+
+    [Space(20f)]
+    public string debugIngID;
+    public Ingredient debugIngredient;
+
+    [Space(20f)]
+    public string debugRecID;
+    public Recipe debugRecipe;
+
+    [Space(20f)]
     public string debugContainerID;
     public ContainerItems debugContainerItems;
 
+    [Space(20f)]
+    public float autosaveTimer = 60f;
+    public bool debugSaving = false;
+
     public static General genData;
-    public static List<Recipe> recipes;
-    public static List<Ingredient> ingredients;
+    public static Dictionary<string, Recipe> recipes;
+    public static Dictionary<string, Ingredient> ingredients;
     public static Dictionary<string, ContainerItems> containers;
 
     public const int bootleShapesNumber = 2;
 
-    private float autosaveTimer = 60f;
     private float currentTimer = 0f;
 
     void Awake()
     {
-        genData = LoadDataFile<General>("general.json");
-        ingredients = LoadIngredients();
-        recipes = LoadRecipes();
-        containers = LoadContainers();
+        genData = LoadDataFile<General>("General", "general.json");
+        ingredients = LoadGameData<Ingredient>(genData.ingredientIDs, "Ingredients", "ingredient");
+        recipes = LoadGameData<Recipe>(genData.recipeIDs, "Recipes", "recipe");
+        containers = LoadGameData<ContainerItems>(genData.labContainerIDs, "LabContainers", "container");
     }
 
     void Update()
@@ -39,19 +50,26 @@ public class DataController : MonoBehaviour
             Autosave();
         }
     }
-    
-    private void OnDestroy() {
+
+    private void OnDestroy()
+    {
         Autosave();
     }
 
     public void Autosave()
     {
-        Debug.Log("Autosaving...");
-
-        SaveToDataFile<General>(genData, "general.json");
-        SaveIngredients();
-        SaveRecipes();
-        SaveContainers();
+        if (debugSaving)
+        {
+            Debug.Log("Abort autosaving.");
+        }
+        else
+        {
+            Debug.Log("Autosaving...");
+            SaveToDataFile<General>(genData, "General", "general.json");
+            SaveGameData<Ingredient>(ingredients, "Ingredients", "ingredient");
+            SaveGameData<Recipe>(recipes, "Recipes", "recipe");
+            SaveGameData<ContainerItems>(containers, "LabContainers", "container");
+        }
     }
 
     public static void AddNewIngredient(
@@ -61,98 +79,42 @@ public class DataController : MonoBehaviour
         float r,
         float g,
         float b,
-        float a)
+        float a,
+        Potion potionData = null)
     {
-        ingredients.Add(new Ingredient(id, cooldown, breakChance, r, g, b, a));
-
-        /*
-        Debug.Log("---");
-        Debug.Log("Ingredients: ");
-        foreach (Ingredient i in ingredients)
-        {
-            Debug.Log(i.id);
-        }
-        Debug.Log("---");
-        */
+        ingredients.Add(id, new Ingredient(id, cooldown, breakChance, r, g, b, a, potionData));
+        string[] temp = new string[genData.ingredientIDs.Length + 1];
+        genData.ingredientIDs.CopyTo(temp, 0);
+        temp[genData.ingredientIDs.Length] = id;
+        genData.ingredientIDs = temp;
     }
 
     public static void CreateNewRecipe(int mistakesAllowed, params string[] ingredients)
     {
-        recipes.Add(new Recipe(mistakesAllowed, ingredients));
-
-        /*
-        Debug.Log("---");
-        Debug.Log("Recipes: ");
-        foreach (Recipe r in recipes)
-        {
-            Debug.Log(r.GetID());
-        }
-        Debug.Log("---");
-        */
+        string id = Recipe.GetID(ingredients);
+        recipes.Add(id, new Recipe(mistakesAllowed, ingredients));
+        string[] temp = new string[genData.recipeIDs.Length + 1];
+        genData.recipeIDs.CopyTo(temp, 0);
+        temp[genData.recipeIDs.Length] = id;
+        genData.recipeIDs = temp;
     }
 
-    private List<Ingredient> LoadIngredients()
-    {
-        int index = 0;
-        Ingredient i = LoadDataFile<Ingredient>("Ingredients", "ingredient_0.json");
-        List<Ingredient> list = new List<Ingredient>();
-        while (i != null)
+    private Dictionary<string, T> LoadGameData<T>(string[] ids, string folder, string prefix) {
+        Dictionary<string, T> dict = new Dictionary<string, T>();
+        foreach (string id in ids)
         {
-            list.Add(i);
-            i = LoadDataFile<Ingredient>("Ingredients", "ingredient_" + (++index) + ".json");
+            T data = LoadDataFile<T>(folder, prefix + "(" + id + ").json");
+            dict.Add(id, data);
         }
-        Debug.Log("[DataController]: Loaded " + index + " ingredients.");
-        return list;
-    }
-
-    private List<Recipe> LoadRecipes()
-    {
-        int index = 0;
-        Recipe i = LoadDataFile<Recipe>("Recipes", "recipe_0.json");
-        List<Recipe> list = new List<Recipe>();
-        while (i != null)
-        {
-            list.Add(i);
-            i = LoadDataFile<Recipe>("Recipes", "recipe_" + (++index) + ".json");
-        }
-        Debug.Log("[DataController]: Loaded " + index + " recipes.");
-        return list;
-    }
-
-    private Dictionary<string, ContainerItems> LoadContainers()
-    {
-        Dictionary<string, ContainerItems> dict = new Dictionary<string, ContainerItems>();
-        for (int i = 0; i < genData.labContainerIDs.Length; i++)
-        {
-            string containerID = genData.labContainerIDs[i];
-            ContainerItems contItems = LoadDataFile<ContainerItems>("LabContainers", "container_" + containerID + ".json");
-            dict.Add(containerID, contItems);
-        }
-        Debug.Log("[DataController]: Loaded " + genData.labContainerIDs.Length + " containers.");
+        Debug.Log("[DataController]: Loaded " + ids.Length + " [" + typeof(T).ToString() + "] game data files.");
         return dict;
     }
 
-    private void SaveIngredients()
+    private void SaveGameData<T>(Dictionary<string, T> dict, string folder, string prefix)
     {
-        for (int i = 0; i < ingredients.Count; i++)
+        foreach (var entry in dict)
         {
-            SaveToDataFile<Ingredient>(ingredients[i], "Ingredients", "ingredient_" + i + ".json");
-        }
-    }
-
-    private void SaveRecipes()
-    {
-        for (int i = 0; i < recipes.Count; i++)
-        {
-            SaveToDataFile<Recipe>(recipes[i], "Recipes", "recipe_" + i + ".json");
-        }
-    }
-
-    private void SaveContainers()
-    {
-        foreach (var contItems in containers)
-        {
-            SaveToDataFile<ContainerItems>(contItems.Value, "LabContainers", "container_" + contItems.Key + ".json");
+            SaveToDataFile<T>(entry.Value, folder, prefix + "(" + entry.Key + ").json");
         }
     }
 
@@ -212,17 +174,9 @@ public class DataController : MonoBehaviour
     {
         Debug.Log("Debug saving...");
 
-        int index = 0;
-        SaveToDataFile<General>(debugGeneral, "general.json");
-        foreach (Ingredient i in debugIngredients)
-        {
-            SaveToDataFile<Ingredient>(i, "Ingredients", "ingredient_" + (index++) + ".json");
-        }
-        index = 0;
-        foreach (Recipe r in debugRecipes)
-        {
-            SaveToDataFile<Recipe>(r, "Recipes", "recipe_" + (index++) + ".json");
-        }
-        //SaveToDataFile<ContainerItems>(debugContainerItems, "LabContainers", "container_" + debugContainerID + ".json");
+        SaveToDataFile<General>(debugGeneral, "General", "general.json");
+        SaveToDataFile<Ingredient>(debugIngredient, "Ingredients", "ingredient(" + debugIngID + ").json");
+        SaveToDataFile<Recipe>(debugRecipe, "Recipes", "recipe(" + debugRecID + ").json");
+        SaveToDataFile<ContainerItems>(debugContainerItems, "LabContainers", "container(" + debugContainerID + ").json");
     }
 }

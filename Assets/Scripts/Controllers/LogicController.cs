@@ -3,8 +3,14 @@ using UnityEngine;
 public class LogicController : MonoBehaviour
 {
     public GameObject player;
+
+    [Space(15f)]
     public GameObject itemsGroup;
     public GameObject containers;
+
+    [Space(15f)]
+    public GameObject recipeBook;
+    public RecipeBook recipeBookScript;
 
     [Space(15f)]
     public SpawnController spawner;
@@ -16,37 +22,89 @@ public class LogicController : MonoBehaviour
 
     private void Start()
     {
-        // spawner.SpawnContainer(1, new Vector3(-2f, -.5f, 2f), Quaternion.Euler(0f, 0f, 0f), staticObjsGroup);
+        // spawner.SpawnContainer(1, new Vector3(-2f, -.5f, 2f), Quaternion.identity, staticObjsGroup);
+
+        // We have to add generated potion items to the spawner
+        foreach (Ingredient i in DataController.ingredients.Values)
+        {
+            if (spawner.items.Find(item => item.GetComponent<ItemWorld>().itemID.Equals(i.id)) == null)
+            {
+                GameObject potion = spawner.SpawnItem(
+                    "potion_" + i.potionData.bottle_shape,
+                    new Vector3(0f, 100f, 0f),
+                    Quaternion.identity,
+                    spawner.gameObject
+                    );
+
+                // Transfer all necessary data
+                PotionWorld potionScript = potion.GetComponentInChildren<PotionWorld>();
+                potionScript.potionData = new Potion(i.potionData);
+
+                // Generated potion ID
+                string newPotionName = i.potionData.GetID();
+                potion.name = newPotionName;
+                potionScript.itemID = newPotionName;
+
+                // Potion Color
+                Color potionColor = PotionWorld.GetColor(i.potionData);
+                potion.GetComponentInChildren<Renderer>().materials[2].SetColor("_Color", potionColor);
+                potion.GetComponentInChildren<Rigidbody>().useGravity = false;
+                potion.GetComponentInChildren<BoxCollider>().enabled = false;
+
+                spawner.items.Add(potion);
+            }
+        }
 
         // Load containers with previously stored items
         foreach (Transform contTransform in containers.transform)
         {
             Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
-            ContainerItems itemsToLoad = DataController.containers[contScript.id];
-            if (itemsToLoad != null)
+            if (!DataController.containers.ContainsKey(contScript.id))
             {
-                for (int i = 0; i < itemsToLoad.items.Length; i++)
+                Debug.LogWarning("No container with ID: " + contScript.id + "!");
+            }
+            else
+            {
+                ContainerItems itemsToLoad = DataController.containers[contScript.id];
+                if (itemsToLoad != null)
                 {
-                    string itemToPutID = itemsToLoad.items[i].itemID;
-                    if (itemToPutID.StartsWith("potion"))
+                    for (int i = 0; i < itemsToLoad.items.Length; i++)
                     {
-                        Potion potionData = itemsToLoad.items[i].potionData;
-                        GameObject potion = spawner.SpawnItem("potion_" + potionData.bottle_shape, new Vector3(0f, 100f, 0f), Quaternion.identity, itemsGroup);
-                        PotionWorld potionScript = potion.GetComponent<PotionWorld>();
-                        potionScript.potionData = potionData;
-                        string newPotionName = potionData.GetID();
-                        potion.name = newPotionName;
-                        potionScript.itemID = newPotionName;
-                        potion.GetComponentInChildren<Renderer>().materials[2].SetColor("_Color", potionScript.GetColor());
-                        contScript.TryToPutItem(potion, i);
-                    }
-                    else
-                    {
-                        contScript.TryToPutItem(spawner.SpawnItem(itemToPutID, new Vector3(0f, 100f, 0f), Quaternion.identity, itemsGroup), i);
+                        string itemToPutID = itemsToLoad.items[i].itemID;
+                        if (itemToPutID.StartsWith("potion"))
+                        {
+                            Potion potionData = itemsToLoad.items[i].potionData;
+                            GameObject potion = spawner.SpawnItem(
+                                "potion_" + potionData.bottle_shape,
+                                new Vector3(0f, 100f, 0f),
+                                Quaternion.identity,
+                                itemsGroup);
+                            PotionWorld potionScript = potion.GetComponent<PotionWorld>();
+                            potionScript.potionData = potionData;
+                            string newPotionName = potionData.GetID();
+                            potion.name = newPotionName;
+                            potionScript.itemID = newPotionName;
+                            potion.GetComponentInChildren<Renderer>().materials[2].SetColor(
+                                "_Color", PotionWorld.GetColor(potionScript.potionData));
+                            contScript.TryToPutItem(potion, i);
+                        }
+                        else
+                        {
+                            contScript.TryToPutItem(
+                                spawner.SpawnItem(itemToPutID, new Vector3(0f, 100f, 0f), Quaternion.identity, itemsGroup),
+                                 i);
+                        }
                     }
                 }
             }
         }
+    }
+
+    private void FixedUpdate()
+    {
+        recipeBookScript.SetDistanceToPlayer(
+            Vector3.Distance(recipeBook.transform.position, player.transform.position)
+        );
     }
 
     public static int GetFreeInvSlot()
@@ -102,7 +160,8 @@ public class LogicController : MonoBehaviour
                     newPotion.name = newPotionID;
                     newPotionScript.itemID = newPotionID;
 
-                    newPotion.GetComponentInChildren<Renderer>().materials[2].SetColor("_Color", newPotionScript.GetColor());
+                    newPotion.GetComponentInChildren<Renderer>().materials[2].SetColor(
+                        "_Color", PotionWorld.GetColor(newPotionScript.potionData));
 
                     newPotionScript.SetPickedUp(true, slot, player);
                     PickedItems[slot] = newPotionScript;

@@ -21,7 +21,7 @@ public class Cauldron : MonoBehaviour
     {
         inventory = new List<string>();
         inventory.AddRange(DataController.genData.cauldronInventory);
-        
+
         if (inventory.Count > 0)
         {
             SetRecipeCooking(true);
@@ -38,7 +38,8 @@ public class Cauldron : MonoBehaviour
         }
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         // Save inventory before exiting
         DataController.genData.cauldronInventory = new string[inventory.Count];
         inventory.CopyTo(DataController.genData.cauldronInventory);
@@ -59,10 +60,10 @@ public class Cauldron : MonoBehaviour
             {
                 SetRecipeCooking(true); // Or continue
 
-                Ingredient curIng = DataController.ingredients.Find(ing => ing.id.Equals(itemID));
+                Ingredient curIng = DataController.ingredients[itemID];
                 if (curIng == null)
                 {
-                    Debug.LogWarning("No ingredient with name: " + itemID);
+                    Debug.LogError("No ingredient with name: " + itemID + "!");
                     DestroyCurrentRecipe();
                 }
                 else
@@ -91,7 +92,7 @@ public class Cauldron : MonoBehaviour
                             // Transfer all necessary data
                             PotionWorld potionScript = potion.GetComponentInChildren<PotionWorld>();
                             Potion potionData = potionScript.potionData;
-                            potionData.recipe_id = potentialRecipe.GetID();
+                            potionData.recipe_id = Recipe.GetID(potentialRecipe.ingredient_seq);
                             potionData.bottle_shape = bottleShape;
                             potionData.ingredients = new string[inventory.Count];
                             inventory.CopyTo(potionData.ingredients);
@@ -102,7 +103,7 @@ public class Cauldron : MonoBehaviour
                             potionScript.itemID = newPotionName;
 
                             // Potion Color
-                            Color potionColor = potionScript.GetColor();
+                            Color potionColor = PotionWorld.GetColor(potionData);
                             potionData.color_r = potionColor.r;
                             potionData.color_g = potionColor.g;
                             potionData.color_b = potionColor.b;
@@ -110,7 +111,15 @@ public class Cauldron : MonoBehaviour
                             potion.GetComponentInChildren<Renderer>().materials[2].SetColor("_Color", potionColor);
 
                             // Add as a new ingredient in any case
-                            spawner.items.Add(potion);
+                            GameObject potionCopy = Instantiate(
+                                potion,
+                                new Vector3(0f, 100f, 0f),
+                                Quaternion.identity,
+                                spawner.gameObject.transform
+                                );
+                            potionCopy.GetComponent<Rigidbody>().useGravity = false;
+                            potionCopy.GetComponent<BoxCollider>().enabled = false; // ATTENTION: May be bad, dunno
+                            spawner.items.Add(potionCopy);
                             int ingrNum = potionData.ingredients.Length;
                             float ptnCooldown = AverageCooldown(potionData.ingredients);
                             float ptnBreakChance = RandomBreakChance(potionData.ingredients);
@@ -118,7 +127,7 @@ public class Cauldron : MonoBehaviour
                             float ptnG = RandomG(potionData.ingredients);
                             float ptnB = RandomB(potionData.ingredients);
                             float ptnA = AverageAlpha(potionData.ingredients);
-                            DataController.AddNewIngredient(newPotionName, ptnCooldown, ptnBreakChance, ptnR, ptnG, ptnB, ptnA);
+                            DataController.AddNewIngredient(newPotionName, ptnCooldown, ptnBreakChance, ptnR, ptnG, ptnB, ptnA, potionData);
 
                             //DataController.CreateNewRecipe(0, newPotionName, "salt", "horseshoe"); // Should be generated somehow
 
@@ -138,7 +147,7 @@ public class Cauldron : MonoBehaviour
     private Recipe RecipeHasPotential()
     {
         int currentIngredientIndex = inventory.Count - 1;
-        foreach (Recipe rec in DataController.recipes)
+        foreach (Recipe rec in DataController.recipes.Values)
         {
             int mistakes = rec.mistakes_allowed - cooldownMistakes;
             for (int i = 0; i < inventory.Count; i++)
@@ -199,7 +208,7 @@ public class Cauldron : MonoBehaviour
         float cldwn = 0f;
         foreach (string id in ingredients)
         {
-            cldwn += DataController.ingredients.Find(ingr => ingr.id.Equals(id)).cooldown;
+            cldwn += DataController.ingredients[id].cooldown;
         }
         return cldwn / ingredients.Length;
     }
@@ -213,7 +222,7 @@ public class Cauldron : MonoBehaviour
         while (randNum > 0)
         {
             int toRemove = Random.Range(0, ings.Count);
-            chance += DataController.ingredients.Find(ing => ing.id.Equals(ings[toRemove])).breakChance;
+            chance += DataController.ingredients[ings[toRemove]].breakChance;
             ings.RemoveAt(toRemove);
             randNum--;
         }
@@ -229,7 +238,7 @@ public class Cauldron : MonoBehaviour
         while (randNum > 0)
         {
             int toRemove = Random.Range(0, ings.Count);
-            color += DataController.ingredients.Find(ing => ing.id.Equals(ings[toRemove])).color_r;
+            color += DataController.ingredients[ings[toRemove]].color_r;
             ings.RemoveAt(toRemove);
             randNum--;
         }
@@ -245,7 +254,7 @@ public class Cauldron : MonoBehaviour
         while (randNum > 0)
         {
             int toRemove = Random.Range(0, ings.Count);
-            color += DataController.ingredients.Find(ing => ing.id.Equals(ings[toRemove])).color_g;
+            color += DataController.ingredients[ings[toRemove]].color_g;
             ings.RemoveAt(toRemove);
             randNum--;
         }
@@ -261,7 +270,7 @@ public class Cauldron : MonoBehaviour
         while (randNum > 0)
         {
             int toRemove = Random.Range(0, ings.Count);
-            color += DataController.ingredients.Find(ing => ing.id.Equals(ings[toRemove])).color_b;
+            color += DataController.ingredients[ings[toRemove]].color_b;
             ings.RemoveAt(toRemove);
             randNum--;
         }
@@ -273,7 +282,7 @@ public class Cauldron : MonoBehaviour
         float alpha = 0f;
         foreach (string id in ingredients)
         {
-            alpha += DataController.ingredients.Find(ingr => ingr.id.Equals(id)).color_a;
+            alpha += DataController.ingredients[id].color_a;
         }
         return alpha / ingredients.Length;
     }

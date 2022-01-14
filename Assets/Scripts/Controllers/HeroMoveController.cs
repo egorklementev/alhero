@@ -33,6 +33,8 @@ public class HeroMoveController : MonoBehaviour
     [Space(20f)]
     public Vector3 cameraOffset = new Vector3(-2f, 10f, -2f);
 
+    public static bool uiTookControl = false;
+
     private Vector2 dragStart; // Starting point of tap. Used for player controlling.
     private float angle = -1f;
     private float tapCounter = 0f;
@@ -54,119 +56,126 @@ public class HeroMoveController : MonoBehaviour
 
     void Update()
     {
-        angle = -1f;
-        isMoving = false;
-        moveDir = Direction.STATIONARY;
+        if (!uiTookControl)
+        {
+            angle = -1f;
+            isMoving = false;
+            moveDir = Direction.STATIONARY;
 
-        #region WASD movement
-        if (Input.GetKey(KeyCode.W))
-        {
-            moveDir = Direction.NORTH;
-            angle = 0f;
-        }
-        else if (Input.GetKey(KeyCode.A))
-        {
-            moveDir = Direction.WEST;
-            angle = -90f;
-        }
-        else if (Input.GetKey(KeyCode.S))
-        {
-            moveDir = Direction.SOUTH;
-            angle = -180f;
-
-        }
-        else if (Input.GetKey(KeyCode.D))
-        {
-            moveDir = Direction.EAST;
-            angle = -270f;
-        }
-        #endregion
-
-        foreach (Touch touch in Input.touches)
-        {
-            if (touch.phase == TouchPhase.Began)
+            #region WASD movement
+            if (Input.GetKey(KeyCode.W))
             {
-                dragStart = touch.position;
+                moveDir = Direction.NORTH;
+                angle = 0f;
             }
-            else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+            else if (Input.GetKey(KeyCode.A))
             {
-                if (Vector2.Distance(touch.position, dragStart) > fingerEpsilon)
-                {
-                    float x = touch.position.x - dragStart.x;
-                    float y = touch.position.y - dragStart.y;
-                    if (x > 0 && y > 0)
-                    {
-                        moveDir = Direction.EAST;
-                        faceDir = moveDir;
-                        angle = -270f;
-                    }
-                    else if (x > 0 && y < 0)
-                    {
-                        moveDir = Direction.SOUTH;
-                        faceDir = moveDir;
-                        angle = -180f;
-                    }
-                    else if (x < 0 && y < 0)
-                    {
-                        moveDir = Direction.WEST;
-                        faceDir = moveDir;
-                        angle = -90f;
-                    }
-                    else
-                    {
-                        moveDir = Direction.NORTH;
-                        faceDir = moveDir;
-                        angle = 0f;
-                    }
-                }
-
-                // Player tap
-                Ray raycast = Camera.main.ScreenPointToRay(touch.position);
-                RaycastHit raycastHit;
-                if (Physics.Raycast(raycast, out raycastHit))
-                {
-                    if (raycastHit.collider.CompareTag("Player"))
-                    {
-                        tapCounter += Time.deltaTime;
-                    }
-                }
+                moveDir = Direction.WEST;
+                angle = -90f;
             }
-            else if (touch.phase == TouchPhase.Ended)
+            else if (Input.GetKey(KeyCode.S))
             {
-                dragStart = touch.position;
+                moveDir = Direction.SOUTH;
+                angle = -180f;
 
-                // Player tap -> throw item
-                if (tapCounter > minTapTime && tapCounter < maxTapTime && LogicController.PickedItems[0] != null)
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                moveDir = Direction.EAST;
+                angle = -270f;
+            }
+            #endregion
+
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.phase == TouchPhase.Began)
                 {
-                    LogicController.PickedItems[0].SetPickedUp(false);
-                    LogicController.PickedItems[0].GetBody().AddRelativeForce(
-                        faceDir switch
+                    dragStart = touch.position;
+                }
+                else if (touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary)
+                {
+                    if (Vector2.Distance(touch.position, dragStart) > fingerEpsilon)
+                    {
+                        float x = touch.position.x - dragStart.x;
+                        float y = touch.position.y - dragStart.y;
+                        if (x > 0 && y > 0)
                         {
-                            Direction.NORTH => new Vector3(0f, .25f * throwForce, throwForce * 1.5f),
-                            Direction.SOUTH => new Vector3(0f, .25f * throwForce, -throwForce * 1.5f),
-                            Direction.WEST => new Vector3(-throwForce * 1.5f, .25f * throwForce, 0f),
-                            Direction.EAST => new Vector3(throwForce * 1.5f, .25f * throwForce, 0f),
-                            _ => new Vector3(0f, 0f, 0f)
-                        },
-                        ForceMode.Impulse);
-                    LogicController.PickedItems[0] = null;
+                            moveDir = Direction.EAST;
+                            faceDir = moveDir;
+                            angle = -270f;
+                        }
+                        else if (x > 0 && y < 0)
+                        {
+                            moveDir = Direction.SOUTH;
+                            faceDir = moveDir;
+                            angle = -180f;
+                        }
+                        else if (x < 0 && y < 0)
+                        {
+                            moveDir = Direction.WEST;
+                            faceDir = moveDir;
+                            angle = -90f;
+                        }
+                        else
+                        {
+                            moveDir = Direction.NORTH;
+                            faceDir = moveDir;
+                            angle = 0f;
+                        }
+                    }
 
-                    // Try to rotate items for better UX
-                    logic.RotateItems();
-                    if (LogicController.PickedItems[0] == null)
+                    // Player tap
+                    Ray raycast = Camera.main.ScreenPointToRay(touch.position);
+                    RaycastHit raycastHit;
+                    if (Physics.Raycast(raycast, out raycastHit))
                     {
-                        logic.RotateItems();
+                        if (raycastHit.collider.CompareTag("Player"))
+                        {
+                            tapCounter += Time.deltaTime;
+                        }
                     }
                 }
-                tapCounter = 0f;
-            }
-            break;
-        }
+                else if (touch.phase == TouchPhase.Ended)
+                {
+                    dragStart = touch.position;
 
-        if (angle != -1f)
+                    // Player tap -> throw item
+                    if (tapCounter > minTapTime && tapCounter < maxTapTime && LogicController.PickedItems[0] != null)
+                    {
+                        LogicController.PickedItems[0].SetPickedUp(false);
+                        LogicController.PickedItems[0].GetBody().AddRelativeForce(
+                            faceDir switch
+                            {
+                                Direction.NORTH => new Vector3(0f, .25f * throwForce, throwForce * 1.5f),
+                                Direction.SOUTH => new Vector3(0f, .25f * throwForce, -throwForce * 1.5f),
+                                Direction.WEST => new Vector3(-throwForce * 1.5f, .25f * throwForce, 0f),
+                                Direction.EAST => new Vector3(throwForce * 1.5f, .25f * throwForce, 0f),
+                                _ => new Vector3(0f, 0f, 0f)
+                            },
+                            ForceMode.Impulse);
+                        LogicController.PickedItems[0] = null;
+
+                        // Try to rotate items for better UX
+                        logic.RotateItems();
+                        if (LogicController.PickedItems[0] == null)
+                        {
+                            logic.RotateItems();
+                        }
+                    }
+                    tapCounter = 0f;
+                }
+                break;
+            }
+
+            if (angle != -1f)
+            {
+                visualObj.transform.rotation = Quaternion.Euler(0f, angle, 0f);
+                isMoving = true;
+            }
+        }
+        else
         {
-            visualObj.transform.rotation = Quaternion.Euler(0f, angle, 0f);
-            isMoving = true;
+            moveDir = Direction.STATIONARY;
         }
 
         anim.SetBool(walkParam, isMoving);

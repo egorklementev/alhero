@@ -18,6 +18,8 @@ public class UIController : MonoBehaviour
     [Space(10f)]
     public float delay = .5f;
 
+    public static string activeGroup = "none";
+
     private static LinkedList<string> groupsForActivation = new LinkedList<string>();
     private static LinkedList<string> groupsForDeactivation = new LinkedList<string>();
     private static bool showRightPanel = false;
@@ -57,11 +59,13 @@ public class UIController : MonoBehaviour
     public static void TriggerRightPanel()
     {
         showRightPanel = !showRightPanel;
+        HeroMoveController.uiTookControl = showRightPanel;
     }
 
     public static void ActivateUIGroup(string name)
     {
         groupsForActivation.AddLast(name);
+        activeGroup = name;
     }
 
     public static void DeactivateUIGroup(string name)
@@ -73,5 +77,18 @@ public class UIController : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         obj.SetActive(false);
+    }
+
+    public void OnCloseButtonPressed()
+    {
+        Container c = LogicController.currentBarrel.GetComponentInChildren<Container>();
+        if (c != null)
+        {
+            c.ResetSelection();
+        }
+        TriggerRightPanel();
+        DeactivateUIGroup(activeGroup);
+        activeGroup = "none";
+        LogicController.currentBarrel = null;
     }
 }

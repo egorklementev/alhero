@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "7afc6a600404",
         "name": "com.erked.AlHero",
-        "processId": 14044,
+        "processId": 13433,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -11,67 +11,49 @@
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
-            "processId": 28369,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 13130,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 28998,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 1371,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 22970,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 23448,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 27098,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 28557,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 30133,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 700,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
             "processId": 14044,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 32106,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.miui.home",
+            "processId": 1798,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 5796,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.unity3d.mobileremote",
+            "processId": 13548,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 11553,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.unity3d.mobileremote",
+            "processId": 12573,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 13433,
             "exited": false
         }
     ],
