@@ -134,5 +134,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldItem: {fileID: 5267771800730489255, guid: 13679d1debc2b444ead863bff94a57e5,
-    type: 3}
+  id: flower
+  arcanumMaterialIndex: 2

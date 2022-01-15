@@ -10,82 +10,84 @@ public class Container : MonoBehaviour
     public int invSize = 4;
     public GameObject[] slots;
     public TextMeshProUGUI ingredientLine;
+    public SpawnController spawner;
 
-    private GameObject[] inventory;
+    private ItemUI[] inventory;
     private int selectedItem = -1;
 
     private void Awake()
     {
-        inventory = new GameObject[invSize];
+        inventory = new ItemUI[invSize];
         transform.parent.Find("EnterField").gameObject.SetActive(isUnlocked);
     }
 
     public void OnItemSelected(int slotNum)
     {
-        GameObject item = inventory[slotNum];
+        ItemUI uiItem = inventory[slotNum];
 
-        if (item != null)
+        if (uiItem != null)
         {
             // When selected already - deselect 
             if (selectedItem == slotNum)
             {
                 selectedItem = -1;
-                item.GetComponent<Animator>().SetBool("IsSelected", false);
+                uiItem.SetSelected(false);
                 ingredientLine.text = "";
             }
             // When other is selected - deselect other and select new
             else if (selectedItem > -1)
             {
-                inventory[selectedItem].GetComponent<Animator>().SetBool("IsSelected", false);
+                inventory[selectedItem].SetSelected(false);
                 selectedItem = slotNum;
-                item.GetComponent<Animator>().SetBool("IsSelected", true);
-                ingredientLine.text = item.GetComponent<ItemUI>().worldItem.GetComponent<ItemWorld>().itemID;
+                uiItem.SetSelected(true);
+                ingredientLine.text = uiItem.id;
             }
             // When no item is selected - select
             else
             {
                 selectedItem = slotNum;
-                item.GetComponent<Animator>().SetBool("IsSelected", true);
-                ingredientLine.text = item.GetComponent<ItemUI>().worldItem.GetComponent<ItemWorld>().itemID;
+                uiItem.SetSelected(true);
+                ingredientLine.text = uiItem.id;
             }
         }
     }
 
     private void OnCollisionExit(Collision other)
     {
-        TryToPutItem(other.gameObject);
+        if (other.gameObject.TryGetComponent<PotionWorld>(out PotionWorld potionWorld))
+        {
+
+            TryToPutItem(potionWorld);
+        }
+        else
+        {
+            TryToPutItem(other.gameObject.GetComponent<ItemWorld>());
+        }
     }
 
-    public void TryToPutItem(GameObject item, int slot = -1)
+    public void TryToPutItem(ItemWorld item, int slot = -1)
     {
         if (item != null && isUnlocked)
         {
             int freeSlot = slot == -1 ? GetFreeSlot() : slot;
             if (item.CompareTag("Item") && freeSlot != -1)
             {
-                item.GetComponentInChildren<Animator>().SetBool("Destroy", true);
-                PotionWorld pWorld = item.GetComponent<PotionWorld>();
+                PotionWorld pWorld = item as PotionWorld;
                 if (pWorld != null)
                 {
-                    GameObject uiItem = pWorld.uiVersion;
+                    inventory[freeSlot] = spawner.SpawnItem<PotionUI>(item.id, slots[freeSlot]);
+                    (inventory[freeSlot] as PotionUI).potionData = new Potion(pWorld.potionData);
 
-                    // Set potion data
-                    PotionUI pUI = uiItem.GetComponent<PotionUI>();
-                    pUI.potionData = new Potion(pWorld.potionData);
-
-                    inventory[freeSlot] = Instantiate(uiItem, slots[freeSlot].transform);
-                    inventory[freeSlot].GetComponent<Renderer>().materials[2].SetColor("_Color", PotionWorld.GetColor(pUI.potionData));
-
-                    DataController.containers[id].items[freeSlot].itemID = pWorld.itemID;
+                    DataController.containers[id].items[freeSlot].id = pWorld.id;
                     DataController.containers[id].items[freeSlot].potionData = new Potion(pWorld.potionData);
                 }
                 else
                 {
-                    ItemWorld itemScript = item.GetComponent<ItemWorld>();
-                    inventory[freeSlot] = Instantiate(itemScript.uiVersion, slots[freeSlot].transform);
+                    inventory[freeSlot] = spawner.SpawnItem<ItemUI>(item.id, slots[freeSlot]);
 
-                    DataController.containers[id].items[freeSlot].itemID = itemScript.itemID;
+                    DataController.containers[id].items[freeSlot].id = item.id;
                 }
+                item.Destroy();
             }
         }
     }
@@ -102,7 +104,7 @@ public class Container : MonoBehaviour
         return -1;
     }
 
-    public GameObject GetSelectedItem()
+    public ItemUI GetSelectedItem()
     {
         if (selectedItem > -1)
         {
@@ -119,7 +121,7 @@ public class Container : MonoBehaviour
     {
         if (selectedItem > -1)
         {
-            inventory[selectedItem].GetComponent<Animator>().SetBool("IsSelected", false);
+            inventory[selectedItem].SetSelected(false);
             ingredientLine.text = "";
         }
         selectedItem = -1;

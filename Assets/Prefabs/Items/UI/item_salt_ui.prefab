@@ -134,5 +134,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldItem: {fileID: 5267771800730489255, guid: f90162521f6da8b4cb067a3a6f61d130,
-    type: 3}
+  id: salt
+  arcanumMaterialIndex: 2

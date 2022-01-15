@@ -28,7 +28,7 @@ public class EnterFieldInteraction : MonoBehaviour
                 isActivated = true;
                 UIController.TriggerRightPanel();
                 UIController.ActivateUIGroup(groupToActivate);
-                LogicController.currentBarrel = transform.parent.gameObject;
+                LogicController.curContainer = transform.parent.gameObject.GetComponentInChildren<Container>();
             }
         }
     }

@@ -9,7 +9,7 @@ public class SpawnController : MonoBehaviour
 
     [Header("Items")]
     [Space(5f)]
-    public List<GameObject> items;
+    public List<AbstractItem> absItems;
 
     [Header("Containers")]
     [Space(5f)]
@@ -68,12 +68,32 @@ public class SpawnController : MonoBehaviour
         return container;
     }
 
-    public GameObject SpawnItem(string itemID, Vector3 pos, Quaternion rot, GameObject owner)
+    public T SpawnItem<T>(string id, GameObject owner) where T : AbstractItem
     {
-        GameObject obj = items.Find(i => i.GetComponent<ItemWorld>().itemID.Equals(itemID));
-        if (obj != null)
+        return SpawnItem<T>(id, Vector3.zero, Quaternion.identity, owner.transform);
+    }
+
+    public T SpawnItem<T>(string id, Transform owner) where T : AbstractItem
+    {
+        return SpawnItem<T>(id, Vector3.zero, Quaternion.identity, owner);
+    }
+
+    public T SpawnItem<T>(string id, Vector3 pos, Quaternion rot, GameObject owner) where T : AbstractItem
+    {
+        return SpawnItem<T>(id, pos, rot, owner.transform);
+    }
+
+    public T SpawnItem<T>(string id, Vector3 pos, Quaternion rot, Transform owner) where T : AbstractItem
+    {
+        AbstractItem item = absItems.Find(i => i.id.Equals(id) && i is T);
+        if (item != null)
         {
-            return Instantiate(obj, pos, rot, owner.transform);
+            T obj = Instantiate(item.gameObject, pos, rot, owner).GetComponent<AbstractItem>() as T;
+            if (obj is ItemWorld)
+            {
+                (obj as ItemWorld).SetPhysicsActive(true);
+            }
+            return obj;
         }
         return null;
     }

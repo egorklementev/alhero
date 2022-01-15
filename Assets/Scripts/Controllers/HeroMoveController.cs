@@ -214,7 +214,7 @@ public class HeroMoveController : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("Speed limit reached!!!");
+            Debug.LogWarning("[HeroMoveController.MoveCharacter] Speed limit reached!");
         }
     }
 

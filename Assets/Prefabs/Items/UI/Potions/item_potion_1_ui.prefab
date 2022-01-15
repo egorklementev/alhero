@@ -134,10 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae7644bfecb7ce4aa66342a199ffa11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldItem: {fileID: 5267771800730489255, guid: c75003aae10b5a045a209b812e24e3fa,
-    type: 3}
-  itemID: 
-  recipeID: 
+  id: potion_1
+  arcanumMaterialIndex: 2
   potionData:
     recipe_id: 
     bottle_shape: 0

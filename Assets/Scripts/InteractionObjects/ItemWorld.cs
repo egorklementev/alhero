@@ -2,24 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemWorld : MonoBehaviour
+public class ItemWorld : AbstractItem
 {
-    public string itemID = "none";
-    public GameObject uiVersion;
-
     private bool isPickedUp = false;
     private GameObject owner = null;
     private int slot = -1; // Where in player's inventory this item is stored [0-3]
 
     private Animator anim;
     private Rigidbody body;
-    private BoxCollider bCollider;
+    private CapsuleCollider clldr;
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         anim = GetComponentInChildren<Animator>();
         body = GetComponent<Rigidbody>();
-        bCollider = GetComponent<BoxCollider>();
+        clldr = GetComponent<CapsuleCollider>();
     }
 
     private void FixedUpdate()
@@ -52,9 +49,7 @@ public class ItemWorld : MonoBehaviour
     public void SetPickedUp(bool pickedUp, int newSlot = -1, GameObject newOwner = null)
     {
         isPickedUp = pickedUp;
-        body.useGravity = !isPickedUp;
-        body.isKinematic = isPickedUp;
-        bCollider.enabled = !isPickedUp;
+        SetPhysicsActive(!pickedUp);
         owner = newOwner;
         slot = newSlot;
     }
@@ -67,6 +62,18 @@ public class ItemWorld : MonoBehaviour
     public Rigidbody GetBody()
     {
         return body;
+    }
+
+    public void Destroy()
+    {
+        anim.SetBool("Destroy", true);
+    }
+
+    public void SetPhysicsActive(bool isActive)
+    {
+        body.useGravity = isActive;
+        body.isKinematic = !isActive;
+        clldr.enabled = isActive;
     }
 
     private void OnCollisionEnter(Collision other)
@@ -82,7 +89,7 @@ public class ItemWorld : MonoBehaviour
 
     private void TryToUnlockIngredient()
     {
-        Ingredient i = DataController.ingredients[itemID];
+        Ingredient i = DataController.ingredients[id];
         if (i != null)
         {
             i.hasBeenDiscovered = true;

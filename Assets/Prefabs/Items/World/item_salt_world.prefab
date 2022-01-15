@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5267771800730489256}
-  - component: {fileID: 5267771800730489258}
+  - component: {fileID: -3344717937187599480}
   - component: {fileID: 5267771800730489257}
   - component: {fileID: 3639953085000846316}
   m_Layer: 0
@@ -34,8 +34,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &5267771800730489258
-BoxCollider:
+--- !u!136 &-3344717937187599480
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -44,8 +44,9 @@ BoxCollider:
   m_Material: {fileID: 13400000, guid: e2102c793bc32ca43b4b2bd60ced8b2a, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
+  m_Radius: 0.75
+  m_Height: 2
+  m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!54 &5267771800730489257
 Rigidbody:
@@ -75,9 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemID: salt
-  uiVersion: {fileID: 2647117813052276098, guid: 3c223369ec3a7894eace0c5ebec72fb7,
-    type: 3}
+  id: salt
+  arcanumMaterialIndex: 2
 --- !u!1001 &2582332431101220435
 PrefabInstance:
   m_ObjectHideFlags: 0

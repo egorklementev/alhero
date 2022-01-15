@@ -2,14 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ItemUI : MonoBehaviour
+public class ItemUI : AbstractItem
 {
-    public GameObject worldItem;
+    private Animator animator;
 
-    private void Start() {
+    protected virtual void OnEnable() {
         foreach (Material m in GetComponent<MeshRenderer>().materials)
         {
             m.renderQueue = 3002;
         }
+        animator = GetComponent<Animator>();
+    }
+
+    public void SetSelected(bool isSelected)
+    {
+        animator.SetBool("IsSelected", isSelected);
+    }
+
+    public void Destroy()
+    {
+        animator.SetBool("Destroy", true);
     }
 }

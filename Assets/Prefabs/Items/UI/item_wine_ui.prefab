@@ -134,5 +134,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  worldItem: {fileID: 5267771800730489255, guid: 93d55dd2c14a90d40bbc38fbec0bd4ed,
-    type: 3}
+  id: wine
+  arcanumMaterialIndex: 2

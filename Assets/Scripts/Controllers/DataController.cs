@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
@@ -60,11 +60,11 @@ public class DataController : MonoBehaviour
     {
         if (debugSaving)
         {
-            Debug.Log("Abort autosaving.");
+            Debug.Log("[DataController.Autosave] Abort autosaving.");
         }
         else
         {
-            Debug.Log("Autosaving...");
+            Debug.Log("[DataController.Autosave] Autosaving...");
             SaveToDataFile<General>(genData, "General", "general.json");
             SaveGameData<Ingredient>(ingredients, "Ingredients", "ingredient");
             SaveGameData<Recipe>(recipes, "Recipes", "recipe");
@@ -76,17 +76,21 @@ public class DataController : MonoBehaviour
         string id,
         float cooldown,
         float breakChance,
-        float r,
-        float g,
-        float b,
-        float a,
+        float r, float g, float b, float a,
         Potion potionData = null)
     {
-        ingredients.Add(id, new Ingredient(id, cooldown, breakChance, r, g, b, a, potionData));
-        string[] temp = new string[genData.ingredientIDs.Length + 1];
-        genData.ingredientIDs.CopyTo(temp, 0);
-        temp[genData.ingredientIDs.Length] = id;
-        genData.ingredientIDs = temp;
+        try
+        {
+            ingredients.Add(id, new Ingredient(id, cooldown, breakChance, r, g, b, a, potionData));
+            string[] temp = new string[genData.ingredientIDs.Length + 1];
+            genData.ingredientIDs.CopyTo(temp, 0);
+            temp[genData.ingredientIDs.Length] = id;
+            genData.ingredientIDs = temp;
+        }
+        catch (ArgumentException)
+        {
+            Debug.LogWarning("[DataController.AddNewIngredient] Ingredient with ID \"" + id + "\" already exists!");
+        }
     }
 
     public static void CreateNewRecipe(int mistakesAllowed, params string[] ingredients)
@@ -99,14 +103,15 @@ public class DataController : MonoBehaviour
         genData.recipeIDs = temp;
     }
 
-    private Dictionary<string, T> LoadGameData<T>(string[] ids, string folder, string prefix) {
+    private Dictionary<string, T> LoadGameData<T>(string[] ids, string folder, string prefix)
+    {
         Dictionary<string, T> dict = new Dictionary<string, T>();
         foreach (string id in ids)
         {
             T data = LoadDataFile<T>(folder, prefix + "(" + id + ").json");
             dict.Add(id, data);
         }
-        Debug.Log("[DataController]: Loaded " + ids.Length + " [" + typeof(T).ToString() + "] game data files.");
+        Debug.Log("[DataController.LoadGameData]: Loaded " + ids.Length + " [" + typeof(T).ToString() + "] game data files.");
         return dict;
     }
 
@@ -133,7 +138,7 @@ public class DataController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning("Unable to read data file: " + absPath);
+                        Debug.LogWarning("[DataController.LoadDataFile] Unable to read data file \"" + absPath + "\"!");
                         return default(T);
                     }
                     break;
@@ -145,7 +150,7 @@ public class DataController : MonoBehaviour
                         if (request.result == UnityWebRequest.Result.ConnectionError ||
                         request.result == UnityWebRequest.Result.DataProcessingError)
                         {
-                            Debug.LogError("What a fuck!?");
+                            Debug.LogError("[DataController.LoadDataFile] What a fuck!?");
                             break;
                         }
                     }
@@ -172,7 +177,7 @@ public class DataController : MonoBehaviour
 
     public void SaveGameDataDebruh()
     {
-        Debug.Log("Debug saving...");
+        Debug.Log("[DataController] Debug saving...");
 
         SaveToDataFile<General>(debugGeneral, "General", "general.json");
         SaveToDataFile<Ingredient>(debugIngredient, "Ingredients", "ingredient(" + debugIngID + ").json");

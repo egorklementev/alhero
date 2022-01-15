@@ -81,7 +81,7 @@ public class UIController : MonoBehaviour
 
     public void OnCloseButtonPressed()
     {
-        Container c = LogicController.currentBarrel.GetComponentInChildren<Container>();
+        Container c = LogicController.curContainer;
         if (c != null)
         {
             c.ResetSelection();
@@ -89,6 +89,6 @@ public class UIController : MonoBehaviour
         TriggerRightPanel();
         DeactivateUIGroup(activeGroup);
         activeGroup = "none";
-        LogicController.currentBarrel = null;
+        LogicController.curContainer = null;
     }
 }

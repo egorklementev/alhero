@@ -84,19 +84,17 @@ public class RecipeBook : MonoBehaviour
                     {
                         GameObject ingEntry = Instantiate(bookItem, scrollContent.transform);
                         {
-                            GameObject itemWorld = spawner.items.Find(item => item.GetComponent<ItemWorld>().itemID.Equals(ing.id));
-                            ItemWorld itemWorldScript = itemWorld.GetComponent<ItemWorld>();
-                            PotionWorld itemPotionScript = itemWorld.GetComponent<PotionWorld>();
-                            if (itemPotionScript != null)
+                            ItemUI uiItem = spawner.absItems.Find(item => item.id.Equals(ing.id) && item is ItemUI) as ItemUI;
+                            PotionUI uiPotion = uiItem as PotionUI;
+                            if (uiPotion != null)
                             {
-                                GameObject potion = Instantiate(itemWorldScript.uiVersion, ingEntry.transform.Find("Slot"));
-                                potion.GetComponent<Renderer>().materials[2].SetColor("_Color", PotionWorld.GetColor(itemPotionScript.potionData));
+                                PotionUI uiPotionCopy = spawner.SpawnItem<PotionUI>(uiPotion.id, ingEntry.transform.Find("Slot"));
                             }
                             else
                             {
-                                Instantiate(itemWorldScript.uiVersion, ingEntry.transform.Find("Slot"));
+                                spawner.SpawnItem<ItemUI>(uiItem.id, ingEntry.transform.Find("Slot"));
                             }
-                            ingEntry.transform.Find("Title").gameObject.GetComponent<TextMeshProUGUI>().text = itemWorldScript.itemID;
+                            ingEntry.transform.Find("Title").gameObject.GetComponent<TextMeshProUGUI>().text = uiItem.id;
                         }
                     }
                 }

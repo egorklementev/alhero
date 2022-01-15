@@ -10,6 +10,7 @@ public class Cauldron : MonoBehaviour
     [Space(10f)]
     public GameObject[] particles;
     public Animator spoonAnim;
+    public ParticleSystem finishBubbles;
 
 
     private Material waterMat;
@@ -49,8 +50,9 @@ public class Cauldron : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Item"))
         {
-            string itemID = other.gameObject.GetComponent<ItemWorld>().itemID;
-            inventory.Add(itemID);
+            ItemWorld worldItem = other.gameObject.GetComponent<ItemWorld>();
+            string id = worldItem.id;
+            inventory.Add(id);
             if (cooldown > 0f)
             {
                 cooldownMistakes++;
@@ -60,10 +62,10 @@ public class Cauldron : MonoBehaviour
             {
                 SetRecipeCooking(true); // Or continue
 
-                Ingredient curIng = DataController.ingredients[itemID];
+                Ingredient curIng = DataController.ingredients[id];
                 if (curIng == null)
                 {
-                    Debug.LogError("No ingredient with name: " + itemID + "!");
+                    Debug.LogError("[Cauldron.OnCollisionExit] No ingredient with name: " + id + "!");
                     DestroyCurrentRecipe();
                 }
                 else
@@ -82,7 +84,7 @@ public class Cauldron : MonoBehaviour
                         {
                             // Spawn item
                             int bottleShape = Random.Range(1, DataController.bootleShapesNumber + 1);
-                            GameObject potion = spawner.SpawnItem(
+                            PotionWorld potion = spawner.SpawnItem<PotionWorld>(
                                 "potion_" + bottleShape,
                                 (transform.parent.transform.position - new Vector3(4f, -2f, -4f)),
                                 Quaternion.identity,
@@ -90,8 +92,7 @@ public class Cauldron : MonoBehaviour
                                 );
 
                             // Transfer all necessary data
-                            PotionWorld potionScript = potion.GetComponentInChildren<PotionWorld>();
-                            Potion potionData = potionScript.potionData;
+                            Potion potionData = potion.potionData;
                             potionData.recipe_id = Recipe.GetID(potentialRecipe.ingredient_seq);
                             potionData.bottle_shape = bottleShape;
                             potionData.ingredients = new string[inventory.Count];
@@ -100,26 +101,31 @@ public class Cauldron : MonoBehaviour
                             // Generated potion ID
                             string newPotionName = potionData.GetID();
                             potion.name = newPotionName;
-                            potionScript.itemID = newPotionName;
+                            potion.id = newPotionName;
 
-                            // Potion Color
-                            Color potionColor = PotionWorld.GetColor(potionData);
-                            potionData.color_r = potionColor.r;
-                            potionData.color_g = potionColor.g;
-                            potionData.color_b = potionColor.b;
-                            potionData.color_a = potionColor.a;
-                            potion.GetComponentInChildren<Renderer>().materials[2].SetColor("_Color", potionColor);
+                            potion.UpdateColor();
 
-                            // Add as a new ingredient in any case
-                            GameObject potionCopy = Instantiate(
-                                potion,
+                            // Create generated versions for spawner
+                            PotionWorld potionCopy = Instantiate(
+                                potion.gameObject,
                                 new Vector3(0f, 100f, 0f),
                                 Quaternion.identity,
                                 spawner.gameObject.transform
-                                );
-                            potionCopy.GetComponent<Rigidbody>().useGravity = false;
-                            potionCopy.GetComponent<BoxCollider>().enabled = false; // ATTENTION: May be bad, dunno
-                            spawner.items.Add(potionCopy);
+                                ).GetComponent<PotionWorld>();
+                            potionCopy.SetPhysicsActive(false);
+                            spawner.absItems.Add(potionCopy);
+
+                            PotionUI uiPotionCopy = spawner.SpawnItem<PotionUI>(
+                                "potion_" + bottleShape,
+                                new Vector3(0f, 300f, 0f),
+                                Quaternion.identity,
+                                spawner.gameObject
+                            );
+                            uiPotionCopy.potionData = new Potion(potionData);
+                            uiPotionCopy.id = newPotionName;
+                            spawner.absItems.Add(uiPotionCopy);
+
+                            // Add as a new ingredient in any case
                             int ingrNum = potionData.ingredients.Length;
                             float ptnCooldown = AverageCooldown(potionData.ingredients);
                             float ptnBreakChance = RandomBreakChance(potionData.ingredients);
@@ -140,7 +146,7 @@ public class Cauldron : MonoBehaviour
             {
                 DestroyCurrentRecipe();
             }
-            other.gameObject.GetComponentInChildren<Animator>().SetBool("Destroy", true);
+            worldItem.Destroy();
         }
     }
 
@@ -179,7 +185,6 @@ public class Cauldron : MonoBehaviour
         float delay = success ? 6f : 3f;
         Color color = success ? Color.magenta : Color.black;
 
-        ParticleSystem finishBubbles = transform.Find("cauldron").Find("FinishBubbles").gameObject.GetComponent<ParticleSystem>();
         ParticleSystem.MainModule settings = finishBubbles.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(color);
         settings.duration = delay;

@@ -17,43 +17,14 @@ public class LogicController : MonoBehaviour
 
     private static int playerInvSize = 3; // Inverntory size
 
-    public static GameObject currentBarrel { get; set; } = null;
+    public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
 
     private void Start()
     {
         // spawner.SpawnContainer(1, new Vector3(-2f, -.5f, 2f), Quaternion.identity, staticObjsGroup);
 
-        // We have to add generated potion items to the spawner
-        foreach (Ingredient i in DataController.ingredients.Values)
-        {
-            if (spawner.items.Find(item => item.GetComponent<ItemWorld>().itemID.Equals(i.id)) == null)
-            {
-                GameObject potion = spawner.SpawnItem(
-                    "potion_" + i.potionData.bottle_shape,
-                    new Vector3(0f, 100f, 0f),
-                    Quaternion.identity,
-                    spawner.gameObject
-                    );
-
-                // Transfer all necessary data
-                PotionWorld potionScript = potion.GetComponentInChildren<PotionWorld>();
-                potionScript.potionData = new Potion(i.potionData);
-
-                // Generated potion ID
-                string newPotionName = i.potionData.GetID();
-                potion.name = newPotionName;
-                potionScript.itemID = newPotionName;
-
-                // Potion Color
-                Color potionColor = PotionWorld.GetColor(i.potionData);
-                potion.GetComponentInChildren<Renderer>().materials[2].SetColor("_Color", potionColor);
-                potion.GetComponentInChildren<Rigidbody>().useGravity = false;
-                potion.GetComponentInChildren<BoxCollider>().enabled = false;
-
-                spawner.items.Add(potion);
-            }
-        }
+        LoadGeneratedPotions();
 
         // Load containers with previously stored items
         foreach (Transform contTransform in containers.transform)
@@ -61,7 +32,7 @@ public class LogicController : MonoBehaviour
             Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
             if (!DataController.containers.ContainsKey(contScript.id))
             {
-                Debug.LogWarning("No container with ID: " + contScript.id + "!");
+                Debug.LogWarning("[LogicController.Start] No container with ID \"" + contScript.id + "\"!");
             }
             else
             {
@@ -70,32 +41,70 @@ public class LogicController : MonoBehaviour
                 {
                     for (int i = 0; i < itemsToLoad.items.Length; i++)
                     {
-                        string itemToPutID = itemsToLoad.items[i].itemID;
+                        string itemToPutID = itemsToLoad.items[i].id;
                         if (itemToPutID.StartsWith("potion"))
                         {
                             Potion potionData = itemsToLoad.items[i].potionData;
-                            GameObject potion = spawner.SpawnItem(
+                            PotionWorld potion = spawner.SpawnItem<PotionWorld>(
                                 "potion_" + potionData.bottle_shape,
                                 new Vector3(0f, 100f, 0f),
                                 Quaternion.identity,
                                 itemsGroup);
-                            PotionWorld potionScript = potion.GetComponent<PotionWorld>();
-                            potionScript.potionData = potionData;
+                            potion.potionData = potionData;
                             string newPotionName = potionData.GetID();
                             potion.name = newPotionName;
-                            potionScript.itemID = newPotionName;
-                            potion.GetComponentInChildren<Renderer>().materials[2].SetColor(
-                                "_Color", PotionWorld.GetColor(potionScript.potionData));
+                            potion.id = newPotionName;
+                            potion.UpdateColor();
                             contScript.TryToPutItem(potion, i);
                         }
                         else
                         {
                             contScript.TryToPutItem(
-                                spawner.SpawnItem(itemToPutID, new Vector3(0f, 100f, 0f), Quaternion.identity, itemsGroup),
+                                spawner.SpawnItem<ItemWorld>(
+                                    itemToPutID, 
+                                    new Vector3(0f, 100f, 0f), 
+                                    Quaternion.identity, 
+                                    itemsGroup),
                                  i);
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private void LoadGeneratedPotions()
+    {
+        // We have to add generated potion items to the spawner
+        foreach (Ingredient i in DataController.ingredients.Values)
+        {
+            if (spawner.absItems.Find(item => item.id.Equals(i.id)) == null)
+            {
+                // World version
+                PotionWorld worldPotion = spawner.SpawnItem<PotionWorld>(
+                    "potion_" + i.potionData.bottle_shape,
+                    new Vector3(0f, 100f, 0f),
+                    Quaternion.identity,
+                    spawner.gameObject
+                    );
+                worldPotion.potionData = new Potion(i.potionData);
+                string genPotionID = i.potionData.GetID();
+                worldPotion.name = genPotionID;
+                worldPotion.id = genPotionID;
+                worldPotion.SetPhysicsActive(false);
+                spawner.absItems.Add(worldPotion);
+
+                // UI version
+                PotionUI uiPotion = spawner.SpawnItem<PotionUI>(
+                    "potion_" + i.potionData.bottle_shape,
+                    new Vector3(0f, 300f, 0f),
+                    Quaternion.identity,
+                    spawner.gameObject
+                );
+                uiPotion.potionData = new Potion(i.potionData);
+                uiPotion.name = genPotionID;
+                uiPotion.id = genPotionID;
+                spawner.absItems.Add(uiPotion);
             }
         }
     }
@@ -137,43 +146,37 @@ public class LogicController : MonoBehaviour
     public void TakeItemFromContainer()
     {
         int slot = GetFreeInvSlot();
-        if (currentBarrel != null && slot != -1)
+        if (curContainer != null && slot != -1)
         {
-            Container b = currentBarrel.GetComponentInChildren<Container>();
-            GameObject selected = b.GetSelectedItem();
-            if (selected != null)
+            Container b = curContainer;
+            ItemUI selectedItem = b.GetSelectedItem();
+            if (selectedItem != null)
             {
-                selected.GetComponent<Animator>().SetBool("Destroy", true);
+                selectedItem.Destroy();
 
-                DataController.containers[b.id].items[b.GetSelectedItemSlot()].itemID = "";
+                DataController.containers[b.id].items[b.GetSelectedItemSlot()].id = "";
                 DataController.containers[b.id].items[b.GetSelectedItemSlot()].potionData = new Potion();
 
-                PotionUI pUI = selected.GetComponent<PotionUI>();
-                if (pUI != null)
+                PotionUI uiPotion = selectedItem as PotionUI;
+                if (uiPotion != null)
                 {
-                    GameObject newPotion = Instantiate(selected.GetComponent<ItemUI>().worldItem, itemsGroup.transform);
-
-                    PotionWorld newPotionScript = newPotion.GetComponent<PotionWorld>();
-                    newPotionScript.potionData = new Potion(pUI.potionData); // Perform potion data copy
-
-                    string newPotionID = newPotionScript.potionData.GetID();
+                    PotionWorld newPotion = spawner.SpawnItem<PotionWorld>(uiPotion.id, itemsGroup);
+                    
+                    newPotion.potionData = new Potion(uiPotion.potionData); // Perform potion data copy
+                    string newPotionID = newPotion.potionData.GetID();
                     newPotion.name = newPotionID;
-                    newPotionScript.itemID = newPotionID;
-
-                    newPotion.GetComponentInChildren<Renderer>().materials[2].SetColor(
-                        "_Color", PotionWorld.GetColor(newPotionScript.potionData));
-
-                    newPotionScript.SetPickedUp(true, slot, player);
-                    PickedItems[slot] = newPotionScript;
+                    newPotion.id = newPotionID;
+                    newPotion.UpdateColor();
+                    newPotion.SetPickedUp(true, slot, player);
+                    PickedItems[slot] = newPotion;
 
                     b.ResetSelection();
                 }
                 else
                 {
-                    GameObject newWorldItem = Instantiate(selected.GetComponent<ItemUI>().worldItem, itemsGroup.transform);
-                    ItemWorld newItem = newWorldItem.GetComponent<ItemWorld>();
-                    newItem.SetPickedUp(true, slot, player);
-                    PickedItems[slot] = newItem;
+                    ItemWorld newWorldItem = spawner.SpawnItem<ItemWorld>(selectedItem.id, itemsGroup);
+                    newWorldItem.SetPickedUp(true, slot, player);
+                    PickedItems[slot] = newWorldItem;
                     b.ResetSelection();
                 }
             }
@@ -182,9 +185,9 @@ public class LogicController : MonoBehaviour
 
     public void SelectItemInBarrel(int slot)
     {
-        if (currentBarrel != null)
+        if (curContainer != null)
         {
-            currentBarrel.GetComponentInChildren<Container>().OnItemSelected(slot);
+            curContainer.OnItemSelected(slot);
         }
     }
 
@@ -194,11 +197,11 @@ public class LogicController : MonoBehaviour
         {
             "flower", "horseshoe", "meat", "salt", "wine"
         };
-        Vector3 start = new Vector3(11f, 1f, 1.5f * items.Length / 2f);
+        Vector3 pos = new Vector3(11f, 1f, 1.5f * items.Length / 2f);
         foreach (string id in items)
         {
-            spawner.SpawnItem(id, start, Quaternion.identity, itemsGroup);
-            start -= new Vector3(0f, 0f, 3f);
+            spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity, itemsGroup);
+            pos -= new Vector3(0f, 0f, 3f);
         }
     }
 }
