@@ -9,6 +9,7 @@ public class PotionWorld : ItemWorld
     protected override void OnEnable() {
         base.OnEnable();
         render = GetComponentInChildren<Renderer>();
+        UpdateColor();
     }
 
     public void UpdateColor() {

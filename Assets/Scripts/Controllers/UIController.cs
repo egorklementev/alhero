@@ -1,3 +1,4 @@
+using System.Text;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -51,9 +52,15 @@ public class UIController : MonoBehaviour
         }
     }
 
-    public void SetDebugLine(string message)
+    public void SetDebugLine(params string[] message)
     {
-        debugLine.text = "Debug: " + message;
+        string sep = " ";
+        StringBuilder line = new StringBuilder("Debug: ");
+        foreach (string str in message)
+        {
+            line.Append(str).Append(sep);
+        }
+        debugLine.text = line.ToString();
     }
 
     public static void TriggerRightPanel()

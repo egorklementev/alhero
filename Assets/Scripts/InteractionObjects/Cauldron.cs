@@ -12,6 +12,8 @@ public class Cauldron : MonoBehaviour
     public Animator spoonAnim;
     public ParticleSystem finishBubbles;
 
+    [Space(10f)]
+    public UIController ui;
 
     private Material waterMat;
     private float cooldown = 0f;
@@ -56,8 +58,9 @@ public class Cauldron : MonoBehaviour
             if (cooldown > 0f)
             {
                 cooldownMistakes++;
+                cooldown = 0f;
             }
-            Recipe potentialRecipe = RecipeHasPotential();
+            Recipe potentialRecipe = InventoryHasPotential();
             if (potentialRecipe != null)
             {
                 SetRecipeCooking(true); // Or continue
@@ -65,7 +68,7 @@ public class Cauldron : MonoBehaviour
                 Ingredient curIng = DataController.ingredients[id];
                 if (curIng == null)
                 {
-                    Debug.LogError("[Cauldron.OnCollisionExit] No ingredient with name: " + id + "!");
+                    Debug.LogError($"[Cauldron.OnCollisionExit] No ingredient with name \"{id}\" !!!");
                     DestroyCurrentRecipe();
                 }
                 else
@@ -73,7 +76,7 @@ public class Cauldron : MonoBehaviour
                     cooldown = curIng.cooldown;
 
                     // In case we are 'lucky' - just break current recipe
-                    if (Random.Range(0f, 1f) <= curIng.breakChance)
+                    if (Random.Range(0f, 1f) < curIng.breakChance)
                     {
                         DestroyCurrentRecipe();
                     }
@@ -82,62 +85,92 @@ public class Cauldron : MonoBehaviour
                         // If a potion is ready
                         if (potentialRecipe.ingredient_seq.Length == inventory.Count)
                         {
-                            // Spawn item
-                            int bottleShape = Random.Range(1, DataController.bootleShapesNumber + 1);
-                            PotionWorld potion = spawner.SpawnItem<PotionWorld>(
-                                "potion_" + bottleShape,
-                                (transform.parent.transform.position - new Vector3(4f, -2f, -4f)),
-                                Quaternion.identity,
-                                itemsGroup
-                                );
+                            if (IsInventoryValid(potentialRecipe))
+                            {
+                                if (potentialRecipe.is_unlocked)
+                                {
+                                    // Just spawn item
+                                    Potion temp = new Potion();
+                                    temp.recipe_id = potentialRecipe.GetID();
+                                    int bottleShape = Random.Range(1, DataController.bootleShapesNumber + 1);
+                                    PotionWorld potion = spawner.SpawnItem<PotionWorld>(
+                                        temp.GetID(),
+                                        (transform.parent.transform.position - new Vector3(4f, -2f, -4f)),
+                                        Quaternion.identity,
+                                        itemsGroup
+                                        );
+                                }
+                                else
+                                {
+                                    // Spawn item
+                                    int bottleShape = Random.Range(1, DataController.bootleShapesNumber + 1);
+                                    PotionWorld potion = spawner.SpawnItem<PotionWorld>(
+                                        "potion_" + bottleShape,
+                                        (transform.parent.transform.position - new Vector3(4f, -2f, -4f)),
+                                        Quaternion.identity,
+                                        itemsGroup
+                                        );
 
-                            // Transfer all necessary data
-                            Potion potionData = potion.potionData;
-                            potionData.recipe_id = Recipe.GetID(potentialRecipe.ingredient_seq);
-                            potionData.bottle_shape = bottleShape;
-                            potionData.ingredients = new string[inventory.Count];
-                            inventory.CopyTo(potionData.ingredients);
+                                    // Transfer all necessary data
+                                    Potion potionData = potion.potionData;
+                                    potionData.recipe_id = potentialRecipe.GetID();
+                                    potionData.bottle_shape = bottleShape;
+                                    potionData.ingredients = new string[inventory.Count];
+                                    inventory.CopyTo(potionData.ingredients);
 
-                            // Generated potion ID
-                            string newPotionName = potionData.GetID();
-                            potion.name = newPotionName;
-                            potion.id = newPotionName;
+                                    // Generated potion ID
+                                    string newPotionName = potionData.GetID();
+                                    potion.name = newPotionName;
+                                    potion.id = newPotionName;
+                                    potion.UpdateColor();
 
-                            potion.UpdateColor();
+                                    // Create generated versions for spawner
+                                    PotionWorld potionCopy = Instantiate(
+                                        potion.gameObject,
+                                        new Vector3(0f, 100f, 0f),
+                                        Quaternion.identity,
+                                        spawner.gameObject.transform
+                                        ).GetComponent<PotionWorld>();
+                                    potionCopy.SetPhysicsActive(false);
+                                    potionCopy.gameObject.SetActive(false);
+                                    spawner.absItems.Add(potionCopy);
 
-                            // Create generated versions for spawner
-                            PotionWorld potionCopy = Instantiate(
-                                potion.gameObject,
-                                new Vector3(0f, 100f, 0f),
-                                Quaternion.identity,
-                                spawner.gameObject.transform
-                                ).GetComponent<PotionWorld>();
-                            potionCopy.SetPhysicsActive(false);
-                            spawner.absItems.Add(potionCopy);
+                                    PotionUI uiPotionCopy = spawner.SpawnItem<PotionUI>(
+                                        "potion_" + bottleShape,
+                                        new Vector3(0f, 300f, 0f),
+                                        Quaternion.identity,
+                                        spawner.gameObject
+                                    );
+                                    uiPotionCopy.potionData = new Potion(potionData);
+                                    uiPotionCopy.id = newPotionName;
+                                    uiPotionCopy.gameObject.SetActive(false);
+                                    spawner.absItems.Add(uiPotionCopy);
 
-                            PotionUI uiPotionCopy = spawner.SpawnItem<PotionUI>(
-                                "potion_" + bottleShape,
-                                new Vector3(0f, 300f, 0f),
-                                Quaternion.identity,
-                                spawner.gameObject
-                            );
-                            uiPotionCopy.potionData = new Potion(potionData);
-                            uiPotionCopy.id = newPotionName;
-                            spawner.absItems.Add(uiPotionCopy);
+                                    // Add a new ingredient
+                                    int ingrNum = potionData.ingredients.Length;
+                                    float ptnCooldown = AverageCooldown(potionData.ingredients);
+                                    float ptnBreakChance = RandomBreakChance(potionData.ingredients);
+                                    float ptnR = RandomR(potionData.ingredients);
+                                    float ptnG = RandomG(potionData.ingredients);
+                                    float ptnB = RandomB(potionData.ingredients);
+                                    float ptnA = AverageAlpha(potionData.ingredients);
+                                    DataController.AddNewIngredient(newPotionName, ptnCooldown, ptnBreakChance, ptnR, ptnG, ptnB, ptnA, potionData);
 
-                            // Add as a new ingredient in any case
-                            int ingrNum = potionData.ingredients.Length;
-                            float ptnCooldown = AverageCooldown(potionData.ingredients);
-                            float ptnBreakChance = RandomBreakChance(potionData.ingredients);
-                            float ptnR = RandomR(potionData.ingredients);
-                            float ptnG = RandomG(potionData.ingredients);
-                            float ptnB = RandomB(potionData.ingredients);
-                            float ptnA = AverageAlpha(potionData.ingredients);
-                            DataController.AddNewIngredient(newPotionName, ptnCooldown, ptnBreakChance, ptnR, ptnG, ptnB, ptnA, potionData);
+                                    // Unlock potion recipe when it is cooked for the first time 
+                                    DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
 
-                            //DataController.CreateNewRecipe(0, newPotionName, "salt", "horseshoe"); // Should be generated somehow
-
-                            DestroyCurrentRecipe(true);
+                                    GenerateNewRecipeDebug(); // TODO: 
+                                }
+                                DestroyCurrentRecipe(true);
+                            }
+                            else
+                            {
+                                DestroyCurrentRecipe();
+                            }
+                        }
+                        else
+                        {
+                            Debug.Log("[Cauldron]: Waiting for the next ingredient...");
                         }
                     }
                 }
@@ -150,25 +183,41 @@ public class Cauldron : MonoBehaviour
         }
     }
 
-    private Recipe RecipeHasPotential()
+    private Recipe InventoryHasPotential()
     {
-        int currentIngredientIndex = inventory.Count - 1;
+        //int currentIngredientIndex = inventory.Count - 1;
         foreach (Recipe rec in DataController.recipes.Values)
         {
-            int mistakes = rec.mistakes_allowed - cooldownMistakes;
-            for (int i = 0; i < inventory.Count; i++)
+            if (inventory.Count <= rec.ingredient_seq.Length)
             {
-                if (!inventory[i].Equals(rec.ingredient_seq[i]))
+                int mistakes = cooldownMistakes;
+                for (int i = 0; i < inventory.Count; i++)
                 {
-                    mistakes--;
+                    if (!inventory[i].Equals(rec.ingredient_seq[i]))
+                    {
+                        mistakes++;
+                    }
                 }
-            }
-            if (mistakes >= 0)
-            {
-                return rec;
+                if (mistakes <= rec.mistakes_allowed)
+                {
+                    return rec;
+                }
             }
         }
         return null;
+    }
+
+    private bool IsInventoryValid(Recipe recipe)
+    {
+        int mistakes = 0;
+        for (int i = 0; i < recipe.ingredient_seq.Length; i++)
+        {
+            if (!inventory[i].Equals(recipe.ingredient_seq[i]))
+            {
+                mistakes++;
+            }
+        }
+        return mistakes <= recipe.mistakes_allowed;
     }
 
     private void SetRecipeCooking(bool isCooking)
@@ -197,6 +246,25 @@ public class Cauldron : MonoBehaviour
         cooldownMistakes = 0;
     }
 
+    private void GenerateNewRecipeDebug()
+    {
+        int ingNum = Random.Range(3, DataController.ingredients.Count + 1);
+        int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
+        string[] recipe = new string[ingNum];
+        List<string> ingredients = new List<string>(DataController.ingredients.Keys);
+        int i = 0;
+        while (ingNum > 0)
+        {
+            int randIndex = Random.Range(0, ingredients.Count);
+            recipe[i] = ingredients[randIndex];
+            ingredients.RemoveAt(randIndex);
+            ingNum--;
+            i++;
+        }
+        DataController.CreateNewRecipe(mistakes, recipe);
+        ui.SetDebugLine(recipe);
+    }
+
     IEnumerator FadeWaterColor(Color from, Color to, float delay)
     {
         float elapsed = 0f;
@@ -221,12 +289,12 @@ public class Cauldron : MonoBehaviour
     private float RandomBreakChance(string[] ingredients)
     {
         float chance = 0f;
-        int randNum = Random.Range(0, ingredients.Length);
+        int randNum = Random.Range(1, ingredients.Length);
         int temp = randNum;
         List<string> ings = new List<string>(ingredients);
         while (randNum > 0)
         {
-            int toRemove = Random.Range(0, ings.Count);
+            int toRemove = Random.Range(1, ings.Count);
             chance += DataController.ingredients[ings[toRemove]].breakChance;
             ings.RemoveAt(toRemove);
             randNum--;
@@ -237,12 +305,12 @@ public class Cauldron : MonoBehaviour
     private float RandomR(string[] ingredients)
     {
         float color = 0f;
-        int randNum = Random.Range(0, ingredients.Length);
+        int randNum = Random.Range(1, ingredients.Length);
         int temp = randNum;
         List<string> ings = new List<string>(ingredients);
         while (randNum > 0)
         {
-            int toRemove = Random.Range(0, ings.Count);
+            int toRemove = Random.Range(1, ings.Count);
             color += DataController.ingredients[ings[toRemove]].color_r;
             ings.RemoveAt(toRemove);
             randNum--;
@@ -253,12 +321,12 @@ public class Cauldron : MonoBehaviour
     private float RandomG(string[] ingredients)
     {
         float color = 0f;
-        int randNum = Random.Range(0, ingredients.Length);
+        int randNum = Random.Range(1, ingredients.Length);
         int temp = randNum;
         List<string> ings = new List<string>(ingredients);
         while (randNum > 0)
         {
-            int toRemove = Random.Range(0, ings.Count);
+            int toRemove = Random.Range(1, ings.Count);
             color += DataController.ingredients[ings[toRemove]].color_g;
             ings.RemoveAt(toRemove);
             randNum--;
@@ -269,12 +337,12 @@ public class Cauldron : MonoBehaviour
     private float RandomB(string[] ingredients)
     {
         float color = 0f;
-        int randNum = Random.Range(0, ingredients.Length);
+        int randNum = Random.Range(1, ingredients.Length);
         int temp = randNum;
         List<string> ings = new List<string>(ingredients);
         while (randNum > 0)
         {
-            int toRemove = Random.Range(0, ings.Count);
+            int toRemove = Random.Range(1, ings.Count);
             color += DataController.ingredients[ings[toRemove]].color_b;
             ings.RemoveAt(toRemove);
             randNum--;

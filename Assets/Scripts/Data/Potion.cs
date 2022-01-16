@@ -29,11 +29,11 @@ public class Potion
     /// We need this to generate new recipes with other potions
     public string GetID()
     {
-        string newPotionName = "potion_" + bottle_shape + "(";
+        string newPotionName = "potion(";
         Recipe r = DataController.recipes[recipe_id];
         if (r == null)
         {
-            Debug.LogError("[Potion.GetID] No recipe found with ID \"" + recipe_id + "\"!");
+            Debug.LogError($"[Potion.GetID] No recipe found with ID \"{recipe_id}\"!");
         }
         foreach (string ing in r.ingredient_seq)
         {
@@ -54,7 +54,7 @@ public class Potion
             Ingredient ing = DataController.ingredients[ingID];
             if (ing == null)
             {
-                Debug.LogError("[Potion.GetColor] No ingredient found with ID \"" + ingID + "\"!");
+                Debug.LogError($"[Potion.GetColor] No ingredient found with ID \"{ingID}\"!");
             }
             r += ing.color_r;
             g += ing.color_g;

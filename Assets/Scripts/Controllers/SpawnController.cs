@@ -89,12 +89,14 @@ public class SpawnController : MonoBehaviour
         if (item != null)
         {
             T obj = Instantiate(item.gameObject, pos, rot, owner).GetComponent<AbstractItem>() as T;
+            obj.gameObject.SetActive(true); // In any case, whynot
             if (obj is ItemWorld)
             {
                 (obj as ItemWorld).SetPhysicsActive(true);
             }
             return obj;
         }
+        Debug.LogError($"[SpawnController.SpawnItem] No item with ID \"{id}\"!!!");
         return null;
     }
 }

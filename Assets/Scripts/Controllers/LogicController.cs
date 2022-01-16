@@ -32,7 +32,7 @@ public class LogicController : MonoBehaviour
             Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
             if (!DataController.containers.ContainsKey(contScript.id))
             {
-                Debug.LogWarning("[LogicController.Start] No container with ID \"" + contScript.id + "\"!");
+                Debug.LogWarning($"[LogicController.Start] No container with ID \"{contScript.id}\"!");
             }
             else
             {
@@ -54,7 +54,6 @@ public class LogicController : MonoBehaviour
                             string newPotionName = potionData.GetID();
                             potion.name = newPotionName;
                             potion.id = newPotionName;
-                            potion.UpdateColor();
                             contScript.TryToPutItem(potion, i);
                         }
                         else
@@ -152,10 +151,12 @@ public class LogicController : MonoBehaviour
             ItemUI selectedItem = b.GetSelectedItem();
             if (selectedItem != null)
             {
-                selectedItem.Destroy();
-
                 DataController.containers[b.id].items[b.GetSelectedItemSlot()].id = "";
                 DataController.containers[b.id].items[b.GetSelectedItemSlot()].potionData = new Potion();
+
+                b.ResetSelection();
+
+                selectedItem.Destroy();
 
                 PotionUI uiPotion = selectedItem as PotionUI;
                 if (uiPotion != null)
@@ -166,18 +167,15 @@ public class LogicController : MonoBehaviour
                     string newPotionID = newPotion.potionData.GetID();
                     newPotion.name = newPotionID;
                     newPotion.id = newPotionID;
-                    newPotion.UpdateColor();
                     newPotion.SetPickedUp(true, slot, player);
                     PickedItems[slot] = newPotion;
 
-                    b.ResetSelection();
                 }
                 else
                 {
                     ItemWorld newWorldItem = spawner.SpawnItem<ItemWorld>(selectedItem.id, itemsGroup);
                     newWorldItem.SetPickedUp(true, slot, player);
                     PickedItems[slot] = newWorldItem;
-                    b.ResetSelection();
                 }
             }
         }

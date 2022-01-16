@@ -12,10 +12,10 @@ public class Recipe
         is_unlocked = false;
     }
 
-    public static string GetID(string[] ingredients)
+    public string GetID()
     {
         string id = "recipe(";
-        foreach (string i in ingredients)
+        foreach (string i in ingredient_seq)
         {
             id += i + "_";
         }

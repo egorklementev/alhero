@@ -29,7 +29,7 @@ public class DataController : MonoBehaviour
     public static Dictionary<string, Ingredient> ingredients;
     public static Dictionary<string, ContainerItems> containers;
 
-    public const int bootleShapesNumber = 2;
+    public const int bootleShapesNumber = 4;
 
     private float currentTimer = 0f;
 
@@ -89,18 +89,20 @@ public class DataController : MonoBehaviour
         }
         catch (ArgumentException)
         {
-            Debug.LogWarning("[DataController.AddNewIngredient] Ingredient with ID \"" + id + "\" already exists!");
+            Debug.LogWarning($"[DataController.AddNewIngredient] Ingredient with ID \"{id}\" already exists!");
         }
     }
 
     public static void CreateNewRecipe(int mistakesAllowed, params string[] ingredients)
     {
-        string id = Recipe.GetID(ingredients);
+        Recipe newRecipe = new Recipe(mistakesAllowed, ingredients);
+        string id = newRecipe.GetID();
         recipes.Add(id, new Recipe(mistakesAllowed, ingredients));
         string[] temp = new string[genData.recipeIDs.Length + 1];
         genData.recipeIDs.CopyTo(temp, 0);
         temp[genData.recipeIDs.Length] = id;
         genData.recipeIDs = temp;
+        Debug.Log($"[DataController.CreateNewRecipe]: New recipe created: {newRecipe.GetID()}");
     }
 
     private Dictionary<string, T> LoadGameData<T>(string[] ids, string folder, string prefix)
@@ -111,7 +113,7 @@ public class DataController : MonoBehaviour
             T data = LoadDataFile<T>(folder, prefix + "(" + id + ").json");
             dict.Add(id, data);
         }
-        Debug.Log("[DataController.LoadGameData]: Loaded " + ids.Length + " [" + typeof(T).ToString() + "] game data files.");
+        Debug.Log($"[DataController.LoadGameData]: Loaded {ids.Length} [{typeof(T).ToString()}] game data files.");
         return dict;
     }
 
@@ -138,7 +140,7 @@ public class DataController : MonoBehaviour
                     }
                     else
                     {
-                        Debug.LogWarning("[DataController.LoadDataFile] Unable to read data file \"" + absPath + "\"!");
+                        Debug.LogWarning($"[DataController.LoadDataFile] Unable to read data file \"{absPath}\"!");
                         return default(T);
                     }
                     break;

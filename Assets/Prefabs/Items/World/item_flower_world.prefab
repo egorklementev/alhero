@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 9010267654104362270}
   - component: {fileID: 5267771800730489257}
   - component: {fileID: 3639953085000846316}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: item_flower_world
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -164,6 +164,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: item_flower
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 96cbeb619124ec442bc1a88045da7942,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 96cbeb619124ec442bc1a88045da7942, type: 3}

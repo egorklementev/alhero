@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5421344685095131812}
   - component: {fileID: 5267771800730489257}
   - component: {fileID: 3639953085000846316}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: item_wine_world
   m_TagString: Item
   m_Icon: {fileID: 0}
@@ -164,6 +164,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: item_wine
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 36de6c16290e9fc4db04228ccf498bcf,
+        type: 3}
+      propertyPath: m_Layer
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 36de6c16290e9fc4db04228ccf498bcf, type: 3}

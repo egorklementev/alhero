@@ -19,6 +19,11 @@ public class ItemUI : AbstractItem
         animator.SetBool("IsSelected", isSelected);
     }
 
+    public void SetSmall()
+    {
+        animator.SetBool("IsSmall", true);
+    }
+
     public void Destroy()
     {
         animator.SetBool("Destroy", true);
