@@ -1,7 +1,8 @@
 [System.Serializable]
 public class Ingredient
 {
-    public string id; // Corresponds to World Item id
+    public int id; // Corresponds to World Item id
+    public string ing_name; // Localization link
     public float cooldown; // How much of a delay adds this ingredient to the cauldron
     public float breakChance; // How likely is that this ingredient will break the recipe
     public bool hasBeenDiscovered;
@@ -15,7 +16,8 @@ public class Ingredient
     public float color_a;
 
     public Ingredient(
-        string id,
+        int id,
+        string ing_name,
         float cooldown,
         float breakChance,
         float r,
@@ -25,6 +27,7 @@ public class Ingredient
         Potion potionData = null)
     {
         this.id = id;
+        this.ing_name = ing_name;
         this.cooldown = cooldown;
         this.breakChance = breakChance;
         color_r = r;

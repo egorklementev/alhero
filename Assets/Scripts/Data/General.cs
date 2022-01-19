@@ -1,8 +1,8 @@
 [System.Serializable]
 public class General
 {
-    public string[] ingredientIDs;
-    public string[] recipeIDs;
-    public string[] labContainerIDs;
-    public string[] cauldronInventory;
+    public int[] ingredientIDs;
+    public int[] recipeIDs;
+    public int[] labContainerIDs;
+    public int[] cauldronInventory;
 }

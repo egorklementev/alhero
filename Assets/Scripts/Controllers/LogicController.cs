@@ -6,7 +6,6 @@ public class LogicController : MonoBehaviour
 
     [Space(15f)]
     public GameObject itemsGroup;
-    public GameObject containers;
 
     [Space(15f)]
     public GameObject recipeBook;
@@ -19,94 +18,6 @@ public class LogicController : MonoBehaviour
 
     public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
-
-    private void Start()
-    {
-        // spawner.SpawnContainer(1, new Vector3(-2f, -.5f, 2f), Quaternion.identity, staticObjsGroup);
-
-        LoadGeneratedPotions();
-
-        // Load containers with previously stored items
-        foreach (Transform contTransform in containers.transform)
-        {
-            Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
-            if (!DataController.containers.ContainsKey(contScript.id))
-            {
-                Debug.LogWarning($"[LogicController.Start] No container with ID \"{contScript.id}\"!");
-            }
-            else
-            {
-                ContainerItems itemsToLoad = DataController.containers[contScript.id];
-                if (itemsToLoad != null)
-                {
-                    for (int i = 0; i < itemsToLoad.items.Length; i++)
-                    {
-                        string itemToPutID = itemsToLoad.items[i].id;
-                        if (itemToPutID.StartsWith("potion"))
-                        {
-                            Potion potionData = itemsToLoad.items[i].potionData;
-                            PotionWorld potion = spawner.SpawnItem<PotionWorld>(
-                                "potion_" + potionData.bottle_shape,
-                                new Vector3(0f, 100f, 0f),
-                                Quaternion.identity,
-                                itemsGroup);
-                            potion.potionData = potionData;
-                            string newPotionName = potionData.GetID();
-                            potion.name = newPotionName;
-                            potion.id = newPotionName;
-                            contScript.TryToPutItem(potion, i);
-                        }
-                        else
-                        {
-                            contScript.TryToPutItem(
-                                spawner.SpawnItem<ItemWorld>(
-                                    itemToPutID, 
-                                    new Vector3(0f, 100f, 0f), 
-                                    Quaternion.identity, 
-                                    itemsGroup),
-                                 i);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void LoadGeneratedPotions()
-    {
-        // We have to add generated potion items to the spawner
-        foreach (Ingredient i in DataController.ingredients.Values)
-        {
-            if (spawner.absItems.Find(item => item.id.Equals(i.id)) == null)
-            {
-                // World version
-                PotionWorld worldPotion = spawner.SpawnItem<PotionWorld>(
-                    "potion_" + i.potionData.bottle_shape,
-                    new Vector3(0f, 100f, 0f),
-                    Quaternion.identity,
-                    spawner.gameObject
-                    );
-                worldPotion.potionData = new Potion(i.potionData);
-                string genPotionID = i.potionData.GetID();
-                worldPotion.name = genPotionID;
-                worldPotion.id = genPotionID;
-                worldPotion.SetPhysicsActive(false);
-                spawner.absItems.Add(worldPotion);
-
-                // UI version
-                PotionUI uiPotion = spawner.SpawnItem<PotionUI>(
-                    "potion_" + i.potionData.bottle_shape,
-                    new Vector3(0f, 300f, 0f),
-                    Quaternion.identity,
-                    spawner.gameObject
-                );
-                uiPotion.potionData = new Potion(i.potionData);
-                uiPotion.name = genPotionID;
-                uiPotion.id = genPotionID;
-                spawner.absItems.Add(uiPotion);
-            }
-        }
-    }
 
     private void FixedUpdate()
     {
@@ -151,7 +62,7 @@ public class LogicController : MonoBehaviour
             ItemUI selectedItem = b.GetSelectedItem();
             if (selectedItem != null)
             {
-                DataController.containers[b.id].items[b.GetSelectedItemSlot()].id = "";
+                DataController.containers[b.id].items[b.GetSelectedItemSlot()].id = 0;
                 DataController.containers[b.id].items[b.GetSelectedItemSlot()].potionData = new Potion();
 
                 b.ResetSelection();
@@ -162,11 +73,11 @@ public class LogicController : MonoBehaviour
                 if (uiPotion != null)
                 {
                     PotionWorld newPotion = spawner.SpawnItem<PotionWorld>(uiPotion.id, itemsGroup);
-                    
+
                     newPotion.potionData = new Potion(uiPotion.potionData); // Perform potion data copy
-                    string newPotionID = newPotion.potionData.GetID();
-                    newPotion.name = newPotionID;
-                    newPotion.id = newPotionID;
+                    int newPotionID = newPotion.potionData.GetID();
+                    newPotion.name = newPotionID.ToString();
+                    newPotion.name = newPotionID.ToString();
                     newPotion.SetPickedUp(true, slot, player);
                     PickedItems[slot] = newPotion;
 
@@ -196,9 +107,9 @@ public class LogicController : MonoBehaviour
             "flower", "horseshoe", "meat", "salt", "wine"
         };
         Vector3 pos = new Vector3(11f, 1f, 1.5f * items.Length / 2f);
-        foreach (string id in items)
+        foreach (string name in items)
         {
-            spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity, itemsGroup);
+            spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, itemsGroup);
             pos -= new Vector3(0f, 0f, 3f);
         }
     }

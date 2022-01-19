@@ -1,24 +1,24 @@
 [System.Serializable]
 public class Recipe
 {
-    public string[] ingredient_seq;
+    public int[] ingredient_seq;
     public int mistakes_allowed;
     public bool is_unlocked;
 
-    public Recipe(int mistakesAllowed, params string[] ingredients)
+    public Recipe(int mistakesAllowed, params int[] ingredients)
     {
         ingredient_seq = ingredients;
         mistakes_allowed = mistakesAllowed;
         is_unlocked = false;
     }
 
-    public string GetID()
+    public int GetID()
     {
-        string id = "recipe(";
-        foreach (string i in ingredient_seq)
+        string id = "";
+        foreach (int i in ingredient_seq)
         {
-            id += i + "_";
+            id += i.ToString() + "_";
         }
-        return id.Substring(0, id.Length - 1) + ")"; // Remove last '_'
+        return id.Hash();
     }
 }

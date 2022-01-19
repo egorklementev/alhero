@@ -76,7 +76,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: meat
+  id: 1414245136
+  item_name: meat
   arcanumMaterialIndex: 2
 --- !u!1001 &5267771800501293303
 PrefabInstance:

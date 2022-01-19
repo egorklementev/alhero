@@ -1,6 +1,6 @@
 [System.Serializable]
 public class ContainerItem
 {
-    public string id;
+    public int id;
     public Potion potionData;
 }

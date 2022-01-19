@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.IO;
 
@@ -9,25 +10,24 @@ public class DataController : MonoBehaviour
     public General debugGeneral;
 
     [Space(20f)]
-    public string debugIngID;
-    public Ingredient debugIngredient;
+    public Ingredient[] dIng;
 
     [Space(20f)]
-    public string debugRecID;
-    public Recipe debugRecipe;
+    public Recipe[] dRec;
 
     [Space(20f)]
-    public string debugContainerID;
-    public ContainerItems debugContainerItems;
+    public string[] dContIDs;
+    public ContainerItems[] dCont;
 
     [Space(20f)]
     public float autosaveTimer = 60f;
-    public bool debugSaving = false;
+    public bool debugMode = false;
+    public GameObject[] debugButtons;
 
     public static General genData;
-    public static Dictionary<string, Recipe> recipes;
-    public static Dictionary<string, Ingredient> ingredients;
-    public static Dictionary<string, ContainerItems> containers;
+    public static Dictionary<int, Recipe> recipes;
+    public static Dictionary<int, Ingredient> ingredients;
+    public static Dictionary<int, ContainerItems> containers;
 
     public const int bootleShapesNumber = 4;
 
@@ -49,6 +49,10 @@ public class DataController : MonoBehaviour
             currentTimer = autosaveTimer;
             Autosave();
         }
+        foreach (GameObject btn in debugButtons)
+        {
+            btn.SetActive(debugMode);
+        }
     }
 
     private void OnDestroy()
@@ -58,7 +62,7 @@ public class DataController : MonoBehaviour
 
     public void Autosave()
     {
-        if (debugSaving)
+        if (debugMode)
         {
             Debug.Log("[DataController.Autosave] Abort autosaving.");
         }
@@ -73,7 +77,8 @@ public class DataController : MonoBehaviour
     }
 
     public static void AddNewIngredient(
-        string id,
+        int id,
+        string ing_name,
         float cooldown,
         float breakChance,
         float r, float g, float b, float a,
@@ -81,34 +86,92 @@ public class DataController : MonoBehaviour
     {
         try
         {
-            ingredients.Add(id, new Ingredient(id, cooldown, breakChance, r, g, b, a, potionData));
-            string[] temp = new string[genData.ingredientIDs.Length + 1];
+            ingredients.Add(id, new Ingredient(id, ing_name, cooldown, breakChance, r, g, b, a, potionData));
+            int[] temp = new int[genData.ingredientIDs.Length + 1];
             genData.ingredientIDs.CopyTo(temp, 0);
             temp[genData.ingredientIDs.Length] = id;
             genData.ingredientIDs = temp;
+            Debug.Log($"[DataController.AddNewIngredient] New ingredient added: \"{id}\" (\"{ing_name}\")");
         }
         catch (ArgumentException)
         {
-            Debug.LogWarning($"[DataController.AddNewIngredient] Ingredient with ID \"{id}\" already exists!");
+            Debug.LogWarning($"[DataController.AddNewIngredient] Ingredient with ID \"{id}\" (\"{ing_name}\") already exists!");
         }
     }
 
-    public static void CreateNewRecipe(int mistakesAllowed, params string[] ingredients)
+    public static void CreateNewRecipe(int mistakesAllowed, params int[] ingredients)
     {
         Recipe newRecipe = new Recipe(mistakesAllowed, ingredients);
-        string id = newRecipe.GetID();
-        recipes.Add(id, new Recipe(mistakesAllowed, ingredients));
-        string[] temp = new string[genData.recipeIDs.Length + 1];
-        genData.recipeIDs.CopyTo(temp, 0);
-        temp[genData.recipeIDs.Length] = id;
-        genData.recipeIDs = temp;
-        Debug.Log($"[DataController.CreateNewRecipe]: New recipe created: {newRecipe.GetID()}");
+        int id = newRecipe.GetID();
+        try
+        {
+            recipes.Add(id, new Recipe(mistakesAllowed, ingredients));
+            int[] temp = new int[genData.recipeIDs.Length + 1];
+            genData.recipeIDs.CopyTo(temp, 0);
+            temp[genData.recipeIDs.Length] = id;
+            genData.recipeIDs = temp;
+            Debug.Log($"[DataController.CreateNewRecipe]: New recipe created: {newRecipe.GetID()}");
+        }
+        catch (ArgumentException)
+        {
+            Debug.LogWarning($"[DataController.CreateNewRecipe] Recipe with ID \"{id}\" already exists!");
+        }
     }
 
-    private Dictionary<string, T> LoadGameData<T>(string[] ids, string folder, string prefix)
+    public void CreateEmptyInventoryItems(int id, int size)
     {
-        Dictionary<string, T> dict = new Dictionary<string, T>();
-        foreach (string id in ids)
+        ContainerItems ci = new ContainerItems();
+        ci.items = new ContainerItem[size];
+        try
+        {
+            containers.Add(id, ci);
+            int[] temp = new int[genData.labContainerIDs.Length + 1];
+            genData.labContainerIDs.CopyTo(temp, 0);
+            temp[genData.labContainerIDs.Length] = id;
+            genData.labContainerIDs = temp;
+            Debug.Log($"[DataController.CreateInventoryItems]: New ContainerItems object created: {id}");
+        }
+        catch (ArgumentException)
+        {
+            Debug.LogWarning($"[DataController.CreateEmptyInventoryItems] Container with ID \"{id}\" already exists!");
+        }
+    }
+
+    public void AddIngredientsDebug()
+    {
+        foreach (Ingredient i in dIng)
+        {
+            AddNewIngredient(
+                i.ing_name.Hash(),
+                i.ing_name,
+                i.cooldown,
+                i.breakChance,
+                i.color_r, i.color_g, i.color_b, i.color_a
+            );
+        }
+    }
+
+    public void AddRecipesDebug()
+    {
+        foreach (Recipe r in dRec)
+        {
+            CreateNewRecipe(r.mistakes_allowed, r.ingredient_seq);
+        }
+    }
+
+    public void AddContainersDebug()
+    {
+        for (int i = 0; i < dContIDs.Length; i++)
+        {
+            string name = dContIDs[i];
+            CreateEmptyInventoryItems(name.Hash(), dCont[i].items.Length);
+        }
+    }
+
+    private Dictionary<int, T> LoadGameData<T>(int[] ids, string folder, string prefix)
+    {
+        Dictionary<int, T> dict = new Dictionary<int, T>();
+        foreach (int id in ids)
         {
             T data = LoadDataFile<T>(folder, prefix + "(" + id + ").json");
             dict.Add(id, data);
@@ -117,7 +180,7 @@ public class DataController : MonoBehaviour
         return dict;
     }
 
-    private void SaveGameData<T>(Dictionary<string, T> dict, string folder, string prefix)
+    private void SaveGameData<T>(Dictionary<int, T> dict, string folder, string prefix)
     {
         foreach (var entry in dict)
         {
@@ -175,15 +238,5 @@ public class DataController : MonoBehaviour
     {
         string jsonData = JsonUtility.ToJson(objToSave);
         File.WriteAllText(Path.Combine(Application.streamingAssetsPath, Path.Combine(path)), jsonData);
-    }
-
-    public void SaveGameDataDebruh()
-    {
-        Debug.Log("[DataController] Debug saving...");
-
-        SaveToDataFile<General>(debugGeneral, "General", "general.json");
-        SaveToDataFile<Ingredient>(debugIngredient, "Ingredients", "ingredient(" + debugIngID + ").json");
-        SaveToDataFile<Recipe>(debugRecipe, "Recipes", "recipe(" + debugRecID + ").json");
-        SaveToDataFile<ContainerItems>(debugContainerItems, "LabContainers", "container(" + debugContainerID + ").json");
     }
 }

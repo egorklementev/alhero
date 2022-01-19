@@ -5,7 +5,8 @@ using TMPro;
 
 public class Container : MonoBehaviour
 {
-    public string id;
+    public int id;
+    public string container_name;
     public bool isUnlocked;
     public int invSize = 4;
     public GameObject[] slots;
@@ -40,14 +41,14 @@ public class Container : MonoBehaviour
                 inventory[selectedItem].SetSelected(false);
                 selectedItem = slotNum;
                 uiItem.SetSelected(true);
-                ingredientLine.text = uiItem.id;
+                ingredientLine.text = uiItem.item_name;
             }
             // When no item is selected - select
             else
             {
                 selectedItem = slotNum;
                 uiItem.SetSelected(true);
-                ingredientLine.text = uiItem.id;
+                ingredientLine.text = uiItem.item_name;
             }
         }
     }
@@ -75,7 +76,7 @@ public class Container : MonoBehaviour
                 PotionWorld pWorld = item as PotionWorld;
                 if (pWorld != null)
                 {
-                    inventory[freeSlot] = spawner.SpawnItem<PotionUI>(item.id, slots[freeSlot]);
+                    inventory[freeSlot] = spawner.SpawnItem<PotionUI>(pWorld.id, slots[freeSlot]);
                     (inventory[freeSlot] as PotionUI).potionData = new Potion(pWorld.potionData);
 
                     DataController.containers[id].items[freeSlot].id = pWorld.id;

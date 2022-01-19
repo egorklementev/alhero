@@ -76,12 +76,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0621fad78b5e4a4dbf43647a2a733d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: potion_1
+  id: 1414245136
+  item_name: potion_1
   arcanumMaterialIndex: 2
   potionData:
-    recipe_id: 
+    recipe_id: 0
     bottle_shape: 0
-    ingredients: []
+    ingredients: 
+    titleIDs: 
     color_r: 0
     color_g: 0
     color_b: 0

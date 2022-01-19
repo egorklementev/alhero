@@ -3,14 +3,10 @@ using UnityEngine;
 [System.Serializable]
 public class Potion
 {
-    public string recipe_id;
+    public int recipe_id;
     public int bottle_shape;
-    public string[] ingredients;
-
-    public float color_r;
-    public float color_g;
-    public float color_b;
-    public float color_a;
+    public int[] ingredients;
+    public int[] titleIDs;
 
     public Potion() {}
 
@@ -18,28 +14,31 @@ public class Potion
     {
         recipe_id = other.recipe_id;
         bottle_shape = other.bottle_shape;
-        ingredients = new string[other.ingredients.Length];
+        ingredients = new int[other.ingredients.Length];
         other.ingredients.CopyTo(ingredients, 0);
-        color_r = other.color_r;
-        color_g = other.color_g;
-        color_b = other.color_b;
-        color_a = other.color_a;
+        titleIDs = new int[other.titleIDs.Length];
+        other.titleIDs.CopyTo(titleIDs, 0);
     }
 
     /// We need this to generate new recipes with other potions
-    public string GetID()
+    public int GetID()
     {
-        string newPotionName = "potion(";
         Recipe r = DataController.recipes[recipe_id];
         if (r == null)
         {
             Debug.LogError($"[Potion.GetID] No recipe found with ID \"{recipe_id}\"!");
         }
-        foreach (string ing in r.ingredient_seq)
+        return r.GetID();
+    }
+
+    public string GenerateNameDebug()
+    {
+        string name = "potion(";
+        foreach (int title_id in titleIDs)
         {
-            newPotionName += ing + "_";
+            name += DataController.ingredients[ingredients[title_id]].ing_name + "_";
         }
-        return newPotionName.Substring(0, newPotionName.Length - 1) + ")";
+        return name.Substring(0, name.Length- 1) + ")";
     }
 
     public Color GetColor()
@@ -49,7 +48,7 @@ public class Potion
         float g = 0f;
         float b = 0f;
         float a = 0f;
-        foreach (string ingID in ingredients)
+        foreach (int ingID in ingredients)
         {
             Ingredient ing = DataController.ingredients[ingID];
             if (ing == null)
