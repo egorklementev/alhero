@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Networking;
 using System.IO;
 
@@ -25,6 +24,7 @@ public class DataController : MonoBehaviour
     public GameObject[] debugButtons;
 
     public static General genData;
+    public static Queue<HistoryEntry> history;
     public static Dictionary<int, Recipe> recipes;
     public static Dictionary<int, Ingredient> ingredients;
     public static Dictionary<int, ContainerItems> containers;
@@ -36,9 +36,17 @@ public class DataController : MonoBehaviour
     void Awake()
     {
         genData = LoadDataFile<General>("General", "general.json");
+
         ingredients = LoadGameData<Ingredient>(genData.ingredientIDs, "Ingredients", "ingredient");
         recipes = LoadGameData<Recipe>(genData.recipeIDs, "Recipes", "recipe");
         containers = LoadGameData<ContainerItems>(genData.labContainerIDs, "LabContainers", "container");
+
+        History historyData = LoadDataFile<History>("History", "history.json");
+        history = new Queue<HistoryEntry>();
+        foreach (HistoryEntry he in historyData.list)
+        {
+            history.Enqueue(he);
+        }
     }
 
     void Update()
@@ -69,10 +77,20 @@ public class DataController : MonoBehaviour
         else
         {
             Debug.Log("[DataController.Autosave] Autosaving...");
+
             SaveToDataFile<General>(genData, "General", "general.json");
+
             SaveGameData<Ingredient>(ingredients, "Ingredients", "ingredient");
             SaveGameData<Recipe>(recipes, "Recipes", "recipe");
             SaveGameData<ContainerItems>(containers, "LabContainers", "container");
+
+            History historyData = new History(history.Count);
+            int index = 0;
+            foreach (HistoryEntry he in history)
+            {
+                historyData.list[index++] = he;
+            }
+            SaveToDataFile<History>(historyData, "History", "history.json");
         }
     }
 
@@ -118,7 +136,7 @@ public class DataController : MonoBehaviour
         }
     }
 
-    public void CreateEmptyInventoryItems(int id, int size)
+    public static void CreateEmptyInventoryItems(int id, int size)
     {
         ContainerItems ci = new ContainerItems();
         ci.items = new ContainerItem[size];
@@ -135,6 +153,30 @@ public class DataController : MonoBehaviour
         {
             Debug.LogWarning($"[DataController.CreateEmptyInventoryItems] Container with ID \"{id}\" already exists!");
         }
+    }
+
+    public static void AddHistoryEntry(HistoryEntry he)
+    {
+        if (history.Count >= 10)
+        {
+            history.Dequeue();
+        }
+        history.Enqueue(he);
+    }
+
+    public static void AddHistoryIngredient(int id)
+    {
+        if (history.Count == 0)
+        {
+            AddHistoryEntry(new HistoryEntry());
+        }
+        int[] cur = history.ToArray()[history.Count - 1].ingredients;
+        int len = cur == null ? 0 : cur.Length;
+        int[] temp = new int[len + 1];
+        cur?.CopyTo(temp, 0);
+        temp[len] = id;
+        history.ToArray()[history.Count - 1].ingredients = temp;
+        Debug.Log($"[DataController.AddHistoryIngredient]: Ingredient \"{id}\" added.");
     }
 
     public void AddIngredientsDebug()
@@ -236,7 +278,7 @@ public class DataController : MonoBehaviour
 
     public void SaveToDataFile<T>(T objToSave, params string[] path)
     {
-        string jsonData = JsonUtility.ToJson(objToSave);
+        string jsonData = JsonUtility.ToJson(objToSave, true);
         File.WriteAllText(Path.Combine(Application.streamingAssetsPath, Path.Combine(path)), jsonData);
     }
 }

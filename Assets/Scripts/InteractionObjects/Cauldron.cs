@@ -55,6 +55,7 @@ public class Cauldron : MonoBehaviour
             ItemWorld worldItem = other.gameObject.GetComponent<ItemWorld>();
             int id = worldItem.id;
             inventory.Add(id);
+            DataController.AddHistoryIngredient(id); // Anyway
             if (cooldown > 0f)
             {
                 cooldownMistakes++;
@@ -99,6 +100,8 @@ public class Cauldron : MonoBehaviour
                                         Quaternion.identity,
                                         itemsGroup
                                         );
+
+                                    DataController.AddHistoryIngredient(temp.GetID());
                                 }
                                 else
                                 {
@@ -173,6 +176,8 @@ public class Cauldron : MonoBehaviour
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
 
                                     GenerateNewRecipeDebug(); // TODO: 
+
+                                    DataController.AddHistoryIngredient(newPotionID);
                                 }
 
                                 DestroyCurrentRecipe(true);
@@ -258,6 +263,12 @@ public class Cauldron : MonoBehaviour
         inventory.Clear();
         cooldown = 0f;
         cooldownMistakes = 0;
+
+        if (!success)
+        {
+            DataController.AddHistoryIngredient(0); // Fail
+        }
+        DataController.AddHistoryEntry(new HistoryEntry()); // Update potion cooking history
     }
 
     private void GenerateNewRecipeDebug()

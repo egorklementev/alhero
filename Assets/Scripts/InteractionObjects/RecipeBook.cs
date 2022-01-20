@@ -17,6 +17,8 @@ public class RecipeBook : MonoBehaviour
     public GameObject recipeIngItem;
     public GameObject recipeSignText;
     public GameObject recipeDescText;
+    public GameObject historyItem;
+    public GameObject failCross;
 
     [Space(15f)]
     public int maxPages = 3;
@@ -36,7 +38,7 @@ public class RecipeBook : MonoBehaviour
         bookAnim = GetComponentInChildren<Animator>();
         secondTitles = new string[]
         {
-            "Ingredients", "Recipes", "News"
+            "Ingredients", "Recipes", "History"
         };
         //ChangePage(0);
     }
@@ -75,10 +77,10 @@ public class RecipeBook : MonoBehaviour
 
         if (direction == 0)
         {
-            buttons[0].SetActive(true);
-            buttons[1].SetActive(true);
-            buttons[2].SetActive(false);
-            buttons[3].SetActive(false);
+            buttons[0].SetActive(true); // Left
+            buttons[1].SetActive(true); // Right
+            buttons[2].SetActive(false); // Just back
+            buttons[3].SetActive(false); // Recipe back
         }
 
         secondTitle.text = secondTitles[currentPage - 1];
@@ -139,6 +141,52 @@ public class RecipeBook : MonoBehaviour
                     }
                 }
                 break;
+
+            case 3: // History
+                Transform[] histEntries = new Transform[10];
+                int i = 0;
+                for (i = 0; i < 10; i++)
+                {
+                    histEntries[i] = Instantiate(historyItem, scrollContent.transform).transform;
+                    histEntries[i].Find("EntryNumber").GetComponent<TextMeshProUGUI>().text = (i + 1).ToString() + ".";
+                }
+                i = 0;
+                foreach (HistoryEntry he in DataController.history)
+                {
+                    Transform histContent = histEntries[i].Find("IngredientList").Find("HViewport").Find("HContent"); // ???
+                    TextMeshProUGUI lastText = null;
+                    if (he.ingredients != null)
+                    {
+                        int j = 0;
+                        foreach (int id in he.ingredients)
+                        {
+                            Transform ingEntry = Instantiate(recipeIngItem, histContent).transform;
+                            Transform slot = ingEntry.Find("Slot");
+                            if (id == 0)
+                            {
+                                Instantiate(failCross, slot);
+                            }
+                            else
+                            {
+                                slot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(id); });
+                                ItemUI uiItem = spawner.SpawnItem<ItemUI>(id, slot);
+                                uiItem.SetSmall();
+                                if (j < he.ingredients.Length - 1)
+                                {
+                                    lastText = Instantiate(recipeSignText, histContent).GetComponent<TextMeshProUGUI>();
+                                    lastText.text = "+";
+                                }
+                            }
+                            j++;
+                        }
+                        if (lastText != null)
+                        {
+                            lastText.text = "=";
+                        }
+                    }
+                    i++;
+                }
+                break;
             default:
                 break;
         }
@@ -176,8 +224,8 @@ public class RecipeBook : MonoBehaviour
 
         Ingredient ing = DataController.ingredients[uiItem.id];
         ingDescEntry.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text =
-            $"Cooldown: {ing.cooldown:F1} seconds" + 
-            $"{Environment.NewLine}{Environment.NewLine}" + 
+            $"Cooldown: {ing.cooldown:F1} seconds" +
+            $"{Environment.NewLine}{Environment.NewLine}" +
             $"Chance to break a potion: {(ing.breakChance * 100f):F1} %";
     }
 
@@ -228,10 +276,10 @@ public class RecipeBook : MonoBehaviour
         // Additional recipe info
         float failureChance = 1f - successChance;
         lastText = Instantiate(recipeDescText, scrollContent.transform).transform;
-        lastText.GetComponent<TextMeshProUGUI>().text = $"Mistakes allowed: {rec.mistakes_allowed}{Environment.NewLine}{Environment.NewLine}" + 
+        lastText.GetComponent<TextMeshProUGUI>().text = $"Mistakes allowed: {rec.mistakes_allowed}{Environment.NewLine}{Environment.NewLine}" +
             $"Chance of failure: {failureChance:F1} %";
     }
-    
+
     public void OnRecipeBack()
     {
         OnRecipeClicked(currentRecipe);
