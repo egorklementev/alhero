@@ -1,0 +1,109 @@
+{
+    "list": [
+        {
+            "id": -1788335842,
+            "items": [
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                },
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                }
+            ]
+        },
+        {
+            "id": -1788335908,
+            "items": [
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                },
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                },
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                },
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                }
+            ]
+        },
+        {
+            "id": -1788335909,
+            "items": [
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                },
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                },
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                },
+                {
+                    "id": 0,
+                    "potionData": {
+                        "recipe_id": 0,
+                        "bottle_shape": 0,
+                        "ingredients": [],
+                        "titleIDs": []
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -88,13 +88,13 @@ public class SpawnController : MonoBehaviour
         foreach (Transform contTransform in labContainers.transform)
         {
             Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
-            if (!DataController.containers.ContainsKey(contScript.id))
+            if (!DataController.labContainers.ContainsKey(contScript.id))
             {
                 Debug.LogWarning($"[LogicController.Start] No container with ID \"{contScript.id}\"!");
             }
             else
             {
-                ContainerItems itemsToLoad = DataController.containers[contScript.id];
+                LabContainerItems itemsToLoad = DataController.labContainers[contScript.id];
                 if (itemsToLoad != null)
                 {
                     for (int i = 0; i < itemsToLoad.items.Length; i++)

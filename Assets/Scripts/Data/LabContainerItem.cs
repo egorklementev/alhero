@@ -1,5 +1,5 @@
 [System.Serializable]
-public class ContainerItem
+public class LabContainerItem
 {
     public int id;
     public Potion potionData;

@@ -1,5 +1,5 @@
 [System.Serializable]
-public class Recipe
+public class Recipe : GameDataEntry
 {
     public int[] ingredient_seq;
     public int mistakes_allowed;
@@ -10,6 +10,7 @@ public class Recipe
         ingredient_seq = ingredients;
         mistakes_allowed = mistakesAllowed;
         is_unlocked = false;
+        id = GetID();
     }
 
     public int GetID()

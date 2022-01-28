@@ -1,7 +1,6 @@
 [System.Serializable]
-public class Ingredient
+public class Ingredient : GameDataEntry
 {
-    public int id; // Corresponds to World Item id
     public string ing_name; // Localization link
     public float cooldown; // How much of a delay adds this ingredient to the cauldron
     public float breakChance; // How likely is that this ingredient will break the recipe

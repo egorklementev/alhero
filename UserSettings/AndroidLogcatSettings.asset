@@ -3,63 +3,51 @@
     "m_SelectedPackage": {
         "deviceId": "7afc6a600404",
         "name": "com.erked.AlHero",
-        "processId": 30406,
+        "processId": 29212,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 14044,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 32106,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
             "name": "com.miui.home",
-            "processId": 1798,
+            "processId": 1781,
             "exited": false
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
-            "processId": 5796,
+            "processId": 6821,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 10173,
             "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.unity3d.mobileremote",
-            "processId": 13548,
+            "processId": 21751,
             "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
-            "processId": 11553,
+            "processId": 25229,
             "exited": true
         },
         {
             "deviceId": "7afc6a600404",
-            "name": "com.unity3d.mobileremote",
-            "processId": 12573,
-            "exited": false
+            "name": "com.erked.AlHero",
+            "processId": 27504,
+            "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
-            "processId": 13433,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 30406,
+            "processId": 29212,
             "exited": false
         }
     ],
@@ -71,7 +59,7 @@
             },
             {
                 "m_Name": "No Filter",
-                "m_Selected": true
+                "m_Selected": false
             },
             {
                 "m_Name": "",
@@ -87,7 +75,7 @@
             },
             {
                 "m_Name": "Unity",
-                "m_Selected": false
+                "m_Selected": true
             },
             {
                 "m_Name": "CRASH",

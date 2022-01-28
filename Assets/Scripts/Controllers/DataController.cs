@@ -16,7 +16,7 @@ public class DataController : MonoBehaviour
 
     [Space(20f)]
     public string[] dContIDs;
-    public ContainerItems[] dCont;
+    public LabContainerItems[] dCont;
 
     [Space(20f)]
     public float autosaveTimer = 60f;
@@ -27,7 +27,7 @@ public class DataController : MonoBehaviour
     public static Queue<HistoryEntry> history;
     public static Dictionary<int, Recipe> recipes;
     public static Dictionary<int, Ingredient> ingredients;
-    public static Dictionary<int, ContainerItems> containers;
+    public static Dictionary<int, LabContainerItems> labContainers;
 
     public const int bootleShapesNumber = 4;
 
@@ -35,11 +35,21 @@ public class DataController : MonoBehaviour
 
     void Awake()
     {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            string[] folders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
+            string[] files = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
+            for (int i = 0; i < folders.Length; i++)
+            {
+                SetupAndroidDataFile(folders[i], files[i]);
+            }
+        }
+
         genData = LoadDataFile<General>("General", "general.json");
 
-        ingredients = LoadGameData<Ingredient>(genData.ingredientIDs, "Ingredients", "ingredient");
-        recipes = LoadGameData<Recipe>(genData.recipeIDs, "Recipes", "recipe");
-        containers = LoadGameData<ContainerItems>(genData.labContainerIDs, "LabContainers", "container");
+        ingredients = LoadDataFile<Ingredients>("Ingredients", "ingredients.json").GetDict();
+        recipes = LoadDataFile<Recipes>("Recipes", "recipes.json").GetDict();
+        labContainers = LoadDataFile<LabContainers>("LabContainers", "lab_containers.json").GetDict();
 
         History historyData = LoadDataFile<History>("History", "history.json");
         history = new Queue<HistoryEntry>();
@@ -80,9 +90,9 @@ public class DataController : MonoBehaviour
 
             SaveToDataFile<General>(genData, "General", "general.json");
 
-            SaveGameData<Ingredient>(ingredients, "Ingredients", "ingredient");
-            SaveGameData<Recipe>(recipes, "Recipes", "recipe");
-            SaveGameData<ContainerItems>(containers, "LabContainers", "container");
+            SaveGameData<Ingredient>(ingredients, "Ingredients", "ingredients.json");
+            SaveGameData<Recipe>(recipes, "Recipes", "recipes.json");
+            SaveGameData<LabContainerItems>(labContainers, "LabContainers", "lab_containers.json");
 
             History historyData = new History(history.Count);
             int index = 0;
@@ -105,10 +115,6 @@ public class DataController : MonoBehaviour
         try
         {
             ingredients.Add(id, new Ingredient(id, ing_name, cooldown, breakChance, r, g, b, a, potionData));
-            int[] temp = new int[genData.ingredientIDs.Length + 1];
-            genData.ingredientIDs.CopyTo(temp, 0);
-            temp[genData.ingredientIDs.Length] = id;
-            genData.ingredientIDs = temp;
             Debug.Log($"[DataController.AddNewIngredient] New ingredient added: \"{id}\" (\"{ing_name}\")");
         }
         catch (ArgumentException)
@@ -124,10 +130,6 @@ public class DataController : MonoBehaviour
         try
         {
             recipes.Add(id, new Recipe(mistakesAllowed, ingredients));
-            int[] temp = new int[genData.recipeIDs.Length + 1];
-            genData.recipeIDs.CopyTo(temp, 0);
-            temp[genData.recipeIDs.Length] = id;
-            genData.recipeIDs = temp;
             Debug.Log($"[DataController.CreateNewRecipe]: New recipe created: {newRecipe.GetID()}");
         }
         catch (ArgumentException)
@@ -138,15 +140,12 @@ public class DataController : MonoBehaviour
 
     public static void CreateEmptyInventoryItems(int id, int size)
     {
-        ContainerItems ci = new ContainerItems();
-        ci.items = new ContainerItem[size];
+        LabContainerItems ci = new LabContainerItems();
+        ci.id = id;
+        ci.items = new LabContainerItem[size];
         try
         {
-            containers.Add(id, ci);
-            int[] temp = new int[genData.labContainerIDs.Length + 1];
-            genData.labContainerIDs.CopyTo(temp, 0);
-            temp[genData.labContainerIDs.Length] = id;
-            genData.labContainerIDs = temp;
+            labContainers.Add(id, ci);
             Debug.Log($"[DataController.CreateInventoryItems]: New ContainerItems object created: {id}");
         }
         catch (ArgumentException)
@@ -210,62 +209,43 @@ public class DataController : MonoBehaviour
         }
     }
 
-    private Dictionary<int, T> LoadGameData<T>(int[] ids, string folder, string prefix)
+    private void SaveGameData<T>(Dictionary<int, T> dict, string folder, string file) where T : GameDataEntry
     {
-        Dictionary<int, T> dict = new Dictionary<int, T>();
-        foreach (int id in ids)
-        {
-            T data = LoadDataFile<T>(folder, prefix + "(" + id + ").json");
-            dict.Add(id, data);
-        }
-        Debug.Log($"[DataController.LoadGameData]: Loaded {ids.Length} [{typeof(T).ToString()}] game data files.");
-        return dict;
-    }
-
-    private void SaveGameData<T>(Dictionary<int, T> dict, string folder, string prefix)
-    {
+        GameData<T> gameData = new GameData<T>(dict.Count);
+        int index = 0;
         foreach (var entry in dict)
         {
-            SaveToDataFile<T>(entry.Value, folder, prefix + "(" + entry.Key + ").json");
+            gameData.list[index++] = entry.Value;
         }
+        SaveToDataFile<GameData<T>>(gameData, folder, file);
     }
 
     public T LoadDataFile<T>(params string[] path)
     {
         string jsonData;
-        string absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
+        string absPath;
+        switch (Application.platform)
+        {
+            case RuntimePlatform.WindowsEditor:
+                absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
+                break;
+            case RuntimePlatform.Android:
+                absPath = Path.Combine(Application.persistentDataPath, Path.Combine(path));
+                break;
+            default:
+                absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
+                break;
+        }
         try
         {
-            switch (Application.platform)
+            if (File.Exists(absPath))
             {
-                case RuntimePlatform.WindowsEditor:
-                    if (File.Exists(absPath))
-                    {
-                        jsonData = File.ReadAllText(absPath);
-                    }
-                    else
-                    {
-                        Debug.LogWarning($"[DataController.LoadDataFile] Unable to read data file \"{absPath}\"!");
-                        return default(T);
-                    }
-                    break;
-                case RuntimePlatform.Android:
-                    UnityWebRequest request = UnityWebRequest.Get(absPath);
-                    request.SendWebRequest();
-                    while (!request.isDone)
-                    {
-                        if (request.result == UnityWebRequest.Result.ConnectionError ||
-                        request.result == UnityWebRequest.Result.DataProcessingError)
-                        {
-                            Debug.LogError("[DataController.LoadDataFile] What a fuck!?");
-                            break;
-                        }
-                    }
-                    jsonData = request.downloadHandler.text;
-                    break;
-                default:
-                    jsonData = File.ReadAllText(absPath);
-                    break;
+                jsonData = File.ReadAllText(absPath);
+            }
+            else
+            {
+                Debug.LogWarning($"[DataController.LoadDataFile] Unable to read data file \"{absPath}\"!");
+                return default(T);
             }
         }
         catch (System.Exception)
@@ -279,6 +259,51 @@ public class DataController : MonoBehaviour
     public void SaveToDataFile<T>(T objToSave, params string[] path)
     {
         string jsonData = JsonUtility.ToJson(objToSave, true);
-        File.WriteAllText(Path.Combine(Application.streamingAssetsPath, Path.Combine(path)), jsonData);
+        string absPath;
+        switch (Application.platform)
+        {
+            case RuntimePlatform.WindowsEditor:
+                absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
+                break;
+            case RuntimePlatform.Android:
+                absPath = Path.Combine(Application.persistentDataPath, Path.Combine(path));
+                break;
+            default:
+                absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
+                break;
+        }
+        try
+        {
+            File.WriteAllText(absPath, jsonData);
+        }
+        catch (System.Exception)
+        {
+            throw;
+        }
+    }
+
+    private void SetupAndroidDataFile(string folder, string file)
+    {
+        // Create "general.json" file
+        string persPath = Path.Combine(Application.persistentDataPath, folder);
+        string streamPath = Path.Combine(Application.streamingAssetsPath, folder, file);
+        if (!Directory.Exists(persPath))
+        {
+            Directory.CreateDirectory(persPath);
+
+            UnityWebRequest request = UnityWebRequest.Get(streamPath);
+            request.SendWebRequest();
+            while (!request.isDone)
+            {
+                if (request.result == UnityWebRequest.Result.ConnectionError ||
+                request.result == UnityWebRequest.Result.DataProcessingError)
+                {
+                    Debug.LogError("[DataController.SetupAndroidGenFile] What a fuck!?");
+                    break;
+                }
+            }
+            string jsonData = request.downloadHandler.text;
+            File.WriteAllText(Path.Combine(persPath, file), jsonData);
+        }
     }
 }

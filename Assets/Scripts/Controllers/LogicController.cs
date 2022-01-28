@@ -62,8 +62,8 @@ public class LogicController : MonoBehaviour
             ItemUI selectedItem = b.GetSelectedItem();
             if (selectedItem != null)
             {
-                DataController.containers[b.id].items[b.GetSelectedItemSlot()].id = 0;
-                DataController.containers[b.id].items[b.GetSelectedItemSlot()].potionData = new Potion();
+                DataController.labContainers[b.id].items[b.GetSelectedItemSlot()].id = 0;
+                DataController.labContainers[b.id].items[b.GetSelectedItemSlot()].potionData = new Potion();
 
                 b.ResetSelection();
 

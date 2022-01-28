@@ -6629,9 +6629,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debugGeneral:
-    ingredientIDs: 0537f2c3d0998e7ead7212cceaf9f502a98e15ce
-    recipeIDs: 4013908c
-    labContainerIDs: 1e296895dc286895db286895
     cauldronInventory: 
   dIng:
   - id: 0
@@ -6705,7 +6702,8 @@ MonoBehaviour:
     color_b: -0.04
     color_a: 0.28
   dRec:
-  - ingredient_seq: ad7212cc1b9ffef9a98e15ce
+  - id: 0
+    ingredient_seq: ad7212cc1b9ffef9a98e15ce
     mistakes_allowed: 1
     is_unlocked: 0
   dContIDs:
@@ -6713,7 +6711,8 @@ MonoBehaviour:
   - barrel_x4_0
   - barrel_x4_1
   dCont:
-  - items:
+  - id: 0
+    items:
     - id: 0
       potionData:
         recipe_id: 0
@@ -6726,7 +6725,8 @@ MonoBehaviour:
         bottle_shape: 0
         ingredients: 
         titleIDs: 
-  - items:
+  - id: 0
+    items:
     - id: 0
       potionData:
         recipe_id: 0
@@ -6751,7 +6751,8 @@ MonoBehaviour:
         bottle_shape: 0
         ingredients: 
         titleIDs: 
-  - items:
+  - id: 0
+    items:
     - id: 0
       potionData:
         recipe_id: 0
@@ -6777,7 +6778,7 @@ MonoBehaviour:
         ingredients: 
         titleIDs: 
   autosaveTimer: 30
-  debugMode: 1
+  debugMode: 0
   debugButtons:
   - {fileID: 1681070580}
   - {fileID: 2026221793}
