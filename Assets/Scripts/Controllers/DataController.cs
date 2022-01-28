@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
+using SysRandom = System.Random;
+using UnityRandom = UnityEngine.Random;
 
 public class DataController : MonoBehaviour
 {
@@ -19,7 +21,7 @@ public class DataController : MonoBehaviour
     public LabContainerItems[] dCont;
 
     [Space(20f)]
-    public float autosaveTimer = 60f;
+    public float autosaveDelay = 60f;
     public bool debugMode = false;
     public GameObject[] debugButtons;
 
@@ -31,7 +33,9 @@ public class DataController : MonoBehaviour
 
     public const int bootleShapesNumber = 4;
 
-    private float currentTimer = 0f;
+    private float autoSaveTimer = 0f;
+
+    private static List<int> currentHistoryIngs = new List<int>();
 
     void Awake()
     {
@@ -57,14 +61,24 @@ public class DataController : MonoBehaviour
         {
             history.Enqueue(he);
         }
+
+        foreach (int id in genData.cauldronInventory)
+        {
+            currentHistoryIngs.Add(id);
+        }
+
+        if (genData.seed == 0)
+        {
+            StartNewGame();
+        }
     }
 
     void Update()
     {
-        currentTimer -= Time.deltaTime;
-        if (currentTimer < 0f)
+        autoSaveTimer -= Time.deltaTime;
+        if (autoSaveTimer < 0f)
         {
-            currentTimer = autosaveTimer;
+            autoSaveTimer = autosaveDelay;
             Autosave();
         }
         foreach (GameObject btn in debugButtons)
@@ -160,22 +174,23 @@ public class DataController : MonoBehaviour
         {
             history.Dequeue();
         }
+        he.ingredients = new int[currentHistoryIngs.Count];
+        currentHistoryIngs.CopyTo(he.ingredients);
         history.Enqueue(he);
+        Debug.Log($"[History]: New size is {history.Count}");
     }
 
     public static void AddHistoryIngredient(int id)
     {
-        if (history.Count == 0)
-        {
-            AddHistoryEntry(new HistoryEntry());
-        }
-        int[] cur = history.ToArray()[history.Count - 1].ingredients;
-        int len = cur == null ? 0 : cur.Length;
-        int[] temp = new int[len + 1];
-        cur?.CopyTo(temp, 0);
-        temp[len] = id;
-        history.ToArray()[history.Count - 1].ingredients = temp;
+        currentHistoryIngs.Add(id);
         Debug.Log($"[DataController.AddHistoryIngredient]: Ingredient \"{id}\" added.");
+    }
+
+    public static void StartNewGame()
+    {
+        int seed = new SysRandom().Next();
+        genData.seed = seed;
+        UnityRandom.InitState(seed);
     }
 
     public void AddIngredientsDebug()

@@ -21,7 +21,7 @@ public class RecipeBook : MonoBehaviour
     public GameObject failCross;
 
     [Space(15f)]
-    public int maxPages = 3;
+    public int maxPages = 4;
 
     [Space(20f)]
     public SpawnController spawner;
@@ -38,7 +38,7 @@ public class RecipeBook : MonoBehaviour
         bookAnim = GetComponentInChildren<Animator>();
         secondTitles = new string[]
         {
-            "Ingredients", "Recipes", "History"
+            "Ingredients", "Recipes", "History", "Game Info"
         };
         //ChangePage(0);
     }
@@ -187,6 +187,12 @@ public class RecipeBook : MonoBehaviour
                     i++;
                 }
                 break;
+
+            case 4: // Game Info
+                UIController.ActivateUIGroup("game_info_group");
+                UIController.DeactivateUIGroup("recipe_book_group");
+                break;
+
             default:
                 break;
         }
@@ -250,15 +256,22 @@ public class RecipeBook : MonoBehaviour
         Transform lastText = null;
         foreach (int ing_id in rec.ingredient_seq)
         {
-            Ingredient i = DataController.ingredients[ing_id];
-            Transform ing = Instantiate(recipeIngItem, scrollContent.transform).transform;
-            Transform slot = ing.Find("Slot");
-            slot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(ing_id, true); });
-            ItemUI uiItem = spawner.SpawnItem<ItemUI>(ing_id, slot);
-            uiItem.SetSmall();
-            lastText = Instantiate(recipeSignText, scrollContent.transform).transform;
-            lastText.GetComponent<TextMeshProUGUI>().text = "+";
-            successChance *= 1f - i.breakChance;
+            if (DataController.ingredients.ContainsKey(ing_id))
+            {
+                Ingredient i = DataController.ingredients[ing_id];
+                Transform ing = Instantiate(recipeIngItem, scrollContent.transform).transform;
+                Transform slot = ing.Find("Slot");
+                slot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(ing_id, true); });
+                ItemUI uiItem = spawner.SpawnItem<ItemUI>(ing_id, slot);
+                uiItem.SetSmall();
+                lastText = Instantiate(recipeSignText, scrollContent.transform).transform;
+                lastText.GetComponent<TextMeshProUGUI>().text = "+";
+                successChance *= 1f - i.breakChance;
+            }
+            else
+            {
+                Debug.LogError($"[RecipeBook.OnRecipeClicked]: No ingredient with ID \"{ing_id}\"!!!");
+            }
         }
         if (lastText != null)
         {
