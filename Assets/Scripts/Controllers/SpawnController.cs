@@ -210,4 +210,12 @@ public class SpawnController : MonoBehaviour
         Debug.LogWarning($"[SpawnController.SpawnItem] No item with ID \"{id}\"!!!");
         return null;
     }
+
+    public void ClearLabContainers()
+    {
+        foreach (Transform container in labContainers.transform)
+        {
+            container.GetComponentInChildren<Container>().Clear();
+        }
+    }
 }

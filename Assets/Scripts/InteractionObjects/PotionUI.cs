@@ -18,4 +18,9 @@ public class PotionUI : ItemUI
     {
         render.materials[arcanumMaterialIndex].SetColor("_Color", potionData.GetColor());
     }
+
+    public override bool IsPotion()
+    {
+        return true;
+    }
 }

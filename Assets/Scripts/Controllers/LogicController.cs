@@ -13,6 +13,8 @@ public class LogicController : MonoBehaviour
 
     [Space(15f)]
     public SpawnController spawner;
+    public UIController ui;
+    public DataController data;
 
     private static int playerInvSize = 3; // Inverntory size
 
@@ -112,5 +114,18 @@ public class LogicController : MonoBehaviour
             spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, itemsGroup);
             pos -= new Vector3(0f, 0f, 3f);
         }
+    }
+
+    public void StartNewGame()
+    {
+        foreach (Transform obj in itemsGroup.transform)
+        {
+            Destroy(obj.gameObject);
+        }
+
+        spawner.ClearLabContainers();
+        data.StartNewGame();
+        player.transform.position = Vector3.zero;
+        // TODO: play some player animation or something
     }
 }

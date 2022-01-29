@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
-using SysRandom = System.Random;
-using UnityRandom = UnityEngine.Random;
+using Random = UnityEngine.Random;
 
 public class DataController : MonoBehaviour
 {
@@ -25,11 +24,17 @@ public class DataController : MonoBehaviour
     public bool debugMode = false;
     public GameObject[] debugButtons;
 
+    [Space(20f)]
+    public SpawnController spawner;
+    public LogicController logic;
+
     public static General genData;
     public static Queue<HistoryEntry> history;
     public static Dictionary<int, Recipe> recipes;
     public static Dictionary<int, Ingredient> ingredients;
     public static Dictionary<int, LabContainerItems> labContainers;
+    public static int newSeed = 0;
+
 
     public const int bootleShapesNumber = 4;
 
@@ -39,14 +44,11 @@ public class DataController : MonoBehaviour
 
     void Awake()
     {
-        if (Application.platform == RuntimePlatform.Android)
+        string[] folders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
+        string[] files = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
+        for (int i = 0; i < folders.Length; i++)
         {
-            string[] folders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
-            string[] files = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
-            for (int i = 0; i < folders.Length; i++)
-            {
-                SetupAndroidDataFile(folders[i], files[i]);
-            }
+            SetupDataFile(folders[i], files[i]);
         }
 
         genData = LoadDataFile<General>("General", "general.json");
@@ -69,8 +71,9 @@ public class DataController : MonoBehaviour
 
         if (genData.seed == 0)
         {
-            StartNewGame();
+            logic.StartNewGame();
         }
+        Random.InitState(genData.seed);
     }
 
     void Update()
@@ -118,7 +121,7 @@ public class DataController : MonoBehaviour
         }
     }
 
-    public static void AddNewIngredient(
+    public static Ingredient AddNewIngredient(
         int id,
         string ing_name,
         float cooldown,
@@ -126,18 +129,20 @@ public class DataController : MonoBehaviour
         float r, float g, float b, float a,
         Potion potionData = null)
     {
+        Ingredient ing = new Ingredient(id, ing_name, cooldown, breakChance, r, g, b, a, potionData);
         try
         {
-            ingredients.Add(id, new Ingredient(id, ing_name, cooldown, breakChance, r, g, b, a, potionData));
+            ingredients.Add(id, ing);
             Debug.Log($"[DataController.AddNewIngredient] New ingredient added: \"{id}\" (\"{ing_name}\")");
         }
         catch (ArgumentException)
         {
             Debug.LogWarning($"[DataController.AddNewIngredient] Ingredient with ID \"{id}\" (\"{ing_name}\") already exists!");
         }
+        return ing;
     }
 
-    public static void CreateNewRecipe(int mistakesAllowed, params int[] ingredients)
+    public static Recipe CreateNewRecipe(int mistakesAllowed, params int[] ingredients)
     {
         Recipe newRecipe = new Recipe(mistakesAllowed, ingredients);
         int id = newRecipe.GetID();
@@ -150,9 +155,10 @@ public class DataController : MonoBehaviour
         {
             Debug.LogWarning($"[DataController.CreateNewRecipe] Recipe with ID \"{id}\" already exists!");
         }
+        return newRecipe;
     }
 
-    public static void CreateEmptyInventoryItems(int id, int size)
+    public static LabContainerItems CreateEmptyInventoryItems(int id, int size)
     {
         LabContainerItems ci = new LabContainerItems();
         ci.id = id;
@@ -166,6 +172,7 @@ public class DataController : MonoBehaviour
         {
             Debug.LogWarning($"[DataController.CreateEmptyInventoryItems] Container with ID \"{id}\" already exists!");
         }
+        return ci;
     }
 
     public static void AddHistoryEntry(HistoryEntry he)
@@ -177,6 +184,7 @@ public class DataController : MonoBehaviour
         he.ingredients = new int[currentHistoryIngs.Count];
         currentHistoryIngs.CopyTo(he.ingredients);
         history.Enqueue(he);
+        currentHistoryIngs.Clear();
         Debug.Log($"[History]: New size is {history.Count}");
     }
 
@@ -186,11 +194,81 @@ public class DataController : MonoBehaviour
         Debug.Log($"[DataController.AddHistoryIngredient]: Ingredient \"{id}\" added.");
     }
 
-    public static void StartNewGame()
+    public void StartNewGame()
     {
-        int seed = new SysRandom().Next();
-        genData.seed = seed;
-        UnityRandom.InitState(seed);
+        Debug.Log(Environment.NewLine);
+        Debug.Log("Starting a new game...");
+        Debug.Log(Environment.NewLine);
+        
+        // In case of user set seed
+        if (newSeed != 0)
+        {
+            genData.seed = newSeed;
+            newSeed = 0;
+            Debug.Log($"[DataController.StartNewGame]: New game seed is {genData.seed}.");
+        }
+
+        // The very new game
+        if (genData.seed == 0)
+        {
+            genData.seed = Random.Range(int.MinValue, int.MaxValue);
+            Debug.Log($"[DataController.StartNewGame]: New game started. The seed is {genData.seed}.");
+        }
+        Random.InitState(genData.seed);
+
+        history.Clear();
+
+        foreach (LabContainerItems lci in labContainers.Values)
+        {
+            int size = lci.items.Length;
+            lci.items = new LabContainerItem[size];
+        }
+
+        // Randomize ingredient values
+        ingredients.Clear();
+        // The stuff below basically means removal of all generated potions
+        spawner.absItems.RemoveAll(item => item.IsPotion() && (
+            (item as PotionUI == null ? (item as PotionWorld).potionData.recipe_id != 0 : (item as PotionUI).potionData.recipe_id != 0)
+        ));
+        foreach (AbstractItem item in spawner.absItems)
+        {
+            if (item as PotionWorld == null && item as PotionUI == null)
+            {
+                AddNewIngredient(
+                    item.item_name.Hash(),
+                    item.item_name,
+                    Random.Range(0f, 6f),
+                    Random.value * .15f, // TODO:
+                    2f * (Random.value - .5f),
+                    2f * (Random.value - .5f),
+                    2f * (Random.value - .5f),
+                    2f * (Random.value - .5f)
+                );
+            }
+        }
+
+        // Add initial recipe
+        recipes.Clear();
+        GenerateRandomRecipe(3);
+
+        // Unconditional autosave
+        Autosave();
+    }
+
+    public static Recipe GenerateRandomRecipe(int ingNum = 0)
+    {
+        int maxIngredients = ingNum == 0 ? ingredients.Count : ingNum;
+        int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
+        ingNum = Random.Range(2, maxIngredients + 1);
+        int[] ings = new int[ingNum];
+        List<int> ingIDs = new List<int>(ingredients.Keys);
+        for (int i = 0; i < ingNum; i++)
+        {
+            ings[i] = ingIDs[Random.Range(0, ingredients.Count)];
+        }
+        Recipe rec = new Recipe(mistakes, ings);
+        CreateNewRecipe(rec.mistakes_allowed, rec.ingredient_seq);
+        return rec;
     }
 
     public void AddIngredientsDebug()
@@ -238,19 +316,7 @@ public class DataController : MonoBehaviour
     public T LoadDataFile<T>(params string[] path)
     {
         string jsonData;
-        string absPath;
-        switch (Application.platform)
-        {
-            case RuntimePlatform.WindowsEditor:
-                absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
-                break;
-            case RuntimePlatform.Android:
-                absPath = Path.Combine(Application.persistentDataPath, Path.Combine(path));
-                break;
-            default:
-                absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
-                break;
-        }
+        string absPath = Path.Combine(Application.persistentDataPath, Path.Combine(path));
         try
         {
             if (File.Exists(absPath))
@@ -274,19 +340,7 @@ public class DataController : MonoBehaviour
     public void SaveToDataFile<T>(T objToSave, params string[] path)
     {
         string jsonData = JsonUtility.ToJson(objToSave, true);
-        string absPath;
-        switch (Application.platform)
-        {
-            case RuntimePlatform.WindowsEditor:
-                absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
-                break;
-            case RuntimePlatform.Android:
-                absPath = Path.Combine(Application.persistentDataPath, Path.Combine(path));
-                break;
-            default:
-                absPath = Path.Combine(Application.streamingAssetsPath, Path.Combine(path));
-                break;
-        }
+        string absPath = Path.Combine(Application.persistentDataPath, Path.Combine(path));
         try
         {
             File.WriteAllText(absPath, jsonData);
@@ -297,9 +351,9 @@ public class DataController : MonoBehaviour
         }
     }
 
-    private void SetupAndroidDataFile(string folder, string file)
+    /// Creates a copy of data file located in Streaming Assets inside persistent data storage
+    private void SetupDataFile(string folder, string file)
     {
-        // Create "general.json" file
         string persPath = Path.Combine(Application.persistentDataPath, folder);
         string streamPath = Path.Combine(Application.streamingAssetsPath, folder, file);
         if (!Directory.Exists(persPath))
@@ -313,7 +367,7 @@ public class DataController : MonoBehaviour
                 if (request.result == UnityWebRequest.Result.ConnectionError ||
                 request.result == UnityWebRequest.Result.DataProcessingError)
                 {
-                    Debug.LogError("[DataController.SetupAndroidGenFile] What a fuck!?");
+                    Debug.LogError("[DataController.SetupDataFile] What a fuck!?");
                     break;
                 }
             }

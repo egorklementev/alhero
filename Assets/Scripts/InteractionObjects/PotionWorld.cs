@@ -20,4 +20,8 @@ public class PotionWorld : ItemWorld
         return potionData.GetColor();
     }
 
+    public override bool IsPotion()
+    {
+        return true;
+    }
 }

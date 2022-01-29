@@ -8,6 +8,7 @@ public class UIController : MonoBehaviour
 {
 
     public Animator rightPanelAnim;
+    public Animator fadePanelAnim;
 
     [Space(10f)]
     public List<GameObject> uiGroups;
@@ -15,7 +16,6 @@ public class UIController : MonoBehaviour
     [Space(10f)]
     public TextMeshProUGUI fpsLine;
     public TextMeshProUGUI debugLine;
-    public TextMeshProUGUI seedLine;
 
     [Space(10f)]
     public float delay = .5f;
@@ -26,6 +26,8 @@ public class UIController : MonoBehaviour
     private static LinkedList<string> groupsForDeactivation = new LinkedList<string>();
     private static LinkedList<string> groupsForInstantDeactivation = new LinkedList<string>();
     private static bool showRightPanel = false;
+    private static bool triggerFadePanel = false;
+    private static float fadeSpeed = 1f;
 
     // Update is called once per frame
     void Update()
@@ -34,6 +36,15 @@ public class UIController : MonoBehaviour
         fpsLine.text = "FPS: " + fps.ToString();
 
         rightPanelAnim.SetBool("DoShow", showRightPanel);
+
+        if (triggerFadePanel)
+        {
+            fadePanelAnim.SetFloat("fade_speed", fadeSpeed);
+            fadePanelAnim.SetTrigger("Triggered");
+
+            triggerFadePanel = false;
+            fadeSpeed = 1f;
+        }
 
         // Checking whether UI group activation/deactivation was scheduled
         if (groupsForActivation.First != null)
@@ -112,5 +123,16 @@ public class UIController : MonoBehaviour
         DeactivateUIGroup(activeGroup);
         activeGroup = "none";
         LogicController.curContainer = null;
+    }
+
+    public static void TriggerFade(float speed = 1f)
+    {
+        triggerFadePanel = true;
+        fadeSpeed = speed;
+    }
+
+    public void ShowLongFade()
+    {
+        fadePanelAnim.Play("FadeOutLong");
     }
 }

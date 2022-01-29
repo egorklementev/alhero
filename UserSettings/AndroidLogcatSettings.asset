@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "7afc6a600404",
         "name": "com.erked.AlHero",
-        "processId": 29212,
+        "processId": 25579,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -13,18 +13,6 @@
             "name": "com.miui.home",
             "processId": 1781,
             "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 6821,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 10173,
-            "exited": true
         },
         {
             "deviceId": "7afc6a600404",
@@ -48,6 +36,24 @@
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 29212,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 32526,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.unity3d.mobileremote",
+            "processId": 21332,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 25579,
             "exited": false
         }
     ],

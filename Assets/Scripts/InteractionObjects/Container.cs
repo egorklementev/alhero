@@ -127,4 +127,17 @@ public class Container : MonoBehaviour
         }
         selectedItem = -1;
     }
+
+    public void Clear()
+    {
+        ResetSelection();
+        inventory = new ItemUI[invSize];
+        foreach (GameObject slot in slots)
+        {
+            foreach (Transform child in slot.transform)
+            {
+                Destroy(child.gameObject);
+            }
+        }
+    }
 }

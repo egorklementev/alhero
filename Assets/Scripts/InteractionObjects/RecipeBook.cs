@@ -19,6 +19,7 @@ public class RecipeBook : MonoBehaviour
     public GameObject recipeDescText;
     public GameObject historyItem;
     public GameObject failCross;
+    public GameObject questionMark;
 
     [Space(15f)]
     public int maxPages = 4;
@@ -137,6 +138,16 @@ public class RecipeBook : MonoBehaviour
                         slot.GetComponent<Button>().onClick.AddListener(delegate { OnRecipeClicked(rec_id); });
                         uiPotionCopy.SetSmall();
                         recEntry.transform.Find("Title").GetComponent<TextMeshProUGUI>().text = uiPotion.item_name;
+                        index++;
+                    }
+                    else 
+                    {
+                        Transform recEntry = Instantiate(bookItem, scrollContent.transform).transform;
+                        Transform slot = recEntry.Find("Slot");
+                        Instantiate(questionMark, slot);
+                        int rec_id = rec.GetID();
+                        slot.GetComponent<Button>().onClick.AddListener(delegate { OnRecipeClicked(rec_id); });
+                        recEntry.transform.Find("Title").GetComponent<TextMeshProUGUI>().text = "Unknown";
                         index++;
                     }
                 }
@@ -261,12 +272,19 @@ public class RecipeBook : MonoBehaviour
                 Ingredient i = DataController.ingredients[ing_id];
                 Transform ing = Instantiate(recipeIngItem, scrollContent.transform).transform;
                 Transform slot = ing.Find("Slot");
-                slot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(ing_id, true); });
-                ItemUI uiItem = spawner.SpawnItem<ItemUI>(ing_id, slot);
-                uiItem.SetSmall();
+                if (i.hasBeenDiscovered)
+                {
+                    slot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(ing_id, true); });
+                    ItemUI uiItem = spawner.SpawnItem<ItemUI>(ing_id, slot);
+                    uiItem.SetSmall();
+                    successChance *= 1f - i.breakChance;
+                }
+                else
+                {
+                    Instantiate(questionMark, slot);
+                }
                 lastText = Instantiate(recipeSignText, scrollContent.transform).transform;
                 lastText.GetComponent<TextMeshProUGUI>().text = "+";
-                successChance *= 1f - i.breakChance;
             }
             else
             {
@@ -277,20 +295,33 @@ public class RecipeBook : MonoBehaviour
         {
             lastText.GetComponent<TextMeshProUGUI>().text = "||";
         }
-        Transform result = Instantiate(recipeIngItem, scrollContent.transform).transform;
-        Transform resSlot = result.Find("Slot");
-        Potion temp = new Potion(); // Kostiyl - uvazhayu, prikolno
-        temp.recipe_id = rec.GetID();
-        int potion_id = temp.GetID();
-        resSlot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(potion_id, true); });
-        PotionUI uiPotion = spawner.SpawnItem<PotionUI>(potion_id, resSlot);
-        uiPotion.SetSmall();
+        if (rec.is_unlocked)
+        {
+            Transform result = Instantiate(recipeIngItem, scrollContent.transform).transform;
+            Transform resSlot = result.Find("Slot");
+            Potion temp = new Potion(); // Kostiyl - uvazhayu, prikolno
+            temp.recipe_id = rec.GetID();
+            int potion_id = temp.GetID();
+            resSlot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(potion_id, true); });
+            PotionUI uiPotion = spawner.SpawnItem<PotionUI>(potion_id, resSlot);
+            uiPotion.SetSmall();
 
-        // Additional recipe info
-        float failureChance = 1f - successChance;
-        lastText = Instantiate(recipeDescText, scrollContent.transform).transform;
-        lastText.GetComponent<TextMeshProUGUI>().text = $"Mistakes allowed: {rec.mistakes_allowed}{Environment.NewLine}{Environment.NewLine}" +
-            $"Chance of failure: {failureChance:F1} %";
+            // Additional recipe info
+            float failureChance = (1f - successChance) * 100f;
+            lastText = Instantiate(recipeDescText, scrollContent.transform).transform;
+            lastText.GetComponent<TextMeshProUGUI>().text = $"Mistakes allowed: {rec.mistakes_allowed}{Environment.NewLine}{Environment.NewLine}" +
+                $"Chance of failure: {failureChance:F1} %";
+        }
+        else
+        {
+            Transform result = Instantiate(recipeIngItem, scrollContent.transform).transform;
+            Transform resSlot = result.Find("Slot");
+            Instantiate(questionMark, resSlot);
+
+            lastText = Instantiate(recipeDescText, scrollContent.transform).transform;
+            lastText.GetComponent<TextMeshProUGUI>().text = $"Mistakes allowed: ?{Environment.NewLine}{Environment.NewLine}" +
+                $"Chance of failure: ? %";
+        }
     }
 
     public void OnRecipeBack()

@@ -175,7 +175,7 @@ public class Cauldron : MonoBehaviour
                                     // Unlock potion recipe when it is cooked for the first time 
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
 
-                                    GenerateNewRecipeDebug(); // TODO: 
+                                    DataController.GenerateRandomRecipe();
 
                                     DataController.AddHistoryIngredient(newPotionID);
                                 }
@@ -253,6 +253,7 @@ public class Cauldron : MonoBehaviour
         float delay = success ? 6f : 3f;
         Color color = success ? Color.magenta : Color.black;
 
+        finishBubbles.Stop();
         ParticleSystem.MainModule settings = finishBubbles.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(color);
         settings.duration = delay;
@@ -269,25 +270,6 @@ public class Cauldron : MonoBehaviour
             DataController.AddHistoryIngredient(0); // Fail
         }
         DataController.AddHistoryEntry(new HistoryEntry()); // Update potion cooking history
-    }
-
-    private void GenerateNewRecipeDebug()
-    {
-        int ingNum = Random.Range(3, DataController.ingredients.Count + 1);
-        int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
-        int[] recipe = new int[ingNum];
-        List<int> ingredients = new List<int>(DataController.ingredients.Keys);
-        int i = 0;
-        while (ingNum > 0)
-        {
-            int randIndex = Random.Range(0, ingredients.Count);
-            recipe[i] = ingredients[randIndex];
-            ingredients.RemoveAt(randIndex);
-            ingNum--;
-            i++;
-        }
-        DataController.CreateNewRecipe(mistakes, recipe);
-        //ui.SetDebugLine(recipe);
     }
 
     IEnumerator FadeWaterColor(Color from, Color to, float delay)
