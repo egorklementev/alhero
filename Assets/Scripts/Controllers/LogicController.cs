@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class LogicController : MonoBehaviour
@@ -6,6 +7,7 @@ public class LogicController : MonoBehaviour
 
     [Space(15f)]
     public GameObject itemsGroup;
+    public GameObject entitiesGroup;
 
     [Space(15f)]
     public GameObject recipeBook;
@@ -18,8 +20,18 @@ public class LogicController : MonoBehaviour
 
     private static int playerInvSize = 3; // Inverntory size
 
+    public static List<BaseAI> entities { get; } = new List<BaseAI>();
     public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
+
+    private void Awake() {
+        // Load all predefined entities
+        foreach (Transform ent in entitiesGroup.transform)
+        {
+            entities.Add(ent.GetComponent<BaseAI>());
+        }
+        entities.Add(player.GetComponent<BaseAI>());
+    }
 
     private void FixedUpdate()
     {
@@ -108,7 +120,8 @@ public class LogicController : MonoBehaviour
         {
             "flower", "horseshoe", "meat", "salt", "wine"
         };
-        Vector3 pos = new Vector3(11f, 1f, 1.5f * items.Length / 2f);
+        Vector3 pos = new Vector3(2f, 1f, 2f * items.Length / 2f);
+        pos = player.transform.position + pos;
         foreach (string name in items)
         {
             spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, itemsGroup);
