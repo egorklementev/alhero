@@ -48,6 +48,13 @@ public class Cauldron : MonoBehaviour
         inventory.CopyTo(DataController.genData.cauldronInventory);
     }
 
+    public void ClearInventory()
+    {
+        StartCoroutine(FadeWaterColor(Color.cyan, Color.white, 1f));
+        inventory.Clear();
+        SetRecipeCooking(false);
+    }
+
     private void OnCollisionExit(Collision other)
     {
         if (other.gameObject.CompareTag("Item"))
@@ -251,7 +258,7 @@ public class Cauldron : MonoBehaviour
     private void DestroyCurrentRecipe(bool success = false)
     {
         float delay = success ? 6f : 3f;
-        Color color = success ? Color.magenta : Color.black;
+        Color color = success ? new Color(.3089f, .1244f, .5667f) : Color.black;
 
         finishBubbles.Stop();
         ParticleSystem.MainModule settings = finishBubbles.main;
