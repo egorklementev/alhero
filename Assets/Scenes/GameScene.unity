@@ -7616,7 +7616,7 @@ MonoBehaviour:
   spawner: {fileID: 479735420}
   ui: {fileID: 99111274}
   data: {fileID: 324854745}
-  scenes: {fileID: 0}
+  scenes: {fileID: 1493230255}
 --- !u!1 &472018342
 GameObject:
   m_ObjectHideFlags: 0

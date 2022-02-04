@@ -211,7 +211,6 @@ public class Cauldron : MonoBehaviour
 
     private Recipe InventoryHasPotential()
     {
-        //int currentIngredientIndex = inventory.Count - 1;
         foreach (Recipe rec in DataController.recipes.Values)
         {
             if (inventory.Count <= rec.ingredient_seq.Length)

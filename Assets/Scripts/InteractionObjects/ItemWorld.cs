@@ -38,6 +38,11 @@ public class ItemWorld : AbstractItem
                     break;
             }
         }
+
+        if (!isPickedUp && owner == null && transform.position.y < -100f)
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()

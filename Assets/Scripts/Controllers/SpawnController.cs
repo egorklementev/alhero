@@ -84,48 +84,51 @@ public class SpawnController : MonoBehaviour
 
     private void LoadContainers()
     {
-        // Load containers with previously stored items
-        foreach (Transform contTransform in labContainers.transform)
+        if (labContainers != null)
         {
-            Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
-            if (!DataController.labContainers.ContainsKey(contScript.id))
+            // Load containers with previously stored items
+            foreach (Transform contTransform in labContainers.transform)
             {
-                Debug.LogWarning($"[LogicController.Start] No container with ID \"{contScript.id}\"!");
-            }
-            else
-            {
-                LabContainerItems itemsToLoad = DataController.labContainers[contScript.id];
-                if (itemsToLoad != null)
+                Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
+                if (!DataController.labContainers.ContainsKey(contScript.id))
                 {
-                    for (int i = 0; i < itemsToLoad.items.Length; i++)
+                    Debug.LogWarning($"[LogicController.Start] No container with ID \"{contScript.id}\"!");
+                }
+                else
+                {
+                    LabContainerItems itemsToLoad = DataController.labContainers[contScript.id];
+                    if (itemsToLoad != null)
                     {
-                        int itemToPutID = itemsToLoad.items[i].id;
-                        if (itemToPutID != 0)
+                        for (int i = 0; i < itemsToLoad.items.Length; i++)
                         {
-                            if (itemsToLoad.items[i].potionData.ingredients.Length > 0)
+                            int itemToPutID = itemsToLoad.items[i].id;
+                            if (itemToPutID != 0)
                             {
-                                Potion potionData = itemsToLoad.items[i].potionData;
-                                PotionWorld potion = SpawnItem<PotionWorld>(
-                                    ("potion_" + potionData.bottle_shape).Hash(),
-                                    new Vector3(0f, 100f, 0f),
-                                    Quaternion.identity,
-                                    itemsGroup);
-                                potion.potionData = potionData;
-                                int newPotionID = potionData.GetID();
-                                string newPotionName = potionData.GenerateNameDebug();
-                                potion.id = newPotionID;
-                                potion.item_name = newPotionName;
-                                contScript.TryToPutItem(potion, i);
-                            }
-                            else
-                            {
-                                contScript.TryToPutItem(
-                                    SpawnItem<ItemWorld>(
-                                        itemToPutID,
+                                if (itemsToLoad.items[i].potionData.ingredients.Length > 0)
+                                {
+                                    Potion potionData = itemsToLoad.items[i].potionData;
+                                    PotionWorld potion = SpawnItem<PotionWorld>(
+                                        ("potion_" + potionData.bottle_shape).Hash(),
                                         new Vector3(0f, 100f, 0f),
                                         Quaternion.identity,
-                                        itemsGroup),
-                                     i);
+                                        itemsGroup);
+                                    potion.potionData = potionData;
+                                    int newPotionID = potionData.GetID();
+                                    string newPotionName = potionData.GenerateNameDebug();
+                                    potion.id = newPotionID;
+                                    potion.item_name = newPotionName;
+                                    contScript.TryToPutItem(potion, i);
+                                }
+                                else
+                                {
+                                    contScript.TryToPutItem(
+                                        SpawnItem<ItemWorld>(
+                                            itemToPutID,
+                                            new Vector3(0f, 100f, 0f),
+                                            Quaternion.identity,
+                                            itemsGroup),
+                                        i);
+                                }
                             }
                         }
                     }

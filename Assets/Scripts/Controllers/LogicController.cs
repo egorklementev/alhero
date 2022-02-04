@@ -17,7 +17,6 @@ public class LogicController : MonoBehaviour
     public SpawnController spawner;
     public UIController ui;
     public DataController data;
-    public SceneManager scenes;
 
     private static int playerInvSize = 3; // Inverntory size
     private static bool newGameStarted = false;
@@ -54,7 +53,7 @@ public class LogicController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        recipeBookScript.SetDistanceToPlayer(
+        recipeBookScript?.SetDistanceToPlayer(
             Vector3.Distance(recipeBook.transform.position, player.transform.position)
         );
     }
