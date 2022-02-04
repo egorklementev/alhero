@@ -17,14 +17,39 @@ public class LogicController : MonoBehaviour
     public SpawnController spawner;
     public UIController ui;
     public DataController data;
+    public SceneManager scenes;
 
     private static int playerInvSize = 3; // Inverntory size
+    private static bool newGameStarted = false;
 
     public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
 
-    private void Awake() 
+    private void OnEnable() 
     {
+        if (newGameStarted)
+        {
+            #region DEBUG
+            newGameStarted = false;
+            string[] items = new string[]
+            {
+                "flower", "horseshoe", "meat", "salt", "wine"
+            };
+            Vector3[] pos = new Vector3[]
+            {
+                new Vector3(-68f, 0f, 34f),
+                new Vector3(-52f, 0f, 38f),
+                new Vector3(-73f, 0f, 52f),
+                new Vector3(2f, 0f, 62f),
+                new Vector3(2f, 0f, 15f),
+            };
+            int index = 0;
+            foreach (string name in items)
+            {
+                spawner.SpawnItem<ItemWorld>(name.Hash(), pos[index++], Quaternion.identity, worldItemsGroup);
+            }
+            #endregion
+        }
     }
 
     private void FixedUpdate()
@@ -134,6 +159,8 @@ public class LogicController : MonoBehaviour
         data.StartNewGame();
         player.transform.position = Vector3.zero;
         // TODO: play some player animation or something
+
+        newGameStarted = true;
     }
 
     public BaseAI GetClosestEntity(BaseAI ai)
@@ -176,5 +203,10 @@ public class LogicController : MonoBehaviour
             }
         );
         return lst.Count > 0 ? lst[0] : null;
+    }
+
+    public void ChangeScene(string newScene)
+    {
+        ui.StartSceneFade(newScene, 1f);
     }
 }

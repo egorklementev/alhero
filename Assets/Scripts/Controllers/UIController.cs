@@ -135,4 +135,11 @@ public class UIController : MonoBehaviour
     {
         fadePanelAnim.Play("FadeOutLong");
     }
+
+    public void StartSceneFade(string sceneName, float delay)
+    {
+        fadePanelAnim.SetTrigger("SceneChange");
+        fadePanelAnim.SetFloat("fade_speed", delay);
+        FadeLoadScene.sceneToLoad = sceneName;
+    }
 }
