@@ -8,7 +8,6 @@ public class HeroMoveController : MonoBehaviour
     public GameObject visualObj;
     public GameObject mainCamera;
     public Animator anim;
-    public Rigidbody body;
 
     [Header("Controls")]
     [Space(20f)]
@@ -35,6 +34,7 @@ public class HeroMoveController : MonoBehaviour
 
     public static bool uiTookControl = false;
 
+    private Rigidbody body;
     private Vector2 dragStart; // Starting point of tap. Used for player controlling.
     private float angle = -1f;
     private float tapCounter = 0f;
@@ -45,8 +45,8 @@ public class HeroMoveController : MonoBehaviour
 
     void Awake()
     {
-        Application.targetFrameRate = 60;
         dragStart = new Vector2(0f, 0f);
+        body = GetComponent<Rigidbody>();
     }
 
     void FixedUpdate()
@@ -127,7 +127,7 @@ public class HeroMoveController : MonoBehaviour
                     // Player tap
                     Ray raycast = Camera.main.ScreenPointToRay(touch.position);
                     RaycastHit raycastHit;
-                    if (Physics.Raycast(raycast, out raycastHit))
+                    if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity, 7))
                     {
                         if (raycastHit.collider.CompareTag("Player"))
                         {
@@ -156,10 +156,10 @@ public class HeroMoveController : MonoBehaviour
                         LogicController.PickedItems[0] = null;
 
                         // Try to rotate items for better UX
-                        logic.RotateItems();
+                        logic.SwitchItems();
                         if (LogicController.PickedItems[0] == null)
                         {
-                            logic.RotateItems();
+                            logic.SwitchItems();
                         }
                     }
                     tapCounter = 0f;
@@ -211,10 +211,6 @@ public class HeroMoveController : MonoBehaviour
                 default:
                     break;
             }
-        }
-        else
-        {
-            Debug.LogWarning("[HeroMoveController.MoveCharacter] Speed limit reached!");
         }
     }
 

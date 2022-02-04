@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public static class Extensions
@@ -7,18 +8,23 @@ public static class Extensions
         return some.GetHashCode();
     }
     
-    public static void Err<T>(this string msg, string method, params System.Type[] attrs)
+    public static void Err(this string msg, object obj, string method, params System.Type[] attrs)
     {
-        Debug.LogError($"[{typeof(T)}] => {typeof(T).GetMethod(method, attrs)}: " + msg);
+        Debug.LogError($"[{obj.GetType()}] => {obj.GetType().GetMethod(method, attrs)}: " + msg);
     }
 
-    public static void Warn<T>(this string msg, string method, params System.Type[] attrs)
+    public static void Warn(this string msg, object obj, string method, params System.Type[] attrs)
     {
-        Debug.LogWarning($"[{typeof(T)}] => {typeof(T).GetMethod(method, attrs)}: " + msg);
+        Debug.LogWarning($"[{obj.GetType()}] => {obj.GetType().GetMethod(method, attrs)}: " + msg);
     }
 
-    public static void Log<T>(this string msg, string method, params System.Type[] attrs)
+    public static void Log(this string msg, object obj, string method = "", params System.Type[] attrs)
     {
-        Debug.Log($"[{typeof(T)}] => {typeof(T).GetMethod(method, attrs)}: " + msg);
+        Debug.Log($"[{obj.GetType()}] => {obj.GetType().GetMethod(method, attrs)}: " + msg);
+    }
+
+    public static T Last<T>(this List<T> list, int index = 1)
+    {
+        return list[list.Count - index];
     }
 }

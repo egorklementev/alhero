@@ -6,7 +6,7 @@ public class LogicController : MonoBehaviour
     public GameObject player;
 
     [Space(15f)]
-    public GameObject itemsGroup;
+    public GameObject worldItemsGroup;
     public GameObject entitiesGroup;
 
     [Space(15f)]
@@ -20,17 +20,11 @@ public class LogicController : MonoBehaviour
 
     private static int playerInvSize = 3; // Inverntory size
 
-    public static List<BaseAI> entities { get; } = new List<BaseAI>();
     public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
 
-    private void Awake() {
-        // Load all predefined entities
-        foreach (Transform ent in entitiesGroup.transform)
-        {
-            entities.Add(ent.GetComponent<BaseAI>());
-        }
-        entities.Add(player.GetComponent<BaseAI>());
+    private void Awake() 
+    {
     }
 
     private void FixedUpdate()
@@ -49,7 +43,7 @@ public class LogicController : MonoBehaviour
         return -1;
     }
 
-    public void RotateItems()
+    public void SwitchItems()
     {
         for (int i = 0; i < playerInvSize; i++)
         {
@@ -86,7 +80,7 @@ public class LogicController : MonoBehaviour
                 PotionUI uiPotion = selectedItem as PotionUI;
                 if (uiPotion != null)
                 {
-                    PotionWorld newPotion = spawner.SpawnItem<PotionWorld>(uiPotion.id, itemsGroup);
+                    PotionWorld newPotion = spawner.SpawnItem<PotionWorld>(uiPotion.id, worldItemsGroup);
 
                     newPotion.potionData = new Potion(uiPotion.potionData); // Perform potion data copy
                     int newPotionID = newPotion.potionData.GetID();
@@ -98,7 +92,7 @@ public class LogicController : MonoBehaviour
                 }
                 else
                 {
-                    ItemWorld newWorldItem = spawner.SpawnItem<ItemWorld>(selectedItem.id, itemsGroup);
+                    ItemWorld newWorldItem = spawner.SpawnItem<ItemWorld>(selectedItem.id, worldItemsGroup);
                     newWorldItem.SetPickedUp(true, slot, player);
                     PickedItems[slot] = newWorldItem;
                 }
@@ -124,14 +118,14 @@ public class LogicController : MonoBehaviour
         pos = player.transform.position + pos;
         foreach (string name in items)
         {
-            spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, itemsGroup);
+            spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, worldItemsGroup);
             pos -= new Vector3(0f, 0f, 3f);
         }
     }
 
     public void StartNewGame()
     {
-        foreach (Transform obj in itemsGroup.transform)
+        foreach (Transform obj in worldItemsGroup.transform)
         {
             Destroy(obj.gameObject);
         }
@@ -140,5 +134,47 @@ public class LogicController : MonoBehaviour
         data.StartNewGame();
         player.transform.position = Vector3.zero;
         // TODO: play some player animation or something
+    }
+
+    public BaseAI GetClosestEntity(BaseAI ai)
+    {
+        List<BaseAI> lst = new List<BaseAI>();
+        foreach (Transform t in entitiesGroup.transform)
+        {
+            if (t.TryGetComponent<BaseAI>(out BaseAI otherAi) && !otherAi.Equals(ai))
+            {
+                lst.Add(otherAi);
+            }
+        }
+        lst.Sort(
+            delegate (BaseAI ai1, BaseAI ai2) 
+            {
+                float d1 = (ai1.transform.position - ai.transform.position).sqrMagnitude;
+                float d2 = (ai2.transform.position - ai.transform.position).sqrMagnitude;
+                return d1 > d2 ? 1 : -1;
+            }
+        );
+        return lst.Count > 0 ? lst[0] : null;
+    }
+
+    public ItemWorld GetClosestItem(BaseAI ai)
+    {
+        List<ItemWorld> lst = new List<ItemWorld>();
+        foreach (Transform t in worldItemsGroup.transform)
+        {
+            if (t.TryGetComponent<ItemWorld>(out ItemWorld item))
+            {
+                lst.Add(item);
+            }
+        }
+        lst.Sort(
+            delegate (ItemWorld i1, ItemWorld i2)
+            {
+                float d1 = (i1.transform.position - ai.transform.position).sqrMagnitude;
+                float d2 = (i2.transform.position - ai.transform.position).sqrMagnitude;
+                return d1 > d2 ? 1 : -1;
+            }
+        );
+        return lst.Count > 0 ? lst[0] : null;
     }
 }

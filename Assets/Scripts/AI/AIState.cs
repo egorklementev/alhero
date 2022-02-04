@@ -25,7 +25,7 @@ public class AIState
            adj = adjacent[stateName]; 
         }
         catch {
-            $"No AI state with name \"{stateName}\"!!!".Warn<AIState>("GetAdjacent", typeof(string));
+            $"No AI state with name \"{stateName}\"!!!".Warn(this, "GetAdjacent", typeof(string));
         }
         return adj;
     }

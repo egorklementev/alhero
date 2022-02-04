@@ -18,6 +18,7 @@ public class BaseAI : MonoBehaviour
     {
         if (!newState.Equals(currentState.Name)) // No need to transition to itself
         {
+            // $"New state: {newState}".Log<BaseAI>("Transition", typeof(string));
             currentState = currentState.GetAdjacent(newState);
         }
     }

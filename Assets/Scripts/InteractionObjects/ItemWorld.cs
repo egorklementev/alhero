@@ -85,6 +85,11 @@ public class ItemWorld : AbstractItem
             SetPickedUp(true, slot, other.gameObject);
             LogicController.PickedItems[slot] = this;
         }
+        else if (other.gameObject.TryGetComponent<MagpieAI>(out MagpieAI ai) && ai.PickedItem == null)
+        {
+            SetPickedUp(true, 0, other.gameObject);
+            ai.PickedItem = this;
+        }
     }
 
     private void TryToUnlockIngredient()

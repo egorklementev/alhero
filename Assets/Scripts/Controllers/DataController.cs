@@ -44,6 +44,8 @@ public class DataController : MonoBehaviour
 
     void Awake()
     {
+        Application.targetFrameRate = 60;
+
         string[] folders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
         string[] files = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
         for (int i = 0; i < folders.Length; i++)
