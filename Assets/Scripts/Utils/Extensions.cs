@@ -27,4 +27,9 @@ public static class Extensions
     {
         return list[list.Count - index];
     }
+
+    public static void RemoveLast<T>(this List<T> list)
+    {
+        list.RemoveAt(list.Count - 1);
+    }
 }

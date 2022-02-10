@@ -7616,7 +7616,6 @@ MonoBehaviour:
   spawner: {fileID: 479735420}
   ui: {fileID: 99111274}
   data: {fileID: 324854745}
-  scenes: {fileID: 1493230255}
 --- !u!1 &472018342
 GameObject:
   m_ObjectHideFlags: 0
@@ -8507,7 +8506,7 @@ Light:
     m_Strength: 1
     m_Bias: 0.02
     m_NormalBias: 0
-    m_NearPlane: 4.7
+    m_NearPlane: 3.65
     m_CullingMatrixOverride:
       e00: 1
       e01: 0

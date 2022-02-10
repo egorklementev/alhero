@@ -8,7 +8,7 @@ public class MapGenerator : MonoBehaviour
     public Vector3 startPoint;
     public Vector3 noiseParamters;
     public Transform environment;
-    public GameObject forestBlock;
+    public GameObject[] blockList;
 
     [Range(0, 2 << 15)]
     public int offsetWidth;
@@ -18,8 +18,10 @@ public class MapGenerator : MonoBehaviour
     public float scale = 1f;
     [Range(.01f, 10f)]
     public float exponent = 1f;
+    public int islandSizeThreshold = 8;
+    public float blockSize = 10f;
 
-    private Block[,] map;
+    private Map map;
 
     public void GenerateForestGround()
     {
@@ -31,41 +33,42 @@ public class MapGenerator : MonoBehaviour
         int width = mapSize.x;
         int height = mapSize.y;
 
-        map = new Block[width, height];
+        map = new Map();
 
-        Vector3 np = noiseParamters * scale;
+        map.Generate(
+            new MapParameters()
+                .SetDims(mapSize)
+                .SetAnchor(startPoint)
+                .SetNoiseParams(noiseParamters)
+                .SetNoiseOffset(new Vector2Int(offsetWidth, offsetHeight))
+                .SetScale(scale)
+                .SetExponent(exponent)
+                .SetIslandSizeThreshold(islandSizeThreshold)
+                .SetBlockSize(blockSize)
+        );
 
+        // Actual prefab instatiation
         for (int w = 0; w < width; w++)
         {
             for (int h = 0; h < height; h++)
             {
-                float value_big = Mathf.PerlinNoise(
-                    (float) w / width * np.x + offsetWidth,
-                    (float) h / height * np.x + offsetHeight
-                );
-                float value_mid = Mathf.PerlinNoise(
-                    (float) w / width * np.y + offsetWidth,
-                    (float) h / height * np.y + offsetHeight
-                );
-                float value_small = Mathf.PerlinNoise(
-                    (float) w / width * np.z + offsetWidth,
-                    (float) h / height * np.z + offsetHeight
-                );
-
-                float value = (value_big + value_mid + value_small) / 
-                    (np.x + np.y + np.z);
-                value = Mathf.Pow(value, exponent);
-
-                if (value > .5f)
+                if (!map.IsAir(w, h))
                 {
-                    map[w, h] = new Block(1); // Ground
-                    Instantiate(forestBlock, startPoint + new Vector3(10f * w, 0f, 10f * h), forestBlock.transform.rotation, environment);
-                }
-                else
-                {
-                    map[w, h] = new Block(0); // Air
+                    GameObject pref = blockList[map.BlockType(w, h) - 1];
+                    GameObject block = Instantiate(
+                        pref, 
+                        startPoint + new Vector3(
+                            2f * blockSize * w, 
+                            2f * blockSize * pref.transform.position.y, 
+                            2f * blockSize * h
+                        ), 
+                        pref.transform.rotation, 
+                        environment);
+                    block.transform.localScale *= blockSize;
+                    block.name = pref.name + $"({w},{h})";
                 }
             }
         }
     }
+
 }

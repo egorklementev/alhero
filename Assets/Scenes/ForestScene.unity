@@ -98,7 +98,8 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_LightingSettings: {fileID: 0}
+  m_LightingSettings: {fileID: 4890085278179872738, guid: 9a4c0fa3b971e2c4ea1e42055ee51caa,
+    type: 2}
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -715,7 +716,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509517519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 18.14}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1841,13 +1842,28 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5544935011793249806, guid: 6807ec385cde4d748b789730c5b1f3b0,
         type: 3}
+      propertyPath: m_LocalScale.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5544935011793249806, guid: 6807ec385cde4d748b789730c5b1f3b0,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5544935011793249806, guid: 6807ec385cde4d748b789730c5b1f3b0,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5544935011793249806, guid: 6807ec385cde4d748b789730c5b1f3b0,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5544935011793249806, guid: 6807ec385cde4d748b789730c5b1f3b0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -8
+      value: -12.6
       objectReference: {fileID: 0}
     - target: {fileID: 5544935011793249806, guid: 6807ec385cde4d748b789730c5b1f3b0,
         type: 3}
@@ -2081,16 +2097,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mapSize: {x: 64, y: 64}
-  startPoint: {x: -10, y: -8, z: 10}
+  startPoint: {x: -20, y: -15, z: 20}
   noiseParamters: {x: 0.8, y: 1.25, z: 2.25}
   environment: {fileID: 509517520}
-  forestBlock: {fileID: 5544935011793249807, guid: 6807ec385cde4d748b789730c5b1f3b0,
-    type: 3}
-  mapObj: {fileID: 0}
+  blockList:
+  - {fileID: 5544935011793249807, guid: 6807ec385cde4d748b789730c5b1f3b0, type: 3}
+  - {fileID: 4051990589639843076, guid: 9fcbe0a11eff0de4ebae97109d241747, type: 3}
+  - {fileID: 4051990589639843076, guid: bcb0318d11618d04ea1d78cf0e407d95, type: 3}
   offsetWidth: 0
   offsetHeight: 0
   scale: 4.5
   exponent: 0.265
+  islandSizeThreshold: 16
+  blockSize: 3
 --- !u!1 &1818007871
 GameObject:
   m_ObjectHideFlags: 0
