@@ -2,11 +2,13 @@ using UnityEngine;
 
 public class Block
 {
-    public int Type { get; private set; } = 0;
+    public BlockType Type { get; private set; } = BlockType.AIR;
+    public int CntmntID { get; private set; } = -1;
+    public ContainmentType CntmntType { get; private set; } = ContainmentType.EMPTY; 
 
     public Vector2Int Location { get; private set; }
 
-    public Block(int type, Vector2Int location) 
+    public Block(BlockType type, Vector2Int location) 
     {
         Type = type;
         Location = location;
@@ -14,12 +16,39 @@ public class Block
 
     public void SetAir()
     {
-        Type = 0;
+        Type = BlockType.AIR;
     }
 
     public void SetBridge(bool isVertical = true)
     {
-        Type = isVertical ? 2 : 3;
+        Type = isVertical ? BlockType.BRIDGE_V : BlockType.BRIDGE_H;
+    }
+
+    public void SetTree(int treeID)
+    {
+        CntmntID = treeID;
+        CntmntType = ContainmentType.TREE;
+    }
+
+    public void SetFlora(int floraID)
+    {
+        CntmntID = floraID;
+        CntmntType = ContainmentType.FLORA;
+    }
+
+    public bool IsEmpty()
+    {
+        return CntmntType == ContainmentType.EMPTY && (Type == BlockType.GROUND || Type == BlockType.AIR);
+    }
+
+    public enum ContainmentType 
+    {
+        EMPTY, TREE, FLORA
+    }
+
+    public enum BlockType
+    {
+        AIR, GROUND, BRIDGE_V, BRIDGE_H
     }
 
 }

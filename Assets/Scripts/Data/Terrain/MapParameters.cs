@@ -10,6 +10,10 @@ public class MapParameters
     public float exponent { get; private set; } = .225f;
     public int islandSizeThreshold { get; private set; } = 8;
     public float blockSize { get; private set; } = 7f;
+    public int forestDiversity { get; private set; } = 1;
+    public float forestDensity { get; private set; } = .2f;
+    public int floraDiversity { get; private set; } = 1;
+    public float floraDensity { get; private set; } = .2f;
 
     public MapParameters SetDims(Vector2Int dimensions)
     {
@@ -56,6 +60,18 @@ public class MapParameters
     public MapParameters SetBlockSize(float size)
     {
         blockSize = size;
+        return this;
+    }
+
+    public MapParameters SetForestDiversity(int diversity)
+    {
+        forestDiversity = diversity;
+        return this;
+    }
+
+    public MapParameters SetForestDensity(float density)
+    {
+        forestDensity = density;
         return this;
     }
 }

@@ -1,5 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
+using BlockType = Block.BlockType;
+using BlockContainment = Block.ContainmentType;
 
 public class Map 
 {
@@ -15,9 +17,9 @@ public class Map
         return _ground[x, y].Type <= 0;
     }
 
-    public int BlockType(int x, int y)
+    public Block GetBlock(int x, int y)
     {
-        return _ground[x, y].Type;
+        return _ground[x, y];
     }
 
     public int NeighborCount(int x, int y)
@@ -65,11 +67,11 @@ public class Map
 
                 if (value > .5f)
                 {
-                    _ground[w, h] = new Block(1, new Vector2Int(w, h)); // Ground
+                    _ground[w, h] = new Block(BlockType.GROUND, new Vector2Int(w, h));
                 }
                 else
                 {
-                    _ground[w, h] = new Block(0, new Vector2Int(w, h)); // Air
+                    _ground[w, h] = new Block(BlockType.AIR, new Vector2Int(w, h));
                 }
             }
         }
@@ -116,6 +118,41 @@ public class Map
             }
         );
         BuildBridges(_islands[0]);
+
+        // Generate trees
+        foreach (Block b in _ground)
+        {
+            if (b.IsEmpty() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H)))
+            {
+                if (Random.value > 1f - prms.forestDensity )
+                {
+                    b.SetTree(Random.Range(0, prms.forestDiversity));
+                }
+            }
+        }
+    }
+
+    private bool HasNeighbor(Block block, BlockType type)
+    {
+        int x = block.Location.x;
+        int y = block.Location.y;
+        if (x - 1 >= 0 && _ground[x - 1, y].Type == type)
+        {
+            return true;
+        }
+        if (x + 1 < Width && _ground[x + 1, y].Type == type)
+        {
+            return true;
+        }
+        if (y - 1 >= 0 && _ground[x, y - 1].Type == type)
+        {
+            return true;
+        }
+        if (y + 1 < Height && _ground[x, y + 1].Type == type)
+        {
+            return true;
+        }
+        return false;
     }
 
     private void BuildBridges(Island island)
@@ -197,7 +234,7 @@ public class Map
             pos.x += stepX;
             pos.y += stepY;
         }
-        if (IsValidLocation(pos.x, pos.y) && _ground[pos.x, pos.y].Type == 1)
+        if (IsValidLocation(pos.x, pos.y) && _ground[pos.x, pos.y].Type == BlockType.GROUND)
         {
             Island otherIsland = _islands.Find(i => i.HasBlock(pos.x, pos.y));
             if (otherIsland == null)

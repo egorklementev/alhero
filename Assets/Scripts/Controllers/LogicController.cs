@@ -208,4 +208,9 @@ public class LogicController : MonoBehaviour
     {
         ui.StartSceneFade(newScene, 1f);
     }
+
+    public void ResetPlayerPosition()
+    {
+        player.transform.position = Vector3.zero;
+    }
 }

@@ -9,10 +9,9 @@ public class MapGenerator : MonoBehaviour
     public Vector3 noiseParamters;
     public Transform environment;
     public GameObject[] blockList;
+    public GameObject[] trees;
 
-    [Range(0, 2 << 15)]
     public int offsetWidth;
-    [Range(0, 2 << 15)]
     public int offsetHeight;
     [Range(1f, 100f)]
     public float scale = 1f;
@@ -20,8 +19,14 @@ public class MapGenerator : MonoBehaviour
     public float exponent = 1f;
     public int islandSizeThreshold = 8;
     public float blockSize = 10f;
+    [Range(0f, 1f)]
+    public float treeDensity = .2f;
 
     private Map map;
+
+    private void OnEnable() {
+        map.Generate(new MapParameters());
+    }
 
     public void GenerateForestGround()
     {
@@ -32,6 +37,9 @@ public class MapGenerator : MonoBehaviour
 
         int width = mapSize.x;
         int height = mapSize.y;
+
+        offsetWidth = Random.Range(0, 2 << 20);
+        offsetHeight = Random.Range(0, 2 << 20);
 
         map = new Map();
 
@@ -45,6 +53,8 @@ public class MapGenerator : MonoBehaviour
                 .SetExponent(exponent)
                 .SetIslandSizeThreshold(islandSizeThreshold)
                 .SetBlockSize(blockSize)
+                .SetForestDiversity(trees.Length)
+                .SetForestDensity(treeDensity)
         );
 
         // Actual prefab instatiation
@@ -54,7 +64,8 @@ public class MapGenerator : MonoBehaviour
             {
                 if (!map.IsAir(w, h))
                 {
-                    GameObject pref = blockList[map.BlockType(w, h) - 1];
+                    Block blockData = map.GetBlock(w, h);
+                    GameObject pref = blockList[(int)(map.GetBlock(w, h).Type) - 1];
                     GameObject block = Instantiate(
                         pref, 
                         startPoint + new Vector3(
@@ -66,9 +77,41 @@ public class MapGenerator : MonoBehaviour
                         environment);
                     block.transform.localScale *= blockSize;
                     block.name = pref.name + $"({w},{h})";
+
+                    if (blockData.CntmntType != Block.ContainmentType.EMPTY)
+                    {
+                        switch (blockData.CntmntType)
+                        {
+                            case Block.ContainmentType.TREE:
+                                GameObject tree = GenerateRandomTree(block.transform, blockData);
+                                tree.name = trees[blockData.CntmntID].name + $"({w},{h})";
+                                break;
+                            case Block.ContainmentType.FLORA:
+                                break;
+                            default:
+                                break;
+                        } 
+                    }
                 }
             }
         }
+    }
+
+    private GameObject GenerateRandomTree(Transform block, Block blockData)
+    {
+        float scaleFactor = .75f + Random.value * .5f;
+        float heightOffset = 3f;
+        Vector3 randomPos = Random.insideUnitSphere * Random.value * .5f;
+        randomPos.y = trees[blockData.CntmntID].transform.position.z + heightOffset * scaleFactor;
+        randomPos.y *= blockSize;
+        GameObject tree = Instantiate(
+            trees[blockData.CntmntID],
+            block.position + randomPos,
+            Quaternion.Euler(-90f, 0f, 360f * Random.value),
+            block
+        );
+        tree.transform.localScale *= 1f / blockSize * scaleFactor;
+        return tree;
     }
 
 }

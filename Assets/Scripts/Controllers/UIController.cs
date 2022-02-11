@@ -138,6 +138,7 @@ public class UIController : MonoBehaviour
 
     public void StartSceneFade(string sceneName, float delay)
     {
+        // HeroMoveController.uiTookControl = true;
         fadePanelAnim.SetTrigger("SceneChange");
         fadePanelAnim.SetFloat("fade_speed", delay);
         FadeLoadScene.sceneToLoad = sceneName;
