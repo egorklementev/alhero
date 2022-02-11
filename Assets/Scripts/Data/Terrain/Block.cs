@@ -51,4 +51,18 @@ public class Block
         AIR, GROUND, BRIDGE_V, BRIDGE_H
     }
 
+    public Color GetMapColor()
+    {
+        switch (Type) 
+        {
+            case BlockType.GROUND:
+                return new Color(.1f, .7f, .05f);
+            case BlockType.BRIDGE_H:
+            case BlockType.BRIDGE_V:
+                return new Color(.7f, .55f, .05f);
+            default:
+                return Color.clear;
+        }
+    }
+
 }

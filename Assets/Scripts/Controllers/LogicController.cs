@@ -213,4 +213,9 @@ public class LogicController : MonoBehaviour
     {
         player.transform.position = Vector3.zero;
     }
+
+    public Vector3 GetHeroPosition()
+    {
+        return player.transform.position;
+    }
 }

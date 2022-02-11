@@ -10,6 +10,7 @@ public class MapGenerator : MonoBehaviour
     public Transform environment;
     public GameObject[] blockList;
     public GameObject[] trees;
+    public MinimapController minimap;
 
     public int offsetWidth;
     public int offsetHeight;
@@ -24,8 +25,9 @@ public class MapGenerator : MonoBehaviour
 
     private Map map;
 
-    private void OnEnable() {
-        map.Generate(new MapParameters());
+    private void OnEnable() 
+    {
+        GenerateForestGround();
     }
 
     public void GenerateForestGround()
@@ -56,6 +58,8 @@ public class MapGenerator : MonoBehaviour
                 .SetForestDiversity(trees.Length)
                 .SetForestDensity(treeDensity)
         );
+
+        minimap.UpdateMinimap(map);
 
         // Actual prefab instatiation
         for (int w = 0; w < width; w++)
@@ -102,7 +106,7 @@ public class MapGenerator : MonoBehaviour
         float scaleFactor = .75f + Random.value * .5f;
         float heightOffset = 3f;
         Vector3 randomPos = Random.insideUnitSphere * Random.value * .5f;
-        randomPos.y = trees[blockData.CntmntID].transform.position.z + heightOffset * scaleFactor;
+        randomPos.y = trees[blockData.CntmntID].transform.position.z * (1f - scaleFactor) + heightOffset;
         randomPos.y *= blockSize;
         GameObject tree = Instantiate(
             trees[blockData.CntmntID],

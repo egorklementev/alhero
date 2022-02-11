@@ -1,12 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
 using BlockType = Block.BlockType;
-using BlockContainment = Block.ContainmentType;
 
 public class Map 
 {
     public int Width { get; private set; }
     public int Height { get; private set; }
+
+    public MapParameters Parameters { get; private set; }
 
     private Block[,] _ground;
     private List<Island> _islands;
@@ -34,6 +35,8 @@ public class Map
 
     public void Generate(MapParameters prms)
     {
+        Parameters = prms;
+
         Width = prms.dims.x;
         Height = prms.dims.y;
 
