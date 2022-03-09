@@ -8,12 +8,12 @@ public static class Extensions
         return some.GetHashCode();
     }
     
-    public static void Err(this string msg, object obj, string method, params System.Type[] attrs)
+    public static void Err(this string msg, object obj, string method = "", params System.Type[] attrs)
     {
         Debug.LogError($"[{obj.GetType()}] => {obj.GetType().GetMethod(method, attrs)}: " + msg);
     }
 
-    public static void Warn(this string msg, object obj, string method, params System.Type[] attrs)
+    public static void Warn(this string msg, object obj, string method = "", params System.Type[] attrs)
     {
         Debug.LogWarning($"[{obj.GetType()}] => {obj.GetType().GetMethod(method, attrs)}: " + msg);
     }

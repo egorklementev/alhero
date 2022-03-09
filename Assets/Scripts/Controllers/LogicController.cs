@@ -17,6 +17,7 @@ public class LogicController : MonoBehaviour
     public SpawnController spawner;
     public UIController ui;
     public DataController data;
+    public MapGenerator mapGen;
 
     private static int playerInvSize = 3; // Inverntory size
     private static bool newGameStarted = false;
@@ -94,8 +95,12 @@ public class LogicController : MonoBehaviour
             ItemUI selectedItem = b.GetSelectedItem();
             if (selectedItem != null)
             {
-                DataController.labContainers[b.id].items[b.GetSelectedItemSlot()].id = 0;
-                DataController.labContainers[b.id].items[b.GetSelectedItemSlot()].potionData = new Potion();
+                try
+                {
+                    DataController.labContainers[b.id].items[b.GetSelectedItemSlot()].id = 0;
+                    DataController.labContainers[b.id].items[b.GetSelectedItemSlot()].potionData = new Potion();
+                }
+                catch {}
 
                 b.ResetSelection();
 
@@ -212,6 +217,14 @@ public class LogicController : MonoBehaviour
     public void ResetPlayerPosition()
     {
         player.transform.position = Vector3.zero;
+    }
+
+    public void SetRandomPlayerPosition()
+    {
+        if (mapGen != null)
+        {
+            player.transform.position = mapGen.GetRandomBlockSpawnLocation();
+        }
     }
 
     public Vector3 GetHeroPosition()

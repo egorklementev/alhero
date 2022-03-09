@@ -44,9 +44,25 @@ public class Map
         _islands = new List<Island>();
         identified = new bool[Width, Height];
 
-        Vector3 np = prms.noiseParameters * prms.scale;
+        GenerateGroundAndAir(prms);
+        ProcessIslands(prms);
+        BuildBridges(_islands[0]);
+        GenerateIslandBorders();
+        GenerateTrees(prms);
 
+        SpawnPortals(prms);
+        SpawnIngredients(prms);
+        SpawnContainers(prms);
+        SpawnEntities(prms);
+
+        // Here width & height of the map change
+        GenerateOutlineBorders();
+    }
+
+    private void GenerateGroundAndAir(MapParameters prms)
+    {
         // Generate raw ground & air blocks
+        Vector3 np = prms.noiseParameters * prms.scale;
         for (int w = 0; w < Width; w++)
         {
             for (int h = 0; h < Height; h++)
@@ -78,7 +94,10 @@ public class Map
                 }
             }
         }
+    }
 
+    private void ProcessIslands(MapParameters prms)
+    {
         // Identify islands
         for (int w = 0; w < Width; w++)
         {
@@ -104,63 +123,20 @@ public class Map
         }
         _islands.RemoveAll(i => i.IsAllAir());
 
-        int borderCount = 0;
-        foreach (Island i in _islands)
-        {
-            borderCount += i.GetBorderBlocks().Count;
-        }
-
-        // -- Add bridges --
         // We have to have all islands connected (indirectly)
-        // Start with the largest island
-        // We select the shortest bridges possible
         _islands.Sort(
             delegate (Island i1, Island i2) 
             {
                 return i1.Size() > i2.Size() ? -1 : i1.Size() == i2.Size() ? 0 : 1;
             }
         );
-        BuildBridges(_islands[0]);
-
-        // Generate trees
-        foreach (Block b in _ground)
-        {
-            if (b.IsEmpty() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H)))
-            {
-                if (Random.value > 1f - prms.forestDensity )
-                {
-                    b.SetTree(Random.Range(0, prms.forestDiversity));
-                }
-            }
-        }
-    }
-
-    private bool HasNeighbor(Block block, BlockType type)
-    {
-        int x = block.Location.x;
-        int y = block.Location.y;
-        if (x - 1 >= 0 && _ground[x - 1, y].Type == type)
-        {
-            return true;
-        }
-        if (x + 1 < Width && _ground[x + 1, y].Type == type)
-        {
-            return true;
-        }
-        if (y - 1 >= 0 && _ground[x, y - 1].Type == type)
-        {
-            return true;
-        }
-        if (y + 1 < Height && _ground[x, y + 1].Type == type)
-        {
-            return true;
-        }
-        return false;
     }
 
     private void BuildBridges(Island island)
     {
-        // $"Checking island with size {island.Size()}".Log(this);
+        // -- Add bridges --
+        // Start with the largest island
+        // We select the shortest bridges possible
 
         // Mark it as visited 
         island.SetConnected();
@@ -227,6 +203,113 @@ public class Map
         }
     }
 
+    private void GenerateIslandBorders()
+    {
+        // Create island borders 
+        foreach (Island i in _islands)
+        {
+            foreach (Block b in i.GetBorderBlocks())
+            {
+                foreach (Block neighbor in GetNeighbors(b))
+                {
+                    if (neighbor.Type == BlockType.AIR)
+                    {
+                        neighbor.SetIslandBorder();
+                    }
+                }
+            }
+        }
+    }
+
+    private void SpawnPortals(MapParameters prms)
+    {
+        foreach (LocationData ld in prms.neighborLocations)
+        {
+            GetRandomEmptyGroundBlock().SetPortal(ld);
+        }
+    }
+
+    private void GenerateTrees(MapParameters prms)
+    {
+        // Generate trees
+        foreach (Block b in _ground)
+        {
+            if (b.IsGroundEmpty() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H)))
+            {
+                if (Random.value > 1f - prms.forestDensity )
+                {
+                    b.SetTree(Random.Range(0, prms.forestVariety));
+                }
+            }
+        }
+    }
+
+    private void SpawnIngredients(MapParameters prms)
+    {
+        int min = Mathf.Min(prms.ingNumRange.x, prms.ingNumRange.y);
+        int max = Mathf.Max(prms.ingNumRange.x, prms.ingNumRange.y);
+        int ingNum = Random.Range(min, max);
+        while (ingNum > 0)
+        {   
+            GetRandomEmptyGroundBlock()
+                .SetIngredient(DataController.GetWeightedIngredientFromList(
+                    new List<int>(prms.ingredientsForSpawn)
+                    ).id
+                );
+            ingNum--;
+        }
+    }
+
+    private void SpawnContainers(MapParameters prms)
+    {
+        int min = Mathf.Min(prms.contNumRange.x, prms.contNumRange.y);
+        int max = Mathf.Max(prms.contNumRange.x, prms.contNumRange.y);
+        int contNum = Random.Range(min, max);
+        while (contNum > 0)
+        {
+            Block b = GetRandomEmptyGroundBlock();
+            if (IsValidLocation(b.Location.x, b.Location.y - 1) 
+                && GetBlock(b.Location.x, b.Location.y - 1).IsGroundEmpty()) 
+            {
+                b.SetContainer(Random.Range(0, prms.containerVariety));
+            }
+            contNum--;
+        }
+    }
+
+    private void SpawnEntities(MapParameters prms)
+    {
+        int entNum = Random.Range(4, 10);
+        // TODO: 
+    }
+
+    private void GenerateOutlineBorders()
+    {
+        // Outline borders
+        Width += 2;
+        Height += 2;
+        Block[,] finalGround = new Block[Width, Height];
+        for (int i = 0; i < Width - 2; i++)
+        {
+            for (int j = 0; j < Height - 2; j++)
+            {
+                finalGround[i + 1, j + 1] = _ground[i, j];
+            }
+        }
+
+        for (int h = 0; h < Width; h++)
+        {
+            finalGround[h, 0] = new Block(BlockType.ISLAND_BORDER, new Vector2Int(h, 0));
+            finalGround[h, Height - 1] = new Block(BlockType.ISLAND_BORDER, new Vector2Int(h, Height - 1));
+        }
+        for (int v = 0; v < Height; v++)
+        {
+            finalGround[0, v] = new Block(BlockType.ISLAND_BORDER, new Vector2Int(0, v));
+            finalGround[Width - 1, v] = new Block(BlockType.ISLAND_BORDER, new Vector2Int(Width - 1, v));
+        }
+        _ground = finalGround;
+    }
+
     private Bridge TryBuildBridge(Block block, int stepX, int stepY)
     {
         List<Block> bridgeBlocks = new List<Block>();
@@ -253,11 +336,6 @@ public class Map
             }
         }
         return null;
-    }
-
-    private bool IsValidLocation(int x, int y)
-    {
-        return x >= 0 && y >= 0 && x < Width && y < Height;
     }
 
     private Block[] IdentifyIsland(int w, int h)
@@ -294,6 +372,67 @@ public class Map
         return blocks.ToArray();
     }
 
+    private bool IsValidLocation(int x, int y)
+    {
+        return x >= 0 && y >= 0 && x < Width && y < Height;
+    }
+
+    private bool HasNeighbor(Block block, BlockType type)
+    {
+        int x = block.Location.x;
+        int y = block.Location.y;
+        if (x - 1 >= 0 && _ground[x - 1, y].Type == type)
+        {
+            return true;
+        }
+        if (x + 1 < Width && _ground[x + 1, y].Type == type)
+        {
+            return true;
+        }
+        if (y - 1 >= 0 && _ground[x, y - 1].Type == type)
+        {
+            return true;
+        }
+        if (y + 1 < Height && _ground[x, y + 1].Type == type)
+        {
+            return true;
+        }
+        return false;
+    }
+
+    private List<Block> GetNeighbors(Block b)
+    {
+        List<Block> neighbors = new List<Block>();
+        Vector2Int[] coords = new Vector2Int[]
+        {
+            new Vector2Int(b.Location.x + 1, b.Location.y),
+            new Vector2Int(b.Location.x - 1, b.Location.y),
+            new Vector2Int(b.Location.x, b.Location.y + 1),
+            new Vector2Int(b.Location.x, b.Location.y - 1)
+        };
+        foreach (Vector2Int v in coords)
+        {
+            if (IsValidLocation(v.x, v.y))
+            {
+                neighbors.Add(GetBlock(v.x, v.y));
+            }
+        }
+        return neighbors;
+    }
+
+    private Block GetRandomEmptyGroundBlock()
+    {
+        int x = Random.Range(0, Width);
+        int y = Random.Range(0, Height);
+        Block b = GetBlock(x, y);
+        while (!b.IsGroundEmpty())
+        {
+            x = Random.Range(0, Width);               
+            y = Random.Range(0, Height);
+            b = GetBlock(x, y);
+        }
+        return b;
+    }
     private class Bridge
     {
         public Island ParentIsland { get; set; }

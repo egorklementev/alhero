@@ -17,6 +17,9 @@ public class SpawnController : MonoBehaviour
     public GameObject[] containerUIGroups;
     public GameObject[] containersForSpawn;
 
+    [Header("Portal")]
+    public GameObject portal;
+
     [Space(5f)]
     public GameObject labContainers;
     public GameObject itemsGroup;
@@ -137,11 +140,11 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public GameObject SpawnContainer(int containerID, Vector3 pos, Quaternion rot, GameObject owner)
+    public Container SpawnContainer(int containerID, Vector3 pos, Quaternion rot, Transform owner)
     {
         containersSpawned++;
 
-        GameObject container = Instantiate(containersForSpawn[containerID], pos, rot, owner.transform);
+        GameObject container = Instantiate(containersForSpawn[containerID], pos, rot, owner);
         GameObject uiGroup = Instantiate(containerUIGroups[containerID], sidePanel.transform);
         uiGroup.name += "_" + containersSpawned;
         ui.uiGroups.Add(uiGroup);
@@ -165,9 +168,6 @@ public class SpawnController : MonoBehaviour
         GameObject takeBtn = uiGroup.transform.Find("TakeButton").gameObject;
         takeBtn.GetComponent<Button>().onClick.AddListener(logic.TakeItemFromContainer);
 
-        // Connect enter field to UI
-        container.GetComponentInChildren<EnterFieldInteraction>().groupToActivate = uiGroup.name;
-
         // Connect barrel to slots
         Container contScript = container.GetComponentInChildren<Container>();
         contScript.slots = new GameObject[contScript.invSize];
@@ -178,8 +178,13 @@ public class SpawnController : MonoBehaviour
         contScript.ingredientLine = ingredientTitle.GetComponent<TextMeshProUGUI>();
         contScript.isUnlocked = true;
         contScript.id = ("spawned_" + containersSpawned.ToString()).Hash();
+        contScript.spawner = this;
 
-        return container;
+        // Connect enter field to UI
+        container.transform.Find("EnterField").gameObject.SetActive(true);
+        container.GetComponentInChildren<EnterFieldInteraction>().groupToActivate = uiGroup.name;
+
+        return contScript;
     }
 
     public T SpawnItem<T>(int id, GameObject owner) where T : AbstractItem
@@ -212,6 +217,20 @@ public class SpawnController : MonoBehaviour
         }
         Debug.LogWarning($"[SpawnController.SpawnItem] No item with ID \"{id}\"!!!");
         return null;
+    }
+
+    public void SpawnEntity(string entityName)
+    {
+        // TODO: 
+    }
+
+    public void SpawnPortal(string sceneToLoad, string label, Color color, Transform parent, Vector3 pos, Quaternion rot)
+    {
+        Portal p = Instantiate(portal, pos, rot, parent).GetComponent<Portal>();
+        p.SceneToLoad = sceneToLoad;
+        p.LabelToShow = label;
+        p.Color = color;
+        p.logic = logic;
     }
 
     public void ClearLabContainers()

@@ -3,7 +3,7 @@ using UnityEngine;
 public class Block
 {
     public BlockType Type { get; private set; } = BlockType.AIR;
-    public int CntmntID { get; private set; } = -1;
+    public object Cntmnt { get; private set; }
     public ContainmentType CntmntType { get; private set; } = ContainmentType.EMPTY; 
 
     public Vector2Int Location { get; private set; }
@@ -24,31 +24,60 @@ public class Block
         Type = isVertical ? BlockType.BRIDGE_V : BlockType.BRIDGE_H;
     }
 
+    public void SetIslandBorder()
+    {
+        Type = BlockType.ISLAND_BORDER;
+    }
+
     public void SetTree(int treeID)
     {
-        CntmntID = treeID;
+        Cntmnt = treeID;
         CntmntType = ContainmentType.TREE;
     }
 
     public void SetFlora(int floraID)
     {
-        CntmntID = floraID;
+        Cntmnt = floraID;
         CntmntType = ContainmentType.FLORA;
     }
 
-    public bool IsEmpty()
+    public void SetIngredient(int ingID)
     {
-        return CntmntType == ContainmentType.EMPTY && (Type == BlockType.GROUND || Type == BlockType.AIR);
+        Cntmnt = ingID;
+        CntmntType = ContainmentType.INGREDIENT;
+    }
+
+    public void SetContainer(int contId)
+    {
+        Cntmnt = contId;
+        CntmntType = ContainmentType.CONTAINER;
+    }
+
+    public void SetPortal(LocationData ld)
+    {
+        Cntmnt = ld;
+        CntmntType = ContainmentType.PORTAL;
+    }
+
+    public void SetEntity()
+    {
+        // TODO: 
+    }
+
+    public bool IsGroundEmpty()
+    {
+        return Type == BlockType.GROUND && 
+            (CntmntType == ContainmentType.EMPTY || CntmntType == ContainmentType.FLORA);
     }
 
     public enum ContainmentType 
     {
-        EMPTY, TREE, FLORA
+        EMPTY, TREE, FLORA, INGREDIENT, CONTAINER, ENTITY, PORTAL
     }
 
     public enum BlockType
     {
-        AIR, GROUND, BRIDGE_V, BRIDGE_H
+        AIR, GROUND, BRIDGE_V, BRIDGE_H, ISLAND_BORDER
     }
 
     public Color GetMapColor()

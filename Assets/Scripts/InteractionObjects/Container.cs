@@ -79,14 +79,22 @@ public class Container : MonoBehaviour
                     inventory[freeSlot] = spawner.SpawnItem<PotionUI>(pWorld.id, slots[freeSlot]);
                     (inventory[freeSlot] as PotionUI).potionData = new Potion(pWorld.potionData);
 
-                    DataController.labContainers[id].items[freeSlot].id = pWorld.id;
-                    DataController.labContainers[id].items[freeSlot].potionData = new Potion(pWorld.potionData);
+                    try
+                    {
+                        DataController.labContainers[id].items[freeSlot].id = pWorld.id;
+                        DataController.labContainers[id].items[freeSlot].potionData = new Potion(pWorld.potionData);
+                    }
+                    catch {}
                 }
                 else
                 {
                     inventory[freeSlot] = spawner.SpawnItem<ItemUI>(item.id, slots[freeSlot]);
 
-                    DataController.labContainers[id].items[freeSlot].id = item.id;
+                    try 
+                    {
+                        DataController.labContainers[id].items[freeSlot].id = item.id;
+                    }
+                    catch {}
                 }
                 item.Destroy();
             }

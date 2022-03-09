@@ -128,10 +128,11 @@ public class DataController : MonoBehaviour
         string ing_name,
         float cooldown,
         float breakChance,
+        int rarity,
         float r, float g, float b, float a,
         Potion potionData = null)
     {
-        Ingredient ing = new Ingredient(id, ing_name, cooldown, breakChance, r, g, b, a, potionData);
+        Ingredient ing = new Ingredient(id, ing_name, cooldown, breakChance, rarity, r, g, b, a, potionData);
         try
         {
             ingredients.Add(id, ing);
@@ -241,6 +242,7 @@ public class DataController : MonoBehaviour
                     item.item_name,
                     Random.Range(0f, 6f),
                     Random.value * .15f, // TODO:
+                    Random.Range(1, 1000),
                     2f * (Random.value - .5f),
                     2f * (Random.value - .5f),
                     2f * (Random.value - .5f),
@@ -255,6 +257,28 @@ public class DataController : MonoBehaviour
 
         // Unconditional autosave
         Autosave();
+    }
+
+    public static Ingredient GetWeightedIngredientFromList(List<int> ingIDs)
+    {
+        int ingID = 0;
+        int sum = 0;
+        foreach (int ingHash in ingIDs)
+        {
+            sum += DataController.ingredients[ingHash].rarity;
+        }
+        int dice = Random.Range(0, sum);
+        int increment = 0;
+        foreach (int ingHash in ingIDs)
+        {
+            increment += DataController.ingredients[ingHash].rarity;
+            if (increment > dice)
+            {
+                ingID = ingHash;
+                break;
+            }
+        }
+        return ingredients[ingID];
     }
 
     public static Recipe GenerateRandomRecipe(int ingNum = 0)
@@ -282,6 +306,7 @@ public class DataController : MonoBehaviour
                 i.ing_name,
                 i.cooldown,
                 i.breakChance,
+                i.rarity,
                 i.color_r, i.color_g, i.color_b, i.color_a
             );
         }

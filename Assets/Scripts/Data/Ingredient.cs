@@ -5,6 +5,7 @@ public class Ingredient : GameDataEntry
     public float cooldown; // How much of a delay adds this ingredient to the cauldron
     public float breakChance; // How likely is that this ingredient will break the recipe
     public bool hasBeenDiscovered;
+    public int rarity; // How rare is this ingredient in the wolrd (lower is rarer)
 
     public Potion potionData; // In case this ingredient is potion
 
@@ -19,6 +20,7 @@ public class Ingredient : GameDataEntry
         string ing_name,
         float cooldown,
         float breakChance,
+        int rarity,
         float r,
         float g,
         float b,
@@ -29,6 +31,7 @@ public class Ingredient : GameDataEntry
         this.ing_name = ing_name;
         this.cooldown = cooldown;
         this.breakChance = breakChance;
+        this.rarity = rarity;
         color_r = r;
         color_g = g;
         color_b = b;

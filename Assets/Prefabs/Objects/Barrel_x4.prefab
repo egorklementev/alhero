@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7080795387997062574}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Barrel_x4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -168,12 +168,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c320bb2f7f70dbb41a37e990cb6208f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 
+  id: 0
+  container_name: 
   isUnlocked: 0
   invSize: 4
   slots: []
   ingredientLine: {fileID: 0}
   spawner: {fileID: 0}
+--- !u!114 &6978103112038658960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7963877284879903709}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 2
+  outlineColor: {r: 0.8584906, g: 0.6677086, b: 0.4972766, a: 1}
+  outlineWidth: 5
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &7790195169559680213
 PrefabInstance:
   m_ObjectHideFlags: 0

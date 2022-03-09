@@ -173,6 +173,7 @@ public class Cauldron : MonoBehaviour
                                         newPotionName, 
                                         AverageCooldown(potionData.ingredients), 
                                         RandomBreakChance(potionData.ingredients), 
+                                        Random.Range(1, 999), // TODO:
                                         RandomR(potionData.ingredients), 
                                         RandomG(potionData.ingredients), 
                                         RandomB(potionData.ingredients), 
