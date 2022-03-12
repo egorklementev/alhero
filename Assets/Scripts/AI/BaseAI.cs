@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class BaseAI : MonoBehaviour
 {
+    public LogicController logic;
+
     private AIState currentState;
 
     public AIState GetState()

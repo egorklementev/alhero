@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +20,13 @@ public class SpawnController : MonoBehaviour
     [Header("Portal")]
     public GameObject portal;
 
+    [Header("Entities")]
+    public GameObject[] entities;
+
     [Space(5f)]
-    public GameObject labContainers;
-    public GameObject itemsGroup;
+    public Transform containersGroup;
+    public Transform itemsGroup;
+    public Transform entitiesGroup;
 
     [Space(15f)]
     public LogicController logic;
@@ -87,10 +91,10 @@ public class SpawnController : MonoBehaviour
 
     private void LoadContainers()
     {
-        if (labContainers != null)
+        if (containersGroup != null)
         {
             // Load containers with previously stored items
-            foreach (Transform contTransform in labContainers.transform)
+            foreach (Transform contTransform in containersGroup.transform)
             {
                 Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
                 if (!DataController.labContainers.ContainsKey(contScript.id))
@@ -219,9 +223,18 @@ public class SpawnController : MonoBehaviour
         return null;
     }
 
-    public void SpawnEntity(string entityName)
+    public BaseAI SpawnEntity(string entityName, Vector3 pos, Quaternion rot, Transform owner)
     {
-        // TODO: 
+        GameObject ent = Array.Find(entities, e => e.name.Equals(entityName));
+        if (ent == null)
+        {
+            $"No entity with name ({entityName}) found!!!".Warn(this);
+            return null;
+        }
+        else
+        {
+            return Instantiate(ent, pos, rot, owner).GetComponentInChildren<BaseAI>();
+        }
     }
 
     public void SpawnPortal(string sceneToLoad, string label, Color color, Transform parent, Vector3 pos, Quaternion rot)
@@ -233,9 +246,9 @@ public class SpawnController : MonoBehaviour
         p.logic = logic;
     }
 
-    public void ClearLabContainers()
+    public void ClearContainers()
     {
-        foreach (Transform container in labContainers.transform)
+        foreach (Transform container in containersGroup)
         {
             container.GetComponentInChildren<Container>().Clear();
         }

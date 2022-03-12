@@ -20,8 +20,6 @@ public class MagpieAI : BaseAI
     public float minimalStep = 4f;
     public float colliderBounds = 4f;
     
-    [Space(15f)]
-    public LogicController logic;
 
     private float stuckTime = 0f;
     private List<Vector3> walkRoute;
@@ -67,60 +65,63 @@ public class MagpieAI : BaseAI
         };
     }
 
-    private void FixedUpdate() {
-
-        if (memory > 0f)
+    private void FixedUpdate() 
+    {
+        if (enabled) 
         {
-            memory -= Time.fixedDeltaTime;
+            if (memory > 0f)
+            {
+                memory -= Time.fixedDeltaTime;
 
-            // Locate threats if any
-            BaseAI threat = GetSomeThreat();
-            if (threat != null)
-            {
-                currentThreat = threat;
-                UpdateMemory();
-                ResetAnimationParams();
-                Transition("Threatening");
-            }
+                // Locate threats if any
+                BaseAI threat = GetSomeThreat();
+                if (threat != null)
+                {
+                    currentThreat = threat;
+                    UpdateMemory();
+                    ResetAnimationParams();
+                    Transition("Threatening");
+                }
 
-            switch (GetState().Name)
-            {
-                case "Threatening":
-                    BecomeThreatening();
-                    break;
-                case "Walking":
-                    WalkToTheDestination();
-                    break;
-                case "Rotating":
-                    RotateBody();
-                    break;
-                default:
-                    break;
-            }
-        }
-        else
-        {
-            switch (GetState().Name)
-            {
-                case "Idle":
-                    DecideWhatToDo();
-                    break;
-                case "Threatening":
-                    if (GetSomeThreat() != null)
-                    {
+                switch (GetState().Name)
+                {
+                    case "Threatening":
                         BecomeThreatening();
-                    }
-                    else
-                    {
-                        Transition("Idle");
-                        ResetAnimationParams();
-                    }
-                    break;
-                default:
-                    break;
+                        break;
+                    case "Walking":
+                        WalkToTheDestination();
+                        break;
+                    case "Rotating":
+                        RotateBody();
+                        break;
+                    default:
+                        break;
+                }
             }
+            else
+            {
+                switch (GetState().Name)
+                {
+                    case "Idle":
+                        DecideWhatToDo();
+                        break;
+                    case "Threatening":
+                        if (GetSomeThreat() != null)
+                        {
+                            BecomeThreatening();
+                        }
+                        else
+                        {
+                            Transition("Idle");
+                            ResetAnimationParams();
+                        }
+                        break;
+                    default:
+                        break;
+                }
 
-            UpdateMemory();
+                UpdateMemory();
+            }
         }
     }
 

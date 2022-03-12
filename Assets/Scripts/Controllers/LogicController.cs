@@ -1,13 +1,10 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class LogicController : MonoBehaviour
 {
     public GameObject player;
-
-    [Space(15f)]
-    public GameObject worldItemsGroup;
-    public GameObject entitiesGroup;
 
     [Space(15f)]
     public GameObject recipeBook;
@@ -25,30 +22,16 @@ public class LogicController : MonoBehaviour
     public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
 
+    private static int[] _pickedItemsIDs = new int[playerInvSize];
+
     private void OnEnable() 
     {
-        if (newGameStarted)
+        int height = 0;
+        foreach (int id in _pickedItemsIDs)
         {
-            #region DEBUG
-            newGameStarted = false;
-            string[] items = new string[]
-            {
-                "flower", "horseshoe", "meat", "salt", "wine"
-            };
-            Vector3[] pos = new Vector3[]
-            {
-                new Vector3(-68f, 0f, 34f),
-                new Vector3(-52f, 0f, 38f),
-                new Vector3(-73f, 0f, 52f),
-                new Vector3(2f, 0f, 62f),
-                new Vector3(2f, 0f, 15f),
-            };
-            int index = 0;
-            foreach (string name in items)
-            {
-                spawner.SpawnItem<ItemWorld>(name.Hash(), pos[index++], Quaternion.identity, worldItemsGroup);
-            }
-            #endregion
+            StartCoroutine(
+                DelayedItemSpawn(id, player.transform.position + Vector3.up * (2f + height++))
+                );
         }
     }
 
@@ -109,11 +92,10 @@ public class LogicController : MonoBehaviour
                 PotionUI uiPotion = selectedItem as PotionUI;
                 if (uiPotion != null)
                 {
-                    PotionWorld newPotion = spawner.SpawnItem<PotionWorld>(uiPotion.id, worldItemsGroup);
+                    PotionWorld newPotion = spawner.SpawnItem<PotionWorld>(uiPotion.id, spawner.itemsGroup);
 
                     newPotion.potionData = new Potion(uiPotion.potionData); // Perform potion data copy
                     int newPotionID = newPotion.potionData.GetID();
-                    newPotion.name = newPotionID.ToString();
                     newPotion.name = newPotionID.ToString();
                     newPotion.SetPickedUp(true, slot, player);
                     PickedItems[slot] = newPotion;
@@ -121,7 +103,7 @@ public class LogicController : MonoBehaviour
                 }
                 else
                 {
-                    ItemWorld newWorldItem = spawner.SpawnItem<ItemWorld>(selectedItem.id, worldItemsGroup);
+                    ItemWorld newWorldItem = spawner.SpawnItem<ItemWorld>(selectedItem.id, spawner.itemsGroup);
                     newWorldItem.SetPickedUp(true, slot, player);
                     PickedItems[slot] = newWorldItem;
                 }
@@ -147,19 +129,19 @@ public class LogicController : MonoBehaviour
         pos = player.transform.position + pos;
         foreach (string name in items)
         {
-            spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, worldItemsGroup);
+            spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, spawner.itemsGroup);
             pos -= new Vector3(0f, 0f, 3f);
         }
     }
 
     public void StartNewGame()
     {
-        foreach (Transform obj in worldItemsGroup.transform)
+        foreach (Transform obj in spawner.itemsGroup)
         {
             Destroy(obj.gameObject);
         }
 
-        spawner.ClearLabContainers();
+        spawner.ClearContainers();
         data.StartNewGame();
         player.transform.position = Vector3.zero;
         // TODO: play some player animation or something
@@ -170,7 +152,7 @@ public class LogicController : MonoBehaviour
     public BaseAI GetClosestEntity(BaseAI ai)
     {
         List<BaseAI> lst = new List<BaseAI>();
-        foreach (Transform t in entitiesGroup.transform)
+        foreach (Transform t in spawner.entitiesGroup.transform)
         {
             if (t.TryGetComponent<BaseAI>(out BaseAI otherAi) && !otherAi.Equals(ai))
             {
@@ -191,7 +173,7 @@ public class LogicController : MonoBehaviour
     public ItemWorld GetClosestItem(BaseAI ai)
     {
         List<ItemWorld> lst = new List<ItemWorld>();
-        foreach (Transform t in worldItemsGroup.transform)
+        foreach (Transform t in spawner.itemsGroup)
         {
             if (t.TryGetComponent<ItemWorld>(out ItemWorld item))
             {
@@ -211,6 +193,14 @@ public class LogicController : MonoBehaviour
 
     public void ChangeScene(string newScene)
     {
+        for (int i = 0; i < PickedItems.Length; i++)
+        {
+            if (PickedItems[i] != null)
+            {
+                _pickedItemsIDs[i] = PickedItems[i].id;
+            }
+        }
+        data.Autosave(); // Save all stuff before loading a new scene
         ui.StartSceneFade(newScene, 1f);
     }
 
@@ -230,5 +220,21 @@ public class LogicController : MonoBehaviour
     public Vector3 GetHeroPosition()
     {
         return player.transform.position;
+    }
+
+    /// Enable/Disable agents' AI 
+    public void SwitchAI()
+    {
+        foreach (Transform agent in spawner.entitiesGroup)
+        {
+            BaseAI ai = agent.GetComponent<BaseAI>();
+            ai.enabled = !ai.enabled;
+        }
+    }
+
+    public IEnumerator DelayedItemSpawn(int id, Vector3 pos, float time = 1f)
+    {
+        yield return new WaitForSeconds(time);
+        spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity, spawner.itemsGroup);
     }
 }

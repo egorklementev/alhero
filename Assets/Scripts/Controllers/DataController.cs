@@ -75,7 +75,7 @@ public class DataController : MonoBehaviour
         {
             logic.StartNewGame();
         }
-        Random.InitState(genData.seed);
+        Random.InitState(genData.seed + genData.locationGenerations++);
     }
 
     void Update()
@@ -188,7 +188,6 @@ public class DataController : MonoBehaviour
         currentHistoryIngs.CopyTo(he.ingredients);
         history.Enqueue(he);
         currentHistoryIngs.Clear();
-        Debug.Log($"[History]: New size is {history.Count}");
     }
 
     public static void AddHistoryIngredient(int id)
@@ -218,6 +217,8 @@ public class DataController : MonoBehaviour
             Debug.Log($"[DataController.StartNewGame]: New game started. The seed is {genData.seed}.");
         }
         Random.InitState(genData.seed);
+
+        genData.locationGenerations = 0;
 
         history.Clear();
 

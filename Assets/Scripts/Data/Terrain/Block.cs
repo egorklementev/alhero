@@ -47,9 +47,9 @@ public class Block
         CntmntType = ContainmentType.INGREDIENT;
     }
 
-    public void SetContainer(int contId)
+    public void SetContainer(ContainerData cd)
     {
-        Cntmnt = contId;
+        Cntmnt = cd;
         CntmntType = ContainmentType.CONTAINER;
     }
 
@@ -59,12 +59,13 @@ public class Block
         CntmntType = ContainmentType.PORTAL;
     }
 
-    public void SetEntity()
+    public void SetEntity(string name)
     {
-        // TODO: 
+        Cntmnt = name;
+        CntmntType = ContainmentType.ENTITY;
     }
 
-    public bool IsGroundEmpty()
+    public bool IsEmptyGround()
     {
         return Type == BlockType.GROUND && 
             (CntmntType == ContainmentType.EMPTY || CntmntType == ContainmentType.FLORA);

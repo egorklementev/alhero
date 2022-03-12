@@ -20,7 +20,6 @@ public class Portal : MonoBehaviour {
         portalRender.material.SetColor("_Color", Color);
         portalRender.material.SetColor("_EmissionColor", Color);
         var colorOverLife = particles.colorOverLifetime;
-        $"Length: {colorOverLife.color.gradient.colorKeys.Length}".Log(this);
         Gradient g = new Gradient();
         g.SetKeys(
             new GradientColorKey[] {

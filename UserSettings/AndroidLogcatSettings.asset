@@ -3,75 +3,51 @@
     "m_SelectedPackage": {
         "deviceId": "7afc6a600404",
         "name": "com.erked.AlHero",
-        "processId": 20422,
+        "processId": 27359,
         "exited": false
     },
     "m_SelectedPriority": 0,
     "m_KnownPackagesForSerialization": [
         {
             "deviceId": "7afc6a600404",
-            "name": "com.miui.home",
-            "processId": 1781,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.unity3d.mobileremote",
-            "processId": 21751,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 25229,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 27504,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 29212,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.erked.AlHero",
-            "processId": 32526,
-            "exited": true
-        },
-        {
-            "deviceId": "7afc6a600404",
-            "name": "com.unity3d.mobileremote",
-            "processId": 21332,
-            "exited": false
-        },
-        {
-            "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 25579,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 4861,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 3392,
-            "exited": false
+            "exited": true
         },
         {
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 20422,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 3379,
+            "exited": true
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.unity3d.mobileremote",
+            "processId": 16462,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 27359,
             "exited": false
         }
     ],

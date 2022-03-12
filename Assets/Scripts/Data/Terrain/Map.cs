@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using BlockType = Block.BlockType;
+using Random = UnityEngine.Random;
 
 public class Map 
 {
@@ -12,6 +13,7 @@ public class Map
     private Block[,] _ground;
     private List<Island> _islands;
     private bool[,] identified;
+    private const int MaxTrials = 1024; // If this is exceeded - recreate all level
 
     public bool IsAir(int x, int y)
     {
@@ -21,6 +23,21 @@ public class Map
     public Block GetBlock(int x, int y)
     {
         return _ground[x, y];
+    }
+
+    public bool IsEmptyGroundArea(Vector2Int center, int range = 0)
+    {
+        for (int x = center.x - range; x <= center.x + range; x++)
+        {
+            for (int y = center.y - range; y <= center.y + range; y++)
+            {
+                if (!GetBlock(x, y).IsEmptyGround())
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
     public int NeighborCount(int x, int y)
@@ -44,19 +61,39 @@ public class Map
         _islands = new List<Island>();
         identified = new bool[Width, Height];
 
+        MapGenerator.loadingProgress = 0f;
+
         GenerateGroundAndAir(prms);
+        MapGenerator.loadingProgress = 0.1f;
+
         ProcessIslands(prms);
+        MapGenerator.loadingProgress = 0.2f;
+
         BuildBridges(_islands[0]);
+        MapGenerator.loadingProgress = 0.3f;
+
         GenerateIslandBorders();
+        MapGenerator.loadingProgress = 0.4f;
+
         GenerateTrees(prms);
+        MapGenerator.loadingProgress = 0.5f;
 
         SpawnPortals(prms);
+        MapGenerator.loadingProgress = 0.6f;
+
         SpawnIngredients(prms);
+        MapGenerator.loadingProgress = 0.7f;
+
         SpawnContainers(prms);
+        MapGenerator.loadingProgress = 0.8f;
+
         SpawnEntities(prms);
+        MapGenerator.loadingProgress = 0.9f;
 
         // Here width & height of the map change
         GenerateOutlineBorders();
+
+        MapGenerator.loadingProgress = 0.9f;
     }
 
     private void GenerateGroundAndAir(MapParameters prms)
@@ -225,7 +262,7 @@ public class Map
     {
         foreach (LocationData ld in prms.neighborLocations)
         {
-            GetRandomEmptyGroundBlock().SetPortal(ld);
+            GetRandomEmptyGroundBlock(1).SetPortal(ld);
         }
     }
 
@@ -234,7 +271,7 @@ public class Map
         // Generate trees
         foreach (Block b in _ground)
         {
-            if (b.IsGroundEmpty() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H)))
+            if (b.IsEmptyGround() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H)))
             {
                 if (Random.value > 1f - prms.forestDensity )
                 {
@@ -253,7 +290,9 @@ public class Map
         {   
             GetRandomEmptyGroundBlock()
                 .SetIngredient(DataController.GetWeightedIngredientFromList(
-                    new List<int>(prms.ingredientsForSpawn)
+                    new List<int>(
+                        new List<string>(prms.ingredients).ConvertAll(ing => ing.Hash())
+                        )
                     ).id
                 );
             ingNum--;
@@ -267,20 +306,35 @@ public class Map
         int contNum = Random.Range(min, max);
         while (contNum > 0)
         {
-            Block b = GetRandomEmptyGroundBlock();
-            if (IsValidLocation(b.Location.x, b.Location.y - 1) 
-                && GetBlock(b.Location.x, b.Location.y - 1).IsGroundEmpty()) 
+            Block b = GetRandomEmptyGroundBlock(1);
+            LabContainerItems items = new LabContainerItems();
+            items.items = new LabContainerItem[Random.Range(0, 3)];
+            for (int i = 0; i < items.items.Length; i++)
             {
-                b.SetContainer(Random.Range(0, prms.containerVariety));
+                items.items[i] = new LabContainerItem(); 
+                items.items[i].id = DataController.GetWeightedIngredientFromList(
+                    new List<int>(
+                        new List<string>(prms.ingredients).ConvertAll(ing => ing.Hash())
+                    )
+                ).id;
             }
+            b.SetContainer(
+                new ContainerData(
+                    Random.Range(0, prms.containers.Length),
+                    items
+                    )
+            );
             contNum--;
         }
     }
 
     private void SpawnEntities(MapParameters prms)
     {
-        int entNum = Random.Range(4, 10);
-        // TODO: 
+        int entCount = Random.Range(prms.entNumRange.x, prms.entNumRange.y + 1);
+        while (entCount-- > 0)
+        {
+            GetRandomEmptyGroundBlock().SetEntity(prms.entitiesForSpawn[Random.Range(0, prms.entitiesForSpawn.Length)]);
+        }
     }
 
     private void GenerateOutlineBorders()
@@ -420,16 +474,23 @@ public class Map
         return neighbors;
     }
 
-    private Block GetRandomEmptyGroundBlock()
+    private Block GetRandomEmptyGroundBlock(int range = 0)
     {
         int x = Random.Range(0, Width);
         int y = Random.Range(0, Height);
         Block b = GetBlock(x, y);
-        while (!b.IsGroundEmpty())
+        int trials = 0;
+        while (!IsEmptyGroundArea(b.Location, range))
         {
             x = Random.Range(0, Width);               
             y = Random.Range(0, Height);
             b = GetBlock(x, y);
+
+            trials++;
+            if (trials > MaxTrials)
+            {
+                throw new UnityException($"Free ground block not found with range {range}!!!");
+            }
         }
         return b;
     }
