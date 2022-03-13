@@ -52,6 +52,7 @@ public class MinimapController : MonoBehaviour
         mapTexture.filterMode = FilterMode.Point;
         mapTexture.Apply();
         mapRenderer.material.mainTexture = mapTexture;
+        mapRenderer.material.SetColor("_Color", Color.white);
         mapRenderer.material.renderQueue = 2985; // Transparent-15
     }
 

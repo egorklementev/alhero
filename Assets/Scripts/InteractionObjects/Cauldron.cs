@@ -10,7 +10,7 @@ public class Cauldron : MonoBehaviour
     [Space(10f)]
     public GameObject[] particles;
     public Animator spoonAnim;
-    public ParticleSystem finishBubbles;
+    public GameObject finishBubbles;
 
     [Space(10f)]
     public UIController ui;
@@ -51,6 +51,7 @@ public class Cauldron : MonoBehaviour
     public void ClearInventory()
     {
         StartCoroutine(FadeWaterColor(Color.cyan, Color.white, 1f));
+        DataController.genData.cauldronInventory = new int[] {};
         inventory.Clear();
         SetRecipeCooking(false);
     }
@@ -76,7 +77,7 @@ public class Cauldron : MonoBehaviour
                 Ingredient curIng = DataController.ingredients[id];
                 if (curIng == null)
                 {
-                    Debug.LogError($"[Cauldron.OnCollisionExit] No ingredient with name \"{id}\" !!!");
+                    $"No ingredient with name \"{id}\"!!!".Warn(this);
                     DestroyCurrentRecipe();
                 }
                 else
@@ -112,6 +113,19 @@ public class Cauldron : MonoBehaviour
                                 }
                                 else
                                 {
+                                    // Unlock ingredient if it is correct
+                                    if (curIng.id == potentialRecipe.ingredient_seq[inventory.Count - 1])
+                                    {
+                                        try
+                                        {
+                                            DataController.ingredients[curIng.id].hasBeenDiscovered = true;
+                                        }
+                                        catch
+                                        {
+                                            $"No ingredient with id ({curIng.id}) found!!!".Warn(this);
+                                        }
+                                    }
+
                                     // Spawn item
                                     int bottleShape = Random.Range(1, DataController.bootleShapesNumber + 1);
                                     PotionWorld potion = spawner.SpawnItem<PotionWorld>(
@@ -183,7 +197,7 @@ public class Cauldron : MonoBehaviour
                                     // Unlock potion recipe when it is cooked for the first time 
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
 
-                                    DataController.GenerateRandomRecipe();
+                                    DataController.CreateNewRecipe(DataController.GenerateRandomRecipe());
 
                                     DataController.AddHistoryIngredient(newPotionID);
                                 }
@@ -197,7 +211,27 @@ public class Cauldron : MonoBehaviour
                         }
                         else
                         {
-                            Debug.Log("[Cauldron]: Waiting for the next ingredient...");
+                            GameObject fb = Instantiate(finishBubbles, transform);
+                            ParticleSystem fbPS = fb.GetComponent<ParticleSystem>();
+                            ParticleSystem.MainModule settings = fbPS.main;
+                            settings.startColor = new ParticleSystem.MinMaxGradient(Color.white);
+                            settings.duration = 2f;
+                            fbPS.Play();
+                            
+                            // Unlock ingredient if it is correct
+                            if (curIng.id == potentialRecipe.ingredient_seq[inventory.Count - 1])
+                            {
+                                try
+                                {
+                                    DataController.ingredients[curIng.id].hasBeenDiscovered = true;
+                                }
+                                catch
+                                {
+                                    $"No ingredient with id ({curIng.id}) found!!!".Warn(this);
+                                }
+                            }
+
+                            "Waiting for the next ingredient...".Log(this);
                         }
                     }
                 }
@@ -260,11 +294,12 @@ public class Cauldron : MonoBehaviour
         float delay = success ? 6f : 3f;
         Color color = success ? new Color(.3089f, .1244f, .5667f) : Color.black;
 
-        finishBubbles.Stop();
-        ParticleSystem.MainModule settings = finishBubbles.main;
+        GameObject fb = Instantiate(finishBubbles, transform);
+        ParticleSystem fbPS = fb.GetComponent<ParticleSystem>();
+        ParticleSystem.MainModule settings = fbPS.main;
         settings.startColor = new ParticleSystem.MinMaxGradient(color);
         settings.duration = delay;
-        finishBubbles.Play();
+        fbPS.Play();
 
         StartCoroutine(FadeWaterColor(color, Color.white, delay));
         SetRecipeCooking(false);

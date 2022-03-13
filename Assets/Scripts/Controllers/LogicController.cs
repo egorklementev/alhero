@@ -9,6 +9,7 @@ public class LogicController : MonoBehaviour
     [Space(15f)]
     public GameObject recipeBook;
     public RecipeBook recipeBookScript;
+    public Transform checkpoints;
 
     [Space(15f)]
     public SpawnController spawner;
@@ -18,6 +19,7 @@ public class LogicController : MonoBehaviour
 
     private static int playerInvSize = 3; // Inverntory size
     private static bool newGameStarted = false;
+    private static string checkpointToSpawn = "Initial";
 
     public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
@@ -26,12 +28,20 @@ public class LogicController : MonoBehaviour
 
     private void OnEnable() 
     {
-        int height = 0;
-        foreach (int id in _pickedItemsIDs)
+        TryTeleportPlayer(checkpointToSpawn);
+        checkpointToSpawn = "none";
+        Vector3[] itemPos = new Vector3[] 
+        { 
+            Vector3.up * 1.5f + Vector3.left * 2f, 
+            Vector3.up * 1.5f + Vector3.left * 2f + Vector3.back * 2f, 
+            Vector3.up * 1.5f + Vector3.back * 2f, 
+        };
+        for (int i = 0; i < _pickedItemsIDs.Length; i++)
         {
             StartCoroutine(
-                DelayedItemSpawn(id, player.transform.position + Vector3.up * (2f + height++))
+                DelayedItemSpawn(_pickedItemsIDs[i], player.transform.position + itemPos[i])
                 );
+            _pickedItemsIDs[i] = 0; // Reset picked items
         }
     }
 
@@ -191,6 +201,11 @@ public class LogicController : MonoBehaviour
         return lst.Count > 0 ? lst[0] : null;
     }
 
+    public void SetSpawnCheckpoint(string checkpoint)
+    {
+        checkpointToSpawn = checkpoint;
+    }
+
     public void ChangeScene(string newScene)
     {
         for (int i = 0; i < PickedItems.Length; i++)
@@ -236,5 +251,17 @@ public class LogicController : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity, spawner.itemsGroup);
+    }
+
+    public void TryTeleportPlayer(string checkpoint)
+    {
+        try 
+        {
+            player.transform.position = checkpoints.Find(checkpoint).position;
+        }
+        catch
+        {
+            $"No checkpoint \"{checkpoint}\" for player to be spawned found.".Log(this);
+        }
     }
 }

@@ -101,11 +101,11 @@ public class DataController : MonoBehaviour
     {
         if (debugMode)
         {
-            Debug.Log("[DataController.Autosave] Abort autosaving.");
+            "Abort autosaving.".Log(this);
         }
         else
         {
-            Debug.Log("[DataController.Autosave] Autosaving...");
+            "Autosaving...".Log(this);
 
             SaveToDataFile<General>(genData, "General", "general.json");
 
@@ -136,13 +136,18 @@ public class DataController : MonoBehaviour
         try
         {
             ingredients.Add(id, ing);
-            Debug.Log($"[DataController.AddNewIngredient] New ingredient added: \"{id}\" (\"{ing_name}\")");
+            $"New ingredient added: \"{id}\" (\"{ing_name}\")".Log();
         }
         catch (ArgumentException)
         {
-            Debug.LogWarning($"[DataController.AddNewIngredient] Ingredient with ID \"{id}\" (\"{ing_name}\") already exists!");
+            $"Ingredient with ID \"{id}\" (\"{ing_name}\") already exists!".Warn();
         }
         return ing;
+    }
+
+    public static Recipe CreateNewRecipe(Recipe rec)
+    {
+        return CreateNewRecipe(rec.mistakes_allowed, rec.ingredient_seq);
     }
 
     public static Recipe CreateNewRecipe(int mistakesAllowed, params int[] ingredients)
@@ -152,11 +157,11 @@ public class DataController : MonoBehaviour
         try
         {
             recipes.Add(id, new Recipe(mistakesAllowed, ingredients));
-            Debug.Log($"[DataController.CreateNewRecipe]: New recipe created: {newRecipe.GetID()}");
+            $"New recipe created: {newRecipe.GetID()}".Log();
         }
         catch (ArgumentException)
         {
-            Debug.LogWarning($"[DataController.CreateNewRecipe] Recipe with ID \"{id}\" already exists!");
+            $"Recipe with ID \"{id}\" already exists!".Warn();
         }
         return newRecipe;
     }
@@ -169,11 +174,11 @@ public class DataController : MonoBehaviour
         try
         {
             labContainers.Add(id, ci);
-            Debug.Log($"[DataController.CreateInventoryItems]: New ContainerItems object created: {id}");
+            $"New ContainerItems object created: {id}".Log();
         }
         catch (ArgumentException)
         {
-            Debug.LogWarning($"[DataController.CreateEmptyInventoryItems] Container with ID \"{id}\" already exists!");
+            $"Container with ID \"{id}\" already exists!".Warn();
         }
         return ci;
     }
@@ -193,28 +198,28 @@ public class DataController : MonoBehaviour
     public static void AddHistoryIngredient(int id)
     {
         currentHistoryIngs.Add(id);
-        Debug.Log($"[DataController.AddHistoryIngredient]: Ingredient \"{id}\" added.");
+        $"Ingredient \"{id}\" added.".Log();
     }
 
     public void StartNewGame()
     {
-        Debug.Log(Environment.NewLine);
-        Debug.Log("Starting a new game...");
-        Debug.Log(Environment.NewLine);
+        Environment.NewLine.Log(this);
+        "Starting a new game...".Log(this);
+        Environment.NewLine.Log(this);
         
         // In case of user set seed
         if (newSeed != 0)
         {
             genData.seed = newSeed;
             newSeed = 0;
-            Debug.Log($"[DataController.StartNewGame]: New game seed is {genData.seed}.");
+            $"New game seed is {genData.seed}.".Log(this);
         }
 
         // The very new game
         if (genData.seed == 0)
         {
             genData.seed = Random.Range(int.MinValue, int.MaxValue);
-            Debug.Log($"[DataController.StartNewGame]: New game started. The seed is {genData.seed}.");
+            $"New game started. The seed is {genData.seed}.".Log(this);
         }
         Random.InitState(genData.seed);
 
@@ -254,7 +259,7 @@ public class DataController : MonoBehaviour
 
         // Add initial recipe
         recipes.Clear();
-        GenerateRandomRecipe(3);
+        CreateNewRecipe(GenerateRandomRecipe(3));
 
         // Unconditional autosave
         Autosave();
@@ -294,8 +299,35 @@ public class DataController : MonoBehaviour
             ings[i] = ingIDs[Random.Range(0, ingredients.Count)];
         }
         Recipe rec = new Recipe(mistakes, ings);
-        CreateNewRecipe(rec.mistakes_allowed, rec.ingredient_seq);
+        if (HasOverlaps(rec))
+        {
+            rec = GenerateRandomRecipe();
+        }
+        // CreateNewRecipe(rec.mistakes_allowed, rec.ingredient_seq);
         return rec;
+    }
+
+    private static bool HasOverlaps(Recipe rec)
+    {
+        foreach (Recipe r in recipes.Values) 
+        {
+            int recLen = r.ingredient_seq.Length;
+            int potRecLen = rec.ingredient_seq.Length;
+            int index = 0;
+            while (
+                index < recLen && 
+                index < potRecLen && 
+                r.ingredient_seq[index] == rec.ingredient_seq[index]
+                )
+            {
+                index++;
+            }
+            if (potRecLen == index && potRecLen <= recLen)
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void AddIngredientsDebug()
@@ -353,7 +385,7 @@ public class DataController : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning($"[DataController.LoadDataFile] Unable to read data file \"{absPath}\"!");
+                $"Unable to read data file \"{absPath}\"!".Warn(this);
                 return default(T);
             }
         }
@@ -395,7 +427,7 @@ public class DataController : MonoBehaviour
                 if (request.result == UnityWebRequest.Result.ConnectionError ||
                 request.result == UnityWebRequest.Result.DataProcessingError)
                 {
-                    Debug.LogError("[DataController.SetupDataFile] What a fuck!?");
+                    "What a fuck!?".Err(this);
                     break;
                 }
             }

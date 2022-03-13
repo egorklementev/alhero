@@ -86,7 +86,6 @@ public class ItemWorld : AbstractItem
         int slot = LogicController.GetFreeInvSlot();
         if (other.gameObject.CompareTag("Player") && slot != -1)
         {
-            TryToUnlockIngredient();
             SetPickedUp(true, slot, other.gameObject);
             LogicController.PickedItems[slot] = this;
         }
@@ -96,14 +95,4 @@ public class ItemWorld : AbstractItem
             ai.PickedItem = this;
         }
     }
-
-    private void TryToUnlockIngredient()
-    {
-        Ingredient i = DataController.ingredients[id];
-        if (i != null)
-        {
-            i.hasBeenDiscovered = true;
-        }
-    }
-
 }

@@ -5,6 +5,7 @@ public class Portal : MonoBehaviour {
 
     public string LabelToShow = "none";
     public string SceneToLoad = "none";
+    public string CheckpointToSpawn = "none";
     public Color Color;
 
     [Header("Refs")]
@@ -26,12 +27,7 @@ public class Portal : MonoBehaviour {
                 new GradientColorKey(Color, 0f),
                 new GradientColorKey(Color, 1f),
             },
-            new GradientAlphaKey[] {
-                new GradientAlphaKey(0f, .12f),
-                new GradientAlphaKey(1f, .53f),
-                new GradientAlphaKey(1f, .92f),
-                new GradientAlphaKey(0f, 1f),
-            }
+            colorOverLife.color.gradient.alphaKeys
         );
         colorOverLife.color = g;
     }
@@ -41,6 +37,7 @@ public class Portal : MonoBehaviour {
         if (other.CompareTag("Player"))
         {
             other.attachedRigidbody.velocity = Vector3.zero;
+            logic.SetSpawnCheckpoint(CheckpointToSpawn);
             logic.ChangeScene(SceneToLoad);
         }     
     }

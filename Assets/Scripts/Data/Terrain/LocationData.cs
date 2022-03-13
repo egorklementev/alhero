@@ -5,5 +5,6 @@ public class LocationData
 {
     public string SceneToLoad;
     public string LabelToShow;
+    public string Checkpoint;
     public Color Color;
 }

@@ -45,7 +45,7 @@ public class SpawnController : MonoBehaviour
     {
         // Since we do not want to use hashes in prefabs, we need to precalculated them in the Start()
         foreach (AbstractItem item in absItems) {
-            Debug.Log($"[SpawnerController.UpdateItemIDs]: {item.item_name} -> {item.item_name.Hash()}");
+            // $"{item.item_name} -> {item.item_name.Hash()}".Log(this);
             item.id = item.item_name.Hash();
         }
     }
@@ -99,7 +99,7 @@ public class SpawnController : MonoBehaviour
                 Container contScript = contTransform.gameObject.GetComponentInChildren<Container>();
                 if (!DataController.labContainers.ContainsKey(contScript.id))
                 {
-                    Debug.LogWarning($"[LogicController.Start] No container with ID \"{contScript.id}\"!");
+                    $"No container with ID \"{contScript.id}\"!".Warn(this);
                 }
                 else
                 {
@@ -219,7 +219,7 @@ public class SpawnController : MonoBehaviour
             }
             return obj;
         }
-        Debug.LogWarning($"[SpawnController.SpawnItem] No item with ID \"{id}\"!!!");
+        $"No item with ID \"{id}\"!!!".Warn(this);
         return null;
     }
 
@@ -237,12 +237,13 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public void SpawnPortal(string sceneToLoad, string label, Color color, Transform parent, Vector3 pos, Quaternion rot)
+    public void SpawnPortal(string sceneToLoad, string label, string checkpoint, Color color, Transform parent, Vector3 pos, Quaternion rot)
     {
         Portal p = Instantiate(portal, pos, rot, parent).GetComponent<Portal>();
         p.SceneToLoad = sceneToLoad;
         p.LabelToShow = label;
         p.Color = color;
+        p.CheckpointToSpawn = checkpoint;
         p.logic = logic;
     }
 

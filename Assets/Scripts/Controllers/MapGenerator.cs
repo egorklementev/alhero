@@ -169,6 +169,7 @@ public class MapGenerator : MonoBehaviour
                                 spawner.SpawnPortal(
                                     ld.SceneToLoad,
                                     ld.LabelToShow,
+                                    ld.Checkpoint,
                                     ld.Color,
                                     block.transform,
                                     GetBlockSpawnLocation(blockData.Location),
