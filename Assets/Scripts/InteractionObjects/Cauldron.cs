@@ -197,7 +197,7 @@ public class Cauldron : MonoBehaviour
                                     // Unlock potion recipe when it is cooked for the first time 
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
 
-                                    DataController.CreateNewRecipe(DataController.GenerateRandomRecipe());
+                                    DataController.CreateNewRecipe(DataController.GenerateRandomRecipe(2f)); // TODO:
 
                                     DataController.AddHistoryIngredient(newPotionID);
                                 }

@@ -259,7 +259,7 @@ public class DataController : MonoBehaviour
 
         // Add initial recipe
         recipes.Clear();
-        CreateNewRecipe(GenerateRandomRecipe(3));
+        CreateNewRecipe(GenerateRandomRecipe(1f, 3));
 
         // Unconditional autosave
         Autosave();
@@ -287,7 +287,7 @@ public class DataController : MonoBehaviour
         return ingredients[ingID];
     }
 
-    public static Recipe GenerateRandomRecipe(int ingNum = 0)
+    public static Recipe GenerateRandomRecipe(float maxComplexity, int ingNum = 0)
     {
         int maxIngredients = ingNum == 0 ? ingredients.Count : ingNum;
         int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
@@ -299,11 +299,10 @@ public class DataController : MonoBehaviour
             ings[i] = ingIDs[Random.Range(0, ingredients.Count)];
         }
         Recipe rec = new Recipe(mistakes, ings);
-        if (HasOverlaps(rec))
+        if (rec.GetComplexity() > maxComplexity || HasOverlaps(rec))
         {
-            rec = GenerateRandomRecipe();
+            rec = GenerateRandomRecipe(maxComplexity, ingNum);
         }
-        // CreateNewRecipe(rec.mistakes_allowed, rec.ingredient_seq);
         return rec;
     }
 

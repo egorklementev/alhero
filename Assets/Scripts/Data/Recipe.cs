@@ -13,6 +13,17 @@ public class Recipe : GameDataEntry
         id = GetID();
     }
 
+    /// Range is from 0 to L where L is the number of ingredients L: [2, inf]
+    public float GetComplexity()
+    {
+        int accum = 0;
+        foreach (int i in ingredient_seq)
+        {
+            accum += DataController.ingredients[i].rarity;
+        }
+        return (1f - (float) accum / (1000f * ingredient_seq.Length)) * ingredient_seq.Length;
+    }
+
     public int GetID()
     {
         string id = "";
