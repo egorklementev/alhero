@@ -89,10 +89,10 @@ public class ItemWorld : AbstractItem
             SetPickedUp(true, slot, other.gameObject);
             LogicController.PickedItems[slot] = this;
         }
-        else if (other.gameObject.TryGetComponent<MagpieAI>(out MagpieAI ai) && ai.PickedItem == null)
+        else if (other.gameObject.TryGetComponent<ItemOwnerAI>(out ItemOwnerAI ai) && !ai.HasItem())
         {
             SetPickedUp(true, 0, other.gameObject);
-            ai.PickedItem = this;
+            ai.SetItem(this);
         }
     }
 }

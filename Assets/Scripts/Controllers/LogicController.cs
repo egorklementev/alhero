@@ -159,18 +159,18 @@ public class LogicController : MonoBehaviour
         newGameStarted = true;
     }
 
-    public BaseAI GetClosestEntity(BaseAI ai)
+    public AIManager GetClosestEntity(AIManager ai)
     {
-        List<BaseAI> lst = new List<BaseAI>();
+        List<AIManager> lst = new List<AIManager>();
         foreach (Transform t in spawner.entitiesGroup.transform)
         {
-            if (t.TryGetComponent<BaseAI>(out BaseAI otherAi) && !otherAi.Equals(ai))
+            if (t.TryGetComponent<AIManager>(out AIManager otherAi) && !otherAi.Equals(ai))
             {
                 lst.Add(otherAi);
             }
         }
         lst.Sort(
-            delegate (BaseAI ai1, BaseAI ai2) 
+            delegate (AIManager ai1, AIManager ai2) 
             {
                 float d1 = (ai1.transform.position - ai.transform.position).sqrMagnitude;
                 float d2 = (ai2.transform.position - ai.transform.position).sqrMagnitude;
@@ -180,7 +180,7 @@ public class LogicController : MonoBehaviour
         return lst.Count > 0 ? lst[0] : null;
     }
 
-    public ItemWorld GetClosestItem(BaseAI ai)
+    public ItemWorld GetClosestItem(AIManager ai)
     {
         List<ItemWorld> lst = new List<ItemWorld>();
         foreach (Transform t in spawner.itemsGroup)
@@ -242,7 +242,7 @@ public class LogicController : MonoBehaviour
     {
         foreach (Transform agent in spawner.entitiesGroup)
         {
-            BaseAI ai = agent.GetComponent<BaseAI>();
+            AIManager ai = agent.GetComponent<AIManager>();
             ai.enabled = !ai.enabled;
         }
     }

@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEngine;
 
 public class AIState
 {
@@ -10,9 +9,11 @@ public class AIState
 
     public AIState AddAdjState(params AIState[] states)
     {
-        foreach (AIState state in states)
-        {
-            adjacent.Add(state.Name, state);
+        if (states != null) {
+            foreach (AIState state in states)
+            {
+                adjacent.Add(state.Name, state);
+            }
         }
         return this;
     }
@@ -24,7 +25,8 @@ public class AIState
         {
            adj = adjacent[stateName]; 
         }
-        catch {
+        catch 
+        {
             $"No AI state with name \"{stateName}\"!!!".Warn(this, "GetAdjacent", typeof(string));
         }
         return adj;

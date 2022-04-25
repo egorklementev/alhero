@@ -223,7 +223,7 @@ public class SpawnController : MonoBehaviour
         return null;
     }
 
-    public BaseAI SpawnEntity(string entityName, Vector3 pos, Quaternion rot, Transform owner)
+    public AIManager SpawnEntity(string entityName, Vector3 pos, Quaternion rot, Transform owner)
     {
         GameObject ent = Array.Find(entities, e => e.name.Equals(entityName));
         if (ent == null)
@@ -233,7 +233,7 @@ public class SpawnController : MonoBehaviour
         }
         else
         {
-            return Instantiate(ent, pos, rot, owner).GetComponentInChildren<BaseAI>();
+            return Instantiate(ent, pos, rot, owner).GetComponentInChildren<AIManager>();
         }
     }
 

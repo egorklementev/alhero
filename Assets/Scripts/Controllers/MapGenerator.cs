@@ -177,7 +177,7 @@ public class MapGenerator : MonoBehaviour
                                 );
                                 break;
                             case Block.ContainmentType.ENTITY:
-                                BaseAI ai = spawner.SpawnEntity(
+                                AIManager ai = spawner.SpawnEntity(
                                     (string)blockData.Cntmnt,
                                     GetBlockSpawnLocation(blockData.Location),
                                     Quaternion.identity,
