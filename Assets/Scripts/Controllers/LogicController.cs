@@ -28,13 +28,13 @@ public class LogicController : MonoBehaviour
 
     private void OnEnable() 
     {
-        TryTeleportPlayer(checkpointToSpawn);
+        TryTeleportGameObj(player, checkpointToSpawn);
         checkpointToSpawn = "none";
         Vector3[] itemPos = new Vector3[] 
         { 
-            Vector3.up * 1.5f + Vector3.left * 2f, 
-            Vector3.up * 1.5f + Vector3.left * 2f + Vector3.back * 2f, 
-            Vector3.up * 1.5f + Vector3.back * 2f, 
+            Vector3.up * 2.5f + Vector3.left * 2f, 
+            Vector3.up * 2.5f + Vector3.left * 2f + Vector3.back * 2f, 
+            Vector3.up * 2.5f + Vector3.back * 2f, 
         };
         for (int i = 0; i < _pickedItemsIDs.Length; i++)
         {
@@ -159,6 +159,15 @@ public class LogicController : MonoBehaviour
         newGameStarted = true;
     }
 
+    public void RespawnPlayer()
+    {
+        for (int i = 0; i < playerInvSize; i++)
+        {
+            PickedItems[i] = null;
+        }
+        ChangeScene("GameScene");
+    }
+
     public AIManager GetClosestEntity(AIManager ai)
     {
         List<AIManager> lst = new List<AIManager>();
@@ -253,15 +262,15 @@ public class LogicController : MonoBehaviour
         spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity, spawner.itemsGroup);
     }
 
-    public void TryTeleportPlayer(string checkpoint)
+    public void TryTeleportGameObj(GameObject obj, string checkpoint)
     {
         try 
         {
-            player.transform.position = checkpoints.Find(checkpoint).position;
+            obj.transform.position = checkpoints.Find(checkpoint).position;
         }
         catch
         {
-            $"No checkpoint \"{checkpoint}\" for player to be spawned found.".Log(this);
+            $"No checkpoint \"{checkpoint}\" for object to be teleported found.".Log(this);
         }
     }
 }

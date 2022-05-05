@@ -47,6 +47,7 @@ public class HeroMoveController : MonoBehaviour
     {
         dragStart = new Vector2(0f, 0f);
         body = GetComponent<Rigidbody>();
+        uiTookControl = false;
     }
 
     void FixedUpdate()

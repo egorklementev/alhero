@@ -8,6 +8,7 @@ public class AIManager : MonoBehaviour
     public string DefaultState = "Idle";
     public Animator anim;
 
+    private string _currentStateName; // Debug
     private AIState _currentState;
     private Dictionary<string, SomeAI> _ais = new Dictionary<string, SomeAI>();
 
@@ -43,10 +44,15 @@ public class AIManager : MonoBehaviour
     {
         if (!newState.Equals(_currentState.Name))
         {
+            // $"Transition [{gameObject.name}]: ({_currentState.Name}) -> ({newState})".Log(this);
             anim.SetBool(_currentState.Name, false);
             _currentState = _currentState.GetAdjacent(newState);
             anim.SetBool(_currentState.Name, true);
-            _ais[_currentState.Name].PrepareAction();
+            if (_currentState.Name.Equals(newState)) // Transition happened 
+            {
+                _ais[_currentState.Name].PrepareAction();
+            }
+            _currentStateName = _currentState.Name;
         }
     }
 

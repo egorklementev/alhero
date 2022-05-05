@@ -32,6 +32,8 @@ public class MagpieAI : SomeAI
         if (_currentThreat != null)
         {
             transform.LookAt(_currentThreat.transform.position);
+            Vector3 euler = transform.rotation.eulerAngles;
+            transform.rotation = Quaternion.Euler(0f, euler.y, euler.z);
             _memory -= Time.deltaTime;
             if (_memory < 0f)
             {

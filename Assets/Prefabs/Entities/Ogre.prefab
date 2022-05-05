@@ -36,6 +36,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1460339845651343612}
   m_Father: {fileID: 0}
@@ -158,6 +159,9 @@ MonoBehaviour:
   adjacentStates:
   - Walking
   alertRadius: 25
+  alertPeridiocity: 5
+  wai: {fileID: 1242598000770782081}
+  aai: {fileID: 1427238829017062068}
 --- !u!114 &1427238829017062068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -175,6 +179,7 @@ MonoBehaviour:
   - Idle
   - MeleeAttack
   attackDuration: 2
+  attackRange: 7
 --- !u!114 &1427238829017062066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -206,10 +211,10 @@ MonoBehaviour:
   Name: Walking
   adjacentStates:
   - Idle
-  - MeleeAttack
   - Attacking
+  - MeleeAttack
   moveSpeed: 100
-  colliderBounds: 5
+  colliderBounds: 4
   Body: {fileID: 1427238829017062061}
   RangeEnhancement: 8
 --- !u!1001 &1427238829363351319
@@ -1505,7 +1510,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &1427238829363351314
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1518,6 +1523,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1

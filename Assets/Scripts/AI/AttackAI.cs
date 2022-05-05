@@ -3,6 +3,7 @@ using UnityEngine;
 public class AttackAI : SomeAI 
 {
     public float attackDuration;
+    public float attackRange;
 
     private AIManager _target = null;
     private float _currentAttackDuration;
@@ -18,12 +19,24 @@ public class AttackAI : SomeAI
         if (_currentAttackDuration < 0f)
         {
             _aiManager.Transition("Idle");
+
+            float distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
+            if (distanceToTarget < attackRange)
+            {
+                _target.Transition("Death");
+            }
+            else
+            {
+                $"out of range: ({distanceToTarget}/{attackRange})".Log(this);
+            }
         }
         else
         {
             if (_target != null)
             {
                 transform.LookAt(_target.transform);
+                Vector3 euler = transform.rotation.eulerAngles;
+                transform.rotation = Quaternion.Euler(0f, euler.y, euler.z);
             }
         }
     }

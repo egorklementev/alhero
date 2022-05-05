@@ -3,31 +3,48 @@ using UnityEngine;
 public class MeleeAttackAI : SomeAI 
 {
     public float alertRadius;
+    public float alertPeridiocity;
+    public WalkingAI wai;
+    public AttackAI aai;
 
-    private AIManager _currentEnemy;
+    private AIManager _currentEnemy = null;
+    private float _alertTimer = 0f;
 
     public override void PrepareAction()
     {
-        WalkingAI wai = _aiManager.GetAI<WalkingAI>();
-        _currentEnemy = FindSomeEnemy(alertRadius);
-        wai.SetDestination(_currentEnemy.transform.position);
-        wai.SetNextState("Attacking");
-        _aiManager.GetAI<AttackAI>().SetTarget(_currentEnemy);
+        if (_currentEnemy != null)
+        {
+            wai.SetDestination(_currentEnemy.transform.position);
+            wai.SetNextState("Attacking");
+            aai.SetTarget(_currentEnemy);
+        }
     }
 
     public override void Act() 
     {
-        _aiManager.Transition("Walking");
+        if (_currentEnemy != null)
+        {
+            _aiManager.Transition("Walking");
+        }
+        else
+        {
+            _aiManager.Transition("Idle");
+        }
     }
 
     private void FixedUpdate() 
     {
-        AIManager someAI = FindSomeEnemy(alertRadius);
-        if (someAI != null && _currentEnemy == null)
+        _alertTimer -= Time.fixedDeltaTime;
+        if (_alertTimer < 0f)
         {
-            _aiManager.Transition("MeleeAttack");
+            _alertTimer = alertPeridiocity;
+            AIManager someAI = FindSomeEnemy(alertRadius);
+            if (someAI != null)
+            {
+                _aiManager.Transition("MeleeAttack");
+                _currentEnemy = someAI;
+            }
         }
-        _currentEnemy = someAI;
     }
 
     private AIManager FindSomeEnemy(float radius)

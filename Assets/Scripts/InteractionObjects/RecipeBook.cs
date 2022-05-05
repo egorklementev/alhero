@@ -211,39 +211,43 @@ public class RecipeBook : MonoBehaviour
 
     public void OnIngredientClicked(int id, bool fromRecipe = false)
     {
-        // Clear previous content
-        foreach (Transform t in scrollContent.transform)
-        {
-            Destroy(t.gameObject);
-        }
-
-        // Hide paging buttons
-        buttons[0].SetActive(false);
-        buttons[1].SetActive(false);
-        buttons[2].SetActive(!fromRecipe);
-        buttons[3].SetActive(fromRecipe);
-
-        Transform ingDescEntry = Instantiate(ingredientItem, scrollContent.transform).transform;
         ItemUI uiItem = spawner.absItems.Find(item => item.id == id && item is ItemUI) as ItemUI;
-        ItemUI uiItemCopy;
-        PotionUI uiPotion = uiItem as PotionUI;
-        Transform slot = ingDescEntry.Find("Slot");
-        if (uiPotion != null)
-        {
-            uiItemCopy = spawner.SpawnItem<PotionUI>(uiPotion.id, slot);
-        }
-        else
-        {
-            uiItemCopy = spawner.SpawnItem<ItemUI>(uiItem.id, slot);
-        }
-        uiItemCopy.SetSelected(true);
-        ingDescEntry.Find("Title").gameObject.GetComponent<TextMeshProUGUI>().text = uiItem.item_name;
-
         Ingredient ing = DataController.ingredients[uiItem.id];
-        ingDescEntry.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text =
-            $"Cooldown: {ing.cooldown:F1} seconds" +
-            $"{Environment.NewLine}{Environment.NewLine}" +
-            $"Chance to break a potion: {(ing.breakChance * 100f):F1} %";
+
+        if (ing.hasBeenDiscovered)
+        {
+            // Clear previous content
+            foreach (Transform t in scrollContent.transform)
+            {
+                Destroy(t.gameObject);
+            }
+
+            // Hide paging buttons
+            buttons[0].SetActive(false);
+            buttons[1].SetActive(false);
+            buttons[2].SetActive(!fromRecipe);
+            buttons[3].SetActive(fromRecipe);
+
+            Transform ingDescEntry = Instantiate(ingredientItem, scrollContent.transform).transform;
+            ItemUI uiItemCopy;
+            PotionUI uiPotion = uiItem as PotionUI;
+            Transform slot = ingDescEntry.Find("Slot");
+            if (uiPotion != null)
+            {
+                uiItemCopy = spawner.SpawnItem<PotionUI>(uiPotion.id, slot);
+            }
+            else
+            {
+                uiItemCopy = spawner.SpawnItem<ItemUI>(uiItem.id, slot);
+            }
+            uiItemCopy.SetSelected(true);
+            ingDescEntry.Find("Title").gameObject.GetComponent<TextMeshProUGUI>().text = uiItem.item_name;
+
+            ingDescEntry.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text =
+                $"Cooldown: {ing.cooldown:F1} seconds" +
+                $"{Environment.NewLine}{Environment.NewLine}" +
+                $"Chance to break a potion: {(ing.breakChance * 100f):F1} %";
+        }
     }
 
     public void OnRecipeClicked(int id)
