@@ -14,10 +14,13 @@ public class IdleAI : SomeAI
 
     public override void Act()
     {
-        _idle -= Time.fixedDeltaTime;
-        if (_idle < 0f)
+        if (statesToSwitchTo.Length > 0)
         {
-            _aiManager.Transition(statesToSwitchTo[Random.Range(0, statesToSwitchTo.Length)]);
+            _idle -= Time.fixedDeltaTime;
+            if (_idle < 0f)
+            {
+                _aiManager.Transition(statesToSwitchTo[Random.Range(0, statesToSwitchTo.Length)]);
+            }
         }
     }
 }

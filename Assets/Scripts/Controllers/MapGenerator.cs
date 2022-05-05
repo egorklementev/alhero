@@ -180,7 +180,7 @@ public class MapGenerator : MonoBehaviour
                                 AIManager ai = spawner.SpawnEntity(
                                     (string)blockData.Cntmnt,
                                     GetBlockSpawnLocation(blockData.Location),
-                                    Quaternion.identity,
+                                    Random.rotation,
                                     spawner.entitiesGroup
                                     );
                                 ai.logic = logic;

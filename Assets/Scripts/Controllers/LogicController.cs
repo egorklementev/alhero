@@ -23,6 +23,7 @@ public class LogicController : MonoBehaviour
 
     public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
+    public static List<int> ItemsToSpawnInTheLab { get; set; } = new List<int>();
 
     private static int[] _pickedItemsIDs = new int[playerInvSize];
 
@@ -39,10 +40,19 @@ public class LogicController : MonoBehaviour
         for (int i = 0; i < _pickedItemsIDs.Length; i++)
         {
             StartCoroutine(
-                DelayedItemSpawn(_pickedItemsIDs[i], player.transform.position + itemPos[i])
+                DelayedItemSpawn(_pickedItemsIDs[i], player.transform.position + itemPos[i], .25f)
                 );
             _pickedItemsIDs[i] = 0; // Reset picked items
         }
+
+        // Spawn items transfered to the lab in some way
+        int index = 1;
+        foreach (int id in ItemsToSpawnInTheLab)
+        {
+            ItemWorld item = spawner.SpawnItem<ItemWorld>(id, Vector3.zero, Quaternion.identity, spawner.itemsGroup);
+            TryTeleportGameObj(item.gameObject, "ItemSpawnpoint_" + index++);
+        }
+        ItemsToSpawnInTheLab.Clear();
     }
 
     private void FixedUpdate()
