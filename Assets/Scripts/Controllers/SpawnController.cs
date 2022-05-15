@@ -223,6 +223,11 @@ public class SpawnController : MonoBehaviour
         return null;
     }
 
+    public bool DoesItemExist(int id)
+    {
+        return absItems.Find(i => i.id == id) != null;
+    }
+
     public AIManager SpawnEntity(string entityName, Vector3 pos, Quaternion rot, Transform owner)
     {
         GameObject ent = Array.Find(entities, e => e.name.Equals(entityName));

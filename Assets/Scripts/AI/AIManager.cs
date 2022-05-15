@@ -21,6 +21,8 @@ public class AIManager : MonoBehaviour
             ai.SetManager(this);
         }
         CreateStateTree();
+
+        _ais[_currentState.Name].PrepareAction();
     }
 
     void FixedUpdate() 
@@ -44,7 +46,7 @@ public class AIManager : MonoBehaviour
     {
         if (!newState.Equals(_currentState.Name))
         {
-            // $"Transition [{gameObject.name}]: ({_currentState.Name}) -> ({newState})".Log(this);
+            $"Transition [{gameObject.name}]: ({_currentState.Name}) -> ({newState})".Log(this);
             anim.SetBool(_currentState.Name, false);
             _currentState = _currentState.GetAdjacent(newState);
             anim.SetBool(_currentState.Name, true);

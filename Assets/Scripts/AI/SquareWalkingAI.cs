@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class SquareWalkingAI : WalkingAI
@@ -15,6 +16,12 @@ public class SquareWalkingAI : WalkingAI
 
     public override void PrepareAction()
     {
+        StartCoroutine(FindRoute());
+    }
+
+    private IEnumerator FindRoute() 
+    {
+        _routeFound = false;
         _walkRoute.Clear();
         //_walkRoute.Add(transform.position);
         _iterations = 1024;
@@ -44,7 +51,10 @@ public class SquareWalkingAI : WalkingAI
         }
 
         _open.Add(_map[_startTile.x, _startTile.y]);
-        while (BuildPath());
+        while (BuildPath()) 
+        {
+            yield return null;
+        }
         Vector3 lastPoint = transform.position;
 
         // Backtracking
@@ -90,7 +100,7 @@ public class SquareWalkingAI : WalkingAI
 
             lastPoint = nextPoint;
         }
-        // _walkRoute.Add(GetPosition(_closed.Last()));
+        _routeFound = true;
     }
 
     private bool BuildPath()

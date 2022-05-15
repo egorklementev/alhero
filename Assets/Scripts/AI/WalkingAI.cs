@@ -12,6 +12,7 @@ public abstract class WalkingAI : SomeAI
     protected Vector3 _currentDest;
     protected float _stuckTime = 0f;
     protected string _nextState = "Idle";
+    protected bool _routeFound = false;
 
     public void SetDestination(Vector3 destination)
     {
@@ -38,47 +39,61 @@ public abstract class WalkingAI : SomeAI
 
     public override void Act()
     {        
-        if (_walkRoute.Count > 0)
+        if (_routeFound) 
         {
-            transform.LookAt(_walkRoute[0]);
-            transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
-            float eps = colliderBounds / 3f;
-            float stuckEps = .33333f;
-            if ((transform.position - _walkRoute[0]).magnitude < eps)
+            if (_walkRoute.Count > 0)
             {
-                // To the next route point
-                _walkRoute.RemoveAt(0); 
+                transform.LookAt(_walkRoute[0]);
+                transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
+                float eps = colliderBounds / 3f;
+                float stuckEps = .33333f;
+                if ((transform.position - _walkRoute[0]).magnitude < eps)
+                {
+                    // To the next route point
+                    _walkRoute.RemoveAt(0); 
+                }
+                else
+                {
+                    if ((_lastPosition - transform.position).magnitude < stuckEps * stuckEps)
+                    {
+                        _stuckTime += Time.fixedDeltaTime;
+                    }
+                    else
+                    {
+                        _stuckTime = 0f;
+                    }
+
+                    if (_stuckTime > 1.5f)
+                    {
+                        _aiManager.Transition(_nextState);
+                        _walkRoute.Clear();
+                        _stuckTime = 0f;
+                    }
+                    else
+                    {
+                        _lastPosition = transform.position;
+                        Body.AddForce((_walkRoute[0] - transform.position).normalized * moveSpeed);
+                    }
+
+                }
             }
             else
             {
-                if ((_lastPosition - transform.position).magnitude < stuckEps * stuckEps)
-                {
-                    _stuckTime += Time.fixedDeltaTime;
-                }
-                else
-                {
-                    _stuckTime = 0f;
-                }
-
-                if (_stuckTime > 1.5f)
-                {
-                    _aiManager.Transition(_nextState);
-                    _walkRoute.Clear();
-                    _stuckTime = 0f;
-                }
-                else
-                {
-                    _lastPosition = transform.position;
-                    Body.AddForce((_walkRoute[0] - transform.position).normalized * moveSpeed);
-                }
-
+                // No other points to reach
+                _aiManager.Transition(_nextState);
+                _walkRoute.Clear();
             }
         }
         else
         {
-            // No other points to reach
-            _aiManager.Transition(_nextState);
-            _walkRoute.Clear();
+            // In case it takes more than 10 sec to build a route
+            _stuckTime += Time.fixedDeltaTime;
+            if (_stuckTime > 10f)
+            {
+                _aiManager.Transition(_nextState);
+                _walkRoute.Clear();
+                _stuckTime = 0f;
+            }
         }
     }
 }

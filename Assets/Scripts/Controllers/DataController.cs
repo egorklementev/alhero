@@ -224,6 +224,7 @@ public class DataController : MonoBehaviour
         Random.InitState(genData.seed);
 
         genData.locationGenerations = 0;
+        genData.raccoonRequestedItem = 0;
 
         history.Clear();
 
