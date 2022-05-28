@@ -41,6 +41,7 @@ public class DataController : MonoBehaviour
     private float autoSaveTimer = 0f;
 
     private static List<int> currentHistoryIngs = new List<int>();
+    private static List<int> _notIngredientsList = new List<int>();
 
     void Awake()
     {
@@ -70,6 +71,8 @@ public class DataController : MonoBehaviour
         {
             currentHistoryIngs.Add(id);
         }
+
+        _notIngredientsList = new List<int>(genData.notIngredients);
 
         if (genData.seed == 0)
         {
@@ -106,7 +109,8 @@ public class DataController : MonoBehaviour
         else
         {
             "Autosaving...".Log(this);
-
+            
+            genData.notIngredients = _notIngredientsList.ToArray();
             SaveToDataFile<General>(genData, "General", "general.json");
 
             SaveGameData<Ingredient>(ingredients, "Ingredients", "ingredients.json");
@@ -225,6 +229,7 @@ public class DataController : MonoBehaviour
 
         genData.locationGenerations = 0;
         genData.raccoonRequestedItem = 0;
+        genData.coins = 0;
 
         history.Clear();
 
@@ -244,17 +249,23 @@ public class DataController : MonoBehaviour
         {
             if (item as PotionWorld == null && item as PotionUI == null)
             {
-                AddNewIngredient(
-                    item.item_name.Hash(),
-                    item.item_name,
-                    Random.Range(0f, 6f),
-                    Random.value * .15f, // TODO:
-                    Random.Range(1, 1000),
-                    2f * (Random.value - .5f),
-                    2f * (Random.value - .5f),
-                    2f * (Random.value - .5f),
-                    2f * (Random.value - .5f)
-                );
+                if (IsIngredient(item.id))
+                {
+                    AddNewIngredient(
+                        item.item_name.Hash(),
+                        item.item_name,
+                        Random.Range(0f, 6f),
+                        Random.value * .15f, // TODO:
+                        Random.Range(0, 1000),
+                        2f * (Random.value - .5f),
+                        2f * (Random.value - .5f),
+                        2f * (Random.value - .5f),
+                        2f * (Random.value - .5f)
+                    );
+                } 
+                else 
+                {
+                }
             }
         }
 
@@ -328,6 +339,16 @@ public class DataController : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public static void UpdateRaccoonRequestItem()
+    {
+        genData.raccoonRequestedItem = GetWeightedIngredientFromList(new List<int>(ingredients.Keys)).id;
+    }
+
+    public static bool IsIngredient(int id)
+    {
+        return !Array.Exists(genData.notIngredients, i => i == id);
     }
 
     public void AddIngredientsDebug()

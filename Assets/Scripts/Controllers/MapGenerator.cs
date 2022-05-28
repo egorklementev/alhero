@@ -177,10 +177,12 @@ public class MapGenerator : MonoBehaviour
                                 );
                                 break;
                             case Block.ContainmentType.ENTITY:
+                                Vector3 randRot = Random.rotation.eulerAngles;
+                                randRot -= new Vector3(randRot.x, 0f, randRot.z);
                                 AIManager ai = spawner.SpawnEntity(
                                     (string)blockData.Cntmnt,
                                     GetBlockSpawnLocation(blockData.Location),
-                                    Random.rotation,
+                                    Quaternion.Euler(randRot),
                                     spawner.entitiesGroup
                                     );
                                 ai.logic = logic;

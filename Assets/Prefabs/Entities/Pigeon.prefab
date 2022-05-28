@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -3931454054041296742}
   - component: {fileID: 4141446952093521629}
   - component: {fileID: -1095546380422617640}
+  - component: {fileID: 149655881976645034}
   m_Layer: 0
   m_Name: Pigeon
   m_TagString: Untagged
@@ -45,7 +46,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6875907107526826960}
-  m_Material: {fileID: 13400000, guid: 26df85b0a24708c46a6a67dfefe7eece, type: 2}
+  m_Material: {fileID: 13400000, guid: c42ec383e7002304f8f3177e58f357a5, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -98,6 +99,7 @@ MonoBehaviour:
   adjacentStates:
   - Rotating
   - Flying
+  - Death
   statesToSwitchTo:
   - Rotating
   - Idle
@@ -118,6 +120,7 @@ MonoBehaviour:
   adjacentStates:
   - Idle
   - Flying
+  - Death
 --- !u!114 &-1095546380422617640
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,9 +134,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Name: Flying
-  adjacentStates: []
+  adjacentStates:
+  - Death
   body: {fileID: 5059589804940532020}
   FlyDuration: 5
+  FlyForce: 10
+--- !u!114 &149655881976645034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6875907107526826960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ca34ed4e8d43f409345f4209510865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Death
+  adjacentStates: []
+  Duration: 1
+  NextState: Idle
 --- !u!1001 &6875907109412812005
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -521,6 +542,41 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 285.4891
       objectReference: {fileID: 0}
+    - target: {fileID: -3218883565483582083, guid: 0b35a0f36b929fa47b54c46ea659b355,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: -0.30353895
+      objectReference: {fileID: 0}
+    - target: {fileID: -3218883565483582083, guid: 0b35a0f36b929fa47b54c46ea659b355,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.30353895
+      objectReference: {fileID: 0}
+    - target: {fileID: -3218883565483582083, guid: 0b35a0f36b929fa47b54c46ea659b355,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.6386426
+      objectReference: {fileID: 0}
+    - target: {fileID: -3218883565483582083, guid: 0b35a0f36b929fa47b54c46ea659b355,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.63864225
+      objectReference: {fileID: 0}
+    - target: {fileID: -3218883565483582083, guid: 0b35a0f36b929fa47b54c46ea659b355,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 39.158
+      objectReference: {fileID: 0}
+    - target: {fileID: -3218883565483582083, guid: 0b35a0f36b929fa47b54c46ea659b355,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: -3218883565483582083, guid: 0b35a0f36b929fa47b54c46ea659b355,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 90
+      objectReference: {fileID: 0}
     - target: {fileID: -1025993621438519774, guid: 0b35a0f36b929fa47b54c46ea659b355,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -839,6 +895,19 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1922340315687325205
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5991049465042163702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3250762033536c3429fbc2ec2ef9d595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 6875907107526826960}
 --- !u!114 &6875907109412812001
 MonoBehaviour:
   m_ObjectHideFlags: 0

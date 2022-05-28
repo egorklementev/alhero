@@ -149,9 +149,10 @@ public class LogicController : MonoBehaviour
         pos = player.transform.position + pos;
         foreach (string name in items)
         {
-            spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, spawner.itemsGroup);
+            // spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, spawner.itemsGroup);
             pos -= new Vector3(0f, 0f, 3f);
         }
+        UIController.SpawnSideLine("WOW, wow, uWu!!!");
     }
 
     public void StartNewGame()

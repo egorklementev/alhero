@@ -12,15 +12,20 @@ public class UIController : MonoBehaviour
 
     [Space(10f)]
     public List<GameObject> uiGroups;
+    public Transform sideLines;
+    public GameObject sideLine;
 
     [Space(10f)]
     public TextMeshProUGUI fpsLine;
     public TextMeshProUGUI debugLine;
+    public TextMeshProUGUI coinLine;
 
     [Space(10f)]
     public float delay = .5f;
+    public float sideLineOffset = 0f;
 
     public static string activeGroup = "none";
+    public static int requestedLinesNum = 0;
 
     private static LinkedList<string> groupsForActivation = new LinkedList<string>();
     private static LinkedList<string> groupsForDeactivation = new LinkedList<string>();
@@ -28,12 +33,14 @@ public class UIController : MonoBehaviour
     private static bool showRightPanel = false;
     private static bool triggerFadePanel = false;
     private static float fadeSpeed = 1f;
+    private static List<string> requestedSideLines = new List<string>();
 
     // Update is called once per frame
     void Update()
     {
         int fps = (int)(1f / Time.unscaledDeltaTime);
         fpsLine.text = "FPS: " + fps.ToString();
+        coinLine.text = DataController.genData.coins.ToString();
 
         rightPanelAnim.SetBool("DoShow", showRightPanel);
 
@@ -71,6 +78,14 @@ public class UIController : MonoBehaviour
             }
             groupsForDeactivation.Clear();
         }
+
+        foreach (string line in requestedSideLines)
+        {
+            GameObject sd = Instantiate(sideLine, sideLines);
+            sd.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -60f * requestedLinesNum - sideLineOffset); 
+            sd.GetComponent<TextMeshProUGUI>().text = line;
+        }
+        requestedSideLines.Clear();
     }
 
     public void SetDebugLine(params string[] message)
@@ -142,5 +157,11 @@ public class UIController : MonoBehaviour
         fadePanelAnim.SetTrigger("SceneChange");
         fadePanelAnim.SetFloat("fade_speed", delay);
         FadeLoadScene.sceneToLoad = sceneName;
+    }
+
+    public static void SpawnSideLine(params string[] text)
+    {
+        requestedSideLines.AddRange(text);
+        requestedLinesNum += text.Length;
     }
 }

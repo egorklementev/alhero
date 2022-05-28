@@ -19,9 +19,9 @@ public class Block
         Type = BlockType.AIR;
     }
 
-    public void SetBridge(bool isVertical = true)
+    public void SetBridge(bool isVertical = true, bool isCross = false)
     {
-        Type = isVertical ? BlockType.BRIDGE_V : BlockType.BRIDGE_H;
+        Type = isCross ? BlockType.BRIDGE_C : (isVertical ? BlockType.BRIDGE_V : BlockType.BRIDGE_H);
     }
 
     public void SetIslandBorder()
@@ -71,6 +71,11 @@ public class Block
             (CntmntType == ContainmentType.EMPTY || CntmntType == ContainmentType.FLORA);
     }
 
+    public bool IsBridge()
+    {
+        return Type == BlockType.BRIDGE_V || Type == BlockType.BRIDGE_H || Type == BlockType.BRIDGE_C;
+    }
+
     public enum ContainmentType 
     {
         EMPTY, TREE, FLORA, INGREDIENT, CONTAINER, ENTITY, PORTAL
@@ -78,7 +83,7 @@ public class Block
 
     public enum BlockType
     {
-        AIR, GROUND, BRIDGE_V, BRIDGE_H, ISLAND_BORDER
+        AIR, GROUND, BRIDGE_V, BRIDGE_H, ISLAND_BORDER, BRIDGE_C
     }
 
     public Color GetMapColor()
@@ -89,6 +94,7 @@ public class Block
                 return new Color(.1f, .7f, .05f);
             case BlockType.BRIDGE_H:
             case BlockType.BRIDGE_V:
+            case BlockType.BRIDGE_C:
                 return new Color(.7f, .55f, .05f);
             default:
                 return Color.clear;

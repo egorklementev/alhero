@@ -70,6 +70,7 @@ public class Map
         MapGenerator.loadingProgress = 0.2f;
 
         BuildBridges(_islands[0]);
+        PostProcessBridges();
         MapGenerator.loadingProgress = 0.3f;
 
         GenerateIslandBorders();
@@ -237,6 +238,28 @@ public class Map
         foreach (Island i in builtTo)
         {
             BuildBridges(i);
+        }
+    }
+
+    private void PostProcessBridges()
+    {
+        foreach (Block b in _ground)
+        {
+            if (b.IsBridge())
+            {
+                int neighBridges = 0;
+                foreach (Block neigh in GetNeighbors(b))
+                {
+                    if (neigh.IsBridge()) 
+                    {
+                        neighBridges++;
+                    }
+                }
+                if (neighBridges > 2)
+                {
+                    b.SetBridge(false, true);
+                }
+            }
         }
     }
 

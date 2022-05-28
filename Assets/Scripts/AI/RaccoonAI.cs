@@ -5,6 +5,7 @@ using TMPro;
 public class RaccoonAI : SomeAI
 {
     public TextMeshProUGUI potionDesc;
+    public TextMeshProUGUI rewardText;
     public Transform potionSlot;
     public Transform barCounterAnchor;
     [Space(20f)]
@@ -49,9 +50,18 @@ public class RaccoonAI : SomeAI
                     _walkAI.SetNextState("ItemOwner");
                     GenerateNewRequestItem();
                     _magAI.enabled = false;
-                    StartCoroutine(TurnOnStaringAI(10f));
+                    StartCoroutine(TurnOnStaringAI(20f));
                     _aiManager.Transition("Walking");
                     UpdateFields();
+                    for (int i = 0; i < CalcualteReward(item); i++)
+                    {
+                        logic.spawner.SpawnItem<ItemWorld>(
+                            "coin".Hash(), 
+                            transform.position + new Vector3(0f, 2f, -1.5f * i),
+                            Quaternion.identity,
+                            logic.spawner.itemsGroup
+                            );
+                    }
                 }
                 else
                 {
@@ -67,16 +77,7 @@ public class RaccoonAI : SomeAI
 
     public void GenerateNewRequestItem()
     {
-        int rand = Random.Range(0, DataController.ingredients.Count);
-        foreach (Ingredient i in DataController.ingredients.Values)
-        {
-            rand--;
-            if (rand < 0)
-            {
-                DataController.genData.raccoonRequestedItem = i.id;
-                break;
-            }
-        }
+        DataController.UpdateRaccoonRequestItem();
     }
 
     public void UpdateFields() 
@@ -93,6 +94,12 @@ public class RaccoonAI : SomeAI
             potionSlot
         );
         potionDesc.text = item.item_name;
+        rewardText.text = $"Reward: {CalcualteReward(item)} coins";
+    }
+
+    private int CalcualteReward(AbstractItem item)
+    {
+       return 10 - (int)(DataController.ingredients[item.id].rarity / 100f);
     }
 
     private IEnumerator TurnOnStaringAI(float sec)

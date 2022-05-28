@@ -119,6 +119,7 @@ public class Cauldron : MonoBehaviour
                                         try
                                         {
                                             DataController.ingredients[curIng.id].hasBeenDiscovered = true;
+                                            UIController.SpawnSideLine("New ingredient discovered!!!");
                                         }
                                         catch
                                         {
@@ -224,6 +225,7 @@ public class Cauldron : MonoBehaviour
                                 try
                                 {
                                     DataController.ingredients[curIng.id].hasBeenDiscovered = true;
+                                    UIController.SpawnSideLine("New ingredient discovered!!!");
                                 }
                                 catch
                                 {

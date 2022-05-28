@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 365387002018280037}
   - component: {fileID: 908026014289468174}
   - component: {fileID: -8083288365167345188}
+  - component: {fileID: 6296681872511953404}
   m_Layer: 2
   m_Name: Magpie
   m_TagString: Untagged
@@ -35,6 +36,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1598457163522090110}
   m_Father: {fileID: 0}
@@ -47,7 +49,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1271252247946232047}
-  m_Material: {fileID: 13400000, guid: 26df85b0a24708c46a6a67dfefe7eece, type: 2}
+  m_Material: {fileID: 13400000, guid: c42ec383e7002304f8f3177e58f357a5, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 1.5
@@ -100,6 +102,7 @@ MonoBehaviour:
   Name: Threatening
   adjacentStates:
   - Idle
+  - Death
   memoryTime: 3
   threatRadius: 7.5
 --- !u!114 &2050679636861798413
@@ -119,6 +122,9 @@ MonoBehaviour:
   - Idle
   - Threatening
   - Walking
+  vOffset: 0
+  force: 3
+  angleOffset: 45
 --- !u!114 &5683057215145981990
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,6 +141,7 @@ MonoBehaviour:
   adjacentStates:
   - Idle
   - Threatening
+  - Death
 --- !u!114 &365387002018280037
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +160,7 @@ MonoBehaviour:
   - Threatening
   - ItemOwner
   - Rotating
+  - Death
   statesToSwitchTo:
   - Wandering
   - Idle
@@ -174,7 +182,7 @@ MonoBehaviour:
   Name: Wandering
   adjacentStates:
   - Walking
-  wanderDistance: 50
+  wanderDistance: 100
 --- !u!114 &-8083288365167345188
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -191,10 +199,27 @@ MonoBehaviour:
   adjacentStates:
   - Idle
   - Threatening
+  - Death
   moveSpeed: 40
-  colliderBounds: 4
+  colliderBounds: 2.5
   Body: {fileID: 1271252247946232042}
   RangeEnhancement: 8
+--- !u!114 &6296681872511953404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271252247946232047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7ca34ed4e8d43f409345f4209510865, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Death
+  adjacentStates: []
+  Duration: 1
+  NextState: Idle
 --- !u!1001 &1271252248484430741
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1052,6 +1077,26 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: 1114e0a9403a85449b351d93c8b8779f,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071067
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: 1114e0a9403a85449b351d93c8b8779f,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: 1114e0a9403a85449b351d93c8b8779f,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8879528566716807029, guid: 1114e0a9403a85449b351d93c8b8779f,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8883952630155260536, guid: 1114e0a9403a85449b351d93c8b8779f,
         type: 3}
       propertyPath: m_Layer
@@ -1073,7 +1118,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &1271252248484430736
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -1086,7 +1131,21 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &2009435026263656022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8070946766120631978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3250762033536c3429fbc2ec2ef9d595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parent: {fileID: 1271252247946232047}

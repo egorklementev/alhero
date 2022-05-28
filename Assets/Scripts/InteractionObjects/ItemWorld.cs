@@ -40,7 +40,7 @@ public class ItemWorld : AbstractItem
 
         if (!isPickedUp && owner == null && transform.position.y < -100f)
         {
-            Destroy(gameObject);
+            Destroy();
         }
     }
 
@@ -86,10 +86,23 @@ public class ItemWorld : AbstractItem
         int slot = LogicController.GetFreeInvSlot();
         if (other.gameObject.CompareTag("Player") && slot != -1)
         {
-            SetPickedUp(true, slot, other.gameObject);
-            LogicController.PickedItems[slot] = this;
+            if (id == "coin".Hash())
+            {
+                id = "picked_coin".Hash();
+                DataController.genData.coins++;
+                Destroy();
+            }
+            else
+            {
+                SetPickedUp(true, slot, other.gameObject);
+                LogicController.PickedItems[slot] = this;
+            }
         }
-        else if (other.gameObject.TryGetComponent<ItemOwnerAI>(out ItemOwnerAI ai) && !ai.HasItem())
+        else if (
+            other.gameObject.TryGetComponent<ItemOwnerAI>(out ItemOwnerAI ai) && 
+            !ai.HasItem() && 
+            id != "coin".Hash()
+            )
         {
             SetPickedUp(true, 0, other.gameObject, ai.vOffset);
             ai.SetItem(this);
