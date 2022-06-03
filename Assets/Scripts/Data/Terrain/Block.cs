@@ -41,10 +41,16 @@ public class Block
         CntmntType = ContainmentType.FLORA;
     }
 
-    public void SetIngredient(int ingID)
+    public void SetTrap(int trapID)
     {
-        Cntmnt = ingID;
-        CntmntType = ContainmentType.INGREDIENT;
+        Cntmnt = trapID;
+        CntmntType = ContainmentType.TRAP;
+    }
+
+    public void SetItem(int itemID)
+    {
+        Cntmnt = itemID;
+        CntmntType = ContainmentType.ITEM;
     }
 
     public void SetContainer(ContainerData cd)
@@ -78,7 +84,7 @@ public class Block
 
     public enum ContainmentType 
     {
-        EMPTY, TREE, FLORA, INGREDIENT, CONTAINER, ENTITY, PORTAL
+        EMPTY, TREE, FLORA, ITEM, CONTAINER, ENTITY, PORTAL, TRAP
     }
 
     public enum BlockType
@@ -91,11 +97,11 @@ public class Block
         switch (Type) 
         {
             case BlockType.GROUND:
-                return new Color(.1f, .7f, .05f);
+                return new Color(.1f, .7f, .05f, 1f);
             case BlockType.BRIDGE_H:
             case BlockType.BRIDGE_V:
             case BlockType.BRIDGE_C:
-                return new Color(.7f, .55f, .05f);
+                return new Color(.7f, .55f, .05f, 1f);
             default:
                 return Color.clear;
         }

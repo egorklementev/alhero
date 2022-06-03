@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class ItemWorld : AbstractItem
 {
+    public LogicController logic;
+
     private bool isPickedUp = false;
     private GameObject owner = null;
     private int slot = -1; // Where in player's inventory this item is stored [0-3]

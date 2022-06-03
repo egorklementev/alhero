@@ -263,9 +263,6 @@ public class DataController : MonoBehaviour
                         2f * (Random.value - .5f)
                     );
                 } 
-                else 
-                {
-                }
             }
         }
 

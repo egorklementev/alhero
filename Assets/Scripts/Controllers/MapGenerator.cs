@@ -7,11 +7,16 @@ public class MapGenerator : MonoBehaviour
     public Transform environment;
     public GameObject[] blockList;
     public GameObject[] trees;
+    public float[] treeOffsts;
+    public GameObject[] floras;
+    public float[] floraOffsts;
+    public GameObject[] traps;
+    public float[] trapOffsets;
 
     [Space(15f)]
     [SerializeField] public MapParameters mapParams;
 
-    [Space(10f)]
+    [Space(100f)]
     public MinimapController minimap;
 
     [Space(10f)]
@@ -76,6 +81,8 @@ public class MapGenerator : MonoBehaviour
         }
 
         mapParams.forestVariety = trees.Length;
+        mapParams.floraVariety = floras.Length;
+        mapParams.trapVariety = traps.Length;
 
         map = new Map();
         int genAttempt = 1;
@@ -86,14 +93,17 @@ public class MapGenerator : MonoBehaviour
                 if (genAttempt < 64)
                 {
                     map.Generate(mapParams);
+                    logic.SetRandomPlayerPosition();
                     break;
                 }
                 "Map generator broke, have a great day, teleporting back...".Err(this);
                 logic.ChangeScene("GameScene");
                 break;
             }
-            catch
+            catch (UnityException uex)
             {
+                logic.SetRandomPlayerPosition();
+                $"Error: {uex.ToString()}".Warn(this);
                 $"Map could not generate! Attempt {genAttempt++}. Regenerating...".Warn(this);
             }
             yield return null;
@@ -134,12 +144,18 @@ public class MapGenerator : MonoBehaviour
                         switch (blockData.CntmntType)
                         {
                             case Block.ContainmentType.TREE:
-                                GameObject tree = GenerateRandomTree(block.transform, blockData);
+                                GameObject tree = GenerateRandomGroundObj(trees, treeOffsts, block.transform, blockData);
                                 tree.name = trees[(int)blockData.Cntmnt].name + $"({w},{h})";
                                 break;
                             case Block.ContainmentType.FLORA:
+                                GameObject flora = GenerateRandomGroundObj(floras, floraOffsts, block.transform, blockData);
+                                flora.name = floras[(int)blockData.Cntmnt].name + $"({w},{h})";
                                 break;
-                            case Block.ContainmentType.INGREDIENT:
+                            case Block.ContainmentType.TRAP:
+                                GameObject trap = GenerateRandomGroundObj(traps, trapOffsets, block.transform, blockData);
+                                trap.name = traps[(int)blockData.Cntmnt].name + $"({w},{h})";
+                                break;
+                            case Block.ContainmentType.ITEM:
                                 ItemWorld iw = spawner.SpawnItem<ItemWorld>(
                                     (int)blockData.Cntmnt, 
                                     GetBlockSpawnLocation(blockData.Location), 
@@ -197,7 +213,6 @@ public class MapGenerator : MonoBehaviour
 
         loadingSlider.gameObject.SetActive(false);
 
-        logic.SetRandomPlayerPosition();
     }
 
     public Vector3 GetBlockSpawnLocation (Vector2Int location, float yOffset = 1.5f)
@@ -218,21 +233,21 @@ public class MapGenerator : MonoBehaviour
         return GetBlockSpawnLocation(block.Location);
     }
 
-    private GameObject GenerateRandomTree(Transform block, Block blockData)
+    private GameObject GenerateRandomGroundObj(GameObject[] objs, float[] yOffsets, Transform block, Block blockData)
     {
+        float bs = mapParams.blockSize;
         float scaleFactor = .75f + Random.value * .5f;
-        float heightOffset = 3f;
-        Vector3 randomPos = Random.insideUnitSphere * Random.value * .5f;
-        randomPos.y = trees[(int)blockData.Cntmnt].transform.position.z * (1f - scaleFactor) + heightOffset;
-        randomPos.y *= mapParams.blockSize;
-        GameObject tree = Instantiate(
-            trees[(int)blockData.Cntmnt],
-            block.position + randomPos,
-            Quaternion.Euler(-90f, 0f, 360f * Random.value),
+        Vector3 randomPos = Random.insideUnitSphere * bs * .75f;
+        randomPos.y = bs + yOffsets[(int)blockData.Cntmnt] * scaleFactor;
+        GameObject obj = Instantiate(
+            objs[(int)blockData.Cntmnt],
+            Vector3.zero,
+            Quaternion.Euler(0f, 360f * Random.value, 0f),
             block
         );
-        tree.transform.localScale *= 1f / mapParams.blockSize * scaleFactor;
-        return tree;
+        obj.transform.localScale *= 1f / bs * scaleFactor;
+        obj.transform.position = block.position + randomPos;
+        return obj;
     }
 
     public void DebugRegenerateMap() 

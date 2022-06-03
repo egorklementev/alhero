@@ -14,19 +14,19 @@ OcclusionCullingSettings:
 RenderSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 9
-  m_Fog: 0
-  m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
-  m_FogMode: 3
-  m_FogDensity: 0.01
-  m_LinearFogStart: 0
-  m_LinearFogEnd: 300
+  m_Fog: 1
+  m_FogColor: {r: 0.31764707, g: 0.76862746, b: 0.77254903, a: 1}
+  m_FogMode: 1
+  m_FogDensity: 0.006
+  m_LinearFogStart: 75
+  m_LinearFogEnd: 125
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
   m_AmbientEquatorColor: {r: 0.114, g: 0.125, b: 0.133, a: 1}
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
-  m_AmbientIntensity: 1
+  m_AmbientIntensity: 0.76
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
-  m_SkyboxMaterial: {fileID: 10304, guid: 0000000000000000f000000000000000, type: 0}
+  m_SubtractiveShadowColor: {r: 0.36339822, g: 0.6929203, b: 0.696, a: 0.3137255}
+  m_SkyboxMaterial: {fileID: 2100000, guid: a882f60e75be10943ac0910b04862c23, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 411133215}
-  m_IndirectSpecularColor: {r: 0.18028468, g: 0.22571498, b: 0.30692357, a: 1}
+  m_IndirectSpecularColor: {r: 0.08269525, g: 0.51042044, b: 0.5066471, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -161,8 +161,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 25, y: 25}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 40, y: 40}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &32840025
 MonoBehaviour:
@@ -421,7 +421,7 @@ RectTransform:
   m_GameObject: {fileID: 216166857}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 199.99997, y: 200, z: 1}
+  m_LocalScale: {x: 150, y: 150, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1883622035}
@@ -1033,8 +1033,8 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.8584906, g: 0.79752743, b: 0.63495904, a: 1}
-  m_Intensity: 1.39
+  m_Color: {r: 0.53609824, g: 0.6981132, b: 0.68135303, a: 1}
+  m_Intensity: 1.49
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1043,10 +1043,10 @@ Light:
     m_Type: 1
     m_Resolution: -1
     m_CustomResolution: -1
-    m_Strength: 1
+    m_Strength: 0.639
     m_Bias: 0.02
     m_NormalBias: 0
-    m_NearPlane: 4.7
+    m_NearPlane: 6.34
     m_CullingMatrixOverride:
       e00: 1
       e01: 0
@@ -1071,12 +1071,12 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 183
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
-  m_BounceIntensity: 1
+  m_BounceIntensity: 1.29
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
   m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
@@ -1954,7 +1954,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.000030517578, y: 0}
+  m_AnchoredPosition: {x: 0.000061035156, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1252894355
@@ -2013,7 +2013,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1304254236}
-  m_LocalRotation: {x: 0.27781588, y: 0.36497167, z: -0.1150751, w: 0.8811196}
+  m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
   m_LocalPosition: {x: -2.243758, y: 9.851706, z: -2.0937579}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2021,7 +2021,7 @@ Transform:
   - {fileID: 1580482537}
   m_Father: {fileID: 1944255602}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 35, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 45, z: 0}
 --- !u!81 &1304254238
 AudioListener:
   m_ObjectHideFlags: 0
@@ -2053,10 +2053,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -40
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 18
   m_Depth: -1
   m_CullingMask:
@@ -2333,6 +2333,10 @@ MonoBehaviour:
   - {fileID: 3639953085000846316, guid: 54ff97ab92099e846912639bb580908d, type: 3}
   - {fileID: 2341945816938905521, guid: 3d9918e0da4a9434bbc653844e63ed04, type: 3}
   - {fileID: 3639953085000846316, guid: 56bf7c1df9175f349a4e0c82dda1a1f0, type: 3}
+  - {fileID: 3639953085000846316, guid: 14c22cec7e6c23040927a5948a11445b, type: 3}
+  - {fileID: 2341945816938905521, guid: 367d70324249a9b4d894b38d7d905866, type: 3}
+  - {fileID: 2341945816938905521, guid: b6f4214f05193ea41b56b6ed8c9f06da, type: 3}
+  - {fileID: 3639953085000846316, guid: 76c4b6cabc27f324197a9b2f0b2f8b76, type: 3}
   sidePanel: {fileID: 1453561514}
   containerUIGroups:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
@@ -2926,7 +2930,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 1304254239}
-  m_PlaneDistance: -30
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2983,18 +2987,48 @@ MonoBehaviour:
   environment: {fileID: 509517520}
   blockList:
   - {fileID: 5544935011793249807, guid: 6807ec385cde4d748b789730c5b1f3b0, type: 3}
-  - {fileID: 4051990589639843076, guid: 9fcbe0a11eff0de4ebae97109d241747, type: 3}
-  - {fileID: 4051990589639843076, guid: bcb0318d11618d04ea1d78cf0e407d95, type: 3}
+  - {fileID: 3694591596198273514, guid: 737c561758f7259489f3959bd3a9ab7c, type: 3}
+  - {fileID: 2293039379666247535, guid: 74d8aba14da0acb40b7c4e885e878024, type: 3}
   - {fileID: 259124781310316584, guid: 37c227cab6c4148498085c7f4f842620, type: 3}
-  - {fileID: 4051990589639843076, guid: 04c8a1ac16fbc2746823dd0b2bda3240, type: 3}
+  - {fileID: 4152542562802433636, guid: 954ebbc82f92b9949820d8694a75b895, type: 3}
   trees:
-  - {fileID: 7431265880868783856, guid: b98d4ad079498d3409d9a400a94d2e66, type: 3}
-  - {fileID: 6490776548683174418, guid: 0669cef539d897b4b926a54c0419b3bf, type: 3}
-  - {fileID: 3434028344872677200, guid: f983c0ae0c4497348a18a4533df6de5f, type: 3}
-  - {fileID: 8367319700122313126, guid: 0b3ad0bb9685ce443ab24acaec73cd8b, type: 3}
-  - {fileID: 5415946191150086370, guid: 27974266a8ee5c349bcaf7b32b6ce35d, type: 3}
+  - {fileID: 6263898577228119316, guid: 3cb1bd3651239934bab224e4cbbcfe0f, type: 3}
+  - {fileID: 5120028152472379267, guid: cb237b4ea4f6ccc4db18e9e36fc21fb6, type: 3}
+  - {fileID: 1611274309688833164, guid: 2f8b9e1849f55224ba1127ca1c05bf7a, type: 3}
+  - {fileID: 5070067826165927587, guid: 38d3fc2f096e4864a89aac50db2bdb70, type: 3}
+  - {fileID: 6061359384736479152, guid: 7661c094c20d52d4aba71138ed102cc3, type: 3}
+  - {fileID: 4175962443488436963, guid: b3f3ef58f079d24408530ca8ac4dfd5a, type: 3}
+  - {fileID: 4764163061295924136, guid: 689156db5f1f87d4ab50d32a89d9afe8, type: 3}
+  - {fileID: 2589189004803731907, guid: 99b64b0d1a10bac4f9b6e7d31eec8d43, type: 3}
+  treeOffsts:
+  - 0.5
+  - 0.5
+  - 0.5
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  floras:
+  - {fileID: 4692731467772053779, guid: 9b7f88b827a105648b3946efd465ba87, type: 3}
+  - {fileID: 3079031030899134553, guid: 103bb142bbcc4f04b88a4e6863777486, type: 3}
+  - {fileID: 1967906929672827469, guid: 9f805ac9561daf84096a443bf8594241, type: 3}
+  - {fileID: 5438425726352472562, guid: b3bb9db87e78eab4e8adcf95080b78e1, type: 3}
+  - {fileID: 1681874984196834207, guid: c2775e5969f746e44847224ea05ade70, type: 3}
+  - {fileID: 4811457409279847648, guid: af4b1f731e459254582af138718069e6, type: 3}
+  floraOffsts:
+  - 0.5
+  - 0.5
+  - 0.5
+  - 0.25
+  - 0.4
+  - 0.4
+  traps:
+  - {fileID: 8720993582352480715, guid: 0b99db4fbb5a7f94cad149b5264cb2f4, type: 3}
+  trapOffsets:
+  - 0
   mapParams:
-    dims: {x: 64, y: 64}
+    dims: {x: 96, y: 96}
     anchor: {x: 5, y: -7.9, z: 5}
     noiseParameters: {x: 0.8, y: 1.25, z: 2.25}
     noiseOffset: {x: 0, y: 0}
@@ -3004,8 +3038,10 @@ MonoBehaviour:
     blockSize: 3
     forestVariety: 0
     forestDensity: 0.057
-    floraDiversity: 0
-    floraDensity: 0
+    floraVariety: 0
+    floraDensity: 0.25
+    trapVariety: 0
+    trapDensity: 0.015
     containers: 0000000001000000
     contNumRange: {x: 6, y: 12}
     ingredients:
@@ -3017,6 +3053,10 @@ MonoBehaviour:
     - lily
     - tulip
     ingNumRange: {x: 10, y: 25}
+    nonIngredients:
+    - coin
+    - bomb
+    nonIngNumRange: {x: 5, y: 10}
     entitiesForSpawn:
     - Magpie
     - Ogre
@@ -3205,8 +3245,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -30}
-  m_SizeDelta: {x: 220, y: 220}
+  m_AnchoredPosition: {x: 20, y: -40}
+  m_SizeDelta: {x: 160, y: 160}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1883622036
 MonoBehaviour:
@@ -3220,8 +3260,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.38431373}
+  m_Material: {fileID: 2100000, guid: aa9fb737905363c41b127c754af8e3a5, type: 2}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3258,7 +3298,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 025a0296a9e01ae41a43a6d71708c42b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapSize: 200
+  mapSize: 150
   mapRenderer: {fileID: 216166860}
   heroMarker: {fileID: 282133855}
   portalMarkerPref: {fileID: 7904068026992529487, guid: 71e8e91ed5a0bf34e91cf8f1baf124b1,
@@ -3342,9 +3382,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944255601}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 0.05
+  m_Mass: 0.75
+  m_Drag: 0.5
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -3406,7 +3446,7 @@ MonoBehaviour:
   ui: {fileID: 246611966}
   logic: {fileID: 283488800}
   data: {fileID: 1410969494}
-  cameraOffset: {x: -10, y: 16, z: -10}
+  cameraOffset: {x: -16, y: 22, z: -16}
 --- !u!114 &1944255607
 MonoBehaviour:
   m_ObjectHideFlags: 0

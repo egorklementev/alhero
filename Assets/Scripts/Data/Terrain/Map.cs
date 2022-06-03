@@ -13,7 +13,7 @@ public class Map
     private Block[,] _ground;
     private List<Island> _islands;
     private bool[,] identified;
-    private const int MaxTrials = 1024; // If this is exceeded - recreate all level
+    private const int MaxTrials = 128; // If this is exceeded - recreate all level
 
     public bool IsAir(int x, int y)
     {
@@ -27,9 +27,13 @@ public class Map
 
     public bool IsEmptyGroundArea(Vector2Int center, int range = 0)
     {
-        for (int x = center.x - range; x <= center.x + range; x++)
+        int xStart = center.x - range < 0 ? 0 : center.x - range;
+        int xEnd = center.x + range >= Width ? Width - 1 : center.x + range;
+        int yStart = center.y - range < 0 ? 0 : center.y - range;
+        int yEnd = center.y + range >= Height ? Height - 1 : center.y + range;
+        for (int x = xStart; x <= xEnd; x++)
         {
-            for (int y = center.y - range; y <= center.y + range; y++)
+            for (int y = yStart; y <= yEnd; y++)
             {
                 if (!GetBlock(x, y).IsEmptyGround())
                 {
@@ -77,12 +81,15 @@ public class Map
         MapGenerator.loadingProgress = 0.4f;
 
         GenerateTrees(prms);
+        GenerateFlora(prms);
+        GenerateTraps(prms);
         MapGenerator.loadingProgress = 0.5f;
 
         SpawnPortals(prms);
         MapGenerator.loadingProgress = 0.6f;
 
         SpawnIngredients(prms);
+        SpawnNonIngredients(prms);
         MapGenerator.loadingProgress = 0.7f;
 
         SpawnContainers(prms);
@@ -247,15 +254,15 @@ public class Map
         {
             if (b.IsBridge())
             {
-                int neighBridges = 0;
+                int nonAirNeighbors = 0;
                 foreach (Block neigh in GetNeighbors(b))
                 {
-                    if (neigh.IsBridge()) 
+                    if (neigh.Type != BlockType.AIR)
                     {
-                        neighBridges++;
+                        nonAirNeighbors++;
                     }
                 }
-                if (neighBridges > 2)
+                if (nonAirNeighbors > 2)
                 {
                     b.SetBridge(false, true);
                 }
@@ -291,14 +298,41 @@ public class Map
 
     private void GenerateTrees(MapParameters prms)
     {
-        // Generate trees
         foreach (Block b in _ground)
         {
-            if (b.IsEmptyGround() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H)))
+            if (b.IsEmptyGround() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H) || HasNeighbor(b, BlockType.BRIDGE_C)))
             {
-                if (Random.value > 1f - prms.forestDensity )
+                if (Random.value > 1f - prms.forestDensity)
                 {
                     b.SetTree(Random.Range(0, prms.forestVariety));
+                }
+            }
+        }
+    }
+
+    private void GenerateFlora(MapParameters prms)
+    {
+        foreach (Block b in _ground)
+        {
+            if (b.IsEmptyGround())
+            {
+                if (Random.value > 1f - prms.floraDensity)
+                {
+                    b.SetFlora(Random.Range(0, prms.floraVariety));
+                }
+            }
+        }
+    }
+
+    private void GenerateTraps(MapParameters prms)
+    {
+        foreach (Block b in _ground)
+        {
+            if (b.IsEmptyGround())
+            {
+                if (Random.value > 1f - prms.trapDensity)
+                {
+                    b.SetTrap(Random.Range(0, prms.trapVariety));
                 }
             }
         }
@@ -312,13 +346,27 @@ public class Map
         while (ingNum > 0)
         {   
             GetRandomEmptyGroundBlock()
-                .SetIngredient(DataController.GetWeightedIngredientFromList(
+                .SetItem(DataController.GetWeightedIngredientFromList(
                     new List<int>(
                         new List<string>(prms.ingredients).ConvertAll(ing => ing.Hash())
                         )
                     ).id
                 );
             ingNum--;
+        }
+    }
+
+    private void SpawnNonIngredients(MapParameters prms)
+    {
+        int min = Mathf.Min(prms.nonIngNumRange.x, prms.nonIngNumRange.y);
+        int max = Mathf.Max(prms.nonIngNumRange.x, prms.nonIngNumRange.y);
+        int nonIngNum = Random.Range(min, max);
+        int variety = prms.nonIngredients.Length;
+        while (nonIngNum > 0)
+        {   
+            GetRandomEmptyGroundBlock()
+                .SetItem(prms.nonIngredients[Random.Range(0, variety)].Hash());
+            nonIngNum--;
         }
     }
 
@@ -356,7 +404,8 @@ public class Map
         int entCount = Random.Range(prms.entNumRange.x, prms.entNumRange.y + 1);
         while (entCount-- > 0)
         {
-            GetRandomEmptyGroundBlock().SetEntity(prms.entitiesForSpawn[Random.Range(0, prms.entitiesForSpawn.Length)]);
+            GetRandomEmptyGroundBlock()
+                .SetEntity(prms.entitiesForSpawn[Random.Range(0, prms.entitiesForSpawn.Length)]);
         }
     }
 

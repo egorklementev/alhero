@@ -176,6 +176,7 @@ public class LogicController : MonoBehaviour
         {
             PickedItems[i] = null;
         }
+        DataController.genData.coins = 0;
         ChangeScene("GameScene");
     }
 
@@ -282,6 +283,20 @@ public class LogicController : MonoBehaviour
         catch
         {
             $"No checkpoint \"{checkpoint}\" for object to be teleported found.".Log(this);
+        }
+    }
+
+    public void KillInRange(Vector3 origin, float radius)
+    {
+        foreach (GameObject entity in spawner.entities)
+        {
+            if (Vector3.Distance(entity.transform.position, origin) < radius)
+            {
+                if (entity.TryGetComponent<AIManager>(out AIManager ai))
+                {
+                    ai.Transition("Death");
+                }
+            }
         }
     }
 }

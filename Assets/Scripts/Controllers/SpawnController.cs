@@ -213,9 +213,10 @@ public class SpawnController : MonoBehaviour
         {
             T obj = Instantiate(item.gameObject, pos, rot, owner).GetComponent<AbstractItem>() as T;
             obj.gameObject.SetActive(true); // In any case, whynot
-            if (obj is ItemWorld)
+            if (obj is ItemWorld iw)
             {
-                (obj as ItemWorld).SetPhysicsActive(true);
+                iw.SetPhysicsActive(true);
+                iw.logic = logic;
             }
             return obj;
         }

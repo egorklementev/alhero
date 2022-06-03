@@ -6579,7 +6579,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 963194227}
-  m_PlaneDistance: -15
+  m_PlaneDistance: 1
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -6785,7 +6785,7 @@ MonoBehaviour:
   ui: {fileID: 99111274}
   logic: {fileID: 467375639}
   data: {fileID: 324854745}
-  cameraOffset: {x: -10, y: 16, z: -10}
+  cameraOffset: {x: -16, y: 22, z: -16}
 --- !u!114 &219118634
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8384,6 +8384,8 @@ MonoBehaviour:
   - {fileID: 3639953085000846316, guid: 56bf7c1df9175f349a4e0c82dda1a1f0, type: 3}
   - {fileID: 3639953085000846316, guid: 76c4b6cabc27f324197a9b2f0b2f8b76, type: 3}
   - {fileID: 2341945816938905521, guid: b6f4214f05193ea41b56b6ed8c9f06da, type: 3}
+  - {fileID: 2341945816938905521, guid: 367d70324249a9b4d894b38d7d905866, type: 3}
+  - {fileID: 3639953085000846316, guid: 14c22cec7e6c23040927a5948a11445b, type: 3}
   sidePanel: {fileID: 1021330090}
   containerUIGroups:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
@@ -11183,10 +11185,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: -25
+  near clip plane: 0.01
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 18
   m_Depth: -1
   m_CullingMask:
@@ -11210,7 +11212,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.27781588, y: 0.36497167, z: -0.1150751, w: 0.8811196}
+  m_LocalRotation: {x: 0.23911765, y: 0.3696438, z: -0.09904577, w: 0.89239913}
   m_LocalPosition: {x: -2.243758, y: 9.851706, z: -2.0937579}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -11218,7 +11220,7 @@ Transform:
   - {fileID: 172676653}
   m_Father: {fileID: 219118632}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 35, y: 45, z: 0}
+  m_LocalEulerAnglesHint: {x: 30, y: 45, z: 0}
 --- !u!1 &978665305
 GameObject:
   m_ObjectHideFlags: 0
@@ -34876,8 +34878,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 25, y: 25}
-  m_SizeDelta: {x: 50, y: 50}
+  m_AnchoredPosition: {x: 40, y: 40}
+  m_SizeDelta: {x: 75, y: 75}
   m_Pivot: {x: 1, y: 1}
 --- !u!114 &2102914716
 MonoBehaviour:

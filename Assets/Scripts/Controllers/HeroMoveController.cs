@@ -39,6 +39,7 @@ public class HeroMoveController : MonoBehaviour
     private float angle = -1f;
     private float tapCounter = 0f;
     private bool isMoving = false;
+    private bool isDead = false;
     private Direction moveDir = Direction.STATIONARY;
     private Direction faceDir = Direction.NORTH;
     private const string walkParam = "IsWalking"; // Animation parameter
@@ -53,6 +54,13 @@ public class HeroMoveController : MonoBehaviour
     void FixedUpdate()
     {
         MoveCharacter(movementSpeed, moveDir);
+
+        if (!isDead && transform.position.y < -15f)
+        {
+            uiTookControl = true;
+            isDead = true;
+            GetComponent<AIManager>().Transition("Death");
+        }
     }
 
     void Update()
@@ -154,6 +162,16 @@ public class HeroMoveController : MonoBehaviour
                                 _ => new Vector3(0f, 0f, 0f)
                             },
                             ForceMode.Impulse);
+
+                        // Activate bomb
+                        if (LogicController.PickedItems[0].id == "bomb".Hash())
+                        {
+                            if (LogicController.PickedItems[0].TryGetComponent<Bomb>(out Bomb b))
+                            {
+                                b.Activate();
+                            }
+                        }
+
                         LogicController.PickedItems[0] = null;
 
                         // Try to rotate items for better UX
