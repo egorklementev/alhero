@@ -149,10 +149,10 @@ public class LogicController : MonoBehaviour
         pos = player.transform.position + pos;
         foreach (string name in items)
         {
-            // spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, spawner.itemsGroup);
+            spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, spawner.itemsGroup);
             pos -= new Vector3(0f, 0f, 3f);
         }
-        UIController.SpawnSideLine("WOW, wow, uWu!!!");
+        UIController.SpawnSideLine("Wow, you spawned some stuff!!!");
     }
 
     public void StartNewGame()
@@ -288,9 +288,14 @@ public class LogicController : MonoBehaviour
 
     public void KillInRange(Vector3 origin, float radius)
     {
-        foreach (GameObject entity in spawner.entities)
+        foreach (Transform entity in spawner.entitiesGroup)
         {
-            if (Vector3.Distance(entity.transform.position, origin) < radius)
+            for (float i = 0; i < 2f * Mathf.PI; i += Mathf.PI * .125f)
+            {
+                Debug.DrawLine(origin, origin + new Vector3(Mathf.Cos(i), 0f, Mathf.Sin(i)) * radius, Color.yellow, 3f);
+            }
+            float distance = Vector3.Distance(entity.position, origin);
+            if (distance < radius)
             {
                 if (entity.TryGetComponent<AIManager>(out AIManager ai))
                 {

@@ -86,7 +86,7 @@ public class ItemWorld : AbstractItem
     private void OnCollisionEnter(Collision other)
     {
         int slot = LogicController.GetFreeInvSlot();
-        if (other.gameObject.CompareTag("Player") && slot != -1)
+        if (other.gameObject.CompareTag("Player"))
         {
             if (id == "coin".Hash())
             {
@@ -94,7 +94,7 @@ public class ItemWorld : AbstractItem
                 DataController.genData.coins++;
                 Destroy();
             }
-            else
+            else if (slot != -1 && id != "picked_coin".Hash())
             {
                 SetPickedUp(true, slot, other.gameObject);
                 LogicController.PickedItems[slot] = this;
@@ -102,8 +102,7 @@ public class ItemWorld : AbstractItem
         }
         else if (
             other.gameObject.TryGetComponent<ItemOwnerAI>(out ItemOwnerAI ai) && 
-            !ai.HasItem() && 
-            id != "coin".Hash()
+            !ai.HasItem() && DataController.IsIngredient(id)
             )
         {
             SetPickedUp(true, 0, other.gameObject, ai.vOffset);

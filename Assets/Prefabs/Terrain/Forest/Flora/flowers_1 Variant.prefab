@@ -85,7 +85,7 @@ PrefabInstance:
     - target: {fileID: -2570276422793390623, guid: dbf9de09b891c8745a43b1568210ed9a,
         type: 3}
       propertyPath: m_ScaleInLightmap
-      value: 0.063512586
+      value: 0.07497743
       objectReference: {fileID: 0}
     - target: {fileID: -436781860097443329, guid: dbf9de09b891c8745a43b1568210ed9a,
         type: 3}
@@ -149,12 +149,12 @@ PrefabInstance:
     - target: {fileID: 4742473837712756890, guid: dbf9de09b891c8745a43b1568210ed9a,
         type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.063512586
+      value: 0.017170029
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: dbf9de09b891c8745a43b1568210ed9a,
         type: 3}
       propertyPath: m_LODs.Array.data[1].screenRelativeHeight
-      value: 0.014596191
+      value: 0.004198457
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbf9de09b891c8745a43b1568210ed9a, type: 3}

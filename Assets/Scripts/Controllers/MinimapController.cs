@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 public class MinimapController : MonoBehaviour 
 {
-    public float mapSize = 200f;
+    public float mapSize = 160f;
     public Renderer mapRenderer;    
     public RectTransform heroMarker;
     public GameObject portalMarkerPref;
@@ -12,14 +12,15 @@ public class MinimapController : MonoBehaviour
     public LogicController logic;
 
     private float realMapSize = 10f;
+    private Vector2 mapOrigin = Vector2.zero;
     private List<GameObject> portalMarkers = new List<GameObject>();
 
     private void Update() 
     {
         Vector3 heroPos = logic.GetHeroPosition();
         heroMarker.anchoredPosition = new Vector2(
-            (heroPos.x / realMapSize) * mapSize + 12f, 
-            (heroPos.z / realMapSize) * mapSize + 12f);
+            ((heroPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
+            ((heroPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
     }
 
     public void UpdateMinimap(Map map)
@@ -30,6 +31,7 @@ public class MinimapController : MonoBehaviour
         }
 
         realMapSize = map.Parameters.blockSize * map.Width * 2f;
+        mapOrigin = new Vector2(map.Parameters.anchor.x, map.Parameters.anchor.z);
 
         Texture2D mapTexture = new Texture2D(map.Width, map.Height);
         for (int w = 0; w < map.Width; w++)
@@ -42,8 +44,8 @@ public class MinimapController : MonoBehaviour
                 {
                     GameObject marker = Instantiate(portalMarkerPref, transform as RectTransform);
                     (marker.transform as RectTransform).anchoredPosition = new Vector2(
-                        ((float)w / map.Width) * mapSize + 12f,
-                        ((float)h / map.Height) * mapSize + 12f
+                        ((float)w / map.Width) * mapSize,
+                        ((float)h / map.Height) * mapSize
                     );
                     portalMarkers.Add(marker);
                 }

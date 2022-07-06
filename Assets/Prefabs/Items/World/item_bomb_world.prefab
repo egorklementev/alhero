@@ -9723,7 +9723,7 @@ MonoBehaviour:
   - {fileID: 7009876032554156866}
   blastParticles: {fileID: 6356608586019268333, guid: 58c5220daf1fc1249ac4f70fc2580e66,
     type: 3}
-  blastRadius: 15
+  blastRadius: 10
   blastTimer: 3
 --- !u!1001 &7519100574207314831
 PrefabInstance:

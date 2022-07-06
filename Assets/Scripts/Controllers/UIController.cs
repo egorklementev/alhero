@@ -27,6 +27,7 @@ public class UIController : MonoBehaviour
     public static string activeGroup = "none";
     public static int requestedLinesNum = 0;
 
+    private static HashSet<string> activeGroups = new HashSet<string>();
     private static LinkedList<string> groupsForActivation = new LinkedList<string>();
     private static LinkedList<string> groupsForDeactivation = new LinkedList<string>();
     private static LinkedList<string> groupsForInstantDeactivation = new LinkedList<string>();
@@ -59,6 +60,7 @@ public class UIController : MonoBehaviour
             for (LinkedListNode<string> node = groupsForActivation.First; node != null; node = node.Next)
             {
                 uiGroups.Find(group => group.name.Equals(node.Value)).SetActive(true);
+                activeGroups.Add(node.Value);
             }
             groupsForActivation.Clear();
         }
@@ -67,6 +69,7 @@ public class UIController : MonoBehaviour
             for (LinkedListNode<string> node = groupsForInstantDeactivation.First; node != null; node = node.Next)
             {
                 uiGroups.Find(group => group.name.Equals(node.Value)).SetActive(false);
+                activeGroups.Remove(node.Value);
             }
             groupsForInstantDeactivation.Clear();
         }
@@ -75,6 +78,7 @@ public class UIController : MonoBehaviour
             for (LinkedListNode<string> node = groupsForDeactivation.First; node != null; node = node.Next)
             {
                 StartCoroutine(HideUIGroup(uiGroups.Find(group => group.name.Equals(node.Value))));
+                activeGroups.Remove(node.Value);
             }
             groupsForDeactivation.Clear();
         }
@@ -163,5 +167,17 @@ public class UIController : MonoBehaviour
     {
         requestedSideLines.AddRange(text);
         requestedLinesNum += text.Length;
+    }
+
+    public static void HideActiveGroups()
+    {
+        if (activeGroups.Count > 0)
+        {
+            TriggerRightPanel();
+        }
+        foreach (string group in activeGroups)
+        {
+            groupsForInstantDeactivation.AddLast(group);
+        }
     }
 }

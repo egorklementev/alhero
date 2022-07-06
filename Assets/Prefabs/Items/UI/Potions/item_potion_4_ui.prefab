@@ -28,13 +28,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2647117813052276098}
-  m_LocalRotation: {x: -0.59150624, y: -0.5120471, z: -0.34150642, w: 0.5208661}
+  m_LocalRotation: {x: -0.87255234, y: 0.17851688, z: 0.2192931, w: 0.39836493}
   m_LocalPosition: {x: 0, y: 0, z: -65}
   m_LocalScale: {x: 45, y: 45, z: 45}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -129.332, y: 22.296005, z: 12.466003}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 10}
@@ -59,6 +60,7 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -93,7 +95,7 @@ MeshRenderer:
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &2647117813052276102
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -101,11 +103,12 @@ Animator:
   m_GameObject: {fileID: 2647117813052276098}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 974cea9867654be4bb19f16ba958dbb5, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9a2f868c6035648449920cdd93ff08e5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -134,15 +137,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ae7644bfecb7ce4aa66342a199ffa11, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 1414245136
+  id: -468266482
   item_name: potion_4
   arcanumMaterialIndex: 2
+  uiRotation: {x: 309.33224, y: 202.29552, z: 192.46577}
   potionData:
     recipe_id: 0
     bottle_shape: 0
     ingredients: 
     titleIDs: 
-    color_r: 0
-    color_g: 0
-    color_b: 0
-    color_a: 0

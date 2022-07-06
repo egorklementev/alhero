@@ -201,7 +201,7 @@ MonoBehaviour:
   - Threatening
   - Death
   moveSpeed: 40
-  colliderBounds: 2.5
+  colliderBounds: 2
   Body: {fileID: 1271252247946232042}
   RangeEnhancement: 8
 --- !u!114 &6296681872511953404

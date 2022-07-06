@@ -1,12 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemUI : AbstractItem
 {
+    public Vector3 uiRotation; 
     private Animator animator;
 
     protected virtual void OnEnable() {
+        transform.localRotation = Quaternion.Euler(uiRotation);
         foreach (Material m in GetComponent<MeshRenderer>().materials)
         {
             m.renderQueue = 3002;

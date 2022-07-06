@@ -28,13 +28,14 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2647117813052276098}
-  m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.8765871, y: 0.03810004, z: 0.19862378, w: 0.4366831}
   m_LocalPosition: {x: 0, y: 0, z: -65}
   m_LocalScale: {x: 45, y: 45, z: 45}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -128.674, y: 30.266006, z: -9.8289795}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 10}
@@ -59,6 +60,7 @@ MeshRenderer:
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
@@ -92,7 +94,7 @@ MeshRenderer:
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!95 &2647117813052276102
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -100,11 +102,12 @@ Animator:
   m_GameObject: {fileID: 2647117813052276098}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: f24067e3796b8a245b6001d5180ab6b4, type: 2}
+  m_Controller: {fileID: 9100000, guid: 9a2f868c6035648449920cdd93ff08e5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -133,6 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: -1007536379
+  id: 1527900746
   item_name: tulip
   arcanumMaterialIndex: 2
+  uiRotation: {x: 308.67377, y: 210.26547, z: 170.17079}
