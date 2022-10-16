@@ -76,22 +76,26 @@ public class HeroMoveController : MonoBehaviour
             {
                 moveDir = Direction.NORTH;
                 angle = 0f;
+                faceDir = moveDir;
             }
             else if (Input.GetKey(KeyCode.A))
             {
                 moveDir = Direction.WEST;
                 angle = -90f;
+                faceDir = moveDir;
             }
             else if (Input.GetKey(KeyCode.S))
             {
                 moveDir = Direction.SOUTH;
                 angle = -180f;
+                faceDir = moveDir;
 
             }
             else if (Input.GetKey(KeyCode.D))
             {
                 moveDir = Direction.EAST;
                 angle = -270f;
+                faceDir = moveDir;
             }
             #endregion
 
@@ -147,44 +151,32 @@ public class HeroMoveController : MonoBehaviour
                 else if (touch.phase == TouchPhase.Ended)
                 {
                     dragStart = touch.position;
-
-                    // Player tap -> throw item
-                    if (tapCounter > minTapTime && tapCounter < maxTapTime && LogicController.PickedItems[0] != null)
-                    {
-                        LogicController.PickedItems[0].SetPickedUp(false);
-                        LogicController.PickedItems[0].GetBody().AddRelativeForce(
-                            faceDir switch
-                            {
-                                Direction.NORTH => new Vector3(0f, .25f * throwForce, throwForce * 1.5f),
-                                Direction.SOUTH => new Vector3(0f, .25f * throwForce, -throwForce * 1.5f),
-                                Direction.WEST => new Vector3(-throwForce * 1.5f, .25f * throwForce, 0f),
-                                Direction.EAST => new Vector3(throwForce * 1.5f, .25f * throwForce, 0f),
-                                _ => new Vector3(0f, 0f, 0f)
-                            },
-                            ForceMode.Impulse);
-
-                        // Activate bomb
-                        if (LogicController.PickedItems[0].id == "bomb".Hash())
-                        {
-                            if (LogicController.PickedItems[0].TryGetComponent<Bomb>(out Bomb b))
-                            {
-                                b.Activate();
-                            }
-                        }
-
-                        LogicController.PickedItems[0] = null;
-
-                        // Try to rotate items for better UX
-                        logic.SwitchItems();
-                        if (LogicController.PickedItems[0] == null)
-                        {
-                            logic.SwitchItems();
-                        }
-                    }
-                    tapCounter = 0f;
+                    TryToThrowItem();
                 }
                 break;
             }
+
+            #region Mouse tap
+            if (Input.GetMouseButton(0))
+            {
+                // Player tap
+                Ray raycast = Camera.main.ScreenPointToRay(Input.mousePosition);
+                RaycastHit raycastHit;
+                if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity, 7))
+                {
+                    if (raycastHit.collider.CompareTag("Player"))
+                    {
+                        tapCounter += Time.deltaTime;
+                    }
+                }
+            }
+
+            if (Input.GetMouseButtonUp(0))
+            {
+                TryToThrowItem();
+            }
+            #endregion
+            
 
             if (angle != -1f)
             {
@@ -206,6 +198,44 @@ public class HeroMoveController : MonoBehaviour
             data.Autosave();
             Application.Quit();
         }
+    }
+
+    private void TryToThrowItem()
+    {
+        // Player tap -> throw item
+        if (tapCounter > minTapTime && tapCounter < maxTapTime && LogicController.PickedItems[0] != null)
+        {
+            LogicController.PickedItems[0].SetPickedUp(false);
+            LogicController.PickedItems[0].GetBody().AddRelativeForce(
+                faceDir switch
+                {
+                    Direction.NORTH => new Vector3(0f, .25f * throwForce, throwForce * 1.5f),
+                    Direction.SOUTH => new Vector3(0f, .25f * throwForce, -throwForce * 1.5f),
+                    Direction.WEST => new Vector3(-throwForce * 1.5f, .25f * throwForce, 0f),
+                    Direction.EAST => new Vector3(throwForce * 1.5f, .25f * throwForce, 0f),
+                    _ => new Vector3(0f, 0f, 0f)
+                },
+                ForceMode.Impulse);
+
+            // Activate bomb
+            if (LogicController.PickedItems[0].id == "bomb".Hash())
+            {
+                if (LogicController.PickedItems[0].TryGetComponent<Bomb>(out Bomb b))
+                {
+                    b.Activate();
+                }
+            }
+
+            LogicController.PickedItems[0] = null;
+
+            // Try to rotate items for better UX
+            logic.SwitchItems();
+            if (LogicController.PickedItems[0] == null)
+            {
+                logic.SwitchItems();
+            }
+        }
+        tapCounter = 0f;
     }
 
     private void MoveCharacter(float speed, Direction dir)

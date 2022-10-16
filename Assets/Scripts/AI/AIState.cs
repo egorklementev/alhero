@@ -1,4 +1,6 @@
+using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class AIState
 {
@@ -21,14 +23,11 @@ public class AIState
     public AIState GetAdjacent(string stateName)
     {
         AIState adj = this;
-        try
+        if (!adjacent.ContainsKey(stateName))
         {
-           adj = adjacent[stateName]; 
+            throw new UnityException($"No adjacent AI state with name \"{stateName}\"!!!{Environment.NewLine}Current state: {Name}.");
         }
-        catch 
-        {
-            $"No AI state with name \"{stateName}\"!!!".Warn(this, "GetAdjacent", typeof(string));
-        }
+        adj = adjacent[stateName]; 
         return adj;
     }
 }

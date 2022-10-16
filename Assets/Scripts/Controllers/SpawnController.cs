@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Random = UnityEngine.Random;
 
 public class SpawnController : MonoBehaviour
 {
@@ -151,7 +152,7 @@ public class SpawnController : MonoBehaviour
         GameObject container = Instantiate(containersForSpawn[containerID], pos, rot, owner);
         GameObject uiGroup = Instantiate(containerUIGroups[containerID], sidePanel.transform);
         uiGroup.name += "_" + containersSpawned;
-        ui.uiGroups.Add(uiGroup);
+        ui.UIGroups.Add(uiGroup);
         uiGroup.SetActive(false);
 
         // Enable slots logic
@@ -162,7 +163,7 @@ public class SpawnController : MonoBehaviour
             if (slot.gameObject.TryGetComponent<Button>(out Button btn))
             {
                 int i = slotIndex; // Wierd flex but ok
-                btn.onClick.AddListener(delegate { logic.SelectItemInBarrel(i); });
+                btn.onClick.AddListener(() => logic.SelectItemInBarrel(i));
                 slotIndex++;
             }
         }
@@ -186,7 +187,7 @@ public class SpawnController : MonoBehaviour
 
         // Connect enter field to UI
         container.transform.Find("EnterField").gameObject.SetActive(true);
-        container.GetComponentInChildren<EnterFieldInteraction>().groupToActivate = uiGroup.name;
+        container.GetComponentInChildren<EnterField>().groupToActivate = uiGroup.name;
 
         return contScript;
     }
@@ -217,6 +218,14 @@ public class SpawnController : MonoBehaviour
             {
                 iw.SetPhysicsActive(true);
                 iw.logic = logic;
+                if (iw is CoinWorld cw)
+                {
+                    cw.Count = Random.Range(1, 11);
+                }
+            }
+            if (obj is CoinUI cui)
+            {
+                cui.Count = Random.Range(1, 11);
             }
             return obj;
         }

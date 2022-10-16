@@ -46,9 +46,15 @@ public class AIManager : MonoBehaviour
     {
         if (!newState.Equals(_currentState.Name))
         {
-            // $"Transition [{gameObject.name}]: ({_currentState.Name}) -> ({newState})".Log(this);
             anim.SetBool(_currentState.Name, false);
-            _currentState = _currentState.GetAdjacent(newState);
+            try
+            {
+                _currentState = _currentState.GetAdjacent(newState);
+            }
+            catch (UnityException e)
+            {
+                $"Agent: [{name}], trace: {Environment.NewLine}{e}".Err(this);
+            }
             anim.SetBool(_currentState.Name, true);
             if (_currentState.Name.Equals(newState)) // Transition happened 
             {

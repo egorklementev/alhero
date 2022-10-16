@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class ItemOwnerAI : SomeAI
 {
+    public bool canTakeItems = true;
     public float vOffset = 0f;
     public float force = 3f;
 

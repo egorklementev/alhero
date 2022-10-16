@@ -115,7 +115,7 @@ public class RecipeBook : MonoBehaviour
                             uiItemCopy = spawner.SpawnItem<ItemUI>(uiItem.id, slot);
                         }
                         int ing_id = uiItemCopy.id;
-                        slot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(ing_id); });
+                        slot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(ing_id));
                         uiItemCopy.SetSmall();
                         ingEntry.transform.Find("Title").gameObject.GetComponent<TextMeshProUGUI>().text = uiItem.item_name;
                         index++;
@@ -135,7 +135,7 @@ public class RecipeBook : MonoBehaviour
                         Transform slot = recEntry.Find("Slot");
                         uiPotionCopy = spawner.SpawnItem<PotionUI>(uiPotion.id, slot);
                         int rec_id = rec.GetID();
-                        slot.GetComponent<Button>().onClick.AddListener(delegate { OnRecipeClicked(rec_id); });
+                        slot.GetComponent<Button>().onClick.AddListener(() => OnRecipeClicked(rec_id));
                         uiPotionCopy.SetSmall();
                         recEntry.transform.Find("Title").GetComponent<TextMeshProUGUI>().text = uiPotion.item_name;
                         index++;
@@ -146,7 +146,7 @@ public class RecipeBook : MonoBehaviour
                         Transform slot = recEntry.Find("Slot");
                         Instantiate(questionMark, slot);
                         int rec_id = rec.GetID();
-                        slot.GetComponent<Button>().onClick.AddListener(delegate { OnRecipeClicked(rec_id); });
+                        slot.GetComponent<Button>().onClick.AddListener(() => OnRecipeClicked(rec_id));
                         recEntry.transform.Find("Title").GetComponent<TextMeshProUGUI>().text = "Unknown";
                         index++;
                     }
@@ -179,7 +179,7 @@ public class RecipeBook : MonoBehaviour
                             }
                             else
                             {
-                                slot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(id); });
+                                slot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(id));
                                 ItemUI uiItem = spawner.SpawnItem<ItemUI>(id, slot);
                                 uiItem.SetSmall();
                                 if (j < he.ingredients.Length - 1)
@@ -201,7 +201,7 @@ public class RecipeBook : MonoBehaviour
 
             case 4: // Game Info
                 UIController.ActivateUIGroup("game_info_group");
-                UIController.DeactivateUIGroup("recipe_book_group");
+                UIController.DeactivateUIGroupInstantly("recipe_book_group");
                 break;
 
             default:
@@ -278,7 +278,7 @@ public class RecipeBook : MonoBehaviour
                 Transform slot = ing.Find("Slot");
                 if (i.hasBeenDiscovered)
                 {
-                    slot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(ing_id, true); });
+                    slot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(ing_id, true));
                     ItemUI uiItem = spawner.SpawnItem<ItemUI>(ing_id, slot);
                     uiItem.SetSmall();
                     successChance *= 1f - i.breakChance;
@@ -306,7 +306,7 @@ public class RecipeBook : MonoBehaviour
             Potion temp = new Potion(); // Kostiyl - uvazhayu, prikolno
             temp.recipe_id = rec.GetID();
             int potion_id = temp.GetID();
-            resSlot.GetComponent<Button>().onClick.AddListener(delegate { OnIngredientClicked(potion_id, true); });
+            resSlot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(potion_id, true));
             PotionUI uiPotion = spawner.SpawnItem<PotionUI>(potion_id, resSlot);
             uiPotion.SetSmall();
 

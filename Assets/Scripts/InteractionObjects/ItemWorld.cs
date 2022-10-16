@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class ItemWorld : AbstractItem
@@ -27,13 +28,16 @@ public class ItemWorld : AbstractItem
             switch (slot)
             {
                 case 0:
-                    transform.position = owner.transform.position + new Vector3(0f, 2.5f + _vOffset, 0f); // Center
+                    // Center
+                    StartCoroutine(LerpMove(owner.transform.position + new Vector3(0f, 2.5f + _vOffset, 0f), .1f));
                     break;
                 case 1:
-                    transform.position = owner.transform.position + new Vector3(1f, 2.5f + _vOffset, -1f); // Right
+                    // Right
+                    StartCoroutine(LerpMove(owner.transform.position + new Vector3(1f, 2.5f + _vOffset, -1f), .1f));
                     break;
                 case 2:
-                    transform.position = owner.transform.position + new Vector3(-1f, 2.5f + _vOffset, 1f); // Left
+                    // Left
+                    StartCoroutine(LerpMove(owner.transform.position + new Vector3(-1f, 2.5f + _vOffset, 1f), .1f));
                     break;
                 default:
                     break;
@@ -46,9 +50,22 @@ public class ItemWorld : AbstractItem
         }
     }
 
+    private IEnumerator LerpMove(Vector3 target, float duration)
+    {
+        float time = 0;
+        Vector3 startPosition = transform.position;
+        while (time < duration)
+        {
+            transform.position = Vector3.Slerp(startPosition, target, time / duration);
+            time += Time.deltaTime;
+            yield return null;
+        }
+        transform.position = target;
+    }
+
     private void Update()
     {
-        anim.SetBool("IsPickedUp", isPickedUp);
+        anim.SetBool("IsPickedUp", isPickedUp); // This is bad, I know... However, I want to finish this fucking game!!!
         anim.SetInteger("Slot", slot);
     }
 
@@ -91,17 +108,18 @@ public class ItemWorld : AbstractItem
             if (id == "coin".Hash())
             {
                 id = "picked_coin".Hash();
-                DataController.genData.coins++;
+                DataController.genData.coins += ((CoinWorld)this).Count;
                 Destroy();
             }
             else if (slot != -1 && id != "picked_coin".Hash())
             {
-                SetPickedUp(true, slot, other.gameObject);
+                SetPickedUp(true, slot, other.gameObject, 1.5f);
                 LogicController.PickedItems[slot] = this;
             }
         }
         else if (
-            other.gameObject.TryGetComponent<ItemOwnerAI>(out ItemOwnerAI ai) && 
+            other.gameObject.TryGetComponent<ItemOwnerAI>(out var ai) && 
+            ai.canTakeItems &&
             !ai.HasItem() && DataController.IsIngredient(id)
             )
         {

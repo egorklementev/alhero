@@ -7,4 +7,5 @@ public class General
     public int raccoonRequestedItem = 0;
     public int coins = 0;
     public int[] notIngredients;
+    public int[] oldmanItemsForSale;
 }

@@ -3,6 +3,10 @@
     "locationGenerations": 0,
     "cauldronInventory": [],
     "raccoonRequestedItem": 0,
+    "oldmanItemsForSale": [
+		0, 
+		0
+	],
     "coins": 0,
     "notIngredients": [
 		1367190883,

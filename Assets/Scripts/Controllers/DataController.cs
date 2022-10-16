@@ -205,74 +205,7 @@ public class DataController : MonoBehaviour
         $"Ingredient \"{id}\" added.".Log();
     }
 
-    public void StartNewGame()
-    {
-        Environment.NewLine.Log(this);
-        "Starting a new game...".Log(this);
-        Environment.NewLine.Log(this);
-        
-        // In case of user set seed
-        if (newSeed != 0)
-        {
-            genData.seed = newSeed;
-            newSeed = 0;
-            $"New game seed is {genData.seed}.".Log(this);
-        }
-
-        // The very new game
-        if (genData.seed == 0)
-        {
-            genData.seed = Random.Range(int.MinValue, int.MaxValue);
-            $"New game started. The seed is {genData.seed}.".Log(this);
-        }
-        Random.InitState(genData.seed);
-
-        genData.locationGenerations = 0;
-        genData.raccoonRequestedItem = 0;
-        genData.coins = 0;
-
-        history.Clear();
-
-        foreach (LabContainerItems lci in labContainers.Values)
-        {
-            int size = lci.items.Length;
-            lci.items = new LabContainerItem[size];
-        }
-
-        // Randomize ingredient values
-        ingredients.Clear();
-        // The stuff below basically means removal of all generated potions
-        spawner.absItems.RemoveAll(item => item.IsPotion() && (
-            (item as PotionUI == null ? (item as PotionWorld).potionData.recipe_id != 0 : (item as PotionUI).potionData.recipe_id != 0)
-        ));
-        foreach (AbstractItem item in spawner.absItems)
-        {
-            if (item as PotionWorld == null && item as PotionUI == null)
-            {
-                if (IsIngredient(item.id))
-                {
-                    AddNewIngredient(
-                        item.item_name.Hash(),
-                        item.item_name,
-                        Random.Range(0f, 6f),
-                        Random.value * .15f, // TODO:
-                        Random.Range(0, 1000),
-                        2f * (Random.value - .5f),
-                        2f * (Random.value - .5f),
-                        2f * (Random.value - .5f),
-                        2f * (Random.value - .5f)
-                    );
-                } 
-            }
-        }
-
-        // Add initial recipe
-        recipes.Clear();
-        CreateNewRecipe(GenerateRandomRecipe(1f, 3));
-
-        // Unconditional autosave
-        Autosave();
-    }
+    
 
     public static Ingredient GetWeightedIngredientFromList(List<int> ingIDs)
     {
@@ -343,9 +276,104 @@ public class DataController : MonoBehaviour
         genData.raccoonRequestedItem = GetWeightedIngredientFromList(new List<int>(ingredients.Keys)).id;
     }
 
+    public static void UpdateOldmanItems()
+    {
+        for (int i = 0; i < OldmanAI.ITEMS_TO_SELL; i++)
+        {
+            genData.oldmanItemsForSale[i] = GetWeightedIngredientFromList(new List<int>(ingredients.Keys)).id;
+        }
+    }
+
     public static bool IsIngredient(int id)
     {
         return !Array.Exists(genData.notIngredients, i => i == id);
+    }
+
+    public static bool ChangeCoins(int number)
+    {
+        if (!HasSufficientCoins(number))
+            return false;
+
+        genData.coins += number;
+        return true;
+    }
+
+    public static bool HasSufficientCoins(int number)
+    {
+        if (genData.coins - number < 0)
+            return false;
+
+        return true;
+    }
+
+    public void StartNewGame()
+    {
+        Environment.NewLine.Log(this);
+        "Starting a new game...".Log(this);
+        Environment.NewLine.Log(this);
+        
+        // In case of user set seed
+        if (newSeed != 0)
+        {
+            genData.seed = newSeed;
+            newSeed = 0;
+            $"New game seed is {genData.seed}.".Log(this);
+        }
+
+        // The very new game
+        if (genData.seed == 0)
+        {
+            genData.seed = Random.Range(int.MinValue, int.MaxValue);
+            $"New game started. The seed is {genData.seed}.".Log(this);
+        }
+        Random.InitState(genData.seed);
+
+        genData.locationGenerations = 0;
+        genData.raccoonRequestedItem = 0;
+        genData.oldmanItemsForSale = new int[2];
+        genData.coins = 0;
+
+        history.Clear();
+
+        foreach (LabContainerItems lci in labContainers.Values)
+        {
+            int size = lci.items.Length;
+            lci.items = new LabContainerItem[size];
+        }
+
+        // Randomize ingredient values
+        ingredients.Clear();
+        // The stuff below basically means removal of all generated potions
+        spawner.absItems.RemoveAll(item => item.IsPotion() && (
+            (item as PotionUI == null ? (item as PotionWorld).potionData.recipe_id != 0 : (item as PotionUI).potionData.recipe_id != 0)
+        ));
+        foreach (AbstractItem item in spawner.absItems)
+        {
+            if (item as PotionWorld == null && item as PotionUI == null)
+            {
+                if (IsIngredient(item.id))
+                {
+                    AddNewIngredient(
+                        item.item_name.Hash(),
+                        item.item_name,
+                        Random.Range(0f, 6f),
+                        Random.value * .15f, // TODO:
+                        Random.Range(0, 1000),
+                        2f * (Random.value - .5f),
+                        2f * (Random.value - .5f),
+                        2f * (Random.value - .5f),
+                        2f * (Random.value - .5f)
+                    );
+                } 
+            }
+        }
+
+        // Add initial recipe
+        recipes.Clear();
+        CreateNewRecipe(GenerateRandomRecipe(1f, 3));
+
+        // Unconditional autosave
+        Autosave();
     }
 
     public void AddIngredientsDebug()

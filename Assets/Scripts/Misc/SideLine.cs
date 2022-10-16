@@ -4,7 +4,7 @@ public class SideLine : MonoBehaviour
 {
     public void Disable()
     {
-        UIController.requestedLinesNum--;
+        UIController.RequestedLinesNum--;
         Destroy(gameObject);
     }
 }

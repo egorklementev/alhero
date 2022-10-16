@@ -56,12 +56,10 @@ public class MagpieAI : SomeAI
 
     private AIManager GetSomeThreat()
     {
-        AIManager ai = _aiManager.logic.GetClosestEntity(_aiManager);
+        AIManager ai = _aiManager.logic.GetClosestEntity(_aiManager, threatRadius);
         return (
             ai == null ? null : (
-                ai.GetAI<MagpieAI>() != null ? null : (
-                    Vector3.Distance(ai.transform.position, transform.position) > threatRadius ? null : ai
-                )
+                ai.GetAI<MagpieAI>() != null ? null : ai
             )
         );
     }

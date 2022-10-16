@@ -6,6 +6,7 @@ public class MinimapController : MonoBehaviour
     public float mapSize = 160f;
     public Renderer mapRenderer;    
     public RectTransform heroMarker;
+    public RectTransform oldmanMarker;
     public GameObject portalMarkerPref;
 
     [Space(15f)]
@@ -21,6 +22,11 @@ public class MinimapController : MonoBehaviour
         heroMarker.anchoredPosition = new Vector2(
             ((heroPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
             ((heroPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
+
+        Vector3 oldmanPos = logic.GetOldmanPosition();
+        oldmanMarker.anchoredPosition = new Vector2(
+            ((oldmanPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
+            ((oldmanPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
     }
 
     public void UpdateMinimap(Map map)

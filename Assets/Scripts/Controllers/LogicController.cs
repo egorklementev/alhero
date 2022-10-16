@@ -153,6 +153,7 @@ public class LogicController : MonoBehaviour
             pos -= new Vector3(0f, 0f, 3f);
         }
         UIController.SpawnSideLine("Wow, you spawned some stuff!!!");
+        DataController.genData.coins += 10;
     }
 
     public void StartNewGame()
@@ -180,25 +181,41 @@ public class LogicController : MonoBehaviour
         ChangeScene("GameScene");
     }
 
-    public AIManager GetClosestEntity(AIManager ai)
+    public AIManager GetClosestEntity(AIManager ai, float range = -1f, string tag = "no_tag")
     {
         List<AIManager> lst = new List<AIManager>();
-        foreach (Transform t in spawner.entitiesGroup.transform)
+
+        if (spawner.entitiesGroup.childCount <= 0) return null;
+        
+        foreach (Transform t in spawner.entitiesGroup)
         {
-            if (t.TryGetComponent<AIManager>(out AIManager otherAi) && !otherAi.Equals(ai))
+            bool tagCondition = tag == "no_tag" ? true : t.CompareTag(tag);
+            if (t.TryGetComponent<AIManager>(out AIManager otherAi) && tagCondition && !otherAi.Equals(ai))
             {
                 lst.Add(otherAi);
             }
         }
+
+        if (lst.Count == 0) return null;
+
         lst.Sort(
-            delegate (AIManager ai1, AIManager ai2) 
+            (AIManager ai1, AIManager ai2) =>
             {
                 float d1 = (ai1.transform.position - ai.transform.position).sqrMagnitude;
                 float d2 = (ai2.transform.position - ai.transform.position).sqrMagnitude;
                 return d1 > d2 ? 1 : -1;
             }
         );
-        return lst.Count > 0 ? lst[0] : null;
+
+        if (range > 0) 
+        {
+            return (lst[0].transform.position - ai.transform.position).sqrMagnitude < 
+                range * range ? lst[0] : null;
+        } 
+        else 
+        {
+            return lst[0];
+        }
     }
 
     public ItemWorld GetClosestItem(AIManager ai)
@@ -212,7 +229,7 @@ public class LogicController : MonoBehaviour
             }
         }
         lst.Sort(
-            delegate (ItemWorld i1, ItemWorld i2)
+            (ItemWorld i1, ItemWorld i2) =>
             {
                 float d1 = (i1.transform.position - ai.transform.position).sqrMagnitude;
                 float d2 = (i2.transform.position - ai.transform.position).sqrMagnitude;
@@ -256,6 +273,16 @@ public class LogicController : MonoBehaviour
     public Vector3 GetHeroPosition()
     {
         return player.transform.position;
+    }
+
+    public Vector3 GetOldmanPosition()
+    {
+        if (spawner.entitiesGroup.FindNearestName("oldman", out var oldman))
+        {
+            return oldman.position;
+        }
+
+        return Vector3.zero;
     }
 
     /// Enable/Disable agents' AI 

@@ -170,7 +170,7 @@ public class Map
 
         // We have to have all islands connected (indirectly)
         _islands.Sort(
-            delegate (Island i1, Island i2) 
+            (Island i1, Island i2) =>
             {
                 return i1.Size() > i2.Size() ? -1 : i1.Size() == i2.Size() ? 0 : 1;
             }
@@ -221,7 +221,7 @@ public class Map
         // $"Overall bridges for this island: {bridges.Count}".Log(this);
 
         bridges.Sort(
-            delegate (Bridge b1, Bridge b2)
+            (Bridge b1, Bridge b2) =>
             {
                 return b1.Length() > b2.Length() ? 1 : b1.Length() < b2.Length() ? -1 : 0;
             }
@@ -407,6 +407,12 @@ public class Map
             GetRandomEmptyGroundBlock()
                 .SetEntity(prms.entitiesForSpawn[Random.Range(0, prms.entitiesForSpawn.Length)]);
         }
+
+        // Always one oldman with his cow
+
+        Block oldmanSpawn = GetRandomEmptyGroundBlock(1);
+        oldmanSpawn.SetEntity("oldman");
+        GetNeighbors(oldmanSpawn)[0].SetEntity("oldman_cow");
     }
 
     private void GenerateOutlineBorders()

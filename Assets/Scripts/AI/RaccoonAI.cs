@@ -8,8 +8,6 @@ public class RaccoonAI : SomeAI
     public TextMeshProUGUI rewardText;
     public Transform potionSlot;
     public Transform barCounterAnchor;
-    [Space(20f)]
-    public LogicController logic;
 
     private float _itemCheckTimer = 1f;
     private ItemOwnerAI _itemOwnAI;
@@ -22,7 +20,7 @@ public class RaccoonAI : SomeAI
         _magAI = _aiManager.GetAI<MagpieAI>();
         _walkAI = _aiManager.GetAI<WalkingAI>();
 
-        if (!logic.spawner.DoesItemExist(DataController.genData.raccoonRequestedItem))
+        if (!_aiManager.logic.spawner.DoesItemExist(DataController.genData.raccoonRequestedItem))
         {
             GenerateNewRequestItem();
         }    
@@ -53,19 +51,17 @@ public class RaccoonAI : SomeAI
                     StartCoroutine(TurnOnStaringAI(20f));
                     _aiManager.Transition("Walking");
                     UpdateFields();
-                    for (int i = 0; i < CalcualteReward(item); i++)
-                    {
-                        logic.spawner.SpawnItem<ItemWorld>(
-                            "coin".Hash(), 
-                            transform.position + new Vector3(0f, 2f, -1.5f * i),
-                            Quaternion.identity,
-                            logic.spawner.itemsGroup
-                            );
-                    }
+                    _aiManager.logic.spawner.SpawnItem<CoinWorld>(
+                        "coin".Hash(), 
+                        transform.position + new Vector3(-1.5f, 2f, -1.5f),
+                        Quaternion.identity,
+                        _aiManager.logic.spawner.itemsGroup
+                        )
+                        .Count = CalcualteReward(item);
                 }
                 else
                 {
-                    transform.LookAt(logic.player.transform);
+                    transform.LookAt(_aiManager.logic.player.transform);
                     _magAI.enabled = false;
                     StartCoroutine(TurnOnStaringAI(3f));
                     _aiManager.Transition("UnhappyRaccoon");
@@ -86,7 +82,7 @@ public class RaccoonAI : SomeAI
         {
             Destroy(t.gameObject);
         }
-        ItemUI item = logic.spawner.SpawnItem<ItemUI>(DataController.genData.raccoonRequestedItem, potionSlot);
+        ItemUI item = _aiManager.logic.spawner.SpawnItem<ItemUI>(DataController.genData.raccoonRequestedItem, potionSlot);
         Instantiate(
             item,
             Vector3.zero, 
