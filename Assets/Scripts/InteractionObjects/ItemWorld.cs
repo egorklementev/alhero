@@ -29,15 +29,15 @@ public class ItemWorld : AbstractItem
             {
                 case 0:
                     // Center
-                    StartCoroutine(LerpMove(owner.transform.position + new Vector3(0f, 2.5f + _vOffset, 0f), .1f));
+                    gameObject.transform.position = owner.transform.position + new Vector3(0f, 2.5f + _vOffset, 0f);
                     break;
                 case 1:
                     // Right
-                    StartCoroutine(LerpMove(owner.transform.position + new Vector3(1f, 2.5f + _vOffset, -1f), .1f));
+                    gameObject.transform.position = owner.transform.position + new Vector3(1f, 2.5f + _vOffset, -1f);
                     break;
                 case 2:
                     // Left
-                    StartCoroutine(LerpMove(owner.transform.position + new Vector3(-1f, 2.5f + _vOffset, 1f), .1f));
+                    gameObject.transform.position = owner.transform.position + new Vector3(-1f, 2.5f + _vOffset, 1f);
                     break;
                 default:
                     break;
@@ -48,19 +48,6 @@ public class ItemWorld : AbstractItem
         {
             Destroy();
         }
-    }
-
-    private IEnumerator LerpMove(Vector3 target, float duration)
-    {
-        float time = 0;
-        Vector3 startPosition = transform.position;
-        while (time < duration)
-        {
-            transform.position = Vector3.Slerp(startPosition, target, time / duration);
-            time += Time.deltaTime;
-            yield return null;
-        }
-        transform.position = target;
     }
 
     private void Update()

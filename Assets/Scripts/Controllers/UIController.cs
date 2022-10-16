@@ -117,57 +117,66 @@ public class UIController : MonoBehaviour
 
     private void UpdateRequestedLines()
     {
-        foreach (string line in requestedSideLines)
+        if (requestedSideLines.Count > 0)
         {
-            GameObject sd = Instantiate(SideLine, SideLines);
-            sd.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -60f * RequestedLinesNum - SideLineOffset); 
-            sd.GetComponent<TextMeshProUGUI>().text = line;
+            foreach (string line in requestedSideLines)
+            {
+                GameObject sd = Instantiate(SideLine, SideLines);
+                sd.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -60f * RequestedLinesNum - SideLineOffset); 
+                sd.GetComponent<TextMeshProUGUI>().text = line;
+            }
+            requestedSideLines.Clear();
         }
-        requestedSideLines.Clear();
     }
 
     private void UpdateEntityPanels()
     {
-        foreach (string entityPanel in entityPanelsToSpawn)
+        if (entityPanelsToSpawn.Count > 0)
         {
-            try
-            {   GameObject panel = Instantiate(
-                    EntityPanelPrefab, 
-                    EntityPanelsParent);
-                panel.GetComponent<Animator>().SetBool("DoShow", true);
-                panel.GetComponent<RectTransform>().position = 
-                    new Vector3(0f, -100f * entityPanels.Count, 0f) + EntityPanelAnchor.position;
-
-                Transform panelIcon = panel.transform.Find("icon_button");
-                panelIcon.GetComponent<Image>().sprite = Array.Find(EntityPanelSprites, x => x.name.Equals($"icon_{entityPanel}"));
-                panelIcon.GetComponent<Button>().onClick.AddListener(() => TryToDespawnEntityPanel(entityPanel));
-                panelIcon.GetComponent<Button>().onClick.AddListener(() => TriggerRightPanel());
-                panelIcon.GetComponent<Button>().onClick.AddListener(() => ActivateUIGroup($"group_{entityPanel}"));
-
-                entityPanels.Add(entityPanel, panel);
-            }
-            catch (Exception)
+            foreach (string entityPanel in entityPanelsToSpawn)
             {
-                $"Entity panel \"{entityPanel}\" is already on the screen!".Warn(this);
-            }
-        }
-        entityPanelsToSpawn.Clear();
+                try
+                {
+                    GameObject panel = Instantiate(
+                        EntityPanelPrefab, 
+                        EntityPanelsParent);
+                    panel.GetComponent<Animator>().SetBool("DoShow", true);
+                    panel.GetComponent<RectTransform>().position = 
+                        new Vector3(0f, -100f * entityPanels.Count, 0f) + EntityPanelAnchor.position;
 
-        foreach (string entityPanel in entityPanelsToDespawn)
+                    Transform panelIcon = panel.transform.Find("icon_button");
+                    panelIcon.GetComponent<Image>().sprite = Array.Find(EntityPanelSprites, x => x.name.Equals($"icon_{entityPanel}"));
+                    panelIcon.GetComponent<Button>().onClick.AddListener(() => TryToDespawnEntityPanel(entityPanel));
+                    panelIcon.GetComponent<Button>().onClick.AddListener(() => TriggerRightPanel());
+                    panelIcon.GetComponent<Button>().onClick.AddListener(() => ActivateUIGroup($"group_{entityPanel}"));
+
+                    entityPanels.Add(entityPanel, panel);
+                }
+                catch (Exception)
+                {
+                    $"Entity panel \"{entityPanel}\" is already on the screen!".Warn(this);
+                }
+            }
+            entityPanelsToSpawn.Clear();
+        }
+
+        if (entityPanelsToDespawn.Count > 0)
         {
-            try
+            foreach (string entityPanel in entityPanelsToDespawn)
             {
-                entityPanels[entityPanel].GetComponent<Animator>().SetBool("DoShow", false);
-                Destroy(entityPanels[entityPanel], 1.5f);
-                entityPanels.Remove(entityPanel);
+                try
+                {
+                    entityPanels[entityPanel].GetComponent<Animator>().SetBool("DoShow", false);
+                    Destroy(entityPanels[entityPanel], 1.5f);
+                    entityPanels.Remove(entityPanel);
+                }
+                catch(Exception)
+                {
+                    $"No entity panel with name \"{entityPanel}\" is on the screen!".Warn(this);
+                }
             }
-            catch(Exception)
-            {
-                $"No entity panel with name \"{entityPanel}\" is on the screen!".Warn(this);
-            }
+            entityPanelsToDespawn.Clear();
         }
-        entityPanelsToDespawn.Clear();
-        // TODO: fix wierd entity panel position, make sprite visible (its invisible for some reason)
     }
 
     public void SetDebugLine(params string[] message)
