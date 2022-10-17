@@ -145,8 +145,13 @@ public class SpawnController : MonoBehaviour
         }
     }
 
-    public Container SpawnContainer(int containerID, Vector3 pos, Quaternion rot, Transform owner)
+    public Container SpawnContainer(int containerID, Vector3 pos, Quaternion rot, Transform owner = null)
     {
+        if (owner == null)
+        {
+            owner = containersGroup;
+        }
+
         containersSpawned++;
 
         GameObject container = Instantiate(containersForSpawn[containerID], pos, rot, owner);
@@ -202,13 +207,18 @@ public class SpawnController : MonoBehaviour
         return SpawnItem<T>(id, Vector3.zero, Quaternion.identity, owner);
     }
 
-    public T SpawnItem<T>(int id, Vector3 pos, Quaternion rot, GameObject owner) where T : AbstractItem
+    public T SpawnItem<T>(int id, Vector3 pos, Quaternion rot, GameObject owner = null) where T : AbstractItem
     {
-        return SpawnItem<T>(id, pos, rot, owner.transform);
+        return SpawnItem<T>(id, pos, rot, owner?.transform);
     }
 
-    public T SpawnItem<T>(int id, Vector3 pos, Quaternion rot, Transform owner) where T : AbstractItem
+    public T SpawnItem<T>(int id, Vector3 pos, Quaternion rot, Transform owner = null) where T : AbstractItem
     {
+        if (owner == null)
+        {
+            owner = itemsGroup;
+        }
+
         AbstractItem item = absItems.Find(i => i.id == id && i is T);
         if (item != null)
         {
@@ -238,8 +248,13 @@ public class SpawnController : MonoBehaviour
         return absItems.Find(i => i.id == id) != null;
     }
 
-    public AIManager SpawnEntity(string entityName, Vector3 pos, Quaternion rot, Transform owner)
+    public AIManager SpawnEntity(string entityName, Vector3 pos, Quaternion rot, Transform owner = null)
     {
+        if (owner == null)
+        {
+            owner = entitiesGroup;
+        }
+
         GameObject ent = Array.Find(entities, e => e.name.Equals(entityName));
         if (ent == null)
         {
