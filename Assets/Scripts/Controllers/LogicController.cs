@@ -53,6 +53,11 @@ public class LogicController : MonoBehaviour
             TryTeleportGameObj(item.gameObject, "ItemSpawnpoint_" + index++);
         }
         ItemsToSpawnInTheLab.Clear();
+
+        if (newGameStarted)
+        {
+            spawner.SpawnContainer(1, new Vector3(-10f, -.6f, -20f), Quaternion.identity);
+        }
     }
 
     private void FixedUpdate()
@@ -167,7 +172,6 @@ public class LogicController : MonoBehaviour
         data.StartNewGame();
         player.transform.position = Vector3.zero;
 
-        spawner.SpawnContainer(1, new Vector3(-10f, -.6f, -20f), Quaternion.identity);
 
         // TODO: play some player animation or something
 

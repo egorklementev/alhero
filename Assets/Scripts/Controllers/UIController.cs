@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using UnityEngine.Serialization;
 using TMPro;
 using System;
+using System.Threading;
 
 public class UIController : MonoBehaviour
 {
@@ -43,6 +44,8 @@ public class UIController : MonoBehaviour
     public static string ActiveGroup = "none";
     public static int RequestedLinesNum = 0;
 
+    private float fpsLineTimer = 0f;
+
     private static Dictionary<string, GameObject> entityPanels = new Dictionary<string, GameObject>();
     private static HashSet<string> activeGroups = new HashSet<string>();
     private static LinkedList<string> groupsForActivation = new LinkedList<string>();
@@ -70,9 +73,15 @@ public class UIController : MonoBehaviour
 
     private void UpdateLines()
     {
-        int fps = (int)(1f / Time.unscaledDeltaTime);
-        FpsLine.text = "FPS: " + fps.ToString();
-        CoinLine.text = DataController.genData.coins.ToString();
+        fpsLineTimer -= Time.deltaTime;
+        if (fpsLineTimer - Time.deltaTime < 0f)
+        {
+            fpsLineTimer = .2f;
+
+            int fps = (int)(1f / Time.unscaledDeltaTime);
+            FpsLine.text = "FPS: " + fps.ToString();
+            CoinLine.text = DataController.genData.coins.ToString();
+        }
     }
 
     private void UpdateFade()
