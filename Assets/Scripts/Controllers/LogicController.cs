@@ -289,7 +289,7 @@ public class LogicController : MonoBehaviour
             return oldman.position;
         }
 
-        return Vector3.zero;
+        return Vector3.negativeInfinity;
     }
 
     /// Enable/Disable agents' AI 

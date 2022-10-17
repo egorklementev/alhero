@@ -24,9 +24,17 @@ public class MinimapController : MonoBehaviour
             ((heroPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
 
         Vector3 oldmanPos = logic.GetOldmanPosition();
-        oldmanMarker.anchoredPosition = new Vector2(
-            ((oldmanPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
-            ((oldmanPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
+        if (!oldmanPos.Equals(Vector3.negativeInfinity))
+        {
+            oldmanMarker.anchoredPosition = new Vector2(
+                ((oldmanPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
+                ((oldmanPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
+        }
+        else
+        {
+            // Oldman is dead or unavailable. Please wait.
+            oldmanMarker.gameObject.SetActive(false);
+        }
     }
 
     public void UpdateMinimap(Map map)
