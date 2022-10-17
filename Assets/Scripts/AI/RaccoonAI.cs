@@ -54,9 +54,7 @@ public class RaccoonAI : SomeAI
                     _aiManager.logic.spawner.SpawnItem<CoinWorld>(
                         "coin".Hash(), 
                         transform.position + new Vector3(-1.5f, 2f, -1.5f),
-                        Quaternion.identity,
-                        _aiManager.logic.spawner.itemsGroup
-                        )
+                        Quaternion.identity)
                         .Count = CalcualteReward(item);
                 }
                 else

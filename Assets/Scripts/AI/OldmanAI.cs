@@ -84,8 +84,7 @@ public class OldmanAI : SomeAI
                     itemId,
                     // Somewhere far away to not trigger collision script
                     gameObject.transform.position + Vector3.up * (_itemOwnAI.vOffset + 2f),
-                    Quaternion.identity,
-                    _aiManager.logic.spawner.itemsGroup)
+                    Quaternion.identity)
                 .transform;
 
             ItemWorld itemToSell = itemToSellTransform.GetComponent<ItemWorld>();

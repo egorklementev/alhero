@@ -159,9 +159,7 @@ public class MapGenerator : MonoBehaviour
                                 ItemWorld iw = spawner.SpawnItem<ItemWorld>(
                                     (int)blockData.Cntmnt, 
                                     GetBlockSpawnLocation(blockData.Location), 
-                                    Quaternion.identity, 
-                                    spawner.itemsGroup
-                                    );
+                                    Quaternion.identity);
                                 iw.gameObject.name += $"({w},{h})";
                                 break;
                             case Block.ContainmentType.CONTAINER:
@@ -176,7 +174,7 @@ public class MapGenerator : MonoBehaviour
                                 cont.TryToPutItem(
                                     spawner.SpawnItem<ItemWorld>(
                                         contItem.id,
-                                        cont.gameObject
+                                        cont.gameObject.transform
                                     )
                                 );
                                 break;
@@ -198,9 +196,7 @@ public class MapGenerator : MonoBehaviour
                                 AIManager ai = spawner.SpawnEntity(
                                     (string)blockData.Cntmnt,
                                     GetBlockSpawnLocation(blockData.Location),
-                                    Quaternion.Euler(randRot),
-                                    spawner.entitiesGroup
-                                    );
+                                    Quaternion.Euler(randRot));
                                 ai.logic = logic;
                                 break;
                             default:

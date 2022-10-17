@@ -76,7 +76,7 @@ public class Container : MonoBehaviour
                 PotionWorld pWorld = item as PotionWorld;
                 if (pWorld != null)
                 {
-                    inventory[freeSlot] = spawner.SpawnItem<PotionUI>(pWorld.id, slots[freeSlot]);
+                    inventory[freeSlot] = spawner.SpawnItem<PotionUI>(pWorld.id, slots[freeSlot].transform);
                     (inventory[freeSlot] as PotionUI).potionData = new Potion(pWorld.potionData);
 
                     try
@@ -88,7 +88,7 @@ public class Container : MonoBehaviour
                 }
                 else
                 {
-                    inventory[freeSlot] = spawner.SpawnItem<ItemUI>(item.id, slots[freeSlot]);
+                    inventory[freeSlot] = spawner.SpawnItem<ItemUI>(item.id, slots[freeSlot].transform);
 
                     try 
                     {

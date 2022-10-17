@@ -5,7 +5,6 @@ using UnityEngine;
 public class Cauldron : MonoBehaviour
 {
     public SpawnController spawner;
-    public GameObject itemsGroup;
 
     [Space(10f)]
     public GameObject[] particles;
@@ -105,9 +104,7 @@ public class Cauldron : MonoBehaviour
                                     PotionWorld potion = spawner.SpawnItem<PotionWorld>(
                                         temp.GetID(),
                                         (transform.parent.transform.position - new Vector3(4f, -2f, -4f)),
-                                        Quaternion.identity,
-                                        itemsGroup
-                                        );
+                                        Quaternion.identity);
 
                                     DataController.AddHistoryIngredient(temp.GetID());
                                 }
@@ -132,9 +129,7 @@ public class Cauldron : MonoBehaviour
                                     PotionWorld potion = spawner.SpawnItem<PotionWorld>(
                                         ("potion_" + bottleShape).Hash(),
                                         (transform.parent.transform.position - new Vector3(4f, -2f, -4f)),
-                                        Quaternion.identity,
-                                        itemsGroup
-                                        );
+                                        Quaternion.identity);
 
                                     // Transfer all necessary data
                                     Potion potionData = potion.potionData;
@@ -162,7 +157,7 @@ public class Cauldron : MonoBehaviour
                                         ("potion_" + bottleShape).Hash(),
                                         new Vector3(0f, 100f, 0f),
                                         Quaternion.identity,
-                                        spawner.gameObject);
+                                        spawner.gameObject.transform);
                                     potionCopy.id = newPotionID;
                                     potionCopy.item_name = newPotionName;
                                     potionCopy.potionData = new Potion(potionData);
@@ -174,7 +169,7 @@ public class Cauldron : MonoBehaviour
                                         ("potion_" + bottleShape).Hash(),
                                         new Vector3(0f, 300f, 0f),
                                         Quaternion.identity,
-                                        spawner.gameObject);
+                                        spawner.gameObject.transform);
                                     uiPotionCopy.id = newPotionID;
                                     uiPotionCopy.item_name = newPotionName;
                                     uiPotionCopy.potionData = new Potion(potionData);

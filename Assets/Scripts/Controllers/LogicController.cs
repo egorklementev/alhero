@@ -49,7 +49,7 @@ public class LogicController : MonoBehaviour
         int index = 1;
         foreach (int id in ItemsToSpawnInTheLab)
         {
-            ItemWorld item = spawner.SpawnItem<ItemWorld>(id, Vector3.zero, Quaternion.identity, spawner.itemsGroup);
+            ItemWorld item = spawner.SpawnItem<ItemWorld>(id, Vector3.zero, Quaternion.identity);
             TryTeleportGameObj(item.gameObject, "ItemSpawnpoint_" + index++);
         }
         ItemsToSpawnInTheLab.Clear();
@@ -166,6 +166,9 @@ public class LogicController : MonoBehaviour
         spawner.ClearContainers();
         data.StartNewGame();
         player.transform.position = Vector3.zero;
+
+        spawner.SpawnContainer(1, new Vector3(-10f, -.6f, -20f), Quaternion.identity);
+
         // TODO: play some player animation or something
 
         newGameStarted = true;
@@ -298,7 +301,7 @@ public class LogicController : MonoBehaviour
     public IEnumerator DelayedItemSpawn(int id, Vector3 pos, float time = 1f)
     {
         yield return new WaitForSeconds(time);
-        spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity, spawner.itemsGroup);
+        spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity);
     }
 
     public void TryTeleportGameObj(GameObject obj, string checkpoint)

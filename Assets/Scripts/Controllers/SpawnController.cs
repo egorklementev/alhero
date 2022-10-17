@@ -63,7 +63,7 @@ public class SpawnController : MonoBehaviour
                     ("potion_" + i.potionData.bottle_shape).Hash(),
                     new Vector3(0f, 100f, 0f),
                     Quaternion.identity,
-                    gameObject
+                    gameObject.transform
                     );
                 worldPotion.potionData = new Potion(i.potionData);
                 int genPotionID = i.potionData.GetID();
@@ -79,7 +79,7 @@ public class SpawnController : MonoBehaviour
                     ("potion_" + i.potionData.bottle_shape).Hash(),
                     new Vector3(0f, 300f, 0f),
                     Quaternion.identity,
-                    gameObject
+                    gameObject.transform
                 );
                 uiPotion.potionData = new Potion(i.potionData);
                 uiPotion.id = genPotionID;
@@ -197,19 +197,9 @@ public class SpawnController : MonoBehaviour
         return contScript;
     }
 
-    public T SpawnItem<T>(int id, GameObject owner) where T : AbstractItem
-    {
-        return SpawnItem<T>(id, Vector3.zero, Quaternion.identity, owner.transform);
-    }
-
-    public T SpawnItem<T>(int id, Transform owner) where T : AbstractItem
+    public T SpawnItem<T>(int id, Transform owner = null) where T : AbstractItem
     {
         return SpawnItem<T>(id, Vector3.zero, Quaternion.identity, owner);
-    }
-
-    public T SpawnItem<T>(int id, Vector3 pos, Quaternion rot, GameObject owner = null) where T : AbstractItem
-    {
-        return SpawnItem<T>(id, pos, rot, owner?.transform);
     }
 
     public T SpawnItem<T>(int id, Vector3 pos, Quaternion rot, Transform owner = null) where T : AbstractItem
