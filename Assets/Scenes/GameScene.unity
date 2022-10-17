@@ -5618,7 +5618,7 @@ PrefabInstance:
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
       propertyPath: id
-      value: 2
+      value: -1788335909
       objectReference: {fileID: 0}
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
@@ -6881,7 +6881,7 @@ PrefabInstance:
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
       propertyPath: id
-      value: 1
+      value: -1788335908
       objectReference: {fileID: 0}
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
@@ -7686,9 +7686,10 @@ MonoBehaviour:
     mistakes_allowed: 1
     is_unlocked: 0
   dContIDs:
-  - barrel_x2_0
   - barrel_x4_0
   - barrel_x4_1
+  - barrel_x4_2
+  - barrel_x4_3
   dCont:
   - id: 0
     items:
@@ -7704,7 +7705,19 @@ MonoBehaviour:
         bottle_shape: 0
         ingredients: 
         titleIDs: 
-  - id: 0
+    - id: 0
+      potionData:
+        recipe_id: 0
+        bottle_shape: 0
+        ingredients: 
+        titleIDs: 
+    - id: 0
+      potionData:
+        recipe_id: 0
+        bottle_shape: 0
+        ingredients: 
+        titleIDs: 
+  - id: 1
     items:
     - id: 0
       potionData:
@@ -7730,7 +7743,33 @@ MonoBehaviour:
         bottle_shape: 0
         ingredients: 
         titleIDs: 
-  - id: 0
+  - id: 2
+    items:
+    - id: 0
+      potionData:
+        recipe_id: 0
+        bottle_shape: 0
+        ingredients: 
+        titleIDs: 
+    - id: 0
+      potionData:
+        recipe_id: 0
+        bottle_shape: 0
+        ingredients: 
+        titleIDs: 
+    - id: 0
+      potionData:
+        recipe_id: 0
+        bottle_shape: 0
+        ingredients: 
+        titleIDs: 
+    - id: 0
+      potionData:
+        recipe_id: 0
+        bottle_shape: 0
+        ingredients: 
+        titleIDs: 
+  - id: 3
     items:
     - id: 0
       potionData:
@@ -8743,6 +8782,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
+      propertyPath: id
+      value: -1788335842
+      objectReference: {fileID: 0}
+    - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
+        type: 3}
       propertyPath: spawner
       value: 
       objectReference: {fileID: 479735420}
@@ -9168,7 +9212,7 @@ PrefabInstance:
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
       propertyPath: id
-      value: 3
+      value: -1788335910
       objectReference: {fileID: 0}
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}

@@ -56,7 +56,6 @@ public class LogicController : MonoBehaviour
 
         if (newGameStarted)
         {
-            spawner.SpawnContainer(1, new Vector3(-10f, -.6f, -20f), Quaternion.identity);
         }
     }
 
@@ -158,7 +157,6 @@ public class LogicController : MonoBehaviour
             pos -= new Vector3(0f, 0f, 3f);
         }
         UIController.SpawnSideLine("Wow, you spawned some stuff!!!");
-        DataController.genData.coins += 10;
     }
 
     public void StartNewGame()
