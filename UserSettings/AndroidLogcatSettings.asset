@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "7afc6a600404",
         "name": "com.erked.AlHero",
-        "processId": 25596,
+        "processId": 26473,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -90,6 +90,12 @@
             "deviceId": "7afc6a600404",
             "name": "com.erked.AlHero",
             "processId": 25596,
+            "exited": false
+        },
+        {
+            "deviceId": "7afc6a600404",
+            "name": "com.erked.AlHero",
+            "processId": 26473,
             "exited": false
         }
     ],
