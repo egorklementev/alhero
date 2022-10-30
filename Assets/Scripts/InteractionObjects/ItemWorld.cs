@@ -28,16 +28,13 @@ public class ItemWorld : AbstractItem
             switch (slot)
             {
                 case 0:
-                    // Center
-                    gameObject.transform.position = owner.transform.position + new Vector3(0f, 2.5f + _vOffset, 0f);
+                    StartCoroutine(MoveToSmoothly(owner.transform.position + new Vector3(0f, 2.5f + _vOffset, 0f))); // Center
                     break;
                 case 1:
-                    // Right
-                    gameObject.transform.position = owner.transform.position + new Vector3(1f, 2.5f + _vOffset, -1f);
+                    StartCoroutine(MoveToSmoothly(owner.transform.position + new Vector3(1f, 2.5f + _vOffset, -1f))); // Right
                     break;
                 case 2:
-                    // Left
-                    gameObject.transform.position = owner.transform.position + new Vector3(-1f, 2.5f + _vOffset, 1f);
+                    StartCoroutine(MoveToSmoothly(owner.transform.position + new Vector3(-1f, 2.5f + _vOffset, 1f))); // Left
                     break;
                 default:
                     break;
@@ -47,6 +44,20 @@ public class ItemWorld : AbstractItem
         if (!isPickedUp && owner == null && transform.position.y < -100f)
         {
             Destroy();
+        }
+    }
+
+    private IEnumerator MoveToSmoothly(Vector3 destination)
+    {
+        float timer = 0;
+        while (timer < logic.data.itemLerpTimer && isPickedUp)
+        {
+            timer += Time.fixedDeltaTime;
+            gameObject.transform.position = Vector3.Slerp(
+                gameObject.transform.position,
+                destination,
+                timer / logic.data.itemLerpTimer);
+            yield return new WaitForFixedUpdate();
         }
     }
 

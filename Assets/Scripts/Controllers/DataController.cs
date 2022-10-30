@@ -23,6 +23,7 @@ public class DataController : MonoBehaviour
     public float autosaveDelay = 60f;
     public bool debugMode = false;
     public GameObject[] debugButtons;
+    public float itemLerpTimer = .1f;
 
     [Space(20f)]
     public SpawnController spawner;

@@ -17,12 +17,13 @@ public class HeroMoveController : MonoBehaviour
     [Range(1f, 100f)]
     public float maxSpeed = 5f;
 
-    [Header("Item throwing")]
+    [Header("Items' settings")]
     [Range(0f, 1f)]
     public float minTapTime = .444f;
     [Range(0f, 1f)]
     public float maxTapTime = .666f;
     public float throwForce = 10f;
+    public float lerpTimer = .1f;
 
     [Space(20f)]
     public UIController ui;
