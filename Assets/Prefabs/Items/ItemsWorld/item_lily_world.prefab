@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3618626673701842718}
   m_Father: {fileID: 0}
@@ -79,6 +80,7 @@ MonoBehaviour:
   id: 1414245136
   item_name: lily
   arcanumMaterialIndex: 2
+  logic: {fileID: 0}
 --- !u!1001 &3872331196473870581
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -166,6 +168,11 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 2a503cf057820e54c98bee6103ecb073,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: 6db3d3dc60abd314aba45b18a35c17f8, type: 2}
     - target: {fileID: 919132149155446097, guid: 2a503cf057820e54c98bee6103ecb073,
         type: 3}
       propertyPath: m_Name
@@ -173,21 +180,21 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2a503cf057820e54c98bee6103ecb073, type: 3}
---- !u!1 &4142222475191661988 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2a503cf057820e54c98bee6103ecb073,
-    type: 3}
-  m_PrefabInstance: {fileID: 3872331196473870581}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3618626673701842718 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 2a503cf057820e54c98bee6103ecb073,
     type: 3}
   m_PrefabInstance: {fileID: 3872331196473870581}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &4142222475191661988 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 2a503cf057820e54c98bee6103ecb073,
+    type: 3}
+  m_PrefabInstance: {fileID: 3872331196473870581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!95 &3763082237901532691
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -200,6 +207,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
