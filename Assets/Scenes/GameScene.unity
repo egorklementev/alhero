@@ -6304,6 +6304,86 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 131248833}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &158005884
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1711226013}
+    m_Modifications:
+    - target: {fileID: 3639953085000846316, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: logic
+      value: 
+      objectReference: {fileID: 467375639}
+    - target: {fileID: 5267771800730489255, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_Name
+      value: item_skull_world
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -45.804314
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.47
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 7.821582
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 5199e6816591d974fbbd937e5f6f8859, type: 3}
+--- !u!4 &158005885 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5267771800730489256, guid: 5199e6816591d974fbbd937e5f6f8859,
+    type: 3}
+  m_PrefabInstance: {fileID: 158005884}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &159271788
 GameObject:
   m_ObjectHideFlags: 0
@@ -8582,6 +8662,8 @@ MonoBehaviour:
   - {fileID: 3639953085000846316, guid: 7cb9a519741563f47990508e5ebd68fe, type: 3}
   - {fileID: 2341945816938905521, guid: 97946385b0ab99a4dbc6aa8ff3f2f76f, type: 3}
   - {fileID: 3639953085000846316, guid: 6540f4ebf9282a64e9e4e5c6291547f2, type: 3}
+  - {fileID: 2341945816938905521, guid: 3212e5c749604114ca8d7639c4444786, type: 3}
+  - {fileID: 3639953085000846316, guid: 5199e6816591d974fbbd937e5f6f8859, type: 3}
   sidePanel: {fileID: 1021330090}
   containerUIGroups:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
@@ -27431,6 +27513,7 @@ Transform:
   m_Children:
   - {fileID: 68018455}
   - {fileID: 2038665553}
+  - {fileID: 158005885}
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
