@@ -121,14 +121,14 @@ public class LogicController : MonoBehaviour
                     newPotion.potionData = new Potion(uiPotion.potionData); // Perform potion data copy
                     int newPotionID = newPotion.potionData.GetID();
                     newPotion.name = newPotionID.ToString();
-                    newPotion.SetPickedUp(true, slot, player);
+                    newPotion.SetPickedUp(true, slot, player, 1.5f);
                     PickedItems[slot] = newPotion;
 
                 }
                 else
                 {
                     ItemWorld newWorldItem = spawner.SpawnItem<ItemWorld>(selectedItem.id, spawner.itemsGroup);
-                    newWorldItem.SetPickedUp(true, slot, player);
+                    newWorldItem.SetPickedUp(true, slot, player, 1.5f);
                     PickedItems[slot] = newWorldItem;
                 }
             }
