@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6081319506042412209}
   - component: {fileID: 2341945816938905521}
   m_Layer: 0
-  m_Name: item_wine_ui
+  m_Name: item_deer_horn_ui
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -28,17 +28,17 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2647117813052276098}
-  m_LocalRotation: {x: -0.85642993, y: 0.036172878, z: 0.2945078, w: 0.42247427}
-  m_LocalPosition: {x: 0, y: 0, z: -65}
+  m_LocalRotation: {x: -0.10558038, y: -0.76816964, z: -0.53421235, w: 0.33672753}
+  m_LocalPosition: {x: 0, y: 0, z: -65.95794}
   m_LocalScale: {x: 45, y: 45, z: 45}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -131.84601, y: 45.263, z: -16.268005}
+  m_LocalEulerAnglesHint: {x: -116.895004, y: 63.412003, z: -205.896}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 10}
+  m_AnchoredPosition: {x: -1.9292421, y: 8.061098}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &2647117813052276103
@@ -48,7 +48,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2647117813052276098}
-  m_Mesh: {fileID: -3456433319769647891, guid: 36de6c16290e9fc4db04228ccf498bcf, type: 3}
+  m_Mesh: {fileID: -4728168290891725693, guid: 1913dd6f4f75b1f4da8daee0b27c6642, type: 3}
 --- !u!23 &2647117813052276096
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -69,9 +69,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 913b14fc061d8e14892f535b97a9da4a, type: 2}
-  - {fileID: 2100000, guid: 12688679e0744d74e8a3533782c0b8c1, type: 2}
-  - {fileID: -4733822269256519351, guid: 36de6c16290e9fc4db04228ccf498bcf, type: 3}
+  - {fileID: 7470264795075141283, guid: 1913dd6f4f75b1f4da8daee0b27c6642, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,7 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: -837448023
-  item_name: wine
+  id: 0
+  item_name: deer_horn
   arcanumMaterialIndex: 2
-  uiRotation: {x: 311.84558, y: 225.26266, z: 163.73177}
+  uiRotation: {x: 296.89526, y: 243.41205, z: 334.1044}
