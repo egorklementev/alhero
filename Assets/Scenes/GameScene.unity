@@ -7993,7 +7993,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 397.99997, y: -57}
+  m_AnchoredPosition: {x: 398, y: -57}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &417833460
@@ -8602,6 +8602,8 @@ MonoBehaviour:
   - {fileID: 2341945816938905521, guid: 87a24edce31dc224a9c58a2f607d653c, type: 3}
   - {fileID: 3639953085000846316, guid: e0ce8fdad4b636f428abf0702eebb7d8, type: 3}
   - {fileID: 2341945816938905521, guid: 3401359b3ecd9e249ad16d06f0e239cc, type: 3}
+  - {fileID: 2341945816938905521, guid: c19f058fff630e942a405970dff9e717, type: 3}
+  - {fileID: 3639953085000846316, guid: 9169583ec909ad24f9426635eefa2628, type: 3}
   sidePanel: {fileID: 1021330090}
   containerUIGroups:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
@@ -19187,7 +19189,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 261a871530ae08a489e58c730abba104, type: 2}
+  - {fileID: 8771165019874961651, guid: 0c92f47f602fd2a45af0ae559fae8976, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
