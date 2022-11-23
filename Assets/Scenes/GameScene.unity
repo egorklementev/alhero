@@ -8606,6 +8606,8 @@ MonoBehaviour:
   - {fileID: 3639953085000846316, guid: 9169583ec909ad24f9426635eefa2628, type: 3}
   - {fileID: 2341945816938905521, guid: cd7bb6d052aa23b45b8e330cc4ffc526, type: 3}
   - {fileID: 3639953085000846316, guid: 60b4690c8baf7d248bf2a4a65ab15eb3, type: 3}
+  - {fileID: 3639953085000846316, guid: 86bc893d9e18469499cb4ffbeaf6637a, type: 3}
+  - {fileID: 2341945816938905521, guid: 397cd122dce5ed14cb39cbf8ffee1297, type: 3}
   sidePanel: {fileID: 1021330090}
   containerUIGroups:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
