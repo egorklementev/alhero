@@ -206,8 +206,6 @@ public class DataController : MonoBehaviour
         $"Ingredient \"{id}\" added.".Log();
     }
 
-    
-
     public static Ingredient GetWeightedIngredientFromList(List<int> ingIDs)
     {
         int ingID = 0;
@@ -333,6 +331,7 @@ public class DataController : MonoBehaviour
         genData.raccoonRequestedItem = 0;
         genData.oldmanItemsForSale = new int[2];
         genData.coins = 0;
+        genData.maxPigeons = 3;
 
         history.Clear();
 

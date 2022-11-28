@@ -409,10 +409,17 @@ public class Map
         }
 
         // Always one oldman with his cow
-
         Block oldmanSpawn = GetRandomEmptyGroundBlock(1);
         oldmanSpawn.SetEntity("oldman");
         GetNeighbors(oldmanSpawn)[0].SetEntity("oldman_cow");
+
+        // Restrict the number of pigeons on the map
+        int pigeonCount = Random.Range(0, DataController.genData.maxPigeons - LogicController.ItemsToSpawnInTheLab.Count + 1);
+        for (int i = 0; i < pigeonCount; i++)
+        {
+            Block pigeonSpawn = GetRandomEmptyGroundBlock(1);
+            pigeonSpawn.SetEntity("pigeon");
+        }
     }
 
     private void GenerateOutlineBorders()

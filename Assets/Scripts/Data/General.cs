@@ -8,4 +8,5 @@ public class General
     public int coins = 0;
     public int[] notIngredients;
     public int[] oldmanItemsForSale;
+    public int maxPigeons = 0;
 }
