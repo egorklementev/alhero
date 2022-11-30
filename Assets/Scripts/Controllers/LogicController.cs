@@ -133,6 +133,16 @@ public class LogicController : MonoBehaviour
                 }
             }
         }
+        else if (curContainer != null && slot == -1)
+        {
+            
+            Container b = curContainer;
+            ItemUI selectedItem = b.GetSelectedItem();
+            if (selectedItem != null)
+            {
+                selectedItem.PlayUnableAnimation();
+            }
+        }
     }
 
     public void SelectItemInBarrel(int slot)

@@ -7536,6 +7536,7 @@ MonoBehaviour:
     coins: 0
     notIngredients: 
     oldmanItemsForSale: 
+    maxPigeons: 0
   dIng:
   - id: 0
     ing_name: flower
@@ -7993,7 +7994,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 397.99997, y: -57}
+  m_AnchoredPosition: {x: 398, y: -57}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &417833460
@@ -10396,86 +10397,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 809394400}
   m_CullTransparentMesh: 1
---- !u!1001 &818956142
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1711226013}
-    m_Modifications:
-    - target: {fileID: 3639953085000846316, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: logic
-      value: 
-      objectReference: {fileID: 467375639}
-    - target: {fileID: 5267771800730489255, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_Name
-      value: item_oasis_water_world
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 2d3e182402da9a242b6436bb2e8e793f, type: 3}
---- !u!4 &818956143 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5267771800730489256, guid: 2d3e182402da9a242b6436bb2e8e793f,
-    type: 3}
-  m_PrefabInstance: {fileID: 818956142}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &840201163
 GameObject:
   m_ObjectHideFlags: 0
@@ -27466,8 +27387,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children:
-  - {fileID: 818956143}
+  m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

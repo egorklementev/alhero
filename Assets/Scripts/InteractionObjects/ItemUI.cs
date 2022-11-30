@@ -24,6 +24,11 @@ public class ItemUI : AbstractItem
         animator.SetBool("IsSmall", true);
     }
 
+    public void PlayUnableAnimation()
+    {
+        animator.SetTrigger("Unable");
+    }
+
     public void Destroy()
     {
         animator.SetBool("Destroy", true);
