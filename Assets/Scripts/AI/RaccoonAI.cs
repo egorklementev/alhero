@@ -88,7 +88,7 @@ public class RaccoonAI : SomeAI
             potionSlot
         );
         potionDesc.text = item.item_name;
-        rewardText.text = $"Reward: {CalcualteReward(item)} coins";
+        rewardText.text = $"Reward: {CalcualteReward(item)}";
     }
 
     private int CalcualteReward(AbstractItem item)
