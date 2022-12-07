@@ -105,14 +105,17 @@ public class ItemWorld : AbstractItem
         {
             if (id == "coin".Hash())
             {
+                int coinNum = ((CoinWorld)this).Count;
                 id = "picked_coin".Hash();
-                DataController.genData.coins += ((CoinWorld)this).Count;
+                DataController.genData.coins += coinNum;
+                UIController.SpawnSideLine($"Picked {coinNum} coins", 3f);
                 Destroy();
             }
             else if (slot != -1 && id != "picked_coin".Hash())
             {
                 SetPickedUp(true, slot, other.gameObject, 1.5f);
                 LogicController.PickedItems[slot] = this;
+                UIController.SpawnSideLine($"{item_name} picked.", 3f);
             }
         }
         else if (

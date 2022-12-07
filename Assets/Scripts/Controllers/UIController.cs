@@ -7,6 +7,7 @@ using UnityEngine.Serialization;
 using TMPro;
 using System;
 using System.Threading;
+using System.Linq;
 
 public class UIController : MonoBehaviour
 {
@@ -54,7 +55,7 @@ public class UIController : MonoBehaviour
     private static bool showRightPanel = false;
     private static bool triggerFadePanel = false;
     private static float fadeSpeed = 1f;
-    private static List<string> requestedSideLines = new List<string>();
+    private static List<(string, float)> requestedSideLines = new List<(string, float)>();
     private static List<string> entityPanelsToSpawn = new List<string>();
     private static List<string> entityPanelsToDespawn = new List<string>();
 
@@ -128,11 +129,12 @@ public class UIController : MonoBehaviour
     {
         if (requestedSideLines.Count > 0)
         {
-            foreach (string line in requestedSideLines)
+            foreach ((string, float) line in requestedSideLines)
             {
                 GameObject sd = Instantiate(SideLine, SideLines);
                 sd.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -60f * RequestedLinesNum - SideLineOffset); 
-                sd.GetComponent<TextMeshProUGUI>().text = line;
+                sd.GetComponent<TextMeshProUGUI>().text = line.Item1;
+                sd.GetComponent<Animator>().SetFloat("Speed", line.Item2);
             }
             requestedSideLines.Clear();
         }
@@ -272,8 +274,14 @@ public class UIController : MonoBehaviour
 
     public static void SpawnSideLine(params string[] text)
     {
-        requestedSideLines.AddRange(text);
+        requestedSideLines.AddRange(text.Select(t => (t, 1f)));
         RequestedLinesNum += text.Length;
+    }
+
+    public static void SpawnSideLine(string text, float duration = 4.5f)
+    {
+        requestedSideLines.Add((text, 4.5f / duration)); // 4.5f - animation duration
+        RequestedLinesNum++;
     }
 
     public static void HideActiveGroups()
