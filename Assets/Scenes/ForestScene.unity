@@ -4995,6 +4995,10 @@ MonoBehaviour:
       LabelToShow: Lab
       Checkpoint: ForestPortal
       Color: {r: 0.4812961, g: 0.17531148, b: 0.6320754, a: 0.49803922}
+    - SceneToLoad: DesertScene
+      LabelToShow: Desert
+      Checkpoint: none
+      Color: {r: 0.745283, g: 0.6255677, b: 0.22780348, a: 0.49803922}
   minimap: {fileID: 1883622038}
   loadingSlider: {fileID: 386484055}
   spawner: {fileID: 1415301579}
