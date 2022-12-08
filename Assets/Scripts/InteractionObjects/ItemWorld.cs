@@ -74,6 +74,10 @@ public class ItemWorld : AbstractItem
         owner = newOwner;
         slot = newSlot;
         _vOffset = pickedUp ? offset : 0f;
+        if (owner != null)
+        {
+            transform.position = new Vector3(0f, _vOffset, 0f) + owner.transform.position;
+        }
     }
 
     public void SetSlot(int newSlot)

@@ -313,7 +313,14 @@ public class LogicController : MonoBehaviour
     public IEnumerator DelayedItemSpawn(int id, Vector3 pos, float time = 1f)
     {
         yield return new WaitForSeconds(time);
-        spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity);
+        var item = spawner.SpawnItem<ItemWorld>(id, pos, Quaternion.identity);
+        if (item != null)
+        {
+            var slot = GetFreeInvSlot();
+            item.SetPickedUp(true, slot, player, 1.5f);
+            PickedItems[slot] = item;
+        }
+        
     }
 
     public void TryTeleportGameObj(GameObject obj, string checkpoint)
