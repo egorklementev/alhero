@@ -4011,11 +4011,11 @@ MonoBehaviour:
   - {fileID: 7080795387997062573, guid: b425985e430b99548afc730fea1ebf8f, type: 3}
   portal: {fileID: 2990814628135031580, guid: f80c579191d9667498bded619560c92f, type: 3}
   entities:
-  - {fileID: 1271252247946232047, guid: 2c711ce90e6370d4f9a34641606a56df, type: 3}
-  - {fileID: 1427238829017062063, guid: 2eb605b183038c941b9fa84c3b3f37ca, type: 3}
   - {fileID: 6875907107526826960, guid: cebc79ecac1984a428c2c08d7dee3962, type: 3}
   - {fileID: 8146236249718156023, guid: e2de89713c044bb4d95812162d9c5279, type: 3}
   - {fileID: 5769453629339021603, guid: 1d6567e649913fa46b54948c94e81ed0, type: 3}
+  - {fileID: 1271252247946232047, guid: 2c711ce90e6370d4f9a34641606a56df, type: 3}
+  - {fileID: 1427238829017062063, guid: 2eb605b183038c941b9fa84c3b3f37ca, type: 3}
   containersGroup: {fileID: 1252894356}
   itemsGroup: {fileID: 1938610838}
   entitiesGroup: {fileID: 692997106}
@@ -4999,6 +4999,9 @@ MonoBehaviour:
       LabelToShow: Desert
       Checkpoint: none
       Color: {r: 0.745283, g: 0.6255677, b: 0.22780348, a: 0.49803922}
+    oldmanName: oldman
+    oldmanCowName: oldman_cow
+    pigeonName: pigeon
   minimap: {fileID: 1883622038}
   loadingSlider: {fileID: 386484055}
   spawner: {fileID: 1415301579}

@@ -26,4 +26,7 @@ public class MapParameters
     public string[] entitiesForSpawn;
     public Vector2Int entNumRange;
     public LocationData[] neighborLocations;
+    public string oldmanName;
+    public string oldmanCowName;
+    public string pigeonName;
 }
