@@ -245,7 +245,7 @@ public class SpawnController : MonoBehaviour
             owner = entitiesGroup;
         }
 
-        GameObject ent = Array.Find(entities, e => e.name.Equals(entityName));
+        GameObject ent = Array.Find(entities, e => e.name.ToUpper().Equals(entityName.ToUpper()));
         if (ent == null)
         {
             $"No entity with name ({entityName}) found!!!".Warn(this);
