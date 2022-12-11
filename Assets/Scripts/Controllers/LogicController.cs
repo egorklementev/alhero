@@ -47,12 +47,22 @@ public class LogicController : MonoBehaviour
 
         // Spawn items transfered to the lab in some way
         int index = 1;
+        bool isInTheLab = true;
         foreach (int id in ItemsToSpawnInTheLab)
         {
             ItemWorld item = spawner.SpawnItem<ItemWorld>(id, Vector3.zero, Quaternion.identity);
-            TryTeleportGameObj(item.gameObject, "ItemSpawnpoint_" + index++);
+            if (!TryTeleportGameObj(item.gameObject, "ItemSpawnpoint_" + index++))
+            {
+                isInTheLab = false;
+                Destroy(item.gameObject);
+                break;
+            }
         }
-        ItemsToSpawnInTheLab.Clear();
+
+        if (isInTheLab)
+        {
+            ItemsToSpawnInTheLab.Clear();
+        }
 
         if (newGameStarted)
         {
@@ -323,15 +333,17 @@ public class LogicController : MonoBehaviour
         
     }
 
-    public void TryTeleportGameObj(GameObject obj, string checkpoint)
+    public bool TryTeleportGameObj(GameObject obj, string checkpoint)
     {
         try 
         {
             obj.transform.position = checkpoints.Find(checkpoint).position;
+            return true;
         }
         catch
         {
             $"No checkpoint \"{checkpoint}\" for object to be teleported found.".Log(this);
+            return false;
         }
     }
 
