@@ -298,7 +298,10 @@ public class UIController : MonoBehaviour
 
     public static void SpawnEntityPanel(string panelToSpawn)
     {
-        entityPanelsToSpawn.Add(panelToSpawn);
+        if (activeGroups.Count == 0)
+        {
+            entityPanelsToSpawn.Add(panelToSpawn);
+        }
     }
 
     public static void TryToDespawnEntityPanel(string panelToDespawn)

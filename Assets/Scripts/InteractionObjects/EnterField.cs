@@ -24,7 +24,7 @@ public abstract class EnterField : MonoBehaviour
         }
     }
 
-    void OnTriggerStay(Collider other)
+    protected virtual void OnTriggerStay(Collider other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
