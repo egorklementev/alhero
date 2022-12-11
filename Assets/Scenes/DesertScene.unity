@@ -4917,8 +4917,18 @@ MonoBehaviour:
   - {fileID: 2293039379666247535, guid: fa027c6a32c792d4480494b565f13c5c, type: 3}
   - {fileID: 259124781310316584, guid: 37c227cab6c4148498085c7f4f842620, type: 3}
   - {fileID: 4152542562802433636, guid: 325b6bb35cc899d4ba49f198391ab7b4, type: 3}
-  trees: []
-  treeOffsts: []
+  trees:
+  - {fileID: 8401863657784975704, guid: aba534dec8af3ee44aea9cea8362b2f1, type: 3}
+  - {fileID: 340668119019760547, guid: 4471c857aa77d634584f1fe0e79e4cef, type: 3}
+  - {fileID: 5770860474810006654, guid: 46566d42244ea454e91b31de3199a4cd, type: 3}
+  - {fileID: 8220574343447556866, guid: ccb6b4c6330777f499f783e14adbe5c6, type: 3}
+  - {fileID: 623610101757598338, guid: b32be8e5160b09441b4065ab1a512bdc, type: 3}
+  treeOffsts:
+  - 2.5
+  - 4.5
+  - 5
+  - 6.5
+  - 4
   floras: []
   floraOffsts: []
   traps: []
@@ -4930,10 +4940,10 @@ MonoBehaviour:
     noiseOffset: {x: 0, y: 0}
     scale: 4.5
     exponent: 0.265
-    islandSizeThreshold: 16
+    islandSizeThreshold: 32
     blockSize: 3
-    forestVariety: 0
-    forestDensity: 0
+    forestVariety: 5
+    forestDensity: 0.015
     floraVariety: 0
     floraDensity: 0
     trapVariety: 0
