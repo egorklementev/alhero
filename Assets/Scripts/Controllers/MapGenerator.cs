@@ -238,7 +238,10 @@ public class MapGenerator : MonoBehaviour
         GameObject obj = Instantiate(
             objs[(int)blockData.Cntmnt],
             Vector3.zero,
-            Quaternion.Euler(0f, 360f * Random.value, 0f),
+            Quaternion.Euler(
+                objs[(int)blockData.Cntmnt].transform.rotation.x, 
+                360f * Random.value, 
+                objs[(int)blockData.Cntmnt].transform.rotation.z),
             block
         );
         obj.transform.localScale *= 1f / bs * scaleFactor;

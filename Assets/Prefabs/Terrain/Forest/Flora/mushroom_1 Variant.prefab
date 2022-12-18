@@ -30,17 +30,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.0000000018626451
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.0038297176
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.000000017695129
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
@@ -50,27 +50,27 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: -0.0000000013805527
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.7071067
+      value: -0.70710677
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0.000000013520617
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: e3984460968acbd4199871317194ee8b,
         type: 3}

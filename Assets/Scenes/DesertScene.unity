@@ -2054,7 +2054,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 509517519}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 6.27, y: 0, z: 2.16}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4923,14 +4923,26 @@ MonoBehaviour:
   - {fileID: 5770860474810006654, guid: 46566d42244ea454e91b31de3199a4cd, type: 3}
   - {fileID: 8220574343447556866, guid: ccb6b4c6330777f499f783e14adbe5c6, type: 3}
   - {fileID: 623610101757598338, guid: b32be8e5160b09441b4065ab1a512bdc, type: 3}
+  - {fileID: 6409594545161790020, guid: 0f476d4ed07d2804a99b41b98fc333a6, type: 3}
   treeOffsts:
   - 2.5
   - 4.5
   - 5
   - 6.5
   - 4
-  floras: []
-  floraOffsts: []
+  - 4.5
+  floras:
+  - {fileID: 2893909641938023569, guid: c1e56df180e19cf4db742d587f3e1165, type: 3}
+  - {fileID: 4878698801366608427, guid: 396dd9d1da5a8e145a96e130a1ce5ff6, type: 3}
+  - {fileID: 2818778489045079132, guid: f967446ced2ebd245b0d0948d3162e38, type: 3}
+  - {fileID: 4650016602582172295, guid: 5338579402b982548acf51c0c80f2521, type: 3}
+  - {fileID: 1722847721316854649, guid: 60f3a96b64035414995a9d3baf58c94e, type: 3}
+  floraOffsts:
+  - 1
+  - 0.5
+  - 0.25
+  - 0.25
+  - 0.1
   traps: []
   trapOffsets: []
   mapParams:
@@ -4944,8 +4956,8 @@ MonoBehaviour:
     blockSize: 3
     forestVariety: 5
     forestDensity: 0.015
-    floraVariety: 0
-    floraDensity: 0
+    floraVariety: 5
+    floraDensity: 0.02
     trapVariety: 0
     trapDensity: 0
     containers: 
