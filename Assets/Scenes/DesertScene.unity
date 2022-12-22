@@ -4775,7 +4775,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 317.99997, y: -146}
+  m_AnchoredPosition: {x: 317.99994, y: -146}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1758510422
@@ -4943,8 +4943,10 @@ MonoBehaviour:
   - 0.25
   - 0.25
   - 0.1
-  traps: []
-  trapOffsets: []
+  traps:
+  - {fileID: 3235875807131041591, guid: 4672eeb6c460504408108468339b0e48, type: 3}
+  trapOffsets:
+  - 0.25
   mapParams:
     dims: {x: 96, y: 96}
     anchor: {x: 5, y: -7.9, z: 5}
@@ -4958,8 +4960,8 @@ MonoBehaviour:
     forestDensity: 0.015
     floraVariety: 5
     floraDensity: 0.02
-    trapVariety: 0
-    trapDensity: 0
+    trapVariety: 1
+    trapDensity: 0.01
     containers: 
     contNumRange: {x: 0, y: 0}
     ingredients:

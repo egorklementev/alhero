@@ -154,6 +154,10 @@ public class MapGenerator : MonoBehaviour
                             case Block.ContainmentType.TRAP:
                                 GameObject trap = GenerateRandomGroundObj(traps, trapOffsets, block.transform, blockData);
                                 trap.name = traps[(int)blockData.Cntmnt].name + $"({w},{h})";
+                                if (trap.TryGetComponent<Trap>(out var trapComponent))
+                                {
+                                    trapComponent.logic = logic;
+                                }
                                 break;
                             case Block.ContainmentType.ITEM:
                                 ItemWorld iw = spawner.SpawnItem<ItemWorld>(

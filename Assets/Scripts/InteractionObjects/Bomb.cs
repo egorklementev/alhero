@@ -34,7 +34,14 @@ public class Bomb : MonoBehaviour
 
     public void Explode()
     {
-        GetComponent<ItemWorld>().logic.KillInRange(transform.position, blastRadius);
+        if (TryGetComponent<ItemWorld>(out var item)) 
+        {
+            item.logic.KillInRange(transform.position, blastRadius);
+        }
+        else if (TryGetComponent<Trap>(out var trap))
+        {
+            trap.logic.KillInRange(transform.position, blastRadius);
+        }
         Instantiate(blastParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

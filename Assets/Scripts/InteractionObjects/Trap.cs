@@ -1,8 +1,13 @@
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Trap : MonoBehaviour 
 {
-    public Animator anim;
+    public Animator anim = null;
+    public UnityEvent onActivated;
+
+    [Space(15)]
+    public LogicController logic;
 
     private bool _activated = false;
 
@@ -12,7 +17,11 @@ public class Trap : MonoBehaviour
         {
             if (!_activated)
             {
-                anim.SetBool("Activated", true);
+                onActivated.Invoke();
+
+                if (anim != null)
+                    anim.SetBool("Activated", true);
+
                 ai.Transition("Death");
                 _activated = true;
             }
