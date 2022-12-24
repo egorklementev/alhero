@@ -47,6 +47,12 @@ public class Block
         CntmntType = ContainmentType.TRAP;
     }
 
+    public void SetPreset(int presetID)
+    {
+        Cntmnt = presetID;
+        CntmntType = ContainmentType.PRESET;
+    }
+
     public void SetItem(int itemID)
     {
         Cntmnt = itemID;
@@ -84,7 +90,7 @@ public class Block
 
     public enum ContainmentType 
     {
-        EMPTY, TREE, FLORA, ITEM, CONTAINER, ENTITY, PORTAL, TRAP
+        EMPTY, TREE, FLORA, ITEM, CONTAINER, ENTITY, PORTAL, TRAP, PRESET
     }
 
     public enum BlockType

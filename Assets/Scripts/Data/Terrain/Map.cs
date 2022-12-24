@@ -96,6 +96,9 @@ public class Map
         MapGenerator.loadingProgress = 0.8f;
 
         SpawnEntities(prms);
+        MapGenerator.loadingProgress = 0.85f;
+
+        GeneratePresets(prms);
         MapGenerator.loadingProgress = 0.9f;
 
         // Here width & height of the map change
@@ -422,6 +425,17 @@ public class Map
         }
     }
 
+    private void GeneratePresets(MapParameters prms)
+    {
+        var blocksNum = prms.dims.x * prms.dims.y; 
+        int presetNum = (int)(blocksNum * prms.presetDensity);
+        while (presetNum-- > 0)
+        {
+            var id = Random.Range(0, prms.presetVariety);
+            TryGetRandomEmptyGroundBlock(prms.presetBlockSizes[id]).SetPreset(id);
+        }
+    }
+
     private void GenerateOutlineBorders()
     {
         // Outline borders
@@ -579,6 +593,19 @@ public class Map
         }
         return b;
     }
+
+    private Block TryGetRandomEmptyGroundBlock(int range = 0)
+    {
+        try
+        {
+            return GetRandomEmptyGroundBlock(range);    
+        }
+        catch
+        {
+        }
+        return null;
+    }
+
     private class Bridge
     {
         public Island ParentIsland { get; set; }

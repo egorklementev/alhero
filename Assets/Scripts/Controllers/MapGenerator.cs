@@ -12,6 +12,8 @@ public class MapGenerator : MonoBehaviour
     public float[] floraOffsts;
     public GameObject[] traps;
     public float[] trapOffsets;
+    public GameObject[] presets;
+    public float[] presetsOffsets;
 
     [Space(15f)]
     [SerializeField] public MapParameters mapParams;
@@ -83,6 +85,7 @@ public class MapGenerator : MonoBehaviour
         mapParams.forestVariety = trees.Length;
         mapParams.floraVariety = floras.Length;
         mapParams.trapVariety = traps.Length;
+        mapParams.presetVariety = presets.Length;
 
         map = new Map();
         int genAttempt = 1;
@@ -158,6 +161,10 @@ public class MapGenerator : MonoBehaviour
                                 {
                                     trapComponent.logic = logic;
                                 }
+                                break;
+                            case Block.ContainmentType.PRESET:
+                                GameObject preset = GenerateRandomGroundObj(presets, presetsOffsets, block.transform, blockData);
+                                preset.name = presets[(int)blockData.Cntmnt].name + $"({w},{h})";
                                 break;
                             case Block.ContainmentType.ITEM:
                                 ItemWorld iw = spawner.SpawnItem<ItemWorld>(

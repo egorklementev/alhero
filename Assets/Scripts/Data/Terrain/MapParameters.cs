@@ -29,4 +29,7 @@ public class MapParameters
     public string oldmanName;
     public string oldmanCowName;
     public string pigeonName;
+    public int presetVariety;
+    public float presetDensity;
+    public int[] presetBlockSizes;
 }
