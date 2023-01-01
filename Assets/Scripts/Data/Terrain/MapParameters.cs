@@ -23,6 +23,7 @@ public class MapParameters
     public Vector2Int ingNumRange;
     public string[] nonIngredients;
     public Vector2Int nonIngNumRange;
+    public float[] nonIngredientsRates;
     public string[] entitiesForSpawn;
     public Vector2Int entNumRange;
     public LocationData[] neighborLocations;

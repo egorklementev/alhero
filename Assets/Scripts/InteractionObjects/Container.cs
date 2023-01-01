@@ -17,12 +17,25 @@ public class Container : MonoBehaviour
     private int selectedItem = -1;
     private GameObject keyVisuals;
 
-    private void Awake()
+    private void OnEnable()
     {
         inventory = new ItemUI[invSize];
+
+        SetLocked(!isUnlocked);
+    }
+
+    public void SetLocked(bool isLocked)
+    {
+        isUnlocked = !isLocked;
+
         transform.parent.Find("EnterField").gameObject.SetActive(isUnlocked);
 
-        if (!isUnlocked)
+        if (isUnlocked && keyVisuals != null)
+        {
+            keyVisuals.GetComponent<Animator>().SetTrigger("destroy");
+        }
+
+        if (!isUnlocked && unlockingKeyVisualsPrefab != null)
         {
             keyVisuals = Instantiate(unlockingKeyVisualsPrefab, gameObject.transform);
         }
@@ -112,14 +125,7 @@ public class Container : MonoBehaviour
         {
             if (item.id == unlockingKeyId)
             {
-                isUnlocked = true;
-
-                if (keyVisuals != null)
-                {
-                    keyVisuals.GetComponent<Animator>().SetTrigger("destroy");
-                }
-
-                transform.parent.Find("EnterField").gameObject.SetActive(isUnlocked);
+                SetLocked(false);
                 item.Destroy();
             }
         }

@@ -4002,6 +4002,12 @@ MonoBehaviour:
   - {fileID: 2341945816938905521, guid: a231b70d76914ee4c9a81b24934d59e5, type: 3}
   - {fileID: 2341945816938905521, guid: 45d206a2eca91b942b8429abd7b5dc82, type: 3}
   - {fileID: 3639953085000846316, guid: 2d3e182402da9a242b6436bb2e8e793f, type: 3}
+  - {fileID: 2341945816938905521, guid: 0d7b610027362cb49bd9f60154c2822e, type: 3}
+  - {fileID: 2341945816938905521, guid: ae7e42cc806ec6c4ea33b408e52c304c, type: 3}
+  - {fileID: 2341945816938905521, guid: 0453435742de3e2418521444b7a13c16, type: 3}
+  - {fileID: 3639953085000846316, guid: afbf8e639078988479599041737bb552, type: 3}
+  - {fileID: 3639953085000846316, guid: 8be4965ae82450740b54ecfc7d4596a4, type: 3}
+  - {fileID: 3639953085000846316, guid: 2125e6b53deb3f944a63bcf88eefbbb7, type: 3}
   sidePanel: {fileID: 1453561514}
   containerUIGroups:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
@@ -4951,6 +4957,10 @@ MonoBehaviour:
   - {fileID: 2739071077972169117, guid: 25276745486b3da4fa481accb05b26ce, type: 3}
   presetsOffsets:
   - 0.5
+  unlockingKeys:
+  - {fileID: 2221017872934947975, guid: fb684296a72900a43bc8ac110e11ee3d, type: 3}
+  - {fileID: 2221017872934947975, guid: 47dfd59f9a97b304ca45517d27073461, type: 3}
+  - {fileID: 2221017872934947975, guid: a795f692080b7c9489adf2df7fa68ec1, type: 3}
   mapParams:
     dims: {x: 96, y: 96}
     anchor: {x: 5, y: -7.9, z: 5}
@@ -4980,7 +4990,16 @@ MonoBehaviour:
     nonIngredients:
     - coin
     - bomb
+    - key_bronze
+    - key_silver
+    - key_gold
     nonIngNumRange: {x: 3, y: 7}
+    nonIngredientsRates:
+    - 0.2
+    - 0.6
+    - 0.1
+    - 0.07
+    - 0.03
     entitiesForSpawn: []
     entNumRange: {x: 0, y: 0}
     neighborLocations:

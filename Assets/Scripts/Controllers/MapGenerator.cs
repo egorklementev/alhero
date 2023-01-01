@@ -14,6 +14,7 @@ public class MapGenerator : MonoBehaviour
     public float[] trapOffsets;
     public GameObject[] presets;
     public float[] presetsOffsets;
+    public GameObject[] unlockingKeys;
 
     [Space(15f)]
     [SerializeField] public MapParameters mapParams;
@@ -188,6 +189,32 @@ public class MapGenerator : MonoBehaviour
                                         cont.gameObject.transform
                                     )
                                 );
+
+                                // Locked containers
+                                float dice = Random.value;
+                                if (dice > .97f)
+                                {
+                                    cont.unlockingKeyId = "key_gold".Hash();
+                                    cont.unlockingKeyVisualsPrefab = unlockingKeys[0];
+                                    cont.SetLocked(true);
+                                }
+                                else if (dice > .87f)
+                                {
+                                    cont.unlockingKeyId = "key_silver".Hash();
+                                    cont.unlockingKeyVisualsPrefab = unlockingKeys[1];
+                                    cont.SetLocked(true);
+                                }
+                                else if (dice > .67f)
+                                {
+                                    cont.unlockingKeyId = "key_broze".Hash();
+                                    cont.unlockingKeyVisualsPrefab = unlockingKeys[2];
+                                    cont.SetLocked(true);
+                                }
+                                else
+                                {
+                                    cont.SetLocked(false);
+                                }
+
                                 break;
                             case Block.ContainmentType.PORTAL:
                                 LocationData ld = (LocationData)blockData.Cntmnt;

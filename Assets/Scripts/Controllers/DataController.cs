@@ -228,6 +228,19 @@ public class DataController : MonoBehaviour
         return ingredients[ingID];
     }
 
+    public static int GetWeightedItemFromList(List<int> ids, List<float> probs)
+    {
+        float dice = Random.value + .001f;
+        float accum = 0f;
+        int index = -1;
+        while (dice > accum)
+        {
+            accum += probs[++index];
+        }
+
+        return ids[index];
+    }
+
     public static Recipe GenerateRandomRecipe(float maxComplexity, int ingNum = 0)
     {
         int maxIngredients = ingNum == 0 ? ingredients.Count : ingNum;

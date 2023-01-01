@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using BlockType = Block.BlockType;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class Map 
 {
@@ -350,11 +351,7 @@ public class Map
         {   
             GetRandomEmptyGroundBlock()
                 .SetItem(DataController.GetWeightedIngredientFromList(
-                    new List<int>(
-                        new List<string>(prms.ingredients).ConvertAll(ing => ing.Hash())
-                        )
-                    ).id
-                );
+                        prms.ingredients.ToList().ConvertAll(ing => ing.Hash())).id);
             ingNum--;
         }
     }
@@ -364,11 +361,11 @@ public class Map
         int min = Mathf.Min(prms.nonIngNumRange.x, prms.nonIngNumRange.y);
         int max = Mathf.Max(prms.nonIngNumRange.x, prms.nonIngNumRange.y);
         int nonIngNum = Random.Range(min, max);
-        int variety = prms.nonIngredients.Length;
         while (nonIngNum > 0)
         {   
             GetRandomEmptyGroundBlock()
-                .SetItem(prms.nonIngredients[Random.Range(0, variety)].Hash());
+                .SetItem(DataController.GetWeightedItemFromList(
+                    prms.nonIngredients.ToList().ConvertAll(item => item.Hash()), prms.nonIngredientsRates.ToList()));
             nonIngNum--;
         }
     }
