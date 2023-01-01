@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -8,6 +6,8 @@ public class Container : MonoBehaviour
     public int id;
     public string container_name;
     public bool isUnlocked;
+    public int unlockingKeyId;
+    public GameObject unlockingKeyVisualsPrefab;
     public int invSize = 4;
     public GameObject[] slots;
     public TextMeshProUGUI ingredientLine;
@@ -15,11 +15,17 @@ public class Container : MonoBehaviour
 
     private ItemUI[] inventory;
     private int selectedItem = -1;
+    private GameObject keyVisuals;
 
     private void Awake()
     {
         inventory = new ItemUI[invSize];
         transform.parent.Find("EnterField").gameObject.SetActive(isUnlocked);
+
+        if (!isUnlocked)
+        {
+            keyVisuals = Instantiate(unlockingKeyVisualsPrefab, gameObject.transform);
+        }
     }
 
     public void OnItemSelected(int slotNum)
@@ -68,7 +74,10 @@ public class Container : MonoBehaviour
 
     public void TryToPutItem(ItemWorld item, int slot = -1)
     {
-        if (item != null && isUnlocked)
+        if (item == null)
+            return;
+
+        if (isUnlocked)
         {
             int freeSlot = slot == -1 ? GetFreeSlot() : slot;
             if (item.CompareTag("Item") && freeSlot != -1)
@@ -96,6 +105,21 @@ public class Container : MonoBehaviour
                     }
                     catch {}
                 }
+                item.Destroy();
+            }
+        }
+        else
+        {
+            if (item.id == unlockingKeyId)
+            {
+                isUnlocked = true;
+
+                if (keyVisuals != null)
+                {
+                    keyVisuals.GetComponent<Animator>().SetTrigger("destroy");
+                }
+
+                transform.parent.Find("EnterField").gameObject.SetActive(isUnlocked);
                 item.Destroy();
             }
         }
