@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 1414245136
   item_name: tulip
   arcanumMaterialIndex: 2
+  location: 1
   logic: {fileID: 0}
 --- !u!1001 &973963028859445720
 PrefabInstance:

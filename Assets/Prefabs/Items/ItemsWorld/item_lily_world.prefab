@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 1414245136
   item_name: lily
   arcanumMaterialIndex: 2
+  location: 1
   logic: {fileID: 0}
 --- !u!1001 &3872331196473870581
 PrefabInstance:

@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: demon_horn
   arcanumMaterialIndex: 2
+  location: 5
   logic: {fileID: 0}
 --- !u!1001 &5837944591418361963
 PrefabInstance:

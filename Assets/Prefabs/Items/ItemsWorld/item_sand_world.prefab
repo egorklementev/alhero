@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: sand
   arcanumMaterialIndex: 2
+  location: 2
   logic: {fileID: 0}
 --- !u!1001 &6590542279117412653
 PrefabInstance:

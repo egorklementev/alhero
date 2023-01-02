@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: fireflower
   arcanumMaterialIndex: 2
+  location: 5
   logic: {fileID: 0}
 --- !u!1001 &8579120732629364983
 PrefabInstance:

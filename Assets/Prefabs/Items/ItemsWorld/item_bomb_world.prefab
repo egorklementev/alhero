@@ -9705,6 +9705,7 @@ MonoBehaviour:
   id: -958407982
   item_name: bomb
   arcanumMaterialIndex: 0
+  location: none
   logic: {fileID: 0}
 --- !u!114 &1300434802081353602
 MonoBehaviour:

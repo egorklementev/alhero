@@ -105,6 +105,7 @@ public class SpawnController : MonoBehaviour
                 else
                 {
                     LabContainerItems itemsToLoad = DataController.labContainers[contScript.id];
+                    contScript.SetLocked(!itemsToLoad.isUnlocked);
                     if (itemsToLoad != null)
                     {
                         for (int i = 0; i < itemsToLoad.items.Length; i++)
@@ -125,11 +126,11 @@ public class SpawnController : MonoBehaviour
                                     string newPotionName = potionData.GenerateNameDebug();
                                     potion.id = newPotionID;
                                     potion.item_name = newPotionName;
-                                    contScript.TryToPutItem(potion, i);
+                                    contScript.PutItemForce(potion, i);
                                 }
                                 else
                                 {
-                                    contScript.TryToPutItem(
+                                    contScript.PutItemForce(
                                         SpawnItem<ItemWorld>(
                                             itemToPutID,
                                             new Vector3(0f, 100f, 0f),

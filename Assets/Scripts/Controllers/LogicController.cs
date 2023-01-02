@@ -40,8 +40,7 @@ public class LogicController : MonoBehaviour
         for (int i = 0; i < _pickedItemsIDs.Length; i++)
         {
             StartCoroutine(
-                DelayedItemSpawn(_pickedItemsIDs[i], player.transform.position + itemPos[i], .25f)
-                );
+                DelayedItemSpawn(_pickedItemsIDs[i], player.transform.position + itemPos[i], .25f));
             _pickedItemsIDs[i] = 0; // Reset picked items
         }
 
@@ -189,7 +188,6 @@ public class LogicController : MonoBehaviour
         spawner.ClearContainers();
         data.StartNewGame();
         player.transform.position = Vector3.zero;
-
 
         // TODO: play some player animation or something
 

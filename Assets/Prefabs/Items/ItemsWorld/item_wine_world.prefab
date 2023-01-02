@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 1414245136
   item_name: wine
   arcanumMaterialIndex: 2
+  location: 1
   logic: {fileID: 0}
 --- !u!1001 &4495063081575623953
 PrefabInstance:

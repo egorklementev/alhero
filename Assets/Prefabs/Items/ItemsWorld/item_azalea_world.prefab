@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: azalea
   arcanumMaterialIndex: 2
+  location: 3
   logic: {fileID: 0}
 --- !u!1001 &3092625689872116247
 PrefabInstance:

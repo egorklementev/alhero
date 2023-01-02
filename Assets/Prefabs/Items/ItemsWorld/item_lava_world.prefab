@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: lava
   arcanumMaterialIndex: 2
+  location: 5
   logic: {fileID: 0}
 --- !u!1001 &94604128317169184
 PrefabInstance:

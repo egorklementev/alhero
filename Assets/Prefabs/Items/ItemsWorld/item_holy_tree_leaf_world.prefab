@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: holy_tree_leaf
   arcanumMaterialIndex: 2
+  location: 4
   logic: {fileID: 0}
 --- !u!1001 &266353362270731305
 PrefabInstance:

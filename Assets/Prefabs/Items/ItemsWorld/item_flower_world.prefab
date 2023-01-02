@@ -29,6 +29,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8845241897984131309}
   m_Father: {fileID: 0}
@@ -79,6 +80,8 @@ MonoBehaviour:
   id: 1414245136
   item_name: flower
   arcanumMaterialIndex: 2
+  location: 1
+  logic: {fileID: 0}
 --- !u!1001 &9028070017475962630
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -179,15 +182,9 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9028070017475962630}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8845241897984131309 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 96cbeb619124ec442bc1a88045da7942,
-    type: 3}
-  m_PrefabInstance: {fileID: 9028070017475962630}
-  m_PrefabAsset: {fileID: 0}
 --- !u!95 &6789913271317807172
 Animator:
-  serializedVersion: 3
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -200,6 +197,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -216,3 +214,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8845241897984131309 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 96cbeb619124ec442bc1a88045da7942,
+    type: 3}
+  m_PrefabInstance: {fileID: 9028070017475962630}
+  m_PrefabAsset: {fileID: 0}

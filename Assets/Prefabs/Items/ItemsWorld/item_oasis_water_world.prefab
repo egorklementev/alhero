@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: oasis_water
   arcanumMaterialIndex: 2
+  location: 2
   logic: {fileID: 0}
 --- !u!1001 &8296345386712435724
 PrefabInstance:

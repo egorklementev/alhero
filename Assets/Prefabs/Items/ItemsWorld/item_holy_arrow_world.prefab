@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: holy_arrow
   arcanumMaterialIndex: 2
+  location: 4
   logic: {fileID: 0}
 --- !u!1001 &7040492948691870731
 PrefabInstance:

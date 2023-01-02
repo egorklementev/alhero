@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: golden_sword
   arcanumMaterialIndex: 0
+  location: 4
   logic: {fileID: 0}
 --- !u!1001 &8631537269763533299
 PrefabInstance:

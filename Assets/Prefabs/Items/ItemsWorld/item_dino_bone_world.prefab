@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: dino_bone
   arcanumMaterialIndex: 2
+  location: 2
   logic: {fileID: 0}
 --- !u!1001 &4754205765253452362
 PrefabInstance:
@@ -187,18 +188,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 4754205765253452362}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8636769613265290551
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5565108995934842651}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &3953712443510388118
 Animator:
   serializedVersion: 4
@@ -219,3 +208,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &8636769613265290551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5565108995934842651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

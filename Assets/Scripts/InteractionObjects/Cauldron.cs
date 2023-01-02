@@ -115,7 +115,7 @@ public class Cauldron : MonoBehaviour
                                     {
                                         try
                                         {
-                                            DataController.ingredients[curIng.id].hasBeenDiscovered = true;
+                                            DataController.ingredients[curIng.id].hasBeenUsed = true;
                                             UIController.SpawnSideLine("New ingredient discovered!!!");
                                         }
                                         catch
@@ -177,7 +177,6 @@ public class Cauldron : MonoBehaviour
                                     spawner.absItems.Add(uiPotionCopy);
 
                                     // Add a new ingredient
-                                    //int ingrNum = potionData.ingredients.Length;
                                     DataController.AddNewIngredient(
                                         newPotionID, 
                                         newPotionName, 
@@ -188,7 +187,8 @@ public class Cauldron : MonoBehaviour
                                         RandomG(potionData.ingredients), 
                                         RandomB(potionData.ingredients), 
                                         AverageAlpha(potionData.ingredients), 
-                                        potionData).hasBeenDiscovered = true;
+                                        "none",
+                                        potionData).hasBeenUsed = true;
 
                                     // Unlock potion recipe when it is cooked for the first time 
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
@@ -219,7 +219,7 @@ public class Cauldron : MonoBehaviour
                             {
                                 try
                                 {
-                                    DataController.ingredients[curIng.id].hasBeenDiscovered = true;
+                                    DataController.ingredients[curIng.id].hasBeenUsed = true;
                                     UIController.SpawnSideLine("New ingredient discovered!!!");
                                 }
                                 catch

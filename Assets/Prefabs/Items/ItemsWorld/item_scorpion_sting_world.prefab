@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: scorpion_sting
   arcanumMaterialIndex: 2
+  location: 2
   logic: {fileID: 0}
 --- !u!1001 &5799730254142407354
 PrefabInstance:

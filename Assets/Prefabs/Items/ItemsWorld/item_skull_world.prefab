@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: skull
   arcanumMaterialIndex: 2
+  location: 5
   logic: {fileID: 0}
 --- !u!1001 &5953591044247338214
 PrefabInstance:

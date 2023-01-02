@@ -4,9 +4,11 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
 using Random = UnityEngine.Random;
+using System.Linq;
 
 public class DataController : MonoBehaviour
 {
+    public string locationName;
     public General debugGeneral;
 
     [Space(20f)]
@@ -66,6 +68,14 @@ public class DataController : MonoBehaviour
         foreach (HistoryEntry he in historyData.list)
         {
             history.Enqueue(he);
+        }
+
+        foreach (var ing in ingredients)
+        {
+            if (ing.Value.location == locationName)
+            {
+                ing.Value.hasBeenDiscovered = true;
+            }
         }
 
         foreach (int id in genData.cauldronInventory)
@@ -135,9 +145,10 @@ public class DataController : MonoBehaviour
         float breakChance,
         int rarity,
         float r, float g, float b, float a,
+        string location,
         Potion potionData = null)
     {
-        Ingredient ing = new Ingredient(id, ing_name, cooldown, breakChance, rarity, r, g, b, a, potionData);
+        Ingredient ing = new Ingredient(id, ing_name, cooldown, breakChance, rarity, r, g, b, a, location, potionData);
         try
         {
             ingredients.Add(id, ing);
@@ -247,10 +258,10 @@ public class DataController : MonoBehaviour
         int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
         ingNum = Random.Range(2, maxIngredients + 1);
         int[] ings = new int[ingNum];
-        List<int> ingIDs = new List<int>(ingredients.Keys);
+        List<int> ingIDs = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
         for (int i = 0; i < ingNum; i++)
         {
-            ings[i] = ingIDs[Random.Range(0, ingredients.Count)];
+            ings[i] = ingIDs[Random.Range(0, ingIDs.Count)];
         }
         Recipe rec = new Recipe(mistakes, ings);
         if (rec.GetComplexity() > maxComplexity || HasOverlaps(rec))
@@ -318,6 +329,14 @@ public class DataController : MonoBehaviour
         return true;
     }
 
+    public static List<int> GetIngredientsByLocation(AbstractItem.ItemLocation location)
+    {
+        return ingredients
+            .Where(ing => ing.Value.location == location.ToString())
+            .Select(ing => ing.Key)
+            .ToList();
+    }
+
     public void StartNewGame()
     {
         Environment.NewLine.Log(this);
@@ -375,10 +394,17 @@ public class DataController : MonoBehaviour
                         2f * (Random.value - .5f),
                         2f * (Random.value - .5f),
                         2f * (Random.value - .5f),
-                        2f * (Random.value - .5f)
+                        2f * (Random.value - .5f),
+                        item.location.ToString()
                     );
                 } 
             }
+        }
+
+        // Make forest items discovered, so that the DataController can produce recipes 
+        foreach (int id in GetIngredientsByLocation(AbstractItem.ItemLocation.FOREST))
+        {
+            ingredients[id].hasBeenDiscovered = true;
         }
 
         // Add initial recipe
@@ -399,7 +425,8 @@ public class DataController : MonoBehaviour
                 i.cooldown,
                 i.breakChance,
                 i.rarity,
-                i.color_r, i.color_g, i.color_b, i.color_a
+                i.color_r, i.color_g, i.color_b, i.color_a,
+                i.location
             );
         }
     }

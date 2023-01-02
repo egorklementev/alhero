@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: apple
   arcanumMaterialIndex: 0
+  location: 1
   logic: {fileID: 0}
 --- !u!1001 &8277670652216754162
 PrefabInstance:

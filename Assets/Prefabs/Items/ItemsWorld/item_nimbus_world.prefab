@@ -4892,6 +4892,7 @@ MonoBehaviour:
   id: 0
   item_name: nimbus
   arcanumMaterialIndex: 2
+  location: 4
   logic: {fileID: 0}
 --- !u!1001 &107741673986988959
 PrefabInstance:

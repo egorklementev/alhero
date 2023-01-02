@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: horned_helmet
   arcanumMaterialIndex: 2
+  location: 5
   logic: {fileID: 0}
 --- !u!1001 &5770200390123009823
 PrefabInstance:

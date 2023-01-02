@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: youth_elixir
   arcanumMaterialIndex: 2
+  location: 4
   logic: {fileID: 0}
 --- !u!1001 &4928347316007858150
 PrefabInstance:

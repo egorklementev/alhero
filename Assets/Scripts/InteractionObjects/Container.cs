@@ -85,12 +85,17 @@ public class Container : MonoBehaviour
         }
     }
 
-    public void TryToPutItem(ItemWorld item, int slot = -1)
+    public void PutItemForce(ItemWorld item, int slot = -1)
+    {
+        TryToPutItem(item, slot, true);
+    }
+
+    public void TryToPutItem(ItemWorld item, int slot = -1, bool isForced = false)
     {
         if (item == null)
             return;
 
-        if (isUnlocked)
+        if (isUnlocked || isForced)
         {
             int freeSlot = slot == -1 ? GetFreeSlot() : slot;
             if (item.CompareTag("Item") && freeSlot != -1)
@@ -127,6 +132,11 @@ public class Container : MonoBehaviour
             {
                 SetLocked(false);
                 item.Destroy();
+
+                if (DataController.labContainers.ContainsKey(id))
+                {
+                    DataController.labContainers[id].isUnlocked = true;
+                }
             }
         }
     }

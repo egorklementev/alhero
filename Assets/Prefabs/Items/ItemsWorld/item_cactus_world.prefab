@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: cactus
   arcanumMaterialIndex: 2
+  location: 2
   logic: {fileID: 0}
 --- !u!1001 &3249847852754094371
 PrefabInstance:
@@ -181,18 +182,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 3249847852754094371}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1279995369932411593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2438891297905603698}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &4122645303844794971
 Animator:
   serializedVersion: 4
@@ -213,6 +202,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &1279995369932411593
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2438891297905603698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3067934422037966536 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: f472e2e17fd9d604f87b9dcf5c6fa0e7,

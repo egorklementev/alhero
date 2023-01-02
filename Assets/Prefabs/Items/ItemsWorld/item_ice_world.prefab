@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: ice
   arcanumMaterialIndex: 2
+  location: 3
   logic: {fileID: 0}
 --- !u!1001 &4405103956440949538
 PrefabInstance:

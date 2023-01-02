@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: cauldron
   arcanumMaterialIndex: 2
+  location: 5
   logic: {fileID: 0}
 --- !u!1001 &8363837943553657934
 PrefabInstance:

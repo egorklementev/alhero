@@ -3708,6 +3708,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ed2c3e829134b4295f564a553b3615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  locationName: desert
   debugGeneral:
     seed: 0
     locationGenerations: 0
@@ -3722,7 +3723,9 @@ MonoBehaviour:
     ing_name: flower
     cooldown: 1
     breakChance: 0
+    hasBeenUsed: 0
     hasBeenDiscovered: 0
+    location: 
     rarity: 0
     potionData:
       recipe_id: 0
@@ -3737,7 +3740,9 @@ MonoBehaviour:
     ing_name: horseshoe
     cooldown: 0
     breakChance: 0
+    hasBeenUsed: 0
     hasBeenDiscovered: 0
+    location: 
     rarity: 0
     potionData:
       recipe_id: 0
@@ -3752,7 +3757,9 @@ MonoBehaviour:
     ing_name: meat
     cooldown: 5
     breakChance: 0
+    hasBeenUsed: 0
     hasBeenDiscovered: 0
+    location: 
     rarity: 0
     potionData:
       recipe_id: 0
@@ -3767,7 +3774,9 @@ MonoBehaviour:
     ing_name: salt
     cooldown: 0
     breakChance: 0
+    hasBeenUsed: 0
     hasBeenDiscovered: 0
+    location: 
     rarity: 0
     potionData:
       recipe_id: 0
@@ -3782,7 +3791,9 @@ MonoBehaviour:
     ing_name: wine
     cooldown: 0
     breakChance: 0
+    hasBeenUsed: 0
     hasBeenDiscovered: 0
+    location: 
     rarity: 0
     potionData:
       recipe_id: 0
@@ -3872,7 +3883,7 @@ MonoBehaviour:
   autosaveDelay: 30
   debugMode: 0
   debugButtons: []
-  itemLerpTimer: 0.1
+  itemLerpTimer: 0.5
   spawner: {fileID: 1415301579}
   logic: {fileID: 283488800}
 --- !u!4 &1410969495
@@ -4781,7 +4792,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 317.99988, y: -146}
+  m_AnchoredPosition: {x: 317.9999, y: -146}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1758510422

@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: candy
   arcanumMaterialIndex: 2
+  location: 3
   logic: {fileID: 0}
 --- !u!1001 &2354967724271492300
 PrefabInstance:
@@ -192,18 +193,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2354967724271492300}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3895782807234428287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3202041171152691613}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &6883586431183429219
 Animator:
   serializedVersion: 4
@@ -224,3 +213,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3895782807234428287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202041171152691613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

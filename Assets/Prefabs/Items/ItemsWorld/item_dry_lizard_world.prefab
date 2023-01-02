@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: dry_lizard
   arcanumMaterialIndex: 2
+  location: 2
   logic: {fileID: 0}
 --- !u!1001 &7301639029435051183
 PrefabInstance:

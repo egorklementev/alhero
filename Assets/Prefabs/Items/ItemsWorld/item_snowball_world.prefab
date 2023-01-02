@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: snowball
   arcanumMaterialIndex: 2
+  location: 3
   logic: {fileID: 0}
 --- !u!1001 &9205904393951863078
 PrefabInstance:
@@ -186,18 +187,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 9205904393951863078}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &6044051649220885
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8286791078229073015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &3121301521860193260
 Animator:
   serializedVersion: 4
@@ -218,6 +207,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &6044051649220885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8286791078229073015}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db8b1b8396f4ab34f9318f82387f29b0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8668101313345095373 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 846fdd26299ea57478edb7f0bd139935,

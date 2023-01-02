@@ -80,6 +80,7 @@ MonoBehaviour:
   id: 0
   item_name: coal
   arcanumMaterialIndex: 2
+  location: 5
   logic: {fileID: 0}
 --- !u!1001 &286481950554751966
 PrefabInstance:
