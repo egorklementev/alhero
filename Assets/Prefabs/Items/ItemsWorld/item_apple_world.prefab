@@ -77,10 +77,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1548091822
   item_name: apple
   arcanumMaterialIndex: 0
-  location: 1
+  location: 4
   logic: {fileID: 0}
 --- !u!1001 &8277670652216754162
 PrefabInstance:

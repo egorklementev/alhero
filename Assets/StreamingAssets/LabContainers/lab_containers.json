@@ -39,7 +39,8 @@
                         "titleIDs": []
                     }
                 }
-            ]
+            ],
+            "isUnlocked": false
         },
         {
             "id": -1788335908,
@@ -80,7 +81,8 @@
                         "titleIDs": []
                     }
                 }
-            ]
+            ],
+            "isUnlocked": false
         },
         {
             "id": -1788335909,
@@ -121,7 +123,8 @@
                         "titleIDs": []
                     }
                 }
-            ]
+            ],
+            "isUnlocked": false
         },
         {
             "id": -1788335910,
@@ -162,48 +165,8 @@
                         "titleIDs": []
                     }
                 }
-            ]
-        },
-        {
-            "id": -1788335911,
-            "items": [
-                {
-                    "id": 0,
-                    "potionData": {
-                        "recipe_id": 0,
-                        "bottle_shape": 0,
-                        "ingredients": [],
-                        "titleIDs": []
-                    }
-                },
-                {
-                    "id": 0,
-                    "potionData": {
-                        "recipe_id": 0,
-                        "bottle_shape": 0,
-                        "ingredients": [],
-                        "titleIDs": []
-                    }
-                },
-                {
-                    "id": 0,
-                    "potionData": {
-                        "recipe_id": 0,
-                        "bottle_shape": 0,
-                        "ingredients": [],
-                        "titleIDs": []
-                    }
-                },
-                {
-                    "id": 0,
-                    "potionData": {
-                        "recipe_id": 0,
-                        "bottle_shape": 0,
-                        "ingredients": [],
-                        "titleIDs": []
-                    }
-                }
-            ]
+            ],
+            "isUnlocked": false
         }
     ]
 }

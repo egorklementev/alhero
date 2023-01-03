@@ -182,13 +182,15 @@ public class Cauldron : MonoBehaviour
                                         newPotionName, 
                                         AverageCooldown(potionData.ingredients), 
                                         RandomBreakChance(potionData.ingredients), 
-                                        Random.Range(1, 999), // TODO:
+                                        Random.Range(1, 1000), // TODO:
                                         RandomR(potionData.ingredients), 
                                         RandomG(potionData.ingredients), 
                                         RandomB(potionData.ingredients), 
                                         AverageAlpha(potionData.ingredients), 
                                         "none",
                                         potionData).hasBeenUsed = true;
+
+                                    DataController.genData.potionsCooked++;
 
                                     // Unlock potion recipe when it is cooked for the first time 
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;

@@ -7625,6 +7625,7 @@ MonoBehaviour:
   debugGeneral:
     seed: 0
     locationGenerations: 0
+    potionsCooked: 0
     cauldronInventory: 
     raccoonRequestedItem: 0
     coins: 0
@@ -7754,6 +7755,7 @@ MonoBehaviour:
         bottle_shape: 0
         ingredients: 
         titleIDs: 
+    isUnlocked: 0
   - id: 1
     items:
     - id: 0
@@ -7780,6 +7782,7 @@ MonoBehaviour:
         bottle_shape: 0
         ingredients: 
         titleIDs: 
+    isUnlocked: 0
   - id: 2
     items:
     - id: 0
@@ -7806,6 +7809,7 @@ MonoBehaviour:
         bottle_shape: 0
         ingredients: 
         titleIDs: 
+    isUnlocked: 0
   - id: 3
     items:
     - id: 0
@@ -7832,6 +7836,7 @@ MonoBehaviour:
         bottle_shape: 0
         ingredients: 
         titleIDs: 
+    isUnlocked: 0
   autosaveDelay: 30
   debugMode: 0
   debugButtons:
@@ -8830,13 +8835,18 @@ PrefabInstance:
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
       propertyPath: isUnlocked
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
       propertyPath: ingredientLine
       value: 
       objectReference: {fileID: 742621385}
+    - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
+        type: 3}
+      propertyPath: unlockingKeyId
+      value: -1627836258
+      objectReference: {fileID: 0}
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
       propertyPath: slots.Array.size
@@ -8862,6 +8872,12 @@ PrefabInstance:
       propertyPath: slots.Array.data[3]
       value: 
       objectReference: {fileID: 1436627318}
+    - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
+        type: 3}
+      propertyPath: unlockingKeyVisualsPrefab
+      value: 
+      objectReference: {fileID: 2221017872934947975, guid: a795f692080b7c9489adf2df7fa68ec1,
+        type: 3}
     m_RemovedComponents:
     - {fileID: 6978103112038658960, guid: b425985e430b99548afc730fea1ebf8f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: b425985e430b99548afc730fea1ebf8f, type: 3}

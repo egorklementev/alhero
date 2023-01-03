@@ -296,7 +296,11 @@ public class Map
     {
         foreach (LocationData ld in prms.neighborLocations)
         {
-            GetRandomEmptyGroundBlock(1).SetPortal(ld);
+            float dice = Random.value;
+            if (dice <= ld.appearanceChance && DataController.genData.potionsCooked >= ld.cookedPotionsRequired)
+            {
+                GetRandomEmptyGroundBlock(1).SetPortal(ld);
+            }
         }
     }
 

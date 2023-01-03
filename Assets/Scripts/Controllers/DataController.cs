@@ -296,14 +296,16 @@ public class DataController : MonoBehaviour
 
     public static void UpdateRaccoonRequestItem()
     {
-        genData.raccoonRequestedItem = GetWeightedIngredientFromList(new List<int>(ingredients.Keys)).id;
+        genData.raccoonRequestedItem = GetWeightedIngredientFromList(
+            ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList()).id;
     }
 
     public static void UpdateOldmanItems()
     {
         for (int i = 0; i < OldmanAI.ITEMS_TO_SELL; i++)
         {
-            genData.oldmanItemsForSale[i] = GetWeightedIngredientFromList(new List<int>(ingredients.Keys)).id;
+            genData.oldmanItemsForSale[i] = GetWeightedIngredientFromList(
+                ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList()).id;
         }
     }
 
@@ -364,6 +366,7 @@ public class DataController : MonoBehaviour
         genData.oldmanItemsForSale = new int[2];
         genData.coins = 0;
         genData.maxPigeons = 3;
+        genData.potionsCooked = 0;
 
         history.Clear();
 
@@ -371,6 +374,7 @@ public class DataController : MonoBehaviour
         {
             int size = lci.items.Length;
             lci.items = new LabContainerItem[size];
+            lci.isUnlocked = false;
         }
 
         // Randomize ingredient values

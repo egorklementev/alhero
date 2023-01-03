@@ -7,4 +7,6 @@ public class LocationData
     public string LabelToShow;
     public string Checkpoint;
     public Color Color;
+    public int cookedPotionsRequired;
+    public float appearanceChance;
 }
