@@ -99,8 +99,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -2961200780246916182, guid: 487e83e19f07b084c84d4f01e0bac26f,
         type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -2961200780246916182, guid: 487e83e19f07b084c84d4f01e0bac26f,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -1281890695433952948, guid: 487e83e19f07b084c84d4f01e0bac26f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -1281890695433952948, guid: 487e83e19f07b084c84d4f01e0bac26f,
         type: 3}
@@ -159,6 +169,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 406042073991749167, guid: 487e83e19f07b084c84d4f01e0bac26f,
         type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 406042073991749167, guid: 487e83e19f07b084c84d4f01e0bac26f,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
       objectReference: {fileID: 0}
@@ -166,6 +181,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: desert_tree_5 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 487e83e19f07b084c84d4f01e0bac26f,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 487e83e19f07b084c84d4f01e0bac26f,
         type: 3}

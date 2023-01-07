@@ -79,8 +79,18 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 19b5e782f8cc91946b1900ed032385ae, type: 2}
     - target: {fileID: -5359744971507057065, guid: 84abc96cf4b7cf949a658815ce4248d3,
         type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -5359744971507057065, guid: 84abc96cf4b7cf949a658815ce4248d3,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -3991543597688684995, guid: 84abc96cf4b7cf949a658815ce4248d3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: -3991543597688684995, guid: 84abc96cf4b7cf949a658815ce4248d3,
         type: 3}
@@ -91,6 +101,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: desert_tree_4 Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 84abc96cf4b7cf949a658815ce4248d3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 84abc96cf4b7cf949a658815ce4248d3,
         type: 3}
@@ -136,6 +151,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 2560242799379521067, guid: 84abc96cf4b7cf949a658815ce4248d3,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 2560242799379521067, guid: 84abc96cf4b7cf949a658815ce4248d3,
         type: 3}

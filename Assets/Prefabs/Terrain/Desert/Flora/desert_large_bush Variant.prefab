@@ -109,8 +109,18 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: ab86a621b9157f2409cb71fb57e28bbe, type: 2}
     - target: {fileID: -4644970199294965675, guid: 132905a73ae57af4c855dfe039595c03,
         type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: -4644970199294965675, guid: 132905a73ae57af4c855dfe039595c03,
+        type: 3}
       propertyPath: m_StaticEditorFlags
       value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 590351743542483804, guid: 132905a73ae57af4c855dfe039595c03,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 590351743542483804, guid: 132905a73ae57af4c855dfe039595c03,
         type: 3}
@@ -121,6 +131,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: desert_large_bush Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 132905a73ae57af4c855dfe039595c03,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 132905a73ae57af4c855dfe039595c03,
         type: 3}
@@ -206,6 +221,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalScale.z
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9172777175483981075, guid: 132905a73ae57af4c855dfe039595c03,
+        type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 9172777175483981075, guid: 132905a73ae57af4c855dfe039595c03,
         type: 3}
