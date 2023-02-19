@@ -1,18 +1,34 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Random = UnityEngine.Random;
 
 public class Island : IEnumerable {
 
     private Block[] _blocks;
     private Map _map;
     private bool _isConnected = false; 
+    private List<Block> _borderBlocks;
     
     public Island(Block[] blocks, Map map)
     {
         _blocks = blocks;
         _map = map;
+
+        _borderBlocks = new List<Block>();
+        foreach (Block b in _blocks)
+        {
+            int neighbors = _map.NeighborCount(b.Location.x, b.Location.y);
+            if (neighbors < 4)
+            {
+                _borderBlocks.Add(b);
+            }
+        }
+
+        Bridges = new HashSet<Bridge>();
     }
+
+    public HashSet<Bridge> Bridges { get; }
 
     public int Size()
     {
@@ -26,16 +42,7 @@ public class Island : IEnumerable {
 
     public List<Block> GetBorderBlocks()
     {
-        List<Block> lst = new List<Block>();
-        foreach (Block b in _blocks)
-        {
-            int neighbors = _map.NeighborCount(b.Location.x, b.Location.y);
-            if (neighbors < 4)
-            {
-                lst.Add(b);
-            }
-        }
-        return lst;
+        return _borderBlocks;
     }
 
     public bool HasBlock(Block b)
@@ -52,24 +59,47 @@ public class Island : IEnumerable {
         return Array.Exists(_blocks, b => b.Location.x == x && b.Location.y == y);
     }
 
+    public Block GetRandomBridgeStartPoint()
+    {
+        var borderBlocks = GetBorderBlocks();
+        int trials = borderBlocks.Count;
+        var facings = new List<BlockFacing> { BlockFacing.NORTH, BlockFacing.SOUTH, BlockFacing.EAST, BlockFacing.WEST };
+        while (trials-- > 0)
+        {
+            Block randBorderBlock = borderBlocks[Random.Range(0, borderBlocks.Count)];
+
+            var facingsCopy = new List<BlockFacing>(facings);
+            for (int i = 0; i < 4; i++)
+            {
+                var facing = facingsCopy[Random.Range(0, facingsCopy.Count)];
+                facingsCopy.Remove(facing);
+
+                if ((GetBlockFacing(randBorderBlock) & facing) > 0)
+                    return randBorderBlock;
+            }
+        }
+
+        return null;
+    }
+
     public BlockFacing GetBlockFacing(Block b)
     {
         int x = b.Location.x;
         int y = b.Location.y;
         BlockFacing facing = BlockFacing.UNDEFINED;
-        if (!HasBlock(x + 1, y))
+        if (!HasBlock(x + 1, y) && _map.IsValidLocation(x + 1, y))
         {
             facing |= BlockFacing.EAST;
         }
-        if (!HasBlock(x - 1, y))
+        if (!HasBlock(x - 1, y) && _map.IsValidLocation(x - 1, y))
         {
             facing |= BlockFacing.WEST;
         }
-        if (!HasBlock(x, y + 1))
+        if (!HasBlock(x, y + 1) && _map.IsValidLocation(x, y + 1))
         {
             facing |= BlockFacing.NORTH;
         }
-        if (HasBlock(x, y - 1))
+        if (HasBlock(x, y - 1) && _map.IsValidLocation(x, y - 1))
         {
             facing |= BlockFacing.SOUTH;
         }

@@ -19,9 +19,28 @@ public class Block
         Type = BlockType.AIR;
     }
 
-    public void SetBridge(bool isVertical = true, bool isCross = false)
+    public bool IsAir()
     {
-        Type = isCross ? BlockType.BRIDGE_C : (isVertical ? BlockType.BRIDGE_V : BlockType.BRIDGE_H);
+        return Type == BlockType.AIR;
+    }
+
+    public void SetBridge(Bridge.BridgeBlockType type)
+    {
+        Type = type switch
+        {
+            Bridge.BridgeBlockType.VERTICAL => BlockType.BRIDGE_V,
+            Bridge.BridgeBlockType.HORIZONTAL => BlockType.BRIDGE_H,
+            Bridge.BridgeBlockType.CROSS => BlockType.BRIDGE_X,
+            Bridge.BridgeBlockType.SIDE_NORTH => BlockType.BRIDGE_S_N,
+            Bridge.BridgeBlockType.SIDE_EAST => BlockType.BRIDGE_S_E,
+            Bridge.BridgeBlockType.SIDE_SOUTH => BlockType.BRIDGE_S_S,
+            Bridge.BridgeBlockType.SIDE_WEST => BlockType.BRIDGE_S_W,
+            Bridge.BridgeBlockType.CORNER_NW => BlockType.BRIDGE_C_NW,
+            Bridge.BridgeBlockType.CORNER_NE => BlockType.BRIDGE_C_NE,
+            Bridge.BridgeBlockType.CORNER_SW => BlockType.BRIDGE_C_SW,
+            Bridge.BridgeBlockType.CORNER_SE => BlockType.BRIDGE_C_SE,
+            _ => BlockType.AIR
+        };
     }
 
     public void SetIslandBorder()
@@ -85,7 +104,10 @@ public class Block
 
     public bool IsBridge()
     {
-        return Type == BlockType.BRIDGE_V || Type == BlockType.BRIDGE_H || Type == BlockType.BRIDGE_C;
+        return Type == BlockType.BRIDGE_V || 
+            Type == BlockType.BRIDGE_H || 
+            Type == BlockType.BRIDGE_X || 
+            (Type >= BlockType.BRIDGE_S_N  && Type <= BlockType.BRIDGE_C_SW);
     }
 
     public enum ContainmentType 
@@ -95,7 +117,13 @@ public class Block
 
     public enum BlockType
     {
-        AIR, GROUND, BRIDGE_V, BRIDGE_H, ISLAND_BORDER, BRIDGE_C
+        AIR,
+        GROUND,
+        BRIDGE_V, BRIDGE_H,
+        ISLAND_BORDER,
+        BRIDGE_X,
+        BRIDGE_S_N, BRIDGE_S_E, BRIDGE_S_S, BRIDGE_S_W,
+        BRIDGE_C_NE, BRIDGE_C_NW, BRIDGE_C_SE, BRIDGE_C_SW,
     }
 
     public Color GetMapColor()
@@ -106,7 +134,7 @@ public class Block
                 return new Color(.1f, .7f, .05f, 1f);
             case BlockType.BRIDGE_H:
             case BlockType.BRIDGE_V:
-            case BlockType.BRIDGE_C:
+            case BlockType.BRIDGE_X:
                 return new Color(.7f, .55f, .05f, 1f);
             default:
                 return Color.clear;

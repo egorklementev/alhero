@@ -4,7 +4,7 @@ using BlockType = Block.BlockType;
 using Random = UnityEngine.Random;
 using System.Linq;
 
-public class Map 
+public partial class Map 
 {
     public int Width { get; private set; }
     public int Height { get; private set; }
@@ -19,6 +19,16 @@ public class Map
     public bool IsAir(int x, int y)
     {
         return _ground[x, y].Type <= 0;
+    }
+
+    public bool IsAir(Vector2Int pos)
+    {
+        return IsAir(pos.x, pos.y);
+    }
+
+    public Block GetBlock(Vector2Int pos)
+    {
+        return GetBlock(pos.x, pos.y);
     }
 
     public Block GetBlock(int x, int y)
@@ -74,7 +84,7 @@ public class Map
         ProcessIslands(prms);
         MapGenerator.loadingProgress = 0.2f;
 
-        BuildBridges(_islands[0]);
+        BuildBridges();
         PostProcessBridges();
         MapGenerator.loadingProgress = 0.3f;
 
@@ -176,80 +186,101 @@ public class Map
         _islands.Sort(
             (Island i1, Island i2) =>
             {
-                return i1.Size() > i2.Size() ? -1 : i1.Size() == i2.Size() ? 0 : 1;
+                return i1.Size() > i2.Size() ? 1 : i1.Size() == i2.Size() ? 0 : -1;
             }
         );
     }
 
-    private void BuildBridges(Island island)
+    private Bridge FindShortestBridge(Island i1, Island i2)
     {
-        // -- Add bridges --
-        // Start with the largest island
-        // We select the shortest bridges possible
+        int trials = (i1.GetBorderBlocks().Count + i2.GetBorderBlocks().Count) / 5;
+        Bridge minBridge = null;
 
-        // Mark it as visited 
-        island.SetConnected();
+        while (trials-- > 0)
+        {
+            Block b1 = i1.GetRandomBridgeStartPoint();
+            Block b2 = i2.GetRandomBridgeStartPoint();
 
-        // Try to build bridges from all borders
-        int[] stepsX = new int[] { 0, 0, -1, 1};
-        int[] stepsY = new int[] { 1, -1, 0, 0};
-        Island.BlockFacing[] sides = new Island.BlockFacing[] 
-        { 
-            Island.BlockFacing.NORTH,  
-            Island.BlockFacing.SOUTH,  
-            Island.BlockFacing.WEST,  
-            Island.BlockFacing.EAST  
-        };
+            if (!TryBuildBridge(b1, b2, out var bridge))
+                continue;
+
+            if (bridge == null)
+                continue;
+
+            if (minBridge == null || bridge.Length() < minBridge.Length())
+            {
+                minBridge = bridge;
+            }
+        }
+
+        return minBridge;
+    }
+
+    private void BuildBridges()
+    {
         List<Bridge> bridges = new List<Bridge>();
-        foreach (Block b in island.GetBorderBlocks())
+        for (int i = 0; i < _islands.Count; i++)
         {
-            List<int> indices = new List<int>() { 0, 1, 2, 3 };
-            for (int i = 0; i < 4; i++)
+            for (int j = i + 1; j < _islands.Count; j++)
             {
-                int random = indices[Random.Range(0, indices.Count)];
-                // $"Facing({b.Location.x},{b.Location.y}) => {island.GetBlockFacing(b)}".Log(this);
-                if ((island.GetBlockFacing(b) & sides[random]) > 0)
-                {
-                    Bridge someBridge = TryBuildBridge(b, stepsX[random], stepsY[random]);
-                    if (someBridge != null)
-                    {
-                        someBridge.ParentIsland = island;
-                        someBridge.Facing = sides[random];
-                        bridges.Add(someBridge);
-                    }
-                }
-                indices.Remove(random);
+                bridges.Add(FindShortestBridge(_islands[i], _islands[j]));
             }
         }
 
-        // $"Overall bridges for this island: {bridges.Count}".Log(this);
+        bridges.RemoveAll(b => b == null);
+        $"bridges found: {bridges.Count}".Log();
+        bridges.Sort((b1, b2) => b1.Length() > b2.Length() ? 1 : b1.Length() == b2.Length() ? 0 : -1);
 
-        bridges.Sort(
-            (Bridge b1, Bridge b2) =>
-            {
-                return b1.Length() > b2.Length() ? 1 : b1.Length() < b2.Length() ? -1 : 0;
-            }
-        );
-
-        List<Island> builtTo = new List<Island>();
-        foreach (Bridge someBridge in bridges)
+        while (bridges.Count > 0)
         {
-            // $"Bridge length: {someBridge.Length()}".Log(this);
-            if (!builtTo.Contains(someBridge.DestIsland))
+            if (bridges.Count == 0)
+                break;
+
+            var bridge = bridges.First();
+            bridges.RemoveAt(0);
+            
+            if (DoesCreateLoop(bridge))
             {
-                builtTo.Add(someBridge.DestIsland);
-                // $"Setting bridge: {someBridge.Facing}, size({someBridge.Length()}), to island({someBridge.DestIsland.Size()})".Log(this);
-                foreach (Block b in someBridge.Blocks)
-                {
-                    b.SetBridge(someBridge.IsVertical());
-                }
+                "yes indeed".Log(this);
+                continue;
             }
+            "proceed...".Log(this);
+
+            foreach (Block b in bridge.Blocks)
+            {
+                b.SetBridge(Bridge.BridgeBlockType.CROSS);
+            }
+
+            bridge.ParentIsland.Bridges.Add(bridge);
+            bridge.DestIsland.Bridges.Add(bridge);
+        }
+    }
+
+    private bool DoesCreateLoop(Bridge bridge)
+    {
+        return RetunsToTheOrigin(bridge.DestIsland, bridge.ParentIsland, bridge);
+    }
+
+    private bool RetunsToTheOrigin(Island island, Island originIsland, Bridge lastBridge)
+    {
+        if (island == originIsland)
+            return true;
+
+        foreach (var bridge in island.Bridges)
+        {
+            if (bridge == lastBridge)
+                continue;
+
+            if (RetunsToTheOrigin(
+                bridge.DestIsland == island ? 
+                bridge.ParentIsland : 
+                bridge.DestIsland, 
+                originIsland,
+                bridge))
+                return true;
         }
 
-        foreach (Island i in builtTo)
-        {
-            BuildBridges(i);
-        }
+        return false;    
     }
 
     private void PostProcessBridges()
@@ -258,18 +289,7 @@ public class Map
         {
             if (b.IsBridge())
             {
-                int nonAirNeighbors = 0;
-                foreach (Block neigh in GetNeighbors(b))
-                {
-                    if (neigh.Type != BlockType.AIR)
-                    {
-                        nonAirNeighbors++;
-                    }
-                }
-                if (nonAirNeighbors > 2)
-                {
-                    b.SetBridge(false, true);
-                }
+                b.SetBridge(Bridge.BridgeBlockType.CROSS);
             }
         }
     }
@@ -308,7 +328,7 @@ public class Map
     {
         foreach (Block b in _ground)
         {
-            if (b.IsEmptyGround() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H) || HasNeighbor(b, BlockType.BRIDGE_C)))
+            if (b.IsEmptyGround() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H) || HasNeighbor(b, BlockType.BRIDGE_X)))
             {
                 if (Random.value > 1f - prms.forestDensity)
                 {
@@ -464,32 +484,134 @@ public class Map
         _ground = finalGround;
     }
 
-    private Bridge TryBuildBridge(Block block, int stepX, int stepY)
+    private class Tile
     {
-        List<Block> bridgeBlocks = new List<Block>();
-        Vector2Int pos = new Vector2Int(block.Location.x + stepX, block.Location.y + stepY);
-        while (IsValidLocation(pos.x, pos.y) && IsAir(pos.x, pos.y))
+        public Tile Parent { get; set; }
+        public Vector2Int Location { get; set; }
+        public int G { get; set; }
+        public int H { get; set; }
+
+        public int F => G + H;
+    }
+
+    private bool TryBuildBridge(Block b1, Block b2, out Bridge bridge)
+    {
+        bridge = null;
+
+        if (b1 == null || b2 == null)
+            return false;
+
+        if (b1.Location == b2.Location)
+            return false;
+
+        int ComputeH(Vector2Int loc1, Vector2Int loc2)
         {
-            bridgeBlocks.Add(_ground[pos.x, pos.y]);
-            pos.x += stepX;
-            pos.y += stepY;
+            return (int)(Mathf.Abs(loc1.x - loc2.x) + Mathf.Abs(loc1.y - loc2.y));
         }
-        if (IsValidLocation(pos.x, pos.y) && _ground[pos.x, pos.y].Type == BlockType.GROUND)
+
+        bridge = new Bridge();
+        bridge.ParentIsland = _islands.Where(i => i.HasBlock(b1)).FirstOrDefault();
+        bridge.DestIsland = _islands.Where(i => i.HasBlock(b2)).FirstOrDefault();
+
+        List<Tile> open = new List<Tile>();
+        List<Tile> closed = new List<Tile>();
+
+        var startTile = new Tile
         {
-            Island otherIsland = _islands.Find(i => i.HasBlock(pos.x, pos.y));
-            if (otherIsland == null)
+            Parent = null,
+            Location = b1.Location,
+            G = 0,
+            H = ComputeH(b1.Location, b2.Location)
+        };
+
+        // Initial tile
+        open.Add(startTile);
+
+        while (open.Count > 0 && open.Count < Width * Height)
+        {
+            // Find a node with the minimum F
+            int minF = int.MaxValue;
+            Tile minTile = null;
+            foreach (Tile t in open)
             {
-                $"What a HELL????!!! => x: {pos.x}, y: {pos.y}".Log(this);
+                if (t.F < minF)
+                {
+                    minTile = t;
+                    minF = t.F;
+                }
             }
-            else if (!otherIsland.IsConnected())
+
+            if (minTile == null)
             {
-                Bridge b = new Bridge();
-                b.Blocks = bridgeBlocks;
-                b.DestIsland = otherIsland;
-                return b;
+                bridge = null;
+                return false;
+            }
+
+            open.Remove(minTile);
+            closed.Add(minTile);
+
+            // Find neighboring tiles for "minimum F" tile
+            List<Tile> neighbors = new List<Tile>();
+            List<Vector2Int> checkDirections = new List<Vector2Int> 
+            {
+                Vector2Int.down,
+                Vector2Int.up,
+                Vector2Int.left,
+                Vector2Int.right,
+            };
+
+            foreach (Vector2Int dir in checkDirections)
+            {
+                var neighLocation = minTile.Location + dir;
+
+                if (!IsValidLocation(neighLocation))
+                    continue;
+
+                if (neighLocation == b2.Location)
+                {
+                    bridge.Blocks = new List<Block>();
+
+                    var finalTile = minTile;
+                    bridge.Blocks.Add(GetBlock(finalTile.Location));
+                    while (!finalTile.Parent.Equals(startTile))
+                    {
+                        finalTile = finalTile.Parent;
+                        bridge.Blocks.Add(GetBlock(finalTile.Location));
+                    }
+
+                    return true;
+                }
+
+                if (IsAir(neighLocation))
+                {
+                    neighbors.Add(new Tile
+                    {
+                        Parent = minTile,
+                        Location = neighLocation,
+                        G = minTile.G + 1,
+                        H = ComputeH(neighLocation, b2.Location),
+                    });
+                }
+            }
+
+            foreach (Tile neighbor in neighbors)
+            {
+                if (open.Where(t => t.F < neighbor.F || t.Location == neighbor.Location).Any())
+                {
+                    continue;
+                }
+
+                if (closed.Where(t => t.F < neighbor.F || t.Location == neighbor.Location).Any())
+                {
+                    continue;
+                }
+
+                open.Add(neighbor);
             }
         }
-        return null;
+
+        bridge = null;
+        return false;
     }
 
     private Block[] IdentifyIsland(int w, int h)
@@ -526,7 +648,12 @@ public class Map
         return blocks.ToArray();
     }
 
-    private bool IsValidLocation(int x, int y)
+    public bool IsValidLocation(Vector2Int vec)
+    {
+        return IsValidLocation(vec.x, vec.y);
+    }
+
+    public bool IsValidLocation(int x, int y)
     {
         return x >= 0 && y >= 0 && x < Width && y < Height;
     }
@@ -605,23 +732,5 @@ public class Map
         {
         }
         return null;
-    }
-
-    private class Bridge
-    {
-        public Island ParentIsland { get; set; }
-        public Island DestIsland { get; set; }
-        public List<Block> Blocks { get; set; }
-        public Island.BlockFacing Facing { get; set; } 
-
-        public int Length()
-        {
-            return Blocks.Count;
-        }
-
-        public bool IsVertical()
-        {
-            return (Facing & Island.BlockFacing.NORTH) > 0 || (Facing & Island.BlockFacing.SOUTH) > 0;
-        }
     }
 }
