@@ -35,10 +35,10 @@ public class Block
             Bridge.BridgeBlockType.SIDE_EAST => BlockType.BRIDGE_S_E,
             Bridge.BridgeBlockType.SIDE_SOUTH => BlockType.BRIDGE_S_S,
             Bridge.BridgeBlockType.SIDE_WEST => BlockType.BRIDGE_S_W,
-            Bridge.BridgeBlockType.CORNER_NW => BlockType.BRIDGE_C_NW,
-            Bridge.BridgeBlockType.CORNER_NE => BlockType.BRIDGE_C_NE,
-            Bridge.BridgeBlockType.CORNER_SW => BlockType.BRIDGE_C_SW,
-            Bridge.BridgeBlockType.CORNER_SE => BlockType.BRIDGE_C_SE,
+            Bridge.BridgeBlockType.CORNER_W => BlockType.BRIDGE_C_W,
+            Bridge.BridgeBlockType.CORNER_N => BlockType.BRIDGE_C_N,
+            Bridge.BridgeBlockType.CORNER_S => BlockType.BRIDGE_C_S,
+            Bridge.BridgeBlockType.CORNER_E => BlockType.BRIDGE_C_E,
             _ => BlockType.AIR
         };
     }
@@ -107,7 +107,7 @@ public class Block
         return Type == BlockType.BRIDGE_V || 
             Type == BlockType.BRIDGE_H || 
             Type == BlockType.BRIDGE_X || 
-            (Type >= BlockType.BRIDGE_S_N  && Type <= BlockType.BRIDGE_C_SW);
+            (Type >= BlockType.BRIDGE_S_N  && Type <= BlockType.BRIDGE_C_S);
     }
 
     public enum ContainmentType 
@@ -123,7 +123,7 @@ public class Block
         ISLAND_BORDER,
         BRIDGE_X,
         BRIDGE_S_N, BRIDGE_S_E, BRIDGE_S_S, BRIDGE_S_W,
-        BRIDGE_C_NE, BRIDGE_C_NW, BRIDGE_C_SE, BRIDGE_C_SW,
+        BRIDGE_C_N, BRIDGE_C_W, BRIDGE_C_E, BRIDGE_C_S,
     }
 
     public Color GetMapColor()

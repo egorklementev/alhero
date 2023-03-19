@@ -20,7 +20,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.365
+      value: 0.3625
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
@@ -30,7 +30,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.7071068
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
@@ -40,7 +40,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.7071068
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
@@ -55,7 +55,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
@@ -71,6 +71,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ReceiveShadows
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8230186594657665203, guid: 1cce7a47d59252a4faf68ec26808d1e4,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.07972722
       objectReference: {fileID: 0}
     - target: {fileID: -5885124615204890582, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
@@ -97,6 +102,11 @@ PrefabInstance:
       propertyPath: m_ReceiveShadows
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -2913886660363334059, guid: 1cce7a47d59252a4faf68ec26808d1e4,
+        type: 3}
+      propertyPath: m_ScaleInLightmap
+      value: 0.031574953
+      objectReference: {fileID: 0}
     - target: {fileID: 410701709281439301, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_Layer
@@ -110,7 +120,7 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_Name
-      value: winter_forest_bridge_we
+      value: winter_forest_bridge_ns
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
@@ -170,17 +180,17 @@ PrefabInstance:
     - target: {fileID: 4742473837712756890, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.08097421
+      value: 0.079485156
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_LODs.Array.data[1].screenRelativeHeight
-      value: 0.028367288
+      value: 0.026603898
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}
       propertyPath: m_LODs.Array.data[2].screenRelativeHeight
-      value: 0.004908246
+      value: 0.004908248
       objectReference: {fileID: 0}
     - target: {fileID: 5294418554552039427, guid: 1cce7a47d59252a4faf68ec26808d1e4,
         type: 3}

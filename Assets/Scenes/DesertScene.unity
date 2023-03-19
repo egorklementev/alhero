@@ -32,11 +32,11 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
-  m_CustomReflection: {fileID: 0}
+  m_CustomReflection: {fileID: 8900000, guid: 223a48de074299248bca4d3d2e8317c5, type: 3}
   m_Sun: {fileID: 411133215}
   m_IndirectSpecularColor: {r: 0.2997421, g: 0.3792401, b: 0.42221618, a: 1}
   m_UseRadianceAmbientProbe: 0
@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: c5d7650914ee54a41927619c963d752b,
+    type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 9a4c0fa3b971e2c4ea1e42055ee51caa,
     type: 2}
 --- !u!196 &4
@@ -2004,7 +2005,7 @@ Light:
     serializedVersion: 2
     m_Bits: 183
   m_RenderingLayerMask: 1
-  m_Lightmapping: 4
+  m_Lightmapping: 1
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1.29
@@ -4796,7 +4797,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 317.99988, y: -146}
+  m_AnchoredPosition: {x: 317.99982, y: -146}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1758510422
@@ -4938,6 +4939,14 @@ MonoBehaviour:
   - {fileID: 2293039379666247535, guid: fa027c6a32c792d4480494b565f13c5c, type: 3}
   - {fileID: 259124781310316584, guid: 37c227cab6c4148498085c7f4f842620, type: 3}
   - {fileID: 4152542562802433636, guid: 325b6bb35cc899d4ba49f198391ab7b4, type: 3}
+  - {fileID: 5617810083070254862, guid: d73ead15b8e3abd4d8b1ad7c0a14b997, type: 3}
+  - {fileID: 4372050691000837319, guid: ec57e0214da739b43b4a3dbe1e8e09a7, type: 3}
+  - {fileID: 8774372867775443600, guid: 70c5790c10c92d447a8a8753c94225e9, type: 3}
+  - {fileID: 2142278162365629590, guid: 1b1be065a9e2f30458db0301324f0157, type: 3}
+  - {fileID: 7652085527837973976, guid: 4f15381acd6282745a92b8877ce27842, type: 3}
+  - {fileID: 6100250453170761896, guid: 40e655c3c86c945479c14c8a82877595, type: 3}
+  - {fileID: 4069505616667880831, guid: b886670fd8968fc4e8e7904aa47411fb, type: 3}
+  - {fileID: 765947442204763972, guid: 8ea9e5efe9fe98b4d8f37bda1ab39328, type: 3}
   trees:
   - {fileID: 8401863657784975704, guid: aba534dec8af3ee44aea9cea8362b2f1, type: 3}
   - {fileID: 340668119019760547, guid: 4471c857aa77d634584f1fe0e79e4cef, type: 3}

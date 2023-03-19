@@ -32,11 +32,11 @@ RenderSettings:
   m_FlareFadeSpeed: 3
   m_HaloTexture: {fileID: 0}
   m_SpotCookie: {fileID: 10001, guid: 0000000000000000e000000000000000, type: 0}
-  m_DefaultReflectionMode: 0
+  m_DefaultReflectionMode: 1
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
-  m_CustomReflection: {fileID: 0}
+  m_CustomReflection: {fileID: 8900000, guid: 25b9a70c67dba7448ada5b16c656d760, type: 3}
   m_Sun: {fileID: 411133215}
   m_IndirectSpecularColor: {r: 0.08269525, g: 0.51042044, b: 0.5066471, a: 1}
   m_UseRadianceAmbientProbe: 0
@@ -4798,7 +4798,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 318, y: -146}
+  m_AnchoredPosition: {x: 317.99994, y: -146}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1758510422
@@ -4940,6 +4940,14 @@ MonoBehaviour:
   - {fileID: 2293039379666247535, guid: 74d8aba14da0acb40b7c4e885e878024, type: 3}
   - {fileID: 259124781310316584, guid: 37c227cab6c4148498085c7f4f842620, type: 3}
   - {fileID: 4152542562802433636, guid: 954ebbc82f92b9949820d8694a75b895, type: 3}
+  - {fileID: 521173643070111118, guid: fdd90c101ea8e5a40ac84133d07d0f90, type: 3}
+  - {fileID: 7722085629984173747, guid: 06b40119e5d7944418a40f4fd2c7b1a9, type: 3}
+  - {fileID: 1078005506711639724, guid: 4e92572a69a7ca9498ee2c939b6e4842, type: 3}
+  - {fileID: 2743241739083149866, guid: b636e770fbdb660498d19c7ca80ddc8f, type: 3}
+  - {fileID: 3275977937732421013, guid: 85417e575e99d464d944978645904952, type: 3}
+  - {fileID: 6889877933407444673, guid: d857d989f9f36764f80964d480d30322, type: 3}
+  - {fileID: 4579553831686182895, guid: 65a747102f9f3054e979e2e89fee37a8, type: 3}
+  - {fileID: 7546034102083883126, guid: 1aebe3395c9a3504a8990e4e1927de02, type: 3}
   trees:
   - {fileID: 6263898577228119316, guid: 3cb1bd3651239934bab224e4cbbcfe0f, type: 3}
   - {fileID: 5120028152472379267, guid: cb237b4ea4f6ccc4db18e9e36fc21fb6, type: 3}

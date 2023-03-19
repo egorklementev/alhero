@@ -241,10 +241,8 @@ public partial class Map
             
             if (DoesCreateLoop(bridge))
             {
-                "yes indeed".Log(this);
                 continue;
             }
-            "proceed...".Log(this);
 
             foreach (Block b in bridge.Blocks)
             {
@@ -289,7 +287,56 @@ public partial class Map
         {
             if (b.IsBridge())
             {
-                b.SetBridge(Bridge.BridgeBlockType.CROSS);
+                var neighbors = GetNeighbors(b);
+
+                if (neighbors.All(b => !b.IsAir()))
+                {
+                    continue;
+                }
+                else
+                {
+                    var airBlocks = neighbors.Where(n => n.IsAir()).ToList();
+
+                    if (airBlocks.Count == 2)
+                    {
+                        var air1 = airBlocks[0];
+                        var air2 = airBlocks[1];
+
+                        if (air1.Location.x == air2.Location.x ||
+                            air1.Location.y == air2.Location.y)
+                        {
+                            if (air1.Location.x == air2.Location.x)
+                                b.SetBridge(Bridge.BridgeBlockType.HORIZONTAL);
+                            else
+                                b.SetBridge(Bridge.BridgeBlockType.VERTICAL);
+                        }
+                        else
+                        {
+                            if (air1.Location.x < air2.Location.x && air1.Location.y < air2.Location.y)
+                                b.SetBridge(Bridge.BridgeBlockType.CORNER_W);
+                            else if (air1.Location.x < air2.Location.x && air1.Location.y > air2.Location.y)
+                                b.SetBridge(Bridge.BridgeBlockType.CORNER_N);
+                            else if (air1.Location.x > air2.Location.x && air1.Location.y > air2.Location.y)
+                                b.SetBridge(Bridge.BridgeBlockType.CORNER_S);
+                            else
+                                b.SetBridge(Bridge.BridgeBlockType.CORNER_E);
+                        }
+                    }
+                    else if (airBlocks.Count == 1)
+                    {
+                        var air = airBlocks[0];
+                        if (air.Location.x != b.Location.x)
+                            if (air.Location.x > b.Location.x)
+                                b.SetBridge(Bridge.BridgeBlockType.SIDE_WEST);
+                            else
+                                b.SetBridge(Bridge.BridgeBlockType.SIDE_EAST);
+                        else
+                            if (air.Location.y > b.Location.y)
+                                b.SetBridge(Bridge.BridgeBlockType.SIDE_SOUTH);
+                            else
+                                b.SetBridge(Bridge.BridgeBlockType.SIDE_NORTH);
+                    }
+                }
             }
         }
     }
