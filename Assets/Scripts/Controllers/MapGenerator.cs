@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,7 +35,7 @@ public class MapGenerator : MonoBehaviour
 
     private void Start() 
     {
-        StartCoroutine(GenerateMap());
+        GenerateMapAsync();
     }
 
     private void Update() {
@@ -45,8 +45,10 @@ public class MapGenerator : MonoBehaviour
         }
     }
 
-    public IEnumerator GenerateMap()
+    public async void GenerateMapAsync()
     {
+        logic.TogglePlayerPhysics(false);
+
         loadingSlider.gameObject.SetActive(true);
 
         foreach (Transform child in environment)
@@ -87,30 +89,26 @@ public class MapGenerator : MonoBehaviour
         mapParams.floraVariety = floras.Length;
         mapParams.trapVariety = traps.Length;
         mapParams.presetVariety = presets.Length;
+        mapParams.randomSeed = Random.Range(int.MinValue, int.MaxValue);
 
         map = new Map();
         int genAttempt = 1;
         while (true)
         {
-            try 
+            $"Map gen attempt {genAttempt}...".Log(this);
+            if (genAttempt++ > 4)
             {
-                if (genAttempt < 64)
-                {
-                    map.Generate(mapParams);
-                    logic.SetRandomPlayerPosition();
-                    break;
-                }
                 "Map generator broke, have a great day, teleporting back...".Err(this);
+                UIController.SpawnSideLine("Map has failed to generate!");
                 logic.ChangeScene("GameScene");
-                break;
             }
-            catch (UnityException uex)
+
+            await Task.Run(() => map.Generate(mapParams));
+            if (map.IsSuccess)
             {
                 logic.SetRandomPlayerPosition();
-                $"Error: {uex.ToString()}".Warn(this);
-                $"Map could not generate! Attempt {genAttempt++}. Regenerating...".Warn(this);
+                break;
             }
-            yield return null;
         }
 
         try 
@@ -247,6 +245,7 @@ public class MapGenerator : MonoBehaviour
 
         loadingSlider.gameObject.SetActive(false);
 
+        logic.TogglePlayerPhysics(true);
     }
 
     public Vector3 GetBlockSpawnLocation (Vector2Int location, float yOffset = 1.5f)
@@ -263,7 +262,7 @@ public class MapGenerator : MonoBehaviour
             block = map.GetBlock(Random.Range(1, map.Width - 1), Random.Range(1, map.Height - 1));
             iterations++;
         }
-        $"iterations: {iterations}, block: {block.Location}, {block.Type}".Log(this);
+        // $"iterations: {iterations}, block: {block.Location}, {block.Type}".Log(this);
         return GetBlockSpawnLocation(block.Location);
     }
 
@@ -289,7 +288,7 @@ public class MapGenerator : MonoBehaviour
 
     public void DebugRegenerateMap() 
     {
-        StartCoroutine(GenerateMap());
+        GenerateMapAsync();
     }
 
 }

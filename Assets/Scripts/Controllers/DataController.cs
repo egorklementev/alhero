@@ -217,7 +217,7 @@ public class DataController : MonoBehaviour
         $"Ingredient \"{id}\" added.".Log();
     }
 
-    public static Ingredient GetWeightedIngredientFromList(List<int> ingIDs)
+    public static Ingredient GetWeightedIngredientFromList(List<int> ingIDs, System.Random rand = null)
     {
         int ingID = 0;
         int sum = 0;
@@ -225,7 +225,7 @@ public class DataController : MonoBehaviour
         {
             sum += DataController.ingredients[ingHash].rarity;
         }
-        int dice = Random.Range(0, sum);
+        int dice = rand == null ? Random.Range(0, sum) : rand.Next(0, sum);
         int increment = 0;
         foreach (int ingHash in ingIDs)
         {
@@ -239,9 +239,9 @@ public class DataController : MonoBehaviour
         return ingredients[ingID];
     }
 
-    public static int GetWeightedItemFromList(List<int> ids, List<float> probs)
+    public static int GetWeightedItemFromList(List<int> ids, List<float> probs, System.Random rand = null)
     {
-        float dice = Random.value + .001f;
+        float dice = rand == null ? Random.value + .001f : (float)rand.NextDouble() + .001f;
         float accum = 0f;
         int index = -1;
         while (dice > accum)

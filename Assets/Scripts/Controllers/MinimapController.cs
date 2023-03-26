@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using System.Collections.Generic;
 
 public class MinimapController : MonoBehaviour 
@@ -8,6 +9,8 @@ public class MinimapController : MonoBehaviour
     public RectTransform heroMarker;
     public RectTransform oldmanMarker;
     public GameObject portalMarkerPref;
+    
+    [SerializeField] private GameObject oldman;
 
     [Space(15f)]
     public LogicController logic;
@@ -23,17 +26,12 @@ public class MinimapController : MonoBehaviour
             ((heroPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
             ((heroPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
 
-        Vector3 oldmanPos = logic.GetOldmanPosition();
-        if (!oldmanPos.Equals(Vector3.negativeInfinity))
+        if (oldman != null)
         {
+            Vector3 oldmanPos = logic.GetOldmanPosition();
             oldmanMarker.anchoredPosition = new Vector2(
                 ((oldmanPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
                 ((oldmanPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
-        }
-        else
-        {
-            // Oldman is dead or unavailable. Please wait.
-            oldmanMarker.gameObject.SetActive(false);
         }
     }
 

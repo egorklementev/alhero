@@ -1,8 +1,9 @@
-using UnityEngine;
 using System.Collections.Generic;
 using BlockType = Block.BlockType;
-using Random = UnityEngine.Random;
 using System.Linq;
+using System.Threading.Tasks;
+using Random = System.Random;
+using UnityEngine;
 
 public partial class Map 
 {
@@ -10,11 +11,13 @@ public partial class Map
     public int Height { get; private set; }
 
     public MapParameters Parameters { get; private set; }
+    public bool IsSuccess { get; private set; }
 
+    private const int MaxTrials = 128; // If this is exceeded - recreate all level
     private Block[,] _ground;
     private List<Island> _islands;
     private bool[,] identified;
-    private const int MaxTrials = 128; // If this is exceeded - recreate all level
+    private Random rand;
 
     public bool IsAir(int x, int y)
     {
@@ -67,6 +70,8 @@ public partial class Map
 
     public void Generate(MapParameters prms)
     {
+        rand = new Random(prms.randomSeed);
+
         Parameters = prms;
 
         Width = prms.dims.x;
@@ -96,7 +101,11 @@ public partial class Map
         GenerateTraps(prms);
         MapGenerator.loadingProgress = 0.5f;
 
-        SpawnPortals(prms);
+        if (!SpawnPortals(prms))
+        {
+            MapGenerator.loadingProgress = 0.9f;
+            IsSuccess = false;
+        }
         MapGenerator.loadingProgress = 0.6f;
 
         SpawnIngredients(prms);
@@ -115,7 +124,8 @@ public partial class Map
         // Here width & height of the map change
         GenerateOutlineBorders();
 
-        MapGenerator.loadingProgress = 0.9f;
+        MapGenerator.loadingProgress = 1f;
+        IsSuccess = true;
     }
 
     private void GenerateGroundAndAir(MapParameters prms)
@@ -193,16 +203,15 @@ public partial class Map
 
     private Bridge FindShortestBridge(Island i1, Island i2)
     {
-        int trials = (i1.GetBorderBlocks().Count + i2.GetBorderBlocks().Count) / 5;
+        int trials = (int)((i1.GetBorderBlocks().Count + i2.GetBorderBlocks().Count) * .35f);
         Bridge minBridge = null;
 
         while (trials-- > 0)
         {
-            Block b1 = i1.GetRandomBridgeStartPoint();
-            Block b2 = i2.GetRandomBridgeStartPoint();
+            Block b1 = i1.GetRandomBridgeStartPoint(rand);
+            Block b2 = i2.GetRandomBridgeStartPoint(rand);
 
-            if (!TryBuildBridge(b1, b2, out var bridge))
-                continue;
+            TryBuildBridge(b1, b2, out var bridge);
 
             if (bridge == null)
                 continue;
@@ -218,16 +227,18 @@ public partial class Map
 
     private void BuildBridges()
     {
-        List<Bridge> bridges = new List<Bridge>();
+        List<Task<Bridge>> bridgeTasks = new List<Task<Bridge>>();
         for (int i = 0; i < _islands.Count; i++)
         {
             for (int j = i + 1; j < _islands.Count; j++)
             {
-                bridges.Add(FindShortestBridge(_islands[i], _islands[j]));
+                bridgeTasks.Add(Task.FromResult(FindShortestBridge(_islands[i], _islands[j])));
             }
         }
 
-        bridges.RemoveAll(b => b == null);
+        Task.WaitAll(bridgeTasks.ToArray());
+
+        var bridges = bridgeTasks.Where(t => t.Result != null).Select(t => t.Result).ToList();
         $"bridges found: {bridges.Count}".Log();
         bridges.Sort((b1, b2) => b1.Length() > b2.Length() ? 1 : b1.Length() == b2.Length() ? 0 : -1);
 
@@ -359,16 +370,24 @@ public partial class Map
         }
     }
 
-    private void SpawnPortals(MapParameters prms)
+    private bool SpawnPortals(MapParameters prms)
     {
         foreach (LocationData ld in prms.neighborLocations)
         {
-            float dice = Random.value;
+            float dice = (float)rand.NextDouble();
             if (dice <= ld.appearanceChance && DataController.genData.potionsCooked >= ld.cookedPotionsRequired)
             {
-                GetRandomEmptyGroundBlock(1).SetPortal(ld);
+                var block = GetRandomEmptyGroundBlock(1);
+                if (block == null)
+                {
+                    return false;
+                }
+
+                block.SetPortal(ld);
             }
         }
+
+        return true;
     }
 
     private void GenerateTrees(MapParameters prms)
@@ -377,9 +396,9 @@ public partial class Map
         {
             if (b.IsEmptyGround() && !(HasNeighbor(b, BlockType.BRIDGE_V) || HasNeighbor(b, BlockType.BRIDGE_H) || HasNeighbor(b, BlockType.BRIDGE_X)))
             {
-                if (Random.value > 1f - prms.forestDensity)
+                if (rand.NextDouble() > 1f - prms.forestDensity)
                 {
-                    b.SetTree(Random.Range(0, prms.forestVariety));
+                    b.SetTree(rand.Next(0, prms.forestVariety));
                 }
             }
         }
@@ -391,9 +410,9 @@ public partial class Map
         {
             if (b.IsEmptyGround())
             {
-                if (Random.value > 1f - prms.floraDensity)
+                if (rand.NextDouble() > 1f - prms.floraDensity)
                 {
-                    b.SetFlora(Random.Range(0, prms.floraVariety));
+                    b.SetFlora(rand.Next(0, prms.floraVariety));
                 }
             }
         }
@@ -405,9 +424,9 @@ public partial class Map
         {
             if (b.IsEmptyGround())
             {
-                if (Random.value > 1f - prms.trapDensity)
+                if (rand.NextDouble() > 1f - prms.trapDensity)
                 {
-                    b.SetTrap(Random.Range(0, prms.trapVariety));
+                    b.SetTrap(rand.Next(0, prms.trapVariety));
                 }
             }
         }
@@ -417,12 +436,19 @@ public partial class Map
     {
         int min = Mathf.Min(prms.ingNumRange.x, prms.ingNumRange.y);
         int max = Mathf.Max(prms.ingNumRange.x, prms.ingNumRange.y);
-        int ingNum = Random.Range(min, max);
+        int ingNum = rand.Next(min, max);
         while (ingNum > 0)
         {   
-            GetRandomEmptyGroundBlock()
-                .SetItem(DataController.GetWeightedIngredientFromList(
-                        prms.ingredients.ToList().ConvertAll(ing => ing.Hash())).id);
+            var block = GetRandomEmptyGroundBlock();
+            if (block == null)
+            {
+                $"Failed to spawn ingredients, {ingNum} left".Warn(this);
+                return;
+            }
+
+            block.SetItem(DataController.GetWeightedIngredientFromList(
+                prms.ingredients.ToList().ConvertAll(ing => ing.Hash()), 
+                rand).id);
             ingNum--;
         }
     }
@@ -431,12 +457,21 @@ public partial class Map
     {
         int min = Mathf.Min(prms.nonIngNumRange.x, prms.nonIngNumRange.y);
         int max = Mathf.Max(prms.nonIngNumRange.x, prms.nonIngNumRange.y);
-        int nonIngNum = Random.Range(min, max);
+        int nonIngNum = rand.Next(min, max);
         while (nonIngNum > 0)
         {   
-            GetRandomEmptyGroundBlock()
-                .SetItem(DataController.GetWeightedItemFromList(
-                    prms.nonIngredients.ToList().ConvertAll(item => item.Hash()), prms.nonIngredientsRates.ToList()));
+            var block = GetRandomEmptyGroundBlock();
+            if (block == null)
+            {
+                $"Failed to spawn non-ingredients, {nonIngNum} left".Warn(this);
+                return;
+            }
+
+            block.SetItem(DataController.GetWeightedItemFromList(
+                prms.nonIngredients.ToList().ConvertAll(item => item.Hash()),
+                prms.nonIngredientsRates.ToList(),
+                rand));
+
             nonIngNum--;
         }
     }
@@ -445,24 +480,31 @@ public partial class Map
     {
         int min = Mathf.Min(prms.contNumRange.x, prms.contNumRange.y);
         int max = Mathf.Max(prms.contNumRange.x, prms.contNumRange.y);
-        int contNum = Random.Range(min, max);
+        int contNum = rand.Next(min, max);
         while (contNum > 0)
         {
             Block b = GetRandomEmptyGroundBlock(1);
+            if (b == null)
+            {
+                $"Failed to spawn all containers, {contNum} left.".Warn(this);
+                return;
+            }
+
             LabContainerItems items = new LabContainerItems();
-            items.items = new LabContainerItem[Random.Range(0, 3)];
+            items.items = new LabContainerItem[rand.Next(0, 3)];
             for (int i = 0; i < items.items.Length; i++)
             {
                 items.items[i] = new LabContainerItem(); 
                 items.items[i].id = DataController.GetWeightedIngredientFromList(
                     new List<int>(
                         new List<string>(prms.ingredients).ConvertAll(ing => ing.Hash())
-                    )
+                    ),
+                    rand
                 ).id;
             }
             b.SetContainer(
                 new ContainerData(
-                    Random.Range(0, prms.containers.Length),
+                    rand.Next(0, prms.containers.Length),
                     items
                     )
             );
@@ -472,11 +514,17 @@ public partial class Map
 
     private void SpawnEntities(MapParameters prms)
     {
-        int entCount = Random.Range(prms.entNumRange.x, prms.entNumRange.y + 1);
+        int entCount = rand.Next(prms.entNumRange.x, prms.entNumRange.y + 1);
         while (entCount-- > 0)
         {
-            GetRandomEmptyGroundBlock()
-                .SetEntity(prms.entitiesForSpawn[Random.Range(0, prms.entitiesForSpawn.Length)]);
+            var block = GetRandomEmptyGroundBlock();
+            if (block == null)
+            {
+                $"Failed to spawn entities, {entCount} left".Warn(this);
+                break;
+            }
+
+            block.SetEntity(prms.entitiesForSpawn[rand.Next(0, prms.entitiesForSpawn.Length)]);
         }
 
         // Always one oldman with his cow
@@ -485,11 +533,14 @@ public partial class Map
         GetNeighbors(oldmanSpawn)[0].SetEntity(Parameters.oldmanCowName);
 
         // Restrict the number of pigeons on the map
-        int pigeonCount = Random.Range(0, DataController.genData.maxPigeons - LogicController.ItemsToSpawnInTheLab.Count + 1);
+        int pigeonCount = rand.Next(0, DataController.genData.maxPigeons - LogicController.ItemsToSpawnInTheLab.Count + 1);
         for (int i = 0; i < pigeonCount; i++)
         {
             Block pigeonSpawn = GetRandomEmptyGroundBlock(1);
-            pigeonSpawn.SetEntity(Parameters.pigeonName);
+            if (pigeonSpawn != null)
+            {
+                pigeonSpawn.SetEntity(Parameters.pigeonName);
+            }
         }
     }
 
@@ -499,8 +550,8 @@ public partial class Map
         int presetNum = (int)(blocksNum * prms.presetDensity);
         while (presetNum-- > 0)
         {
-            var id = Random.Range(0, prms.presetVariety);
-            TryGetRandomEmptyGroundBlock(prms.presetBlockSizes[id]).SetPreset(id);
+            var id = rand.Next(0, prms.presetVariety);
+            GetRandomEmptyGroundBlock(prms.presetBlockSizes[id])?.SetPreset(id);
         }
     }
 
@@ -541,15 +592,15 @@ public partial class Map
         public int F => G + H;
     }
 
-    private bool TryBuildBridge(Block b1, Block b2, out Bridge bridge)
+    private void TryBuildBridge(Block b1, Block b2, out Bridge bridge)
     {
         bridge = null;
 
         if (b1 == null || b2 == null)
-            return false;
+            return;
 
         if (b1.Location == b2.Location)
-            return false;
+            return;
 
         int ComputeH(Vector2Int loc1, Vector2Int loc2)
         {
@@ -591,7 +642,7 @@ public partial class Map
             if (minTile == null)
             {
                 bridge = null;
-                return false;
+                return;
             }
 
             open.Remove(minTile);
@@ -626,7 +677,7 @@ public partial class Map
                         bridge.Blocks.Add(GetBlock(finalTile.Location));
                     }
 
-                    return true;
+                    return;
                 }
 
                 if (IsAir(neighLocation))
@@ -658,7 +709,7 @@ public partial class Map
         }
 
         bridge = null;
-        return false;
+        return;
     }
 
     private Block[] IdentifyIsland(int w, int h)
@@ -750,34 +801,22 @@ public partial class Map
 
     private Block GetRandomEmptyGroundBlock(int range = 0)
     {
-        int x = Random.Range(0, Width);
-        int y = Random.Range(0, Height);
+        int x = rand.Next(0, Width);
+        int y = rand.Next(0, Height);
         Block b = GetBlock(x, y);
         int trials = 0;
         while (!IsEmptyGroundArea(b.Location, range))
         {
-            x = Random.Range(0, Width);               
-            y = Random.Range(0, Height);
+            x = rand.Next(0, Width);               
+            y = rand.Next(0, Height);
             b = GetBlock(x, y);
 
             trials++;
             if (trials > MaxTrials)
             {
-                throw new UnityException($"Free ground block not found with range {range}!!!");
+                return null;
             }
         }
         return b;
-    }
-
-    private Block TryGetRandomEmptyGroundBlock(int range = 0)
-    {
-        try
-        {
-            return GetRandomEmptyGroundBlock(range);    
-        }
-        catch
-        {
-        }
-        return null;
     }
 }

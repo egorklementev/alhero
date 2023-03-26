@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Random = UnityEngine.Random;
 
 public class Island : IEnumerable {
 
@@ -59,19 +58,19 @@ public class Island : IEnumerable {
         return Array.Exists(_blocks, b => b.Location.x == x && b.Location.y == y);
     }
 
-    public Block GetRandomBridgeStartPoint()
+    public Block GetRandomBridgeStartPoint(Random rand)
     {
         var borderBlocks = GetBorderBlocks();
         int trials = borderBlocks.Count;
         var facings = new List<BlockFacing> { BlockFacing.NORTH, BlockFacing.SOUTH, BlockFacing.EAST, BlockFacing.WEST };
         while (trials-- > 0)
         {
-            Block randBorderBlock = borderBlocks[Random.Range(0, borderBlocks.Count)];
+            Block randBorderBlock = borderBlocks[rand.Next(0, borderBlocks.Count)];
 
             var facingsCopy = new List<BlockFacing>(facings);
             for (int i = 0; i < 4; i++)
             {
-                var facing = facingsCopy[Random.Range(0, facingsCopy.Count)];
+                var facing = facingsCopy[rand.Next(0, facingsCopy.Count)];
                 facingsCopy.Remove(facing);
 
                 if ((GetBlockFacing(randBorderBlock) & facing) > 0)

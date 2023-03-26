@@ -285,6 +285,14 @@ public class LogicController : MonoBehaviour
         player.transform.position = Vector3.zero;
     }
 
+    public void TogglePlayerPhysics(bool isEnabled)
+    {
+        var body = player.GetComponent<Rigidbody>();
+        body.useGravity = isEnabled;
+        body.isKinematic = !isEnabled;
+        player.GetComponent<Collider>().enabled = isEnabled;
+    }
+
     public void SetRandomPlayerPosition()
     {
         if (mapGen != null)

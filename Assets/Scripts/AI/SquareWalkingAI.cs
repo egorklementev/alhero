@@ -51,9 +51,20 @@ public class SquareWalkingAI : WalkingAI
         }
 
         _open.Add(_map[_startTile.x, _startTile.y]);
-        while (BuildPath()) 
+        int maxFramePathBuilds = 16;
+        int framePathBuilds = 0;
+        while (true) 
         {
-            yield return null;
+            if (!BuildPath())
+            {
+                break;
+            }
+
+            if (framePathBuilds++ > maxFramePathBuilds)
+            {
+                framePathBuilds = 0;
+                yield return null;
+            }
         }
         Vector3 lastPoint = transform.position;
 

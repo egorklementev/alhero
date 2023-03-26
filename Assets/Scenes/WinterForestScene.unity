@@ -25,8 +25,8 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.047, g: 0.043, b: 0.035, a: 1}
   m_AmbientIntensity: 0.76
   m_AmbientMode: 0
-  m_SubtractiveShadowColor: {r: 0.3423161, g: 0.40431035, b: 0.469, a: 0.3137255}
-  m_SkyboxMaterial: {fileID: 2100000, guid: 5a6366688b5aec740b4186781152db5c, type: 2}
+  m_SubtractiveShadowColor: {r: 0.4330189, g: 0.4563465, b: 0.4811321, a: 0.3137255}
+  m_SkyboxMaterial: {fileID: 2100000, guid: 1b2233c7d51fc5b4fb9b605e2232f547, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
   m_FlareFadeSpeed: 3
@@ -36,7 +36,7 @@ RenderSettings:
   m_DefaultReflectionResolution: 128
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 1
-  m_CustomReflection: {fileID: 8900000, guid: 223a48de074299248bca4d3d2e8317c5, type: 3}
+  m_CustomReflection: {fileID: 8900000, guid: c37992707fef85c4db0d003d78b0b90d, type: 3}
   m_Sun: {fileID: 411133215}
   m_IndirectSpecularColor: {r: 0.2997421, g: 0.3792401, b: 0.42221618, a: 1}
   m_UseRadianceAmbientProbe: 0
@@ -1965,7 +1965,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 0.5005696, g: 0.6808308, b: 0.8113208, a: 1}
+  m_Color: {r: 0.90588236, g: 0.90588236, b: 0.90588236, a: 1}
   m_Intensity: 1.07
   m_Range: 10
   m_SpotAngle: 30
@@ -3006,6 +3006,7 @@ GameObject:
   - component: {fileID: 1022900847}
   - component: {fileID: 1022900849}
   - component: {fileID: 1022900848}
+  - component: {fileID: 1022900850}
   m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
@@ -3071,6 +3072,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1022900846}
   m_CullTransparentMesh: 1
+--- !u!95 &1022900850
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1022900846}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 60d1e46848cc6d640b64f31b1311951c, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1078646083
 GameObject:
   m_ObjectHideFlags: 0
@@ -4797,7 +4818,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 317.99963, y: -146}
+  m_AnchoredPosition: {x: 317.9996, y: -146}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1758510422
@@ -5333,7 +5354,7 @@ Rigidbody:
   m_Mass: 0.75
   m_Drag: 0.5
   m_AngularDrag: 0
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 112
