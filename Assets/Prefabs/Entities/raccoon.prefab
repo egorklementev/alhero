@@ -15,11 +15,11 @@ GameObject:
   - component: {fileID: 1058604141596638297}
   - component: {fileID: 1058604141596638293}
   - component: {fileID: 1058604141596638292}
-  - component: {fileID: 1058604141596638295}
   - component: {fileID: 1058604141596638290}
   - component: {fileID: 1058604141596638289}
   - component: {fileID: 1058604141596638286}
   - component: {fileID: 1058604141596638287}
+  - component: {fileID: 2921346366953297155}
   m_Layer: 2
   m_Name: raccoon
   m_TagString: Untagged
@@ -145,26 +145,6 @@ MonoBehaviour:
   adjacentStates:
   - Walking
   wanderDistance: 50
---- !u!114 &1058604141596638295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1058604141596638301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2caccd462b773cd4ea6e6aab3fe4cf77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Walking
-  adjacentStates:
-  - Idle
-  - ItemOwner
-  moveSpeed: 50
-  colliderBounds: 3
-  Body: {fileID: 1058604141596638299}
-  RangeEnhancement: 16
 --- !u!114 &1058604141596638290
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +219,26 @@ MonoBehaviour:
   rewardText: {fileID: 0}
   potionSlot: {fileID: 0}
   barCounterAnchor: {fileID: 0}
+--- !u!114 &2921346366953297155
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1058604141596638301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b358e1a536e4394da4e907d5674b80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Walking
+  adjacentStates:
+  - Idle
+  - ItemOwner
+  moveSpeed: 50
+  colliderBounds: 3
+  Body: {fileID: 1058604141596638299}
+  RangeEnhancement: 16
 --- !u!1001 &1058604141349273319
 PrefabInstance:
   m_ObjectHideFlags: 0

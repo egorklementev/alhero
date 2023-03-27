@@ -15,8 +15,8 @@ GameObject:
   - component: {fileID: 5769453629339021629}
   - component: {fileID: 5769453629339021628}
   - component: {fileID: 5769453629339021626}
-  - component: {fileID: 5769453629339021627}
   - component: {fileID: 2905280441983487671}
+  - component: {fileID: 5507638076312417877}
   m_Layer: 2
   m_Name: oldman_cow_desert
   m_TagString: Untagged
@@ -141,26 +141,6 @@ MonoBehaviour:
   adjacentStates:
   - Idle
   - Death
---- !u!114 &5769453629339021627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5769453629339021603}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2caccd462b773cd4ea6e6aab3fe4cf77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Walking
-  adjacentStates:
-  - Idle
-  - Death
-  moveSpeed: 110
-  colliderBounds: 4
-  Body: {fileID: 5769453629339021601}
-  RangeEnhancement: 8
 --- !u!114 &2905280441983487671
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,6 +157,26 @@ MonoBehaviour:
   adjacentStates: []
   Duration: 1
   NextState: Idle
+--- !u!114 &5507638076312417877
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5769453629339021603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b358e1a536e4394da4e907d5674b80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Walking
+  adjacentStates:
+  - Idle
+  - Death
+  moveSpeed: 110
+  colliderBounds: 4
+  Body: {fileID: 5769453629339021601}
+  RangeEnhancement: 8
 --- !u!1001 &5769453629332509645
 PrefabInstance:
   m_ObjectHideFlags: 0

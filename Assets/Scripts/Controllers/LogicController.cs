@@ -267,7 +267,7 @@ public class LogicController : MonoBehaviour
         checkpointToSpawn = checkpoint;
     }
 
-    public void ChangeScene(string newScene)
+    public void ChangeScene(string newScene, bool doFadeOut = true)
     {
         for (int i = 0; i < PickedItems.Length; i++)
         {
@@ -277,7 +277,8 @@ public class LogicController : MonoBehaviour
             }
         }
         data.Autosave(); // Save all stuff before loading a new scene
-        ui.StartSceneFade(newScene, 1f);
+        MapGenerator.doTriggerFade = !doFadeOut;
+        ui.StartSceneFade(newScene, 1f, doFadeOut);
     }
 
     public void ResetPlayerPosition()

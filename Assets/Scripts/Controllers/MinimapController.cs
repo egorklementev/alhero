@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Events;
 using System.Collections.Generic;
 
 public class MinimapController : MonoBehaviour 
@@ -9,8 +8,6 @@ public class MinimapController : MonoBehaviour
     public RectTransform heroMarker;
     public RectTransform oldmanMarker;
     public GameObject portalMarkerPref;
-    
-    [SerializeField] private GameObject oldman;
 
     [Space(15f)]
     public LogicController logic;
@@ -18,20 +15,32 @@ public class MinimapController : MonoBehaviour
     private float realMapSize = 10f;
     private Vector2 mapOrigin = Vector2.zero;
     private List<GameObject> portalMarkers = new List<GameObject>();
+    private bool _minimapInitialized = false;
+
+    public void SetUpOldmanEventListeners(OldmanAI oldmanAi)
+    {
+        oldmanAi.OnDestroyActions.Add(() =>
+        {
+            oldmanMarker.gameObject.SetActive(false);
+        });
+    }
 
     private void Update() 
     {
-        Vector3 heroPos = logic.GetHeroPosition();
-        heroMarker.anchoredPosition = new Vector2(
-            ((heroPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
-            ((heroPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
-
-        if (oldman != null)
+        if (_minimapInitialized)
         {
+            Vector3 heroPos = logic.GetHeroPosition();
+            heroMarker.anchoredPosition = new Vector2(
+                ((heroPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
+                ((heroPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
+
             Vector3 oldmanPos = logic.GetOldmanPosition();
-            oldmanMarker.anchoredPosition = new Vector2(
-                ((oldmanPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
-                ((oldmanPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
+            if (oldmanPos != Vector3.negativeInfinity)
+            {
+                oldmanMarker.anchoredPosition = new Vector2(
+                    ((oldmanPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
+                    ((oldmanPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
+            }
         }
     }
 
@@ -68,6 +77,11 @@ public class MinimapController : MonoBehaviour
         mapRenderer.material.mainTexture = mapTexture;
         mapRenderer.material.SetColor("_Color", Color.white);
         mapRenderer.material.renderQueue = 2985; // Transparent-15
+
+        heroMarker.gameObject.SetActive(true);
+        oldmanMarker.gameObject.SetActive(true);
+
+        _minimapInitialized = true;
     }
 
 }

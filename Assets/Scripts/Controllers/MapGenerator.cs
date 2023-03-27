@@ -30,6 +30,7 @@ public class MapGenerator : MonoBehaviour
     public LogicController logic;
 
     public static float loadingProgress = 0f;
+    public static bool doTriggerFade = false;
 
     private Map map;
 
@@ -103,8 +104,8 @@ public class MapGenerator : MonoBehaviour
                 logic.ChangeScene("GameScene");
             }
 
-            await Task.Run(() => map.Generate(mapParams));
-            if (map.IsSuccess)
+            var result = await Task.Run(() => map.Generate(mapParams));
+            if (result)
             {
                 logic.SetRandomPlayerPosition();
                 break;
@@ -243,9 +244,18 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
+        // Tell the minimap about spawned oldman
+        if (spawner.entitiesGroup.FindNearestName("oldman", out var oldman))
+        {
+            minimap.SetUpOldmanEventListeners(oldman.GetComponent<OldmanAI>());
+        }
+
         loadingSlider.gameObject.SetActive(false);
 
         logic.TogglePlayerPhysics(true);
+
+        if (doTriggerFade)
+            UIController.TriggerFade();
     }
 
     public Vector3 GetBlockSpawnLocation (Vector2Int location, float yOffset = 1.5f)
@@ -288,6 +298,7 @@ public class MapGenerator : MonoBehaviour
 
     public void DebugRegenerateMap() 
     {
+        doTriggerFade = false;
         GenerateMapAsync();
     }
 

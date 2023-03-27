@@ -329,10 +329,10 @@ GameObject:
   - component: {fileID: 8146236249718155981}
   - component: {fileID: 8146236249718155980}
   - component: {fileID: 8146236249718156019}
-  - component: {fileID: 8146236249718156018}
   - component: {fileID: 3561237545955436116}
   - component: {fileID: 3561237545955436118}
   - component: {fileID: 3561237545955436117}
+  - component: {fileID: 9215731285351930287}
   - component: {fileID: 8146236249718156017}
   - component: {fileID: 8146236249718156016}
   m_Layer: 2
@@ -450,28 +450,6 @@ MonoBehaviour:
   adjacentStates:
   - Walking
   wanderDistance: 50
---- !u!114 &8146236249718156018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8146236249718156023}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2caccd462b773cd4ea6e6aab3fe4cf77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Walking
-  adjacentStates:
-  - Threatening
-  - Idle
-  - ItemOwner
-  - Death
-  moveSpeed: 25
-  colliderBounds: 2
-  Body: {fileID: 8146236249718156016}
-  RangeEnhancement: 16
 --- !u!114 &3561237545955436116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -523,6 +501,28 @@ MonoBehaviour:
   vOffset: 1
   force: 2
   angleOffset: 45
+--- !u!114 &9215731285351930287
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8146236249718156023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b358e1a536e4394da4e907d5674b80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Walking
+  adjacentStates:
+  - Threatening
+  - Idle
+  - ItemOwner
+  - Death
+  moveSpeed: 25
+  colliderBounds: 2
+  Body: {fileID: 8146236249718156016}
+  RangeEnhancement: 16
 --- !u!136 &8146236249718156017
 CapsuleCollider:
   m_ObjectHideFlags: 0

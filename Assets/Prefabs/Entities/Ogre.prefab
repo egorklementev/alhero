@@ -17,9 +17,9 @@ GameObject:
   - component: {fileID: 1427238829017062071}
   - component: {fileID: 1427238829017062069}
   - component: {fileID: 1427238829017062068}
-  - component: {fileID: 1242598000770782081}
   - component: {fileID: -7158319779200465678}
   - component: {fileID: 4154405087857773237}
+  - component: {fileID: 7152247124479564350}
   m_Layer: 2
   m_Name: Ogre
   m_TagString: Untagged
@@ -163,7 +163,7 @@ MonoBehaviour:
   - Walking
   alertRadius: 25
   alertPeridiocity: 5
-  wai: {fileID: 1242598000770782081}
+  wai: {fileID: 7152247124479564350}
   aai: {fileID: 1427238829017062068}
 --- !u!114 &1427238829017062068
 MonoBehaviour:
@@ -184,28 +184,6 @@ MonoBehaviour:
   - Death
   attackDuration: 1.5
   attackRange: 7
---- !u!114 &1242598000770782081
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1427238829017062063}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2caccd462b773cd4ea6e6aab3fe4cf77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Walking
-  adjacentStates:
-  - Idle
-  - Attacking
-  - MeleeAttack
-  - Death
-  moveSpeed: 100
-  colliderBounds: 5
-  Body: {fileID: 1427238829017062061}
-  RangeEnhancement: 8
 --- !u!114 &-7158319779200465678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -240,6 +218,28 @@ MonoBehaviour:
   adjacentStates: []
   Duration: 1
   NextState: Idle
+--- !u!114 &7152247124479564350
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1427238829017062063}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b358e1a536e4394da4e907d5674b80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Walking
+  adjacentStates:
+  - Idle
+  - Attacking
+  - MeleeAttack
+  - Death
+  moveSpeed: 100
+  colliderBounds: 5
+  Body: {fileID: 1427238829017062061}
+  RangeEnhancement: 8
 --- !u!1001 &1427238829363351319
 PrefabInstance:
   m_ObjectHideFlags: 0

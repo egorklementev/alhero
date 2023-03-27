@@ -1,8 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class OldmanAI : SomeAI
@@ -10,6 +10,8 @@ public class OldmanAI : SomeAI
     public const byte ITEMS_TO_SELL = 2;
 
     public int SelectedItem = -1;
+    public List<Action> OnSpawnActions = new List<Action>(); 
+    public List<Action> OnDestroyActions = new List<Action>(); 
 
     private ItemOwnerAI _itemOwnAI;
 
@@ -175,5 +177,21 @@ public class OldmanAI : SomeAI
     {
         yield return new WaitForSeconds(sec);
         _aiManager.GetAI<MagpieAI>().enabled = true;
+    }
+
+    private void OnEnable()
+    {
+        foreach (Action action in OnSpawnActions)
+        {
+            action.Invoke();
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Action action in OnDestroyActions)
+        {
+            action.Invoke();
+        }
     }
 }

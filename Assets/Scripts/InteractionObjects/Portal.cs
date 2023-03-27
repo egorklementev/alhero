@@ -38,7 +38,7 @@ public class Portal : MonoBehaviour {
         {
             other.attachedRigidbody.velocity = Vector3.zero;
             logic.SetSpawnCheckpoint(CheckpointToSpawn);
-            logic.ChangeScene(SceneToLoad);
+            logic.ChangeScene(SceneToLoad, SceneToLoad == "GameScene");
         }     
     }
 

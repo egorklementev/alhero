@@ -14006,11 +14006,11 @@ GameObject:
   - component: {fileID: 1185456071}
   - component: {fileID: 1185456075}
   - component: {fileID: 1185456074}
-  - component: {fileID: 1185456073}
   - component: {fileID: 1185456076}
   - component: {fileID: 1185456079}
   - component: {fileID: 1185456080}
   - component: {fileID: 1185456081}
+  - component: {fileID: 1185456082}
   m_Layer: 2
   m_Name: raccoon
   m_TagString: Untagged
@@ -14103,26 +14103,6 @@ MonoBehaviour:
   logic: {fileID: 467375639}
   DefaultState: Raccoon
   anim: {fileID: 1976966524}
---- !u!114 &1185456073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1185456067}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2caccd462b773cd4ea6e6aab3fe4cf77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Walking
-  adjacentStates:
-  - Idle
-  - ItemOwner
-  moveSpeed: 50
-  colliderBounds: 3
-  Body: {fileID: 1185456069}
-  RangeEnhancement: 16
 --- !u!114 &1185456074
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14230,6 +14210,26 @@ MonoBehaviour:
   rewardText: {fileID: 940574864}
   potionSlot: {fileID: 1989114691}
   barCounterAnchor: {fileID: 1698090344}
+--- !u!114 &1185456082
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1185456067}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b358e1a536e4394da4e907d5674b80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Walking
+  adjacentStates:
+  - Idle
+  - ItemOwner
+  moveSpeed: 50
+  colliderBounds: 3
+  Body: {fileID: 1185456069}
+  RangeEnhancement: 16
 --- !u!1 &1213505823
 GameObject:
   m_ObjectHideFlags: 0

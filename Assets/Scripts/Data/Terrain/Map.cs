@@ -11,7 +11,6 @@ public partial class Map
     public int Height { get; private set; }
 
     public MapParameters Parameters { get; private set; }
-    public bool IsSuccess { get; private set; }
 
     private const int MaxTrials = 128; // If this is exceeded - recreate all level
     private Block[,] _ground;
@@ -68,7 +67,7 @@ public partial class Map
         return count;
     }
 
-    public void Generate(MapParameters prms)
+    public bool Generate(MapParameters prms)
     {
         rand = new Random(prms.randomSeed);
 
@@ -84,48 +83,48 @@ public partial class Map
         MapGenerator.loadingProgress = 0f;
 
         GenerateGroundAndAir(prms);
-        MapGenerator.loadingProgress = 0.1f;
+        MapGenerator.loadingProgress = 0.05f;
 
         ProcessIslands(prms);
-        MapGenerator.loadingProgress = 0.2f;
+        MapGenerator.loadingProgress = 0.1f;
 
         BuildBridges();
         PostProcessBridges();
-        MapGenerator.loadingProgress = 0.3f;
+        MapGenerator.loadingProgress = 0.6f;
 
         GenerateIslandBorders();
-        MapGenerator.loadingProgress = 0.4f;
+        MapGenerator.loadingProgress = 0.65f;
 
         GenerateTrees(prms);
         GenerateFlora(prms);
         GenerateTraps(prms);
-        MapGenerator.loadingProgress = 0.5f;
+        MapGenerator.loadingProgress = 0.7f;
 
         if (!SpawnPortals(prms))
         {
-            MapGenerator.loadingProgress = 0.9f;
-            IsSuccess = false;
+            MapGenerator.loadingProgress = 1f;
+            return false;
         }
-        MapGenerator.loadingProgress = 0.6f;
+        MapGenerator.loadingProgress = 0.75f;
 
         SpawnIngredients(prms);
         SpawnNonIngredients(prms);
-        MapGenerator.loadingProgress = 0.7f;
-
-        SpawnContainers(prms);
         MapGenerator.loadingProgress = 0.8f;
 
-        SpawnEntities(prms);
+        SpawnContainers(prms);
         MapGenerator.loadingProgress = 0.85f;
 
-        GeneratePresets(prms);
+        SpawnEntities(prms);
         MapGenerator.loadingProgress = 0.9f;
+
+        GeneratePresets(prms);
+        MapGenerator.loadingProgress = 95f;
 
         // Here width & height of the map change
         GenerateOutlineBorders();
 
         MapGenerator.loadingProgress = 1f;
-        IsSuccess = true;
+        return true;
     }
 
     private void GenerateGroundAndAir(MapParameters prms)
@@ -201,7 +200,7 @@ public partial class Map
         );
     }
 
-    private Bridge FindShortestBridge(Island i1, Island i2)
+    private Bridge FindShortestBridge(Island i1, Island i2, float loadingIncrement)
     {
         int trials = (int)((i1.GetBorderBlocks().Count + i2.GetBorderBlocks().Count) * .35f);
         Bridge minBridge = null;
@@ -222,17 +221,25 @@ public partial class Map
             }
         }
 
+        MapGenerator.loadingProgress += loadingIncrement;
+
         return minBridge;
     }
 
     private void BuildBridges()
     {
+        float loadingStart = .1f; // Should be in range defined in the MapGenerator
+        float loadingEnd = .6f;
+
+        float loadingWhole = loadingEnd - loadingStart;
+        float loadingIncrement = loadingWhole / (_islands.Count * (_islands.Count - 1)) / 2;
+
         List<Task<Bridge>> bridgeTasks = new List<Task<Bridge>>();
         for (int i = 0; i < _islands.Count; i++)
         {
             for (int j = i + 1; j < _islands.Count; j++)
             {
-                bridgeTasks.Add(Task.FromResult(FindShortestBridge(_islands[i], _islands[j])));
+                bridgeTasks.Add(Task.FromResult(FindShortestBridge(_islands[i], _islands[j], loadingIncrement)));
             }
         }
 

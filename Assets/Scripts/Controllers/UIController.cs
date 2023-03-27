@@ -54,10 +54,20 @@ public class UIController : MonoBehaviour
     private static LinkedList<float> delaysForDeactivation = new LinkedList<float>();
     private static bool showRightPanel = false;
     private static bool triggerFadePanel = false;
+    private static bool doNotFadeOut = false;
     private static float fadeSpeed = 1f;
     private static List<(string, float)> requestedSideLines = new List<(string, float)>();
     private static List<string> entityPanelsToSpawn = new List<string>();
     private static List<string> entityPanelsToDespawn = new List<string>();
+
+    private void Start()
+    {
+        if (doNotFadeOut)
+        {
+            doNotFadeOut = false; // Reset
+            FadePanelAnim.SetBool("DoNotFadeOut", true);
+        }
+    }
 
     void Update()
     {
@@ -264,11 +274,12 @@ public class UIController : MonoBehaviour
         FadePanelAnim.Play("FadeOutLong");
     }
 
-    public void StartSceneFade(string sceneName, float delay)
+    public void StartSceneFade(string sceneName, float delay, bool doFadeOut = true)
     {
         HeroMoveController.uiTookControl = true;
         FadePanelAnim.SetTrigger("SceneChange");
         FadePanelAnim.SetFloat("fade_speed", delay);
+        UIController.doNotFadeOut = !doFadeOut;
         FadeLoadScene.sceneToLoad = sceneName;
     }
 

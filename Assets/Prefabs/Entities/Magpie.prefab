@@ -17,8 +17,8 @@ GameObject:
   - component: {fileID: 5683057215145981990}
   - component: {fileID: 365387002018280037}
   - component: {fileID: 908026014289468174}
-  - component: {fileID: -8083288365167345188}
   - component: {fileID: 6296681872511953404}
+  - component: {fileID: -3516615598765631173}
   m_Layer: 2
   m_Name: Magpie
   m_TagString: Untagged
@@ -122,6 +122,7 @@ MonoBehaviour:
   - Idle
   - Threatening
   - Walking
+  canTakeItems: 1
   vOffset: 0
   force: 3
   angleOffset: 45
@@ -183,27 +184,6 @@ MonoBehaviour:
   adjacentStates:
   - Walking
   wanderDistance: 100
---- !u!114 &-8083288365167345188
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1271252247946232047}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2caccd462b773cd4ea6e6aab3fe4cf77, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Name: Walking
-  adjacentStates:
-  - Idle
-  - Threatening
-  - Death
-  moveSpeed: 40
-  colliderBounds: 2
-  Body: {fileID: 1271252247946232042}
-  RangeEnhancement: 8
 --- !u!114 &6296681872511953404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -220,6 +200,27 @@ MonoBehaviour:
   adjacentStates: []
   Duration: 1
   NextState: Idle
+--- !u!114 &-3516615598765631173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1271252247946232047}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b358e1a536e4394da4e907d5674b80f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Name: Walking
+  adjacentStates:
+  - Idle
+  - Threatening
+  - Death
+  moveSpeed: 40
+  colliderBounds: 2
+  Body: {fileID: 1271252247946232042}
+  RangeEnhancement: 8
 --- !u!1001 &1271252248484430741
 PrefabInstance:
   m_ObjectHideFlags: 0
