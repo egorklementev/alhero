@@ -202,27 +202,42 @@ public partial class Map
 
     private Bridge FindShortestBridge(Island i1, Island i2, float loadingIncrement)
     {
-        float islandBlocksToTry = .15f; // Greatly impacts on game's performance
-        int trials = (int)((i1.GetBorderBlocks().Count + i2.GetBorderBlocks().Count) * islandBlocksToTry);
-        Bridge minBridge = null;
+        int iBlocks1 = i1.GetBorderBlocks().Count;
+        int iBlocks2 = i2.GetBorderBlocks().Count;
+        int trials = (int)((iBlocks1 + iBlocks2) * Parameters.bridgesAccuracy); // High impact on performance
+        loadingIncrement /= trials;
 
+        Task<Bridge>[] bridgeCandidates = new Task<Bridge>[trials];
+
+        // We do not have to try every block, just a portion of border blocks
+        // It has good approximation
         while (trials-- > 0)
         {
             Block b1 = i1.GetRandomBridgeStartPoint(rand);
             Block b2 = i2.GetRandomBridgeStartPoint(rand);
 
-            TryBuildBridge(b1, b2, out var bridge);
-
-            if (bridge == null)
-                continue;
-
-            if (minBridge == null || bridge.Length() < minBridge.Length())
-            {
-                minBridge = bridge;
-            }
+            bridgeCandidates[trials] = Task.FromResult(TryBuildBridge(b1, b2, loadingIncrement));
         }
 
-        MapGenerator.loadingProgress += loadingIncrement;
+        Task.WaitAll(bridgeCandidates.ToArray());
+
+        var bridges = bridgeCandidates.Select(t => t.Result).Where(b => b != null).ToList();
+        if (bridges.Count == 0)
+        {
+            return null;
+        }
+        
+        Bridge minBridge = null;
+        int minLength = int.MaxValue;
+        foreach (Bridge b in bridges)
+        {
+            int length = b.Length();
+            if (length < minLength)
+            {
+                minLength = length;
+                minBridge = b;
+            }
+        }
 
         return minBridge;
     }
@@ -233,7 +248,7 @@ public partial class Map
         float loadingEnd = .6f;
 
         float loadingWhole = loadingEnd - loadingStart;
-        float loadingIncrement = loadingWhole / (_islands.Count * (_islands.Count - 1)) / 2;
+        float loadingIncrement = loadingWhole / ((_islands.Count * (_islands.Count - 1)) / 2);
 
         List<Task<Bridge>> bridgeTasks = new List<Task<Bridge>>();
         for (int i = 0; i < _islands.Count; i++)
@@ -600,22 +615,22 @@ public partial class Map
         public int F => G + H;
     }
 
-    private void TryBuildBridge(Block b1, Block b2, out Bridge bridge)
+    private Bridge TryBuildBridge(Block b1, Block b2, float loadingIncr)
     {
-        bridge = null;
+        MapGenerator.loadingProgress += loadingIncr;
 
         if (b1 == null || b2 == null)
-            return;
+            return null;
 
         if (b1.Location == b2.Location)
-            return;
+            return null;
 
         int ComputeH(Vector2Int loc1, Vector2Int loc2)
         {
             return (int)(Mathf.Abs(loc1.x - loc2.x) + Mathf.Abs(loc1.y - loc2.y));
         }
 
-        bridge = new Bridge();
+        var bridge = new Bridge();
         bridge.ParentIsland = _islands.Where(i => i.HasBlock(b1)).FirstOrDefault();
         bridge.DestIsland = _islands.Where(i => i.HasBlock(b2)).FirstOrDefault();
 
@@ -649,8 +664,7 @@ public partial class Map
 
             if (minTile == null)
             {
-                bridge = null;
-                return;
+                return null;
             }
 
             open.Remove(minTile);
@@ -685,7 +699,7 @@ public partial class Map
                         bridge.Blocks.Add(GetBlock(finalTile.Location));
                     }
 
-                    return;
+                    return bridge;
                 }
 
                 if (IsAir(neighLocation))
@@ -716,8 +730,7 @@ public partial class Map
             }
         }
 
-        bridge = null;
-        return;
+        return null;
     }
 
     private Block[] IdentifyIsland(int w, int h)

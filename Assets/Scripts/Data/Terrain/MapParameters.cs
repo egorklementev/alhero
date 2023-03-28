@@ -10,6 +10,7 @@ public class MapParameters
     public float scale;
     public float exponent;
     public int islandSizeThreshold;
+    [Range(.05f, .5f)] public float bridgesAccuracy;
     public float blockSize;
     public int forestVariety;
     public float forestDensity;
