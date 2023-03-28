@@ -267,6 +267,11 @@ public class LogicController : MonoBehaviour
         checkpointToSpawn = checkpoint;
     }
 
+    public void ChangeScene(string newScene)
+    {
+        ChangeScene(newScene, true);
+    }
+
     public void ChangeScene(string newScene, bool doFadeOut = true)
     {
         for (int i = 0; i < PickedItems.Length; i++)

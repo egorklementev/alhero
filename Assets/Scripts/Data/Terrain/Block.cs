@@ -106,8 +106,7 @@ public class Block
     {
         return Type == BlockType.BRIDGE_V || 
             Type == BlockType.BRIDGE_H || 
-            Type == BlockType.BRIDGE_X || 
-            (Type >= BlockType.BRIDGE_S_N  && Type <= BlockType.BRIDGE_C_S);
+            (Type >= BlockType.BRIDGE_X  && Type <= BlockType.BRIDGE_C_S);
     }
 
     public enum ContainmentType 
@@ -125,20 +124,4 @@ public class Block
         BRIDGE_S_N, BRIDGE_S_E, BRIDGE_S_S, BRIDGE_S_W,
         BRIDGE_C_N, BRIDGE_C_W, BRIDGE_C_E, BRIDGE_C_S,
     }
-
-    public Color GetMapColor()
-    {
-        switch (Type) 
-        {
-            case BlockType.GROUND:
-                return new Color(.1f, .7f, .05f, 1f);
-            case BlockType.BRIDGE_H:
-            case BlockType.BRIDGE_V:
-            case BlockType.BRIDGE_X:
-                return new Color(.7f, .55f, .05f, 1f);
-            default:
-                return Color.clear;
-        }
-    }
-
 }

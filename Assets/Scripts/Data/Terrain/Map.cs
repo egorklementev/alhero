@@ -202,7 +202,8 @@ public partial class Map
 
     private Bridge FindShortestBridge(Island i1, Island i2, float loadingIncrement)
     {
-        int trials = (int)((i1.GetBorderBlocks().Count + i2.GetBorderBlocks().Count) * .35f);
+        float islandBlocksToTry = .15f; // Greatly impacts on game's performance
+        int trials = (int)((i1.GetBorderBlocks().Count + i2.GetBorderBlocks().Count) * islandBlocksToTry);
         Bridge minBridge = null;
 
         while (trials-- > 0)
@@ -825,5 +826,24 @@ public partial class Map
             }
         }
         return b;
+    }
+
+    public Color GetBlockColor(int x, int y)
+    {
+        Block b = GetBlock(x, y);
+
+        if (b.Type == BlockType.GROUND)
+        {
+            return Parameters.blockColors[
+                b.CntmntType == Block.ContainmentType.EMPTY 
+                || b.CntmntType == Block.ContainmentType.FLORA ? 0 : 1];
+        }
+
+        if (b.IsBridge())
+        {
+            return Parameters.blockColors[2];
+        }
+
+        return Color.clear;
     }
 }

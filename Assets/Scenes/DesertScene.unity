@@ -254,13 +254,13 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32840023}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1818007872}
   m_Father: {fileID: 1453561517}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
@@ -1300,7 +1300,7 @@ RectTransform:
   - {fileID: 1249167946}
   - {fileID: 347952116}
   m_Father: {fileID: 1453561517}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
@@ -2062,6 +2062,42 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &532729135
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 532729136}
+  m_Layer: 5
+  m_Name: container_panels
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &532729136
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 532729135}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -0.000167246}
+  m_LocalScale: {x: 1.0007792, y: 1.0007792, z: 1.0007792}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1453561517}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -0.00024414062}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &563026858
 GameObject:
   m_ObjectHideFlags: 0
@@ -4024,7 +4060,7 @@ MonoBehaviour:
   - {fileID: 3639953085000846316, guid: afbf8e639078988479599041737bb552, type: 3}
   - {fileID: 3639953085000846316, guid: 8be4965ae82450740b54ecfc7d4596a4, type: 3}
   - {fileID: 3639953085000846316, guid: 2125e6b53deb3f944a63bcf88eefbbb7, type: 3}
-  sidePanel: {fileID: 1453561514}
+  sidePanel: {fileID: 532729135}
   containerUIGroups:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
   - {fileID: 635291360127474127, guid: 640798c46bfe55b43aeac3f91018546e, type: 3}
@@ -4169,8 +4205,9 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 32840024}
   - {fileID: 321345946}
+  - {fileID: 532729136}
+  - {fileID: 32840024}
   m_Father: {fileID: 375346025}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -5033,12 +5070,23 @@ MonoBehaviour:
       Color: {r: 0.13627625, g: 0.5471698, b: 0.16603927, a: 0.5803922}
       cookedPotionsRequired: 0
       appearanceChance: 1
+    - SceneToLoad: WinterForestScene
+      LabelToShow: Winter Forest
+      Checkpoint: none
+      Color: {r: 0.5548416, g: 0.6446107, b: 0.6886792, a: 0.5803922}
+      cookedPotionsRequired: 0
+      appearanceChance: 1
     oldmanName: oldman_desert
     oldmanCowName: oldman_cow_desert
     pigeonName: pigeon_desert
     presetVariety: 1
     presetDensity: 0.01
     presetBlockSizes: 01000000
+    randomSeed: 0
+    blockColors:
+    - {r: 0.8396226, g: 0.765214, b: 0.22495545, a: 1}
+    - {r: 0.8679245, g: 0.657055, b: 0.2652901, a: 1}
+    - {r: 0.4433962, g: 0.29513174, b: 0.2191883, a: 0}
   minimap: {fileID: 1883622038}
   loadingSlider: {fileID: 386484055}
   spawner: {fileID: 1415301579}

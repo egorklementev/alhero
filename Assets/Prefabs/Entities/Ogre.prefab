@@ -183,7 +183,7 @@ MonoBehaviour:
   - MeleeAttack
   - Death
   attackDuration: 1.5
-  attackRange: 7
+  attackRange: 9
 --- !u!114 &-7158319779200465678
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -34,4 +34,5 @@ public class MapParameters
     public float presetDensity;
     public int[] presetBlockSizes;
     public int randomSeed;
+    public Color[] blockColors;
 }

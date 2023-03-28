@@ -59,7 +59,7 @@ public class MinimapController : MonoBehaviour
         {
             for (int h = 0; h < map.Height; h++)
             {
-                mapTexture.SetPixel(w, h, map.GetBlock(w, h).GetMapColor());
+                mapTexture.SetPixel(w, h, map.GetBlockColor(w, h));
 
                 if (map.GetBlock(w, h).CntmntType == Block.ContainmentType.PORTAL)
                 {
