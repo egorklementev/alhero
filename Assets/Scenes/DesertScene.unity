@@ -5030,6 +5030,7 @@ MonoBehaviour:
     scale: 4.5
     exponent: 0.265
     islandSizeThreshold: 32
+    bridgesAccuracy: 0.361
     blockSize: 3
     forestVariety: 5
     forestDensity: 0.015

@@ -5005,8 +5005,12 @@ MonoBehaviour:
   - {fileID: 8155801491082638957, guid: d9ac4913abbe5594ea95bf19ecda90fa, type: 3}
   - {fileID: 6493735379170653813, guid: 3381b8d57295bec43acd3fc8d2a989f4, type: 3}
   - {fileID: 6439714530372864334, guid: 2cfb9448f0c634342831f06a79880d9a, type: 3}
-  trees: []
-  treeOffsts: []
+  trees:
+  - {fileID: 4569229581049782921, guid: 129c562101bce5c41a15ed924e3fe50f, type: 3}
+  - {fileID: 2384620621409268298, guid: a5bb428284a4b934a820fc648573c2b4, type: 3}
+  treeOffsts:
+  - 4.25
+  - 9
   floras: []
   floraOffsts: []
   traps: []
@@ -5025,9 +5029,10 @@ MonoBehaviour:
     scale: 4.5
     exponent: 0.265
     islandSizeThreshold: 8
+    bridgesAccuracy: 0.099
     blockSize: 3
-    forestVariety: 0
-    forestDensity: 0
+    forestVariety: 2
+    forestDensity: 0.15
     floraVariety: 0
     floraDensity: 0
     trapVariety: 0

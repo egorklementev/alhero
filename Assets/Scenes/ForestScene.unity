@@ -97,7 +97,8 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 112000000, guid: e9cf648f610889643ab574681e33cd14,
+    type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 9a4c0fa3b971e2c4ea1e42055ee51caa,
     type: 2}
 --- !u!196 &4
@@ -5058,7 +5059,7 @@ MonoBehaviour:
     scale: 4.5
     exponent: 0.265
     islandSizeThreshold: 16
-    bridgesAccuracy: 0.19
+    bridgesAccuracy: 0.167
     blockSize: 3
     forestVariety: 0
     forestDensity: 0.057

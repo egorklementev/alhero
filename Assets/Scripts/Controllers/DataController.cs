@@ -244,7 +244,7 @@ public class DataController : MonoBehaviour
         float dice = rand == null ? Random.value + .001f : (float)rand.NextDouble() + .001f;
         float accum = 0f;
         int index = -1;
-        while (dice > accum)
+        while (dice > accum && index + 1 < probs.Count)
         {
             accum += probs[++index];
         }
