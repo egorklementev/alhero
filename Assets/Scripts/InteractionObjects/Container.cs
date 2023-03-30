@@ -21,7 +21,7 @@ public class Container : MonoBehaviour
     {
         inventory = new ItemUI[invSize];
 
-        SetLocked(!isUnlocked);
+        // SetLocked(!isUnlocked);
     }
 
     public void SetLocked(bool isLocked)
@@ -33,6 +33,7 @@ public class Container : MonoBehaviour
         if (isUnlocked && keyVisuals != null)
         {
             keyVisuals.GetComponent<Animator>().SetTrigger("destroy");
+            keyVisuals = null;
         }
 
         if (!isUnlocked && unlockingKeyVisualsPrefab != null)
