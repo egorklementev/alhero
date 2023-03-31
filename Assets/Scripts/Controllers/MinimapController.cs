@@ -19,6 +19,11 @@ public class MinimapController : MonoBehaviour
 
     public void SetUpOldmanEventListeners(OldmanAI oldmanAi)
     {
+        if (oldmanAi == null)
+        {
+            return;
+        }
+
         oldmanAi.OnDestroyActions.Add(() =>
         {
             oldmanMarker.gameObject.SetActive(false);

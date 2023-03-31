@@ -63,8 +63,8 @@ public class ItemWorld : AbstractItem
 
     private void Update()
     {
-        anim.SetBool("IsPickedUp", isPickedUp); // This is bad, I know... However, I want to finish this fucking game!!!
         anim.SetInteger("Slot", slot);
+        anim.SetBool("IsPickedUp", isPickedUp); // This is bad, I know... However, I want to finish this fucking game!!!
     }
 
     public void SetPickedUp(bool pickedUp, int newSlot = -1, GameObject newOwner = null, float offset = 0f)
