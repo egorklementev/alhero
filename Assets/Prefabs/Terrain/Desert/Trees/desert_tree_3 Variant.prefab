@@ -225,12 +225,12 @@ PrefabInstance:
     - target: {fileID: 4742473837712756890, guid: e9abe30d5144e8148b9dd0b69b34db89,
         type: 3}
       propertyPath: m_LODs.Array.data[0].screenRelativeHeight
-      value: 0.13098818
+      value: 0.06707594
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: e9abe30d5144e8148b9dd0b69b34db89,
         type: 3}
       propertyPath: m_LODs.Array.data[1].screenRelativeHeight
-      value: 0.040186387
+      value: 0.028611936
       objectReference: {fileID: 0}
     - target: {fileID: 6660712633169369947, guid: e9abe30d5144e8148b9dd0b69b34db89,
         type: 3}
