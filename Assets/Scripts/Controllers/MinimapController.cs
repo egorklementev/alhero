@@ -12,6 +12,8 @@ public class MinimapController : MonoBehaviour
     [Space(15f)]
     public LogicController logic;
 
+    [SerializeField] private Vector2 markersOffset;
+
     private float realMapSize = 10f;
     private Vector2 mapOrigin = Vector2.zero;
     private List<GameObject> portalMarkers = new List<GameObject>();
@@ -36,15 +38,15 @@ public class MinimapController : MonoBehaviour
         {
             Vector3 heroPos = logic.GetHeroPosition();
             heroMarker.anchoredPosition = new Vector2(
-                ((heroPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
-                ((heroPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
+                ((heroPos.x - mapOrigin.x) / realMapSize) * mapSize + markersOffset.x, 
+                ((heroPos.z - mapOrigin.y) / realMapSize) * mapSize + markersOffset.y);
 
             Vector3 oldmanPos = logic.GetOldmanPosition();
             if (oldmanPos != Vector3.negativeInfinity)
             {
                 oldmanMarker.anchoredPosition = new Vector2(
-                    ((oldmanPos.x - mapOrigin.x) / realMapSize) * mapSize + 10f, 
-                    ((oldmanPos.z - mapOrigin.y) / realMapSize) * mapSize + 10f);
+                    ((oldmanPos.x - mapOrigin.x) / realMapSize) * mapSize + markersOffset.x, 
+                    ((oldmanPos.z - mapOrigin.y) / realMapSize) * mapSize + markersOffset.y);
             }
         }
     }
@@ -70,9 +72,8 @@ public class MinimapController : MonoBehaviour
                 {
                     GameObject marker = Instantiate(portalMarkerPref, transform as RectTransform);
                     (marker.transform as RectTransform).anchoredPosition = new Vector2(
-                        ((float)w / map.Width) * mapSize,
-                        ((float)h / map.Height) * mapSize
-                    );
+                        ((float)w / map.Width)  * mapSize + markersOffset.x,
+                        ((float)h / map.Height) * mapSize + markersOffset.y);
                     portalMarkers.Add(marker);
                 }
             }
