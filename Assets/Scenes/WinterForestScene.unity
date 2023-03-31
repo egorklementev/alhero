@@ -69762,7 +69762,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ed2c3e829134b4295f564a553b3615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationName: DESERT
+  locationName: WINTER_FOREST
   debugGeneral:
     seed: 0
     locationGenerations: 0

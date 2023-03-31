@@ -102,6 +102,7 @@ public class OldmanAI : SomeAI
             _aiManager.Transition("ItemOwner");
 
             // Reset both items
+            SelectedItem = -1;
             DataController.UpdateOldmanItems();
             UpdateFields();
         }
