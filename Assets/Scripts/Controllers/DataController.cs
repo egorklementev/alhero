@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.IO;
 using Random = UnityEngine.Random;
+using SysRandom = System.Random;
 using System.Linq;
 
 public class DataController : MonoBehaviour
@@ -37,6 +38,7 @@ public class DataController : MonoBehaviour
     public static Dictionary<int, Ingredient> ingredients;
     public static Dictionary<int, LabContainerItems> labContainers;
     public static int newSeed = int.MaxValue;
+    public static SysRandom random = new SysRandom();
 
 
     public const int bootleShapesNumber = 4;
@@ -49,6 +51,7 @@ public class DataController : MonoBehaviour
     void Awake()
     {
         Application.targetFrameRate = 60;
+        random = new SysRandom();
 
         string[] folders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
         string[] files = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
@@ -163,16 +166,16 @@ public class DataController : MonoBehaviour
 
     public static Recipe CreateNewRecipe(Recipe rec)
     {
-        return CreateNewRecipe(rec.mistakes_allowed, rec.ingredient_seq);
+        return CreateNewRecipe(rec.mistakes_allowed, rec.ingredient_seq, rec.ingredient_known);
     }
 
-    public static Recipe CreateNewRecipe(int mistakesAllowed, params int[] ingredients)
+    public static Recipe CreateNewRecipe(int mistakesAllowed, int[] ingredients, bool[] isKnown)
     {
-        Recipe newRecipe = new Recipe(mistakesAllowed, ingredients);
+        Recipe newRecipe = new Recipe(mistakesAllowed, ingredients, isKnown);
         int id = newRecipe.GetID();
         try
         {
-            recipes.Add(id, new Recipe(mistakesAllowed, ingredients));
+            recipes.Add(id, new Recipe(mistakesAllowed, ingredients, isKnown));
             $"New recipe created: {newRecipe.GetID()}".Log();
         }
         catch (ArgumentException)
@@ -252,24 +255,26 @@ public class DataController : MonoBehaviour
         return ids[index];
     }
 
-    public static Recipe GenerateRandomRecipe(float maxComplexity, int ingNum = 0, int trials = 16)
+    public static Recipe GenerateRandomRecipe(float estimateComplexity, int ingNum = 0, int trials = 16)
     {
-        int maxIngredients = ingNum == 0 ? ingredients.Count : ingNum;
-        int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
+        int maxIngredients = ingNum == 0 ? (int)(estimateComplexity * 2f) : ingNum;
         ingNum = Random.Range(2, maxIngredients + 1);
+        int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
         int[] ings = new int[ingNum];
+        bool[] isIngKnown = new bool[ingNum];
         List<int> ingIDs = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
 
         for (int i = 0; i < ingNum; i++)
         {
             ings[i] = ingIDs[Random.Range(0, ingIDs.Count)];
+            isIngKnown[i] = Random.value > 1f - (ingredients[ings[i]].rarity / 1000f);
         }
-        Recipe rec = new Recipe(mistakes, ings);
-        if (rec.GetComplexity() > maxComplexity || HasOverlaps(rec))
+        Recipe rec = new Recipe(mistakes, ings, isIngKnown);
+        if (rec.GetComplexity() > estimateComplexity || HasOverlaps(rec))
         {
             if (trials > 0)
             {
-                rec = GenerateRandomRecipe(maxComplexity, ingNum, trials - 1);
+                rec = GenerateRandomRecipe(estimateComplexity, ingNum, trials - 1);
             }
         }
 
@@ -444,7 +449,7 @@ public class DataController : MonoBehaviour
     {
         foreach (Recipe r in dRec)
         {
-            CreateNewRecipe(r.mistakes_allowed, r.ingredient_seq);
+            CreateNewRecipe(r.mistakes_allowed, r.ingredient_seq, r.ingredient_known);
         }
     }
 

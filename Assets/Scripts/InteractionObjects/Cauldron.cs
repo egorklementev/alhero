@@ -113,15 +113,7 @@ public class Cauldron : MonoBehaviour
                                     // Unlock ingredient if it is correct
                                     if (curIng.id == potentialRecipe.ingredient_seq[inventory.Count - 1])
                                     {
-                                        try
-                                        {
-                                            DataController.ingredients[curIng.id].hasBeenUsed = true;
-                                            UIController.SpawnSideLine("New ingredient discovered!!!");
-                                        }
-                                        catch
-                                        {
-                                            $"No ingredient with id ({curIng.id}) found!!!".Warn(this);
-                                        }
+                                        potentialRecipe.ingredient_known[inventory.Count - 1] = true;
                                     }
 
                                     // Spawn item
@@ -188,7 +180,7 @@ public class Cauldron : MonoBehaviour
                                         RandomB(potionData.ingredients), 
                                         AverageAlpha(potionData.ingredients), 
                                         "none",
-                                        potionData).hasBeenUsed = true;
+                                        potionData);
 
                                     DataController.genData.potionsCooked++;
 
@@ -219,15 +211,7 @@ public class Cauldron : MonoBehaviour
                             // Unlock ingredient if it is correct
                             if (curIng.id == potentialRecipe.ingredient_seq[inventory.Count - 1])
                             {
-                                try
-                                {
-                                    DataController.ingredients[curIng.id].hasBeenUsed = true;
-                                    UIController.SpawnSideLine("New ingredient discovered!!!");
-                                }
-                                catch
-                                {
-                                    $"No ingredient with id ({curIng.id}) found!!!".Warn(this);
-                                }
+                                potentialRecipe.ingredient_known[inventory.Count - 1] = true;
                             }
 
                             "Waiting for the next ingredient...".Log(this);

@@ -99,7 +99,7 @@ public class RecipeBook : MonoBehaviour
                 index = 0;
                 foreach (Ingredient ing in DataController.ingredients.Values)
                 {
-                    if (ing.hasBeenUsed)
+                    if (ing.hasBeenDiscovered)
                     {
                         Transform ingEntry = Instantiate(bookItem, scrollContent.transform).transform;
                         ItemUI uiItem = spawner.absItems.Find(item => item.id == ing.id && item is ItemUI) as ItemUI;
@@ -218,8 +218,6 @@ public class RecipeBook : MonoBehaviour
 
         Ingredient ing = DataController.ingredients[uiItem.id];
 
-        if (ing.hasBeenUsed)
-        {
             // Clear previous content
             foreach (Transform t in scrollContent.transform)
             {
@@ -251,7 +249,6 @@ public class RecipeBook : MonoBehaviour
                 $"Cooldown: {ing.cooldown:F1} seconds" +
                 $"{Environment.NewLine}{Environment.NewLine}" +
                 $"Chance to break a potion: {(ing.breakChance * 100f):F1} %";
-        }
     }
 
     public void OnRecipeClicked(int id)
@@ -280,7 +277,7 @@ public class RecipeBook : MonoBehaviour
                 Ingredient i = DataController.ingredients[ing_id];
                 Transform ing = Instantiate(recipeIngItem, scrollContent.transform).transform;
                 Transform slot = ing.Find("Slot");
-                if (i.hasBeenUsed)
+                if (rec.IsIngredientKnown(ing_id))
                 {
                     slot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(ing_id, true));
                     ItemUI uiItem = spawner.SpawnItem<ItemUI>(ing_id, slot);

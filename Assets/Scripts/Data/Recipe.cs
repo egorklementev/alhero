@@ -1,13 +1,18 @@
+using System;
+using System.Linq;
+
 [System.Serializable]
 public class Recipe : GameDataEntry
 {
     public int[] ingredient_seq;
+    public bool[] ingredient_known;
     public int mistakes_allowed;
     public bool is_unlocked;
 
-    public Recipe(int mistakesAllowed, params int[] ingredients)
+    public Recipe(int mistakesAllowed, int[] ids, bool[] isKnown)
     {
-        ingredient_seq = ingredients;
+        ingredient_seq = ids;
+        ingredient_known = isKnown;
         mistakes_allowed = mistakesAllowed;
         is_unlocked = false;
         id = GetID();
@@ -17,12 +22,14 @@ public class Recipe : GameDataEntry
     /// 0 - easiest recipe, L - hardest
     public float GetComplexity()
     {
-        int accum = 0;
-        foreach (int i in ingredient_seq)
+        int accum = 500 * ingredient_seq.Length;
+        for (int i = 0; i < ingredient_seq.Length; i++)
         {
-            accum += DataController.ingredients[i].rarity;
+            var ingId = ingredient_seq[i];
+            accum += DataController.ingredients[ingId].rarity;
+            accum -= ingredient_known[i] ? 0 : 500;
         }
-        return (1f - (float) accum / (1000f * ingredient_seq.Length)) * ingredient_seq.Length;
+        return (1f - (float) accum / (1500f * ingredient_seq.Length)) * ingredient_seq.Length;
     }
 
     public int GetID()
@@ -33,5 +40,10 @@ public class Recipe : GameDataEntry
             id += i.ToString() + "_";
         }
         return id.Hash();
+    }
+
+    public bool IsIngredientKnown(int ingId)
+    {
+        return ingredient_known[Array.IndexOf(ingredient_seq, ingId)];
     }
 }
