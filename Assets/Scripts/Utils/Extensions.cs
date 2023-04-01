@@ -67,4 +67,19 @@ public static class Extensions
         result = null;
         return false;
     }
+
+    public static float Range(this System.Random random, float min, float max)
+    {
+        return (float)(min + (max - min) * random.NextDouble());
+    }
+
+    public static int Range(this System.Random random, int min, int maxExclusive)
+    {
+        return random.Next(min, maxExclusive);
+    }
+
+    public static float Value(this System.Random random)
+    {
+        return (float)random.NextDouble();
+    }
 }

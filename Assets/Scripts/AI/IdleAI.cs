@@ -1,4 +1,5 @@
 using UnityEngine;
+using SysRandom = System.Random;
 
 public class IdleAI : SomeAI 
 {
@@ -9,7 +10,7 @@ public class IdleAI : SomeAI
 
     public override void PrepareAction()
     {
-        _idle = Random.Range(idleTimeRange.x, idleTimeRange.y);
+        _idle = DataController.random.Range(idleTimeRange.x, idleTimeRange.y);
     }
 
     public override void Act()
@@ -19,7 +20,7 @@ public class IdleAI : SomeAI
             _idle -= Time.fixedDeltaTime;
             if (_idle < 0f)
             {
-                _aiManager.Transition(statesToSwitchTo[Random.Range(0, statesToSwitchTo.Length)]);
+                _aiManager.Transition(statesToSwitchTo[DataController.random.Range(0, statesToSwitchTo.Length)]);
             }
         }
     }

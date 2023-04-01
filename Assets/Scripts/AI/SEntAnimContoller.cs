@@ -21,9 +21,9 @@ public class SEntAnimContoller : MonoBehaviour
 
         if (timer < 0f)
         {
-            if (Random.value < animationChance)
+            if (DataController.random.Value() < animationChance)
             {
-                anim.Play(animationClips[Random.Range(0, animationClips.Length)]);
+                anim.Play(animationClips[DataController.random.Range(0, animationClips.Length)]);
             } 
             timer = animationTimer;
         }

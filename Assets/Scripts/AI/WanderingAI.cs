@@ -7,8 +7,8 @@ public class WanderingAI : SomeAI
     private Vector3 _destination;
     public override void PrepareAction()
     {
-        float x = Random.value * wanderDistance - wanderDistance / 2f; 
-        float z = Random.value * wanderDistance - wanderDistance / 2f;
+        float x = DataController.random.Value() * wanderDistance - wanderDistance / 2f; 
+        float z = DataController.random.Value() * wanderDistance - wanderDistance / 2f;
         _destination = new Vector3(x, 0f, z) + transform.position;
     }
 

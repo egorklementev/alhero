@@ -10,8 +10,8 @@ public class RotatingAI : SomeAI
     public override void PrepareAction()
     {
         _initialRotation = transform.rotation.eulerAngles.y;
-        _desiredRotation = transform.rotation.eulerAngles.y + (Random.Range(0f, 90f) - 45f);
-        _rotationFramesAmount = Random.Range(30, 60);
+        _desiredRotation = transform.rotation.eulerAngles.y + (DataController.random.Range(0f, 90f) - 45f);
+        _rotationFramesAmount = DataController.random.Range(30, 60);
         _framesOfRotation = 0;
     }
 
