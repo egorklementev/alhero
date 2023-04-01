@@ -10,17 +10,35 @@ public static class Extensions
     
     public static void Err(this string msg, object obj = null, string method = "", params System.Type[] attrs)
     {
-        Debug.LogError($"[{obj?.GetType()}] => {obj?.GetType().GetMethod(method, attrs)}: " + msg);
+        string objName = "";
+        if (obj is MonoBehaviour mono)
+        {
+            objName = mono.gameObject.name + "-";
+        }
+        
+        Debug.LogError($"[{objName}{obj?.GetType()}] => {obj?.GetType().GetMethod(method, attrs)}: " + msg);
     }
 
     public static void Warn(this string msg, object obj = null, string method = "", params System.Type[] attrs)
     {
-        Debug.LogWarning($"[{obj?.GetType()}] => {obj?.GetType().GetMethod(method, attrs)}: " + msg);
+        string objName = "";
+        if (obj is MonoBehaviour mono)
+        {
+            objName = mono.gameObject.name + "-";
+        }
+
+        Debug.LogWarning($"[{objName}{obj?.GetType()}] => {obj?.GetType().GetMethod(method, attrs)}: " + msg);
     }
 
     public static void Log(this string msg, object obj = null, string method = "", params System.Type[] attrs)
     {
-        Debug.Log($"[{obj?.GetType()}] => {obj?.GetType().GetMethod(method, attrs)}: " + msg);
+        string objName = "";
+        if (obj is MonoBehaviour mono)
+        {
+            objName = mono.gameObject.name + "-";
+        }
+
+        Debug.Log($"[{objName}{obj?.GetType()}] => {obj?.GetType().GetMethod(method, attrs)}: " + msg);
     }
 
     public static T Last<T>(this List<T> list, int index = 1)

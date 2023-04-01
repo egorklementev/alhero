@@ -1,9 +1,12 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class MagpieAI : SomeAI 
 {
     public float memoryTime = 5f;
     public float threatRadius = 10f;
+
+    [SerializeField] private List<AIManager> entitiesToIgnore; 
 
     private float _memory = 0f;
     private AIManager _currentThreat;
@@ -54,13 +57,16 @@ public class MagpieAI : SomeAI
         }
     }
 
+    public void IgnoreEntity(AIManager ai)
+    {
+        entitiesToIgnore.Add(ai);
+    }
+
     private AIManager GetSomeThreat()
     {
         AIManager ai = _aiManager.logic.GetClosestEntity(_aiManager, threatRadius);
-        return (
-            ai == null ? null : (
-                ai.GetAI<MagpieAI>() != null ? null : ai
-            )
-        );
+        return (ai == null 
+            ? null 
+            : (entitiesToIgnore.Contains(ai) ? null : ai));
     }
 }   

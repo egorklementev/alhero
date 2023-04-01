@@ -1,6 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class MapGenerator : MonoBehaviour
 {
@@ -34,12 +36,13 @@ public class MapGenerator : MonoBehaviour
 
     private Map map;
 
-    private void Start() 
+    private void Start()
     {
         GenerateMapAsync();
     }
 
-    private void Update() {
+    private void Update()
+    {
         if (loadingSlider.IsActive())
         {
             loadingSlider.value = loadingProgress;
@@ -112,7 +115,7 @@ public class MapGenerator : MonoBehaviour
             }
         }
 
-        try 
+        try
         {
             minimap.UpdateMinimap(map);
         }
@@ -131,13 +134,13 @@ public class MapGenerator : MonoBehaviour
                     Block blockData = map.GetBlock(w, h);
                     GameObject pref = blockList[(int)(map.GetBlock(w, h).Type) - 1];
                     GameObject block = Instantiate(
-                        pref, 
+                        pref,
                         mapParams.anchor + new Vector3(
-                            2f * mapParams.blockSize * w, 
-                            2f * mapParams.blockSize * pref.transform.position.y, 
+                            2f * mapParams.blockSize * w,
+                            2f * mapParams.blockSize * pref.transform.position.y,
                             2f * mapParams.blockSize * h
-                        ), 
-                        pref.transform.rotation, 
+                        ),
+                        pref.transform.rotation,
                         environment);
                     block.transform.localScale *= mapParams.blockSize;
                     block.name = pref.name + $"({w},{h})";
@@ -168,8 +171,8 @@ public class MapGenerator : MonoBehaviour
                                 break;
                             case Block.ContainmentType.ITEM:
                                 ItemWorld iw = spawner.SpawnItem<ItemWorld>(
-                                    (int)blockData.Cntmnt, 
-                                    GetBlockSpawnLocation(blockData.Location), 
+                                    (int)blockData.Cntmnt,
+                                    GetBlockSpawnLocation(blockData.Location),
                                     Quaternion.identity);
                                 iw.gameObject.name += $"({w},{h})";
                                 break;
@@ -182,12 +185,12 @@ public class MapGenerator : MonoBehaviour
                                     );
                                 cont.gameObject.name += $"({w},{h})";
                                 foreach (LabContainerItem contItem in ((ContainerData)blockData.Cntmnt).items.items)
-                                cont.TryToPutItem(
-                                    spawner.SpawnItem<ItemWorld>(
-                                        contItem.id,
-                                        cont.gameObject.transform
-                                    )
-                                );
+                                    cont.TryToPutItem(
+                                        spawner.SpawnItem<ItemWorld>(
+                                            contItem.id,
+                                            cont.gameObject.transform
+                                        )
+                                    );
 
                                 // Locked containers
                                 float dice = Random.value;
@@ -238,16 +241,29 @@ public class MapGenerator : MonoBehaviour
                                 break;
                             default:
                                 break;
-                        } 
+                        }
                     }
                 }
             }
         }
 
-        // Tell the minimap about spawned oldman
-        if (spawner.entitiesGroup.FindNearestName("oldman", out var oldman))
+        try
         {
-            minimap.SetUpOldmanEventListeners(oldman.GetComponent<OldmanAI>());
+            // Tell the minimap about spawned oldman
+            if (spawner.entitiesGroup.FindNearestName("oldman", out var oldman))
+            {
+                minimap.SetUpOldmanEventListeners(oldman.GetComponent<OldmanAI>());
+
+                // Do not stare at the cow since it is always nearby
+                if (spawner.entitiesGroup.FindNearestName("oldman_cow", out var cow))
+                {
+                    oldman.GetComponent<AIManager>().GetAI<MagpieAI>().IgnoreEntity(cow.GetComponent<AIManager>());
+                }
+            }
+        }
+        catch (Exception e)
+        {
+            $"Oldman setup failed! Error:{Environment.NewLine}{e}".Warn(this);
         }
 
         loadingSlider.gameObject.SetActive(false);
@@ -258,7 +274,7 @@ public class MapGenerator : MonoBehaviour
             UIController.TriggerFade();
     }
 
-    public Vector3 GetBlockSpawnLocation (Vector2Int location, float yOffset = 1.5f)
+    public Vector3 GetBlockSpawnLocation(Vector2Int location, float yOffset = 1.5f)
     {
         return mapParams.anchor + new Vector3(location.x + 1, yOffset, location.y + 1) * mapParams.blockSize * 2f;
     }
@@ -286,8 +302,8 @@ public class MapGenerator : MonoBehaviour
             objs[(int)blockData.Cntmnt],
             Vector3.zero,
             Quaternion.Euler(
-                objs[(int)blockData.Cntmnt].transform.rotation.x, 
-                360f * Random.value, 
+                objs[(int)blockData.Cntmnt].transform.rotation.x,
+                360f * Random.value,
                 objs[(int)blockData.Cntmnt].transform.rotation.z),
             block
         );
@@ -296,7 +312,7 @@ public class MapGenerator : MonoBehaviour
         return obj;
     }
 
-    public void DebugRegenerateMap() 
+    public void DebugRegenerateMap()
     {
         doTriggerFade = false;
         GenerateMapAsync();

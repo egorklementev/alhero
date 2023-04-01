@@ -415,6 +415,7 @@ MonoBehaviour:
   - Death
   memoryTime: 8
   threatRadius: 15
+  entitiesToIgnore: []
 --- !u!114 &8146236249718155980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -519,9 +520,10 @@ MonoBehaviour:
   - Idle
   - ItemOwner
   - Death
-  moveSpeed: 25
+  moveSpeed: 20
   colliderBounds: 2
   Body: {fileID: 8146236249718156016}
+  stuckEps: 0.19
   RangeEnhancement: 16
 --- !u!136 &8146236249718156017
 CapsuleCollider:

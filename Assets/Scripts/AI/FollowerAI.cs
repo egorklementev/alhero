@@ -15,12 +15,14 @@ public class FollowerAI : SomeAI
     {
         if (_target != null)
         {
-            float farEnoughDistance = searchRadius / 3f;
+            float farEnoughDistance = searchRadius / 4f; // Since we do not want it to follow anytime
             farEnoughDistance *= farEnoughDistance;
             float actualDistance = (_target.position - transform.position).sqrMagnitude;
 
             if (actualDistance > farEnoughDistance)
             {
+                $"Following [{_target.gameObject.name}]...".Log(this);
+
                 WalkingAI wai = _aiManager.GetAI<WalkingAI>();
                 wai.SetDestination(_target.position);
                 _aiManager.Transition("Walking");

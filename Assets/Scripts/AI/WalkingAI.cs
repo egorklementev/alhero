@@ -6,6 +6,7 @@ public abstract class WalkingAI : SomeAI
     public float moveSpeed = 2f;
     public float colliderBounds = 4f;
     public Rigidbody Body;
+    [Range(0.001f, 2f)] public float stuckEps = .33333f;
 
     protected List<Vector3> _walkRoute = new List<Vector3>();
     protected Vector3 _lastPosition;
@@ -46,7 +47,6 @@ public abstract class WalkingAI : SomeAI
                 transform.LookAt(_walkRoute[0]);
                 transform.rotation = Quaternion.Euler(0f, transform.rotation.eulerAngles.y, 0f);
                 float eps = colliderBounds / 3f;
-                float stuckEps = .33333f;
                 if ((transform.position - _walkRoute[0]).magnitude < eps)
                 {
                     // To the next route point

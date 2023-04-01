@@ -174,9 +174,10 @@ MonoBehaviour:
   - Idle
   - Death
   moveSpeed: 110
-  colliderBounds: 4
+  colliderBounds: 3
   Body: {fileID: 5769453629339021601}
-  RangeEnhancement: 8
+  stuckEps: 0.11
+  RangeEnhancement: 16
 --- !u!1001 &5769453629332509645
 PrefabInstance:
   m_ObjectHideFlags: 0
