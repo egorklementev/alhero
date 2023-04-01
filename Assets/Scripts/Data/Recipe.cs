@@ -14,6 +14,7 @@ public class Recipe : GameDataEntry
     }
 
     /// Range is from 0 to L where L is the number of ingredients L: [2, inf]
+    /// 0 - easiest recipe, L - hardest
     public float GetComplexity()
     {
         int accum = 0;

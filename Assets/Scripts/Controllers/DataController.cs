@@ -36,7 +36,7 @@ public class DataController : MonoBehaviour
     public static Dictionary<int, Recipe> recipes;
     public static Dictionary<int, Ingredient> ingredients;
     public static Dictionary<int, LabContainerItems> labContainers;
-    public static int newSeed = 0;
+    public static int newSeed = int.MaxValue;
 
 
     public const int bootleShapesNumber = 4;
@@ -252,13 +252,14 @@ public class DataController : MonoBehaviour
         return ids[index];
     }
 
-    public static Recipe GenerateRandomRecipe(float maxComplexity, int ingNum = 0)
+    public static Recipe GenerateRandomRecipe(float maxComplexity, int ingNum = 0, int trials = 16)
     {
         int maxIngredients = ingNum == 0 ? ingredients.Count : ingNum;
         int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
         ingNum = Random.Range(2, maxIngredients + 1);
         int[] ings = new int[ingNum];
         List<int> ingIDs = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
+
         for (int i = 0; i < ingNum; i++)
         {
             ings[i] = ingIDs[Random.Range(0, ingIDs.Count)];
@@ -266,8 +267,12 @@ public class DataController : MonoBehaviour
         Recipe rec = new Recipe(mistakes, ings);
         if (rec.GetComplexity() > maxComplexity || HasOverlaps(rec))
         {
-            rec = GenerateRandomRecipe(maxComplexity, ingNum);
+            if (trials > 0)
+            {
+                rec = GenerateRandomRecipe(maxComplexity, ingNum, trials - 1);
+            }
         }
+
         return rec;
     }
 
@@ -346,7 +351,7 @@ public class DataController : MonoBehaviour
         Environment.NewLine.Log(this);
         
         // In case of user set seed
-        if (newSeed != 0)
+        if (newSeed != int.MaxValue)
         {
             genData.seed = newSeed;
             newSeed = 0;
