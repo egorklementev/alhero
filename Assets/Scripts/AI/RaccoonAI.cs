@@ -13,6 +13,7 @@ public class RaccoonAI : SomeAI
     private ItemOwnerAI _itemOwnAI;
     private MagpieAI _magAI;
     private WalkingAI _walkAI;
+    private bool _isTransportingItem = false;
 
     public override void PrepareAction() 
     {
@@ -39,18 +40,26 @@ public class RaccoonAI : SomeAI
         {
             _itemCheckTimer = 1f;
             
-            if(_itemOwnAI.HasItem()) 
+            if(_itemOwnAI.HasItem() && !_isTransportingItem) 
             {
                 ItemWorld item = _itemOwnAI.GetItem();
                 if (item.id == DataController.genData.raccoonRequestedItem)
                 {
+                    "Spawning reward...".Log(this);
                     _walkAI.SetDestination(barCounterAnchor.position);
                     _walkAI.SetNextState("ItemOwner");
+                    _walkAI.SetOnArrivalAction(() => _isTransportingItem = false);
+                    _isTransportingItem = true;
+
                     GenerateNewRequestItem();
+
                     _magAI.enabled = false;
                     StartCoroutine(TurnOnStaringAI(20f));
+
                     _aiManager.Transition("Walking");
+
                     UpdateFields();
+
                     _aiManager.logic.spawner.SpawnItem<CoinWorld>(
                         "coin".Hash(), 
                         transform.position + new Vector3(-1.5f, 2f, -1.5f),

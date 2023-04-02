@@ -1436,18 +1436,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 339057085}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: -0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1580482537}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 70, y: 76.600006}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -31, y: 160}
   m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &339057087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2351,11 +2351,11 @@ RectTransform:
   m_Father: {fileID: 1580482537}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -25, y: 35}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 25, y: 35}
   m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 1, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &606451631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3628,7 +3628,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 40, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!1 &1228736732
@@ -3959,7 +3959,6 @@ MonoBehaviour:
     ing_name: flower
     cooldown: 1
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -3976,7 +3975,6 @@ MonoBehaviour:
     ing_name: horseshoe
     cooldown: 0
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -3993,7 +3991,6 @@ MonoBehaviour:
     ing_name: meat
     cooldown: 5
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -4010,7 +4007,6 @@ MonoBehaviour:
     ing_name: salt
     cooldown: 0
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -4027,7 +4023,6 @@ MonoBehaviour:
     ing_name: wine
     cooldown: 0
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -4043,6 +4038,7 @@ MonoBehaviour:
   dRec:
   - id: 0
     ingredient_seq: ad7212cc0537f2c3a98e15ce
+    ingredient_known: 
     mistakes_allowed: 1
     is_unlocked: 0
   dContIDs:
@@ -4461,18 +4457,18 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1484058433}
   m_LocalRotation: {x: 0, y: 0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1580482537}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 70, y: 22}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: -30, y: 81}
   m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 0, y: 0}
+  m_Pivot: {x: 1, y: 0}
 --- !u!114 &1484058435
 MonoBehaviour:
   m_ObjectHideFlags: 0

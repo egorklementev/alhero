@@ -237,6 +237,7 @@ public class UIController : MonoBehaviour
     {
         groupsForDeactivation.AddLast(name);
         delaysForDeactivation.AddLast(delay);
+        ActiveGroup = "none";
     }
 
     public static bool IsGroupActivated(string name)
@@ -259,7 +260,6 @@ public class UIController : MonoBehaviour
         }
         TriggerRightPanel();
         DeactivateUIGroup(ActiveGroup);
-        ActiveGroup = "none";
         LogicController.curContainer = null;
     }
 

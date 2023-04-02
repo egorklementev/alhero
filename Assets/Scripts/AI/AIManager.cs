@@ -53,7 +53,7 @@ public class AIManager : MonoBehaviour
             }
             catch (UnityException e)
             {
-                $"Agent: [{name}], trace: {Environment.NewLine}{e}".Err(this);
+                $"Agent: [{name}], trace: {Environment.NewLine}{e}".Warn(this);
             }
             anim.SetBool(_currentState.Name, true);
             if (_currentState.Name.Equals(newState)) // Transition happened 

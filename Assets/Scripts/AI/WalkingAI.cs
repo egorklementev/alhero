@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public abstract class WalkingAI : SomeAI
     protected float _stuckTime = 0f;
     protected string _nextState = "Idle";
     protected bool _routeFound = false;
+    protected Action arrivalAction;
 
     public void SetDestination(Vector3 destination)
     {
@@ -23,6 +25,11 @@ public abstract class WalkingAI : SomeAI
     public void SetNextState(string nextState)
     {
         _nextState = nextState;
+    }
+
+    public void SetOnArrivalAction(Action action)
+    {
+        arrivalAction = action;
     }
 
     protected bool TestRaycasts(Vector3 position, Vector3 direction, float distance, float size = 3.25f)
@@ -82,6 +89,8 @@ public abstract class WalkingAI : SomeAI
                 // No other points to reach
                 _aiManager.Transition(_nextState);
                 _walkRoute.Clear();
+
+                arrivalAction.Invoke();
             }
         }
         else
