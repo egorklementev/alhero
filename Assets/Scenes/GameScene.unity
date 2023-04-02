@@ -7713,7 +7713,6 @@ MonoBehaviour:
     ing_name: flower
     cooldown: 1
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -7730,7 +7729,6 @@ MonoBehaviour:
     ing_name: horseshoe
     cooldown: 0
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -7747,7 +7745,6 @@ MonoBehaviour:
     ing_name: meat
     cooldown: 5
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -7764,7 +7761,6 @@ MonoBehaviour:
     ing_name: salt
     cooldown: 0
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -7781,7 +7777,6 @@ MonoBehaviour:
     ing_name: wine
     cooldown: 0
     breakChance: 0
-    hasBeenUsed: 0
     hasBeenDiscovered: 0
     location: 
     rarity: 0
@@ -7797,6 +7792,7 @@ MonoBehaviour:
   dRec:
   - id: 0
     ingredient_seq: ad7212cc0537f2c3a98e15ce
+    ingredient_known: 
     mistakes_allowed: 1
     is_unlocked: 0
   dContIDs:
@@ -8179,7 +8175,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 398, y: -57}
+  m_AnchoredPosition: {x: 398.00003, y: -57}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &417833460
@@ -10680,6 +10676,12 @@ MonoBehaviour:
     type: 3}
   maxPages: 4
   spawner: {fileID: 479735420}
+  itemRarityColors:
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 0.85593307, g: 0.8679245, b: 0.3717337, a: 1}
+  - {r: 0.8867924, g: 0.6736681, b: 0.37981486, a: 1}
+  - {r: 0.8396226, g: 0.3564032, b: 0.34377003, a: 1}
+  - {r: 0.8018868, g: 0.28292987, b: 0.7556785, a: 1}
 --- !u!1 &809394400
 GameObject:
   m_ObjectHideFlags: 0
@@ -14192,6 +14194,7 @@ MonoBehaviour:
   - Walking
   memoryTime: 5
   threatRadius: 12
+  entitiesToIgnore: []
 --- !u!114 &1185456079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14266,6 +14269,7 @@ MonoBehaviour:
   moveSpeed: 50
   colliderBounds: 3
   Body: {fileID: 1185456069}
+  stuckEps: 0.33333
   RangeEnhancement: 16
 --- !u!1 &1213505823
 GameObject:

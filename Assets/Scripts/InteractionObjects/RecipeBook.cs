@@ -27,6 +27,8 @@ public class RecipeBook : MonoBehaviour
     [Space(20f)]
     public SpawnController spawner;
 
+    [SerializeField] private Color[] itemRarityColors;
+
     private static int currentPage = 1;
     private static int currentRecipe = 0;
 
@@ -249,6 +251,26 @@ public class RecipeBook : MonoBehaviour
                 $"Cooldown: {ing.cooldown:F1} seconds" +
                 $"{Environment.NewLine}{Environment.NewLine}" +
                 $"Chance to break a potion: {(ing.breakChance * 100f):F1} %";
+
+            (int rarity, string line, Color color)[] rareness = new (int, string, Color)[]
+            {
+                (200, "Unique", itemRarityColors[4]),
+                (400, "Rare", itemRarityColors[3]),
+                (600, "Sparse", itemRarityColors[2]),
+                (800, "Uncommon", itemRarityColors[1]),
+                (1001, "Common", itemRarityColors[0]),
+            };
+
+            int i = 0;
+            string rarity = rareness[0].line;
+            while (rareness[i].rarity < ing.rarity)
+            {
+                i++;
+            }
+
+            var rarityLine = ingDescEntry.Find("Rarity").gameObject.GetComponent<TextMeshProUGUI>();
+            rarityLine.text = $"{rareness[i].line}";
+            rarityLine.color = rareness[i].color;
     }
 
     public void OnRecipeClicked(int id)
