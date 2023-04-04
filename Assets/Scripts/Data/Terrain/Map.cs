@@ -40,10 +40,16 @@ public partial class Map
 
     public bool IsEmptyGroundArea(Vector2Int center, int range = 0)
     {
-        int xStart = center.x - range < 0 ? 0 : center.x - range;
-        int xEnd = center.x + range >= Width ? Width - 1 : center.x + range;
-        int yStart = center.y - range < 0 ? 0 : center.y - range;
-        int yEnd = center.y + range >= Height ? Height - 1 : center.y + range;
+        int xStart = center.x - range;
+        int xEnd = center.x + range;
+        int yStart = center.y - range;
+        int yEnd = center.y + range;
+
+        if (xStart < 0 || xEnd >= Width || yStart < 0 || yEnd >= Height)
+        {
+            return false;
+        }
+
         for (int x = xStart; x <= xEnd; x++)
         {
             for (int y = yStart; y <= yEnd; y++)

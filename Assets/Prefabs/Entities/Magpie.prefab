@@ -105,6 +105,7 @@ MonoBehaviour:
   - Death
   memoryTime: 3
   threatRadius: 7.5
+  entitiesToIgnore: []
 --- !u!114 &2050679636861798413
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,8 +219,10 @@ MonoBehaviour:
   - Threatening
   - Death
   moveSpeed: 40
-  colliderBounds: 2
+  colliderBounds: 2.25
+  colliderHeight: 2
   Body: {fileID: 1271252247946232042}
+  stuckEps: 0.33333
   RangeEnhancement: 8
 --- !u!1001 &1271252248484430741
 PrefabInstance:

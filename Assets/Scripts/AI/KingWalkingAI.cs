@@ -55,7 +55,7 @@ public class KingWalkingAI : WalkingAI
         }
 
         _open.Add(_map[_startTile.x, _startTile.y]);
-        int maxFramePathBuilds = 8;
+        int maxFramePathBuilds = 32;
         int framePathBuilds = 0;
         while (true) 
         {
@@ -205,7 +205,7 @@ public class KingWalkingAI : WalkingAI
 
     private void CheckAdjacent(Tile tile, Vector2Int offset, Vector3 direction, float distance)
     {
-        if (!TestRaycasts(GetPosition(tile), direction, colliderBounds, colliderBounds))
+        if (!TestRaycasts(GetPosition(tile), direction, colliderBounds * distance, colliderBounds))
         {
             if (!_closed.Contains(_map[tile.Pos.x + offset.x, tile.Pos.y + offset.y]))
             {

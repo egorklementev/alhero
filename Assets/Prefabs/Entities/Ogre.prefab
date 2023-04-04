@@ -128,7 +128,7 @@ MonoBehaviour:
   Name: Wandering
   adjacentStates:
   - Walking
-  wanderDistance: 100
+  wanderDistance: 200
 --- !u!114 &1427238829017062071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -161,7 +161,7 @@ MonoBehaviour:
   Name: MeleeAttack
   adjacentStates:
   - Walking
-  alertRadius: 25
+  alertRadius: 50
   alertPeridiocity: 5
   wai: {fileID: 7152247124479564350}
   aai: {fileID: 1427238829017062068}
@@ -238,7 +238,9 @@ MonoBehaviour:
   - Death
   moveSpeed: 100
   colliderBounds: 5
+  colliderHeight: 8
   Body: {fileID: 1427238829017062061}
+  stuckEps: 0.33333
   RangeEnhancement: 8
 --- !u!1001 &1427238829363351319
 PrefabInstance:

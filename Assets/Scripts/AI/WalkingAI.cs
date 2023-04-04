@@ -6,6 +6,7 @@ public abstract class WalkingAI : SomeAI
 {
     public float moveSpeed = 2f;
     public float colliderBounds = 4f;
+    public float colliderHeight = 4f;
     public Rigidbody Body;
     [Range(0.001f, 2f)] public float stuckEps = .33333f;
 
@@ -34,15 +35,36 @@ public abstract class WalkingAI : SomeAI
 
     protected bool TestRaycasts(Vector3 position, Vector3 direction, float distance, float size = 3.25f)
     {
-        // Debug.DrawLine(position, position + direction * distance, Color.yellow, 5f);
-        return 
-            Physics.Raycast(position, direction, distance) ||
-            Physics.Raycast(position + Vector3.forward * size, direction, distance) ||
-            Physics.Raycast(position + Vector3.back * size, direction, distance) ||
-            Physics.Raycast(position + Vector3.left * size, direction, distance) ||
-            Physics.Raycast(position + Vector3.right * size, direction, distance) ||
-            Physics.Raycast(position + Vector3.up * size, direction, distance) ||
-            Physics.Raycast(position + Vector3.down * size, direction, distance);
+        var ratio = colliderHeight / colliderBounds;
+
+        Vector3[] dirsToCheck = new Vector3[]
+        {
+            Vector3.left, 
+            Vector3.right, 
+            Vector3.forward, 
+            Vector3.back, 
+            Vector3.down * ratio,
+            Vector3.down * ratio + Vector3.left,
+            Vector3.down * ratio + Vector3.right,
+            Vector3.down * ratio + Vector3.forward,
+            Vector3.down * ratio + Vector3.back,
+        };
+
+        size /= 2f;
+
+        Debug.DrawLine(position + Vector3.down * ratio * size,
+            position + Vector3.down * ratio * size + direction * distance,
+            new Color(1f, .5f, 0f, .5f), 5f);
+
+
+        foreach (Vector3 v in dirsToCheck)
+        {
+            if (Physics.CheckSphere(position + v * size, 0f)
+                || Physics.Raycast(position + v * size, direction, distance))
+                return true;
+        }
+
+        return false;
     }
 
     public override void Act()
@@ -105,6 +127,6 @@ public abstract class WalkingAI : SomeAI
         _walkRoute.Clear();
         _stuckTime = 0f;
 
-        arrivalAction.Invoke();
+        arrivalAction?.Invoke();
     }
 }

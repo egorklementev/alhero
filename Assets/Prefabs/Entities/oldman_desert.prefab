@@ -521,7 +521,8 @@ MonoBehaviour:
   - ItemOwner
   - Death
   moveSpeed: 20
-  colliderBounds: 2
+  colliderBounds: 1.5
+  colliderHeight: 1.5
   Body: {fileID: 8146236249718156016}
   stuckEps: 0.19
   RangeEnhancement: 16

@@ -175,6 +175,7 @@ MonoBehaviour:
   - Death
   moveSpeed: 110
   colliderBounds: 3
+  colliderHeight: 3
   Body: {fileID: 5769453629339021601}
   stuckEps: 0.11
   RangeEnhancement: 16
