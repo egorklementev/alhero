@@ -72,9 +72,7 @@ public abstract class WalkingAI : SomeAI
 
                     if (_stuckTime > 1.5f)
                     {
-                        _aiManager.Transition(_nextState);
-                        _walkRoute.Clear();
-                        _stuckTime = 0f;
+                        OnArrival();
                     }
                     else
                     {
@@ -87,10 +85,7 @@ public abstract class WalkingAI : SomeAI
             else
             {
                 // No other points to reach
-                _aiManager.Transition(_nextState);
-                _walkRoute.Clear();
-
-                arrivalAction.Invoke();
+                OnArrival();
             }
         }
         else
@@ -99,10 +94,17 @@ public abstract class WalkingAI : SomeAI
             _stuckTime += Time.fixedDeltaTime;
             if (_stuckTime > 10f)
             {
-                _aiManager.Transition(_nextState);
-                _walkRoute.Clear();
-                _stuckTime = 0f;
+                OnArrival();
             }
         }
+    }
+
+    private void OnArrival()
+    {
+        _aiManager.Transition(_nextState);
+        _walkRoute.Clear();
+        _stuckTime = 0f;
+
+        arrivalAction.Invoke();
     }
 }

@@ -48,13 +48,15 @@ public class RaccoonAI : SomeAI
                     "Spawning reward...".Log(this);
                     _walkAI.SetDestination(barCounterAnchor.position);
                     _walkAI.SetNextState("ItemOwner");
-                    _walkAI.SetOnArrivalAction(() => _isTransportingItem = false);
+                    _walkAI.SetOnArrivalAction(() =>
+                    {
+                        _isTransportingItem = false;
+                        _magAI.enabled = true;
+                    });
                     _isTransportingItem = true;
+                    _magAI.enabled = false;
 
                     GenerateNewRequestItem();
-
-                    _magAI.enabled = false;
-                    StartCoroutine(TurnOnStaringAI(20f));
 
                     _aiManager.Transition("Walking");
 
