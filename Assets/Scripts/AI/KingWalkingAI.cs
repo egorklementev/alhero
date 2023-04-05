@@ -55,7 +55,7 @@ public class KingWalkingAI : WalkingAI
         }
 
         _open.Add(_map[_startTile.x, _startTile.y]);
-        int maxFramePathBuilds = 32;
+        int maxFramePathBuilds = 8;
         int framePathBuilds = 0;
         while (true) 
         {
