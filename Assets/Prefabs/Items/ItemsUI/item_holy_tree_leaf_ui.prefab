@@ -135,7 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1823084026
   item_name: holy_tree_leaf
   arcanumMaterialIndex: 2
+  location: 4
   uiRotation: {x: 305.59012, y: 311.54907, z: 22.12562}

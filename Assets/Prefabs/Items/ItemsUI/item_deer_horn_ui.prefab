@@ -135,7 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1556597890
   item_name: deer_horn
   arcanumMaterialIndex: 2
+  location: 3
   uiRotation: {x: 296.89526, y: 243.41205, z: 334.1044}

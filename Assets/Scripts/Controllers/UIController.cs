@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using UnityEngine.Serialization;
 using TMPro;
 using System;
-using System.Threading;
 using System.Linq;
 
 public class UIController : MonoBehaviour
@@ -114,7 +113,7 @@ public class UIController : MonoBehaviour
         {
             for (LinkedListNode<string> node = groupsForActivation.First; node != null; node = node.Next)
             {
-                $"Activating UI group: {node.Value}".Log(this);
+                // $"Activating UI group: {node.Value}".Log(this);
                 UIGroups.Find(group => group.name.Equals(node.Value)).SetActive(true);
                 activeGroups.Add(node.Value);
             }
@@ -248,7 +247,7 @@ public class UIController : MonoBehaviour
     IEnumerator HideUIGroup(GameObject obj, float delay)
     {
         yield return new WaitForSeconds(delay);
-        obj.SetActive(false);
+        obj?.SetActive(false);
     }
 
     public void OnCloseButtonPressed()

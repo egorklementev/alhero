@@ -9,6 +9,7 @@ public class Ingredient : GameDataEntry
     public int rarity; // How rare is this ingredient in the wolrd (lower is rarer)
 
     public Potion potionData; // In case this ingredient is potion
+    public bool isPotion;
 
     // Used to calculate potion's color
     public float color_r;
@@ -40,5 +41,6 @@ public class Ingredient : GameDataEntry
         color_a = a;
         this.location = location;
         this.potionData = potionData;
+        isPotion = potionData != null;
     }
 }

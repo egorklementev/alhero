@@ -21,8 +21,6 @@ public class FollowerAI : SomeAI
 
             if (actualDistance > farEnoughDistance)
             {
-                $"Following [{_target.gameObject.name}]...".Log(this);
-
                 WalkingAI wai = _aiManager.GetAI<WalkingAI>();
                 wai.SetDestination(_target.position);
                 _aiManager.Transition("Walking");

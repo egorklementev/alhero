@@ -140,4 +140,5 @@ MonoBehaviour:
   id: 49674730
   item_name: salt
   arcanumMaterialIndex: 2
+  location: 1
   uiRotation: {x: 302.8804, y: 204.99864, z: 139.40428}

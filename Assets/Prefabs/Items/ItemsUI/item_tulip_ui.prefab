@@ -139,4 +139,5 @@ MonoBehaviour:
   id: 1527900746
   item_name: tulip
   arcanumMaterialIndex: 2
+  location: 1
   uiRotation: {x: 308.67377, y: 210.26547, z: 170.17079}

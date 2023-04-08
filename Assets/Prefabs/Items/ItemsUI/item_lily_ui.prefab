@@ -140,4 +140,5 @@ MonoBehaviour:
   id: 775689582
   item_name: lily
   arcanumMaterialIndex: 2
+  location: 1
   uiRotation: {x: 324.4635, y: 218.8841, z: 147.99706}

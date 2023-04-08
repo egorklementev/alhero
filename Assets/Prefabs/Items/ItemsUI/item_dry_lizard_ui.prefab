@@ -137,7 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 169088624
   item_name: dry_lizard
   arcanumMaterialIndex: 2
+  location: 2
   uiRotation: {x: 332.21765, y: 163.77104, z: 151.5642}

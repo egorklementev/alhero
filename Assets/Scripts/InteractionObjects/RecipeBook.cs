@@ -269,7 +269,7 @@ public class RecipeBook : MonoBehaviour
             }
 
             var rarityLine = ingDescEntry.Find("Rarity").gameObject.GetComponent<TextMeshProUGUI>();
-            rarityLine.text = ing.potionData == null ? $"{rareness[i].line}" : "";
+            rarityLine.text = ing.isPotion ? "" : $"{rareness[i].line}";
             rarityLine.color = rareness[i].color;
     }
 

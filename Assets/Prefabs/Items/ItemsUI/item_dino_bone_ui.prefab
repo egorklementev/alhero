@@ -135,7 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: -402181595
   item_name: dino_bone
   arcanumMaterialIndex: 2
+  location: 2
   uiRotation: {x: 309.06604, y: 256.61627, z: 334.38144}

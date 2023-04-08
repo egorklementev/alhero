@@ -137,7 +137,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: -1266268823
   item_name: oasis_water
   arcanumMaterialIndex: 2
+  location: 2
   uiRotation: {x: 298.00034, y: 287.97702, z: 42.258503}

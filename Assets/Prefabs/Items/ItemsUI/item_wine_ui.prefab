@@ -140,4 +140,5 @@ MonoBehaviour:
   id: -837448023
   item_name: wine
   arcanumMaterialIndex: 2
+  location: 1
   uiRotation: {x: 311.84558, y: 225.26266, z: 163.73177}

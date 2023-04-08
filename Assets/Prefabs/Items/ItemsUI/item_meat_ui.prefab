@@ -138,4 +138,5 @@ MonoBehaviour:
   id: -871206227
   item_name: meat
   arcanumMaterialIndex: 2
+  location: 1
   uiRotation: {x: 320.44897, y: 217.29155, z: 101.95634}

@@ -135,7 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: -363689972
   item_name: snowball
   arcanumMaterialIndex: 2
+  location: 3
   uiRotation: {x: 323.67813, y: 207.14067, z: 141.31898}

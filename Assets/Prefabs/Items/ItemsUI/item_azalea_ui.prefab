@@ -138,7 +138,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1221506298
   item_name: azalea
   arcanumMaterialIndex: 2
+  location: 3
   uiRotation: {x: 326.07498, y: 198.14677, z: 149.1688}

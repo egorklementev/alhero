@@ -139,4 +139,5 @@ MonoBehaviour:
   id: 2123274704
   item_name: horseshoe
   arcanumMaterialIndex: 2
+  location: 1
   uiRotation: {x: 310.06586, y: 318.72214, z: 27.440521}

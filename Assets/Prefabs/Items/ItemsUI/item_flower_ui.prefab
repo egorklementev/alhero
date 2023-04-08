@@ -140,4 +140,5 @@ MonoBehaviour:
   id: -1007536379
   item_name: flower
   arcanumMaterialIndex: 2
+  location: 1
   uiRotation: {x: 323.67813, y: 207.14067, z: 141.31898}

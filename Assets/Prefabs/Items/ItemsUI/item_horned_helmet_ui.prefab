@@ -135,7 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 824234494
   item_name: horned_helmet
   arcanumMaterialIndex: 2
+  location: 5
   uiRotation: {x: 302.76926, y: 296.8855, z: 53.487118}

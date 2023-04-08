@@ -13,6 +13,8 @@ public class Container : MonoBehaviour
     public TextMeshProUGUI ingredientLine;
     public SpawnController spawner;
 
+    [SerializeField] private GameObject _enterField;
+
     private ItemUI[] inventory;
     private int selectedItem = -1;
     private GameObject keyVisuals;
@@ -28,7 +30,7 @@ public class Container : MonoBehaviour
     {
         isUnlocked = !isLocked;
 
-        transform.parent.Find("EnterField").gameObject.SetActive(isUnlocked);
+        _enterField.SetActive(isUnlocked);
 
         if (isUnlocked && keyVisuals != null)
         {

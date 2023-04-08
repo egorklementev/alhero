@@ -20,6 +20,9 @@ public class AttackAI : SomeAI
         {
             _aiManager.Transition("Idle");
 
+            if (_target == null) // The target is already dead
+                return;
+
             float distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
             if (distanceToTarget < attackRange)
             {

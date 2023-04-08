@@ -558,8 +558,15 @@ public partial class Map
 
         // Always one oldman with his cow
         Block oldmanSpawn = GetRandomEmptyGroundBlock(1);
-        oldmanSpawn.SetEntity(Parameters.oldmanName);
-        GetNeighbors(oldmanSpawn)[0].SetEntity(Parameters.oldmanCowName);
+        if (oldmanSpawn != null)
+        {
+            oldmanSpawn.SetEntity(Parameters.oldmanName);
+            GetNeighbors(oldmanSpawn)[0].SetEntity(Parameters.oldmanCowName);
+        }
+        else
+        {
+            "No space for the oldman to spawn!".Warn(this);
+        }
 
         // Restrict the number of pigeons on the map
         int pigeonCount = rand.Next(0, DataController.genData.maxPigeons - LogicController.ItemsToSpawnInTheLab.Count + 1);

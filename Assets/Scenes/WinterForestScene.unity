@@ -3791,6 +3791,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: -0.2
     color_g: 0.15
     color_b: 0.025
@@ -3807,6 +3808,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: -0.1
     color_g: -0.1
     color_b: -0.1
@@ -3823,6 +3825,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: 0.3
     color_g: 0.12
     color_b: -0.22
@@ -3839,6 +3842,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: 0.1
     color_g: 0.1
     color_b: 0.1
@@ -3855,6 +3859,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: 0.45
     color_g: 0.08
     color_b: -0.04
@@ -4083,8 +4088,8 @@ MonoBehaviour:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
   - {fileID: 635291360127474127, guid: 640798c46bfe55b43aeac3f91018546e, type: 3}
   containersForSpawn:
-  - {fileID: 7080795387997062573, guid: 679282cfe72ed3a4487ac1318d73a38a, type: 3}
-  - {fileID: 7080795387997062573, guid: b425985e430b99548afc730fea1ebf8f, type: 3}
+  - {fileID: 6257321016371871958, guid: 08db2b0b45b3b0b46b00ed42f19d3d34, type: 3}
+  - {fileID: 3805695168874710001, guid: edf499989e3689e4e9babc754e5f10aa, type: 3}
   portal: {fileID: 2990814628135031580, guid: f80c579191d9667498bded619560c92f, type: 3}
   entities:
   - {fileID: 8146236249718156023, guid: 5caa56d4543cb2e469c3ed8cde9e4fd4, type: 3}
@@ -5089,8 +5094,8 @@ MonoBehaviour:
     floraDensity: 0.05
     trapVariety: 0
     trapDensity: 0
-    containers: 
-    contNumRange: {x: 0, y: 0}
+    containers: 0000000001000000
+    contNumRange: {x: 10, y: 20}
     ingredients:
     - candy
     - snowball

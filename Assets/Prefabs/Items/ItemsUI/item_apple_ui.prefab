@@ -140,4 +140,5 @@ MonoBehaviour:
   id: 1548091822
   item_name: apple
   arcanumMaterialIndex: 2
+  location: 4
   uiRotation: {x: 307.55676, y: 203.3238, z: 138.66211}

@@ -136,7 +136,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0f25b63d062674d40823a1c012428c0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: 1491179453
   item_name: candle
   arcanumMaterialIndex: 2
+  location: 4
   uiRotation: {x: 317.6133, y: 213.90724, z: 137.01921}
