@@ -3967,6 +3967,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: -0.2
     color_g: 0.15
     color_b: 0.025
@@ -3983,6 +3984,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: -0.1
     color_g: -0.1
     color_b: -0.1
@@ -3999,6 +4001,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: 0.3
     color_g: 0.12
     color_b: -0.22
@@ -4015,6 +4018,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: 0.1
     color_g: 0.1
     color_b: 0.1
@@ -4031,6 +4035,7 @@ MonoBehaviour:
       bottle_shape: 0
       ingredients: 
       titleIDs: 
+    isPotion: 0
     color_r: 0.45
     color_g: 0.08
     color_b: -0.04
@@ -5254,7 +5259,7 @@ MonoBehaviour:
   - 0.25
   - 0.1
   traps:
-  - {fileID: 3235875807131041591, guid: 4672eeb6c460504408108468339b0e48, type: 3}
+  - {fileID: 2764017138952259956, guid: 053aa84bfd455934a886a9fa96a7722b, type: 3}
   trapOffsets:
   - 0.5
   presets:
@@ -5281,8 +5286,8 @@ MonoBehaviour:
     floraDensity: 0.02
     trapVariety: 1
     trapDensity: 0.01
-    containers: 
-    contNumRange: {x: 0, y: 0}
+    containers: 0000000001000000
+    contNumRange: {x: 6, y: 9}
     ingredients:
     - cactus
     - burr
@@ -5318,8 +5323,8 @@ MonoBehaviour:
       LabelToShow: Winter Forest
       Checkpoint: none
       Color: {r: 0.5548416, g: 0.6446107, b: 0.6886792, a: 0.5803922}
-      cookedPotionsRequired: 0
-      appearanceChance: 1
+      cookedPotionsRequired: 50
+      appearanceChance: 0.7
     oldmanName: oldman_desert
     oldmanCowName: oldman_cow_desert
     pigeonName: pigeon_desert

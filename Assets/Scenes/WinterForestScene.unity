@@ -4295,7 +4295,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -15.9999695, y: 89.40015}
+  m_AnchoredPosition: {x: -16, y: 89.40015}
   m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1484058435
@@ -4894,7 +4894,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 317.9995, y: -146}
+  m_AnchoredPosition: {x: 317.99948, y: -146}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1758510422
@@ -5066,8 +5066,10 @@ MonoBehaviour:
   - 0
   - 0
   - 0.1
-  traps: []
-  trapOffsets: []
+  traps:
+  - {fileID: 3559178225517600909, guid: 3c02940205dc73447b2555b85ab65d46, type: 3}
+  trapOffsets:
+  - 0
   presets:
   - {fileID: 1235535457195192596, guid: dd9b489e3d07e5f4ebbec0c1e9d8801b, type: 3}
   - {fileID: 8156897429348496060, guid: 1855b550bed14b04ca59920e1c1e4abc, type: 3}
@@ -5092,8 +5094,8 @@ MonoBehaviour:
     forestDensity: 0.125
     floraVariety: 3
     floraDensity: 0.05
-    trapVariety: 0
-    trapDensity: 0
+    trapVariety: 1
+    trapDensity: 0.025
     containers: 0000000001000000
     contNumRange: {x: 10, y: 20}
     ingredients:
@@ -5127,6 +5129,12 @@ MonoBehaviour:
       Color: {r: 0.8773585, g: 0.7783299, b: 0.3509434, a: 0.5803922}
       cookedPotionsRequired: 0
       appearanceChance: 1
+    - SceneToLoad: ForestScene
+      LabelToShow: Forest
+      Checkpoint: none
+      Color: {r: 0.17903166, g: 0.8867924, b: 0.29945683, a: 0.5803922}
+      cookedPotionsRequired: 0
+      appearanceChance: 0.5
     oldmanName: oldman_winter_forest
     oldmanCowName: oldman_cow_winter_forest
     pigeonName: Pigeon_WinterForest
