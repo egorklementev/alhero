@@ -5404,7 +5404,6 @@ MonoBehaviour:
     entitiesForSpawn:
     - Magpie
     - Ogre
-    - Pigeon
     entNumRange: {x: 8, y: 16}
     neighborLocations:
     - SceneToLoad: GameScene

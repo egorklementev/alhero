@@ -886,7 +886,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -7048,7 +7048,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -7095,7 +7095,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   emitterVelocityMode: 1
   looping: 1
-  prewarm: 0
+  prewarm: 1
   playOnAwake: 1
   useUnscaledTime: 0
   autoRandomSeed: 1
@@ -11919,7 +11919,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -17151,7 +17151,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -23341,7 +23341,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -28431,11 +28431,9 @@ MonoBehaviour:
   - {fileID: 8355833851556500975, guid: 132453291e92e014682ee150ba4fe161, type: 3}
   portal: {fileID: 2990814628135031580, guid: f80c579191d9667498bded619560c92f, type: 3}
   entities:
-  - {fileID: 6875907107526826960, guid: cebc79ecac1984a428c2c08d7dee3962, type: 3}
-  - {fileID: 8146236249718156023, guid: e2de89713c044bb4d95812162d9c5279, type: 3}
-  - {fileID: 5769453629339021603, guid: 1d6567e649913fa46b54948c94e81ed0, type: 3}
-  - {fileID: 1271252247946232047, guid: 2c711ce90e6370d4f9a34641606a56df, type: 3}
-  - {fileID: 1427238829017062063, guid: 2eb605b183038c941b9fa84c3b3f37ca, type: 3}
+  - {fileID: 6875907107526826960, guid: 0d9618c4abee26844b68dd6cd827c74a, type: 3}
+  - {fileID: 8146236249718156023, guid: 2bf8e5118cb392d4cb97dc98cc1d88c2, type: 3}
+  - {fileID: 5769453629339021603, guid: 63e362c6524d6244abadea97343d2d56, type: 3}
   containersGroup: {fileID: 1252894356}
   itemsGroup: {fileID: 1938610838}
   entitiesGroup: {fileID: 692997106}
@@ -29349,7 +29347,7 @@ ParticleSystemRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_RenderMode: 0
   m_MeshDistribution: 0
   m_SortMode: 0
@@ -34375,9 +34373,8 @@ MonoBehaviour:
     - 0.1
     - 0.07
     - 0.03
-    entitiesForSpawn:
-    - Pigeon
-    entNumRange: {x: 12, y: 20}
+    entitiesForSpawn: []
+    entNumRange: {x: 0, y: 0}
     neighborLocations:
     - SceneToLoad: WinterForestScene
       LabelToShow: WinterForest
@@ -34403,9 +34400,9 @@ MonoBehaviour:
       Color: {r: 0.22745098, g: 0.74509805, b: 0.26976463, a: 0.49803922}
       cookedPotionsRequired: 0
       appearanceChance: 0.1
-    oldmanName: oldman
-    oldmanCowName: oldman_cow
-    pigeonName: pigeon
+    oldmanName: oldman_hell
+    oldmanCowName: oldman_cow_hell
+    pigeonName: pigeon_hell
     presetVariety: 0
     presetDensity: 0
     presetBlockSizes: 
