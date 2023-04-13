@@ -5129,10 +5129,16 @@ MonoBehaviour:
       Color: {r: 0.8773585, g: 0.7783299, b: 0.3509434, a: 0.5803922}
       cookedPotionsRequired: 0
       appearanceChance: 1
+    - SceneToLoad: HellScene
+      LabelToShow: Hell
+      Checkpoint: none
+      Color: {r: 0.5754717, g: 0.16579396, b: 0.14875397, a: 0.5803922}
+      cookedPotionsRequired: 100
+      appearanceChance: 1
     - SceneToLoad: ForestScene
       LabelToShow: Forest
       Checkpoint: none
-      Color: {r: 0.17903166, g: 0.8867924, b: 0.29945683, a: 0.5803922}
+      Color: {r: 0.22915626, g: 0.7735849, b: 0.24819222, a: 0.5803922}
       cookedPotionsRequired: 0
       appearanceChance: 0.5
     oldmanName: oldman_winter_forest
@@ -10718,9 +10724,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 4
-  outlineColor: {r: 1, g: 0, b: 0.03685236, a: 0.50980395}
-  outlineWidth: 10
+  outlineMode: 2
+  outlineColor: {r: 0.4350834, g: 0, b: 1, a: 0.28235295}
+  outlineWidth: 4.66
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 2959467708922500008, guid: 419a88237fb42614eae7b7860ead074f, type: 3}

@@ -5418,7 +5418,7 @@ MonoBehaviour:
       Checkpoint: none
       Color: {r: 0.745283, g: 0.6255677, b: 0.22780348, a: 0.49803922}
       cookedPotionsRequired: 10
-      appearanceChance: 0.8
+      appearanceChance: 1
     oldmanName: oldman
     oldmanCowName: oldman_cow
     pigeonName: pigeon
@@ -6221,9 +6221,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  outlineMode: 4
-  outlineColor: {r: 1, g: 0, b: 0.03685236, a: 0.50980395}
-  outlineWidth: 10
+  outlineMode: 2
+  outlineColor: {r: 0.4350834, g: 0, b: 1, a: 0.28235295}
+  outlineWidth: 4.66
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 2959467708922500008, guid: 419a88237fb42614eae7b7860ead074f, type: 3}

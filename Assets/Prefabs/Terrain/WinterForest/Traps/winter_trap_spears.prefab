@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3559178225517600914}
   - component: {fileID: 3559178225517600915}
   - component: {fileID: 3559178225517600912}
+  - component: {fileID: 1232469766413390053}
   m_Layer: 0
   m_Name: winter_trap_spears
   m_TagString: Untagged
@@ -64,6 +65,24 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   logic: {fileID: 0}
+--- !u!114 &1232469766413390053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3559178225517600909}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 2
+  outlineColor: {r: 0.49056602, g: 0.49056602, b: 0.49056602, a: 0.5058824}
+  outlineWidth: 4.87
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1001 &3559178225881792342
 PrefabInstance:
   m_ObjectHideFlags: 0
