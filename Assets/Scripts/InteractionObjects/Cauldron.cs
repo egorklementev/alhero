@@ -50,7 +50,7 @@ public class Cauldron : MonoBehaviour
     public void ClearInventory()
     {
         StartCoroutine(FadeWaterColor(Color.cyan, Color.white, 1f));
-        DataController.genData.cauldronInventory = new int[] {};
+        DataController.genData.cauldronInventory = new int[] { };
         inventory.Clear();
         SetRecipeCooking(false);
     }
@@ -139,7 +139,7 @@ public class Cauldron : MonoBehaviour
                                     // Generated potion ID
                                     int newPotionID = potionData.GetID();
                                     string newPotionName = potionData.GenerateNameDebug();
-                                    
+
                                     potion.id = newPotionID;
                                     potion.item_name = newPotionName;
                                     potion.UpdateColor();
@@ -170,21 +170,34 @@ public class Cauldron : MonoBehaviour
 
                                     // Add a new ingredient
                                     DataController.AddNewIngredient(
-                                        newPotionID, 
-                                        newPotionName, 
-                                        AverageCooldown(potionData.ingredients), 
-                                        RandomBreakChance(potionData.ingredients), 
+                                        newPotionID,
+                                        newPotionName,
+                                        AverageCooldown(potionData.ingredients),
+                                        RandomBreakChance(potionData.ingredients),
                                         Random.Range(1, 1000), // TODO:
-                                        RandomR(potionData.ingredients), 
-                                        RandomG(potionData.ingredients), 
-                                        RandomB(potionData.ingredients), 
-                                        AverageAlpha(potionData.ingredients), 
+                                        RandomR(potionData.ingredients),
+                                        RandomG(potionData.ingredients),
+                                        RandomB(potionData.ingredients),
+                                        AverageAlpha(potionData.ingredients),
                                         "none",
                                         potionData).hasBeenDiscovered = true;
 
                                     DataController.genData.potionsCooked++;
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
-                                    DataController.CreateNewRecipe(DataController.GenerateRandomRecipe(2f)); // TODO:
+
+                                    if (DataController.genData.potionsCooked == 300)
+                                    {
+                                        // Generate final potion
+                                        // TODO: set this recipe as winning condition
+                                        DataController.CreateNewRecipe(DataController.GenerateRandomRecipe(50f));
+                                        DataController.genData.potionsCooked++;
+                                    }
+                                    else if (DataController.genData.potionsCooked < 300)
+                                    {
+                                        DataController.CreateNewRecipe(DataController.GenerateRandomRecipe(
+                                            2f + (DataController.genData.potionsCooked / 300f * 23f)));
+                                    }
+
                                     DataController.AddHistoryIngredient(newPotionID);
                                 }
 
@@ -203,7 +216,7 @@ public class Cauldron : MonoBehaviour
                             settings.startColor = new ParticleSystem.MinMaxGradient(Color.white);
                             settings.duration = 2f;
                             fbPS.Play();
-                            
+
                             // Unlock ingredient if it is correct
                             if (curIng.id == potentialRecipe.ingredient_seq[inventory.Count - 1])
                             {

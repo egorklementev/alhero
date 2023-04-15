@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LogicController : MonoBehaviour
@@ -204,7 +205,7 @@ public class LogicController : MonoBehaviour
         ChangeScene("GameScene");
     }
 
-    public AIManager GetClosestEntity(AIManager ai, float range = -1f, string tag = "no_tag")
+    public AIManager GetClosestEntity(AIManager ai, float range = -1f, string tag = "no_tag", string[] entitiesToExclude = null)
     {
         List<AIManager> lst = new List<AIManager>();
 
@@ -213,6 +214,7 @@ public class LogicController : MonoBehaviour
         foreach (Transform t in spawner.entitiesGroup)
         {
             bool tagCondition = tag == "no_tag" ? true : t.CompareTag(tag);
+            bool nameCondition = entitiesToExclude == null ? true : entitiesToExclude.Any(ent => t.name.Contains(ent));
             if (t.TryGetComponent<AIManager>(out AIManager otherAi) && tagCondition && !otherAi.Equals(ai))
             {
                 lst.Add(otherAi);

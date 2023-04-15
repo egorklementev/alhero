@@ -105,7 +105,8 @@ MonoBehaviour:
   - Death
   memoryTime: 3
   threatRadius: 7.5
-  entitiesToIgnore: []
+  entitiesToExclude:
+  - Magpie
 --- !u!114 &2050679636861798413
 MonoBehaviour:
   m_ObjectHideFlags: 0

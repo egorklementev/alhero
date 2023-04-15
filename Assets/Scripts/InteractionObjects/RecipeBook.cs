@@ -202,8 +202,8 @@ public class RecipeBook : MonoBehaviour
                 break;
 
             case 4: // Game Info
-                UIController.ActivateUIGroup("game_info_group");
                 UIController.DeactivateUIGroupInstantly("recipe_book_group");
+                UIController.ActivateUIGroup("game_info_group");
                 break;
 
             default:
@@ -250,7 +250,7 @@ public class RecipeBook : MonoBehaviour
             ingDescEntry.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text =
                 $"Cooldown: {ing.cooldown:F1} seconds" +
                 $"{Environment.NewLine}{Environment.NewLine}" +
-                $"Chance to break a potion: {(ing.breakChance * 100f):F1} %";
+                $"Stability: {((int)(ing.breakChance / .03f * 100f))}";
 
             (int rarity, string line, Color color)[] rareness = new (int, string, Color)[]
             {

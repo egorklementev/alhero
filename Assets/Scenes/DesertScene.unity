@@ -4271,6 +4271,7 @@ MonoBehaviour:
   - {fileID: 6875907107526826960, guid: a0bc1005953767843b34172a014995f2, type: 3}
   - {fileID: 8146236249718156023, guid: 2e6fd50e4ba9d8a4ab66912859d5404c, type: 3}
   - {fileID: 5769453629339021603, guid: c6d4886c2db928f48a1aaef2c878208d, type: 3}
+  - {fileID: 583081754698530398, guid: f25d48dcebcf5e54b9fe6fc014086a04, type: 3}
   containersGroup: {fileID: 1252894356}
   itemsGroup: {fileID: 1938610838}
   entitiesGroup: {fileID: 692997106}
@@ -5310,8 +5311,9 @@ MonoBehaviour:
     - 0.1
     - 0.07
     - 0.03
-    entitiesForSpawn: []
-    entNumRange: {x: 0, y: 0}
+    entitiesForSpawn:
+    - desert_mouse
+    entNumRange: {x: 5, y: 9}
     neighborLocations:
     - SceneToLoad: ForestScene
       LabelToShow: Forest
@@ -5323,8 +5325,8 @@ MonoBehaviour:
       LabelToShow: Winter Forest
       Checkpoint: none
       Color: {r: 0.5548416, g: 0.6446107, b: 0.6886792, a: 0.5803922}
-      cookedPotionsRequired: 50
-      appearanceChance: 0.7
+      cookedPotionsRequired: 0
+      appearanceChance: 1
     oldmanName: oldman_desert
     oldmanCowName: oldman_cow_desert
     pigeonName: pigeon_desert

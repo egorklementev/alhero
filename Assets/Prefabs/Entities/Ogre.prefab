@@ -163,6 +163,8 @@ MonoBehaviour:
   - Walking
   alertRadius: 50
   alertPeridiocity: 5
+  entitiesToExclude:
+  - Ogre
   wai: {fileID: 7152247124479564350}
   aai: {fileID: 1427238829017062068}
 --- !u!114 &1427238829017062068
@@ -182,7 +184,7 @@ MonoBehaviour:
   - Idle
   - MeleeAttack
   - Death
-  attackDuration: 1.5
+  attackDuration: 1.15
   attackRange: 9
 --- !u!114 &-7158319779200465678
 MonoBehaviour:

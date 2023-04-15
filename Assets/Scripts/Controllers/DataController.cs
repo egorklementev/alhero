@@ -403,7 +403,7 @@ public class DataController : MonoBehaviour
                         item.item_name.Hash(),
                         item.item_name,
                         Random.Range(0f, 6f),
-                        Random.value * .15f, // TODO:
+                        Random.value * .03f,
                         Random.Range(0, 1000),
                         2f * (Random.value - .5f),
                         2f * (Random.value - .5f),

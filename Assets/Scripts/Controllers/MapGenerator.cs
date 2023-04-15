@@ -253,12 +253,6 @@ public class MapGenerator : MonoBehaviour
             if (spawner.entitiesGroup.FindNearestName("oldman", out var oldman))
             {
                 minimap.SetUpOldmanEventListeners(oldman.GetComponent<OldmanAI>());
-
-                // Do not stare at the cow since it is always nearby
-                if (spawner.entitiesGroup.FindNearestName("oldman_cow", out var cow))
-                {
-                    oldman.GetComponent<AIManager>().GetAI<MagpieAI>().IgnoreEntity(cow.GetComponent<AIManager>());
-                }
             }
         }
         catch (Exception e)

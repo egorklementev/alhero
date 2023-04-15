@@ -4,6 +4,7 @@ public class MeleeAttackAI : SomeAI
 {
     public float alertRadius;
     public float alertPeridiocity;
+    public string[] entitiesToExclude;
     public WalkingAI wai;
     public AttackAI aai;
 
@@ -49,7 +50,7 @@ public class MeleeAttackAI : SomeAI
 
     private AIManager FindSomeEnemy(float radius)
     {
-        AIManager ai = _aiManager.logic.GetClosestEntity(_aiManager);
+        AIManager ai = _aiManager.logic.GetClosestEntity(_aiManager, entitiesToExclude: entitiesToExclude);
         return (
             ai == null ? null : (Vector3.Distance(ai.transform.position, transform.position) > radius ? null : ai)
         );

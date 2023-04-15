@@ -5133,7 +5133,7 @@ MonoBehaviour:
       LabelToShow: Hell
       Checkpoint: none
       Color: {r: 0.5754717, g: 0.16579396, b: 0.14875397, a: 0.5803922}
-      cookedPotionsRequired: 100
+      cookedPotionsRequired: 0
       appearanceChance: 1
     - SceneToLoad: ForestScene
       LabelToShow: Forest

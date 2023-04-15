@@ -18133,7 +18133,7 @@ ParticleSystem:
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
+          value: 0.13846262
           inSlope: 2
           outSlope: 2
           tangentMode: 0
@@ -34321,14 +34321,32 @@ MonoBehaviour:
   - {fileID: 8015856779574191451, guid: 94286d74c6a20b84f827d097f3ff2797, type: 3}
   - {fileID: 8177108519397470993, guid: c8fac8986e304d545bbaccb35751b927, type: 3}
   - {fileID: 6345264761003828378, guid: a02e63506287cde47afa39190bfbf393, type: 3}
-  trees: []
-  treeOffsts: []
-  floras: []
-  floraOffsts: []
-  traps: []
-  trapOffsets: []
-  presets: []
-  presetsOffsets: []
+  trees:
+  - {fileID: 5764013641944658258, guid: c491607b81c1abb4991c7118bd9a261b, type: 3}
+  - {fileID: 7671433085632589628, guid: 9c809e8182708ef4e876fd3c31ef5a69, type: 3}
+  treeOffsts:
+  - 15.5
+  - 9
+  floras:
+  - {fileID: 5496677230570229605, guid: 6c23098fb4a410f4f9681a9d2d064890, type: 3}
+  - {fileID: 4270795432960164467, guid: 1e68afd405a82e5459733aabe59d57ef, type: 3}
+  - {fileID: 5434270146369774714, guid: ac99f9415d96de741ac00eb0071b63da, type: 3}
+  - {fileID: 1089909724203080924, guid: e1c485ca8b43dbd42af0fa1b47f4213c, type: 3}
+  floraOffsts:
+  - 0.7
+  - 0.3
+  - 0.3
+  - 0.5
+  traps:
+  - {fileID: 4675620115784040497, guid: 21c3174806322c84bad10869f04eb476, type: 3}
+  trapOffsets:
+  - 5
+  presets:
+  - {fileID: 5506865179001073074, guid: 44f696d4e406b744297d1aaa00278c1e, type: 3}
+  - {fileID: 8656533491675553160, guid: 03484863560be5e41ae6538c2648d80e, type: 3}
+  presetsOffsets:
+  - 1.6
+  - 0
   unlockingKeys:
   - {fileID: 2221017872934947975, guid: fb684296a72900a43bc8ac110e11ee3d, type: 3}
   - {fileID: 2221017872934947975, guid: 47dfd59f9a97b304ca45517d27073461, type: 3}
@@ -34343,12 +34361,12 @@ MonoBehaviour:
     islandSizeThreshold: 16
     bridgesAccuracy: 0.167
     blockSize: 3
-    forestVariety: 0
-    forestDensity: 0
-    floraVariety: 0
-    floraDensity: 0
-    trapVariety: 0
-    trapDensity: 0
+    forestVariety: 2
+    forestDensity: 0.04
+    floraVariety: 3
+    floraDensity: 0.05
+    trapVariety: 1
+    trapDensity: 0.008
     containers: 00000000
     contNumRange: {x: 12, y: 18}
     ingredients:
@@ -34386,7 +34404,7 @@ MonoBehaviour:
       LabelToShow: Heaven
       Checkpoint: none
       Color: {r: 0.22745098, g: 0.72050047, b: 0.74509805, a: 0.49803922}
-      cookedPotionsRequired: 250
+      cookedPotionsRequired: 0
       appearanceChance: 1
     - SceneToLoad: DesertScene
       LabelToShow: Desert
@@ -34403,9 +34421,9 @@ MonoBehaviour:
     oldmanName: oldman_hell
     oldmanCowName: oldman_cow_hell
     pigeonName: pigeon_hell
-    presetVariety: 0
-    presetDensity: 0
-    presetBlockSizes: 
+    presetVariety: 2
+    presetDensity: 0.01
+    presetBlockSizes: 0100000002000000
     randomSeed: 0
     blockColors:
     - {r: 0.58431375, g: 0.2592959, b: 0.1843137, a: 1}

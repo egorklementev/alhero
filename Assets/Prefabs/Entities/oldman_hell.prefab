@@ -417,7 +417,8 @@ MonoBehaviour:
   - Death
   memoryTime: 8
   threatRadius: 15
-  entitiesToIgnore: []
+  entitiesToExclude:
+  - oldman_cow
 --- !u!114 &8146236249718155980
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -52,9 +52,11 @@ public abstract class WalkingAI : SomeAI
 
         size /= 2f;
 
+        /*
         Debug.DrawLine(position + Vector3.down * ratio * size,
             position + Vector3.down * ratio * size + direction * distance,
             new Color(1f, .5f, 0f, .5f), 5f);
+        */
 
 
         foreach (Vector3 v in dirsToCheck)
