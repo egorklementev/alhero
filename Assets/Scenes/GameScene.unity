@@ -6733,8 +6733,8 @@ MonoBehaviour:
   mainCamera: {fileID: 963194225}
   anim: {fileID: 1047802906}
   fingerEpsilon: 25
-  movementSpeed: 50
-  maxSpeed: 20
+  movementSpeed: 100
+  maxSpeed: 18
   minTapTime: 0.2
   maxTapTime: 0.8
   throwForce: 3
@@ -6766,9 +6766,9 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219118631}
   serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 1
-  m_AngularDrag: 0.05
+  m_Mass: 0.75
+  m_Drag: 5
+  m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -8912,7 +8912,7 @@ PrefabInstance:
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
       propertyPath: isUnlocked
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7080795388555594391, guid: b425985e430b99548afc730fea1ebf8f,
         type: 3}
@@ -14397,7 +14397,7 @@ MonoBehaviour:
   - Walking
   memoryTime: 5
   threatRadius: 12
-  entitiesToIgnore: []
+  entitiesToExclude: []
 --- !u!114 &1185456079
 MonoBehaviour:
   m_ObjectHideFlags: 0

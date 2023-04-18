@@ -5358,8 +5358,6 @@ MonoBehaviour:
   presetsOffsets:
   - 0
   unlockingKeys:
-  - {fileID: 2221017872934947975, guid: fb684296a72900a43bc8ac110e11ee3d, type: 3}
-  - {fileID: 2221017872934947975, guid: 47dfd59f9a97b304ca45517d27073461, type: 3}
   - {fileID: 2221017872934947975, guid: a795f692080b7c9489adf2df7fa68ec1, type: 3}
   mapParams:
     dims: {x: 96, y: 96}
@@ -5387,20 +5385,16 @@ MonoBehaviour:
     - salt
     - lily
     - tulip
-    ingNumRange: {x: 10, y: 25}
+    ingNumRange: {x: 25, y: 35}
     nonIngredients:
     - coin
     - bomb
     - key_bronze
-    - key_silver
-    - key_gold
-    nonIngNumRange: {x: 5, y: 10}
+    nonIngNumRange: {x: 8, y: 12}
     nonIngredientsRates:
-    - 0.2
+    - 0.25
     - 0.6
-    - 0.1
-    - 0.07
-    - 0.03
+    - 0.15
     entitiesForSpawn:
     - Magpie
     - Ogre
@@ -5858,7 +5852,7 @@ Rigidbody:
   m_GameObject: {fileID: 1944255601}
   serializedVersion: 2
   m_Mass: 0.75
-  m_Drag: 0.5
+  m_Drag: 5
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -5913,8 +5907,8 @@ MonoBehaviour:
   mainCamera: {fileID: 1304254236}
   anim: {fileID: 1946960780}
   fingerEpsilon: 25
-  movementSpeed: 50
-  maxSpeed: 20
+  movementSpeed: 100
+  maxSpeed: 18
   minTapTime: 0.2
   maxTapTime: 0.8
   throwForce: 3

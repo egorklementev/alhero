@@ -194,13 +194,13 @@ public class MapGenerator : MonoBehaviour
 
                                 // Locked containers
                                 float dice = Random.value;
-                                if (dice > .97f)
+                                if (dice > .97f && unlockingKeys.Length > 2)
                                 {
                                     cont.unlockingKeyId = "key_gold".Hash();
-                                    cont.unlockingKeyVisualsPrefab = unlockingKeys[0];
+                                    cont.unlockingKeyVisualsPrefab = unlockingKeys[2];
                                     cont.SetLocked(true);
                                 }
-                                else if (dice > .87f)
+                                else if (dice > .87f && unlockingKeys.Length > 1)
                                 {
                                     cont.unlockingKeyId = "key_silver".Hash();
                                     cont.unlockingKeyVisualsPrefab = unlockingKeys[1];
@@ -209,7 +209,7 @@ public class MapGenerator : MonoBehaviour
                                 else if (dice > .67f)
                                 {
                                     cont.unlockingKeyId = "key_broze".Hash();
-                                    cont.unlockingKeyVisualsPrefab = unlockingKeys[2];
+                                    cont.unlockingKeyVisualsPrefab = unlockingKeys[0];
                                     cont.SetLocked(true);
                                 }
                                 else
