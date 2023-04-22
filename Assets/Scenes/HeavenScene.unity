@@ -4277,9 +4277,9 @@ MonoBehaviour:
   - {fileID: 3639953085000846316, guid: 2125e6b53deb3f944a63bcf88eefbbb7, type: 3}
   sidePanel: {fileID: 1634553658}
   containerUIGroups:
-  - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}
+  - {fileID: 635291360127474127, guid: 640798c46bfe55b43aeac3f91018546e, type: 3}
   containersForSpawn:
-  - {fileID: 8355833851556500975, guid: 132453291e92e014682ee150ba4fe161, type: 3}
+  - {fileID: 6998031205226985396, guid: c771935bb33c0c84f87a94f804df3c06, type: 3}
   portal: {fileID: 2990814628135031580, guid: f80c579191d9667498bded619560c92f, type: 3}
   entities:
   - {fileID: 6875907107526826960, guid: a4e1da0569741c343a8f3a369fff7e1a, type: 3}
@@ -5417,7 +5417,7 @@ MonoBehaviour:
   mapParams:
     dims: {x: 128, y: 128}
     anchor: {x: 5, y: -7.9, z: 5}
-    noiseParameters: {x: 0.9, y: 1.27, z: 2.27}
+    noiseParameters: {x: 0.9, y: 1.27, z: 2.26}
     noiseOffset: {x: 470560, y: 1883632}
     scale: 4.7
     exponent: 0.2675
