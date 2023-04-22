@@ -615,7 +615,7 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     randomizeRotationDirection: 0
-    maxNumParticles: 1000
+    maxNumParticles: 50
     customEmitterVelocity: {x: 0, y: 0, z: 0}
     size3D: 0
     rotation3D: 0
@@ -1572,13 +1572,22 @@ ParticleSystem:
           inWeight: 0.33333334
           outWeight: 0.33333334
         - serializedVersion: 3
-          time: 1
-          value: -1
-          inSlope: -3.1018803
-          outSlope: -3.1018803
+          time: 0.41160274
+          value: -0.18498951
+          inSlope: -1.6075222
+          outSlope: -1.6075222
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.11903453
+          inWeight: 0.33333334
+          outWeight: 0.07567236
+        - serializedVersion: 3
+          time: 1
+          value: -1
+          inSlope: 0.97996694
+          outSlope: 0.97996694
+          tangentMode: 0
+          weightedMode: 0
+          inWeight: 0.05985661
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2

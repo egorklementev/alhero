@@ -73,6 +73,11 @@ public class ItemOwnerAI : SomeAI
         _mode = mode;
     }
 
+    public void DropItemsIfAny() {
+        SetMode(Mode.THROW_ITEM);
+        PrepareAction();
+    }
+
     public enum Mode 
     {
         FIND_SOME_ITEM,

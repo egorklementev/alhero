@@ -214,8 +214,8 @@ public class LogicController : MonoBehaviour
         foreach (Transform t in spawner.entitiesGroup)
         {
             bool tagCondition = tag == "no_tag" ? true : t.CompareTag(tag);
-            bool nameCondition = entitiesToExclude == null ? true : entitiesToExclude.Any(ent => t.name.Contains(ent));
-            if (t.TryGetComponent<AIManager>(out AIManager otherAi) && tagCondition && !otherAi.Equals(ai))
+            bool nameCondition = entitiesToExclude == null ? true : !entitiesToExclude.Any(ent => t.name.Contains(ent));
+            if (t.TryGetComponent<AIManager>(out AIManager otherAi) && tagCondition && nameCondition && !otherAi.Equals(ai))
             {
                 lst.Add(otherAi);
             }

@@ -255,20 +255,44 @@ public class DataController : MonoBehaviour
         return ids[index];
     }
 
-    public static Recipe GenerateRandomRecipe(float estimateComplexity, int ingNum = 0, int trials = 16)
+    public static Recipe GenerateRandomRecipe(float estimateComplexity, int ingNum = 0, int trials = 1024)
     {
         int maxIngredients = ingNum == 0 ? (int)(estimateComplexity * 2f) : ingNum;
         ingNum = Random.Range(2, maxIngredients + 1);
         int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
         int[] ings = new int[ingNum];
-        bool[] isIngKnown = new bool[ingNum];
         List<int> ingIDs = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
 
         for (int i = 0; i < ingNum; i++)
         {
             ings[i] = ingIDs[Random.Range(0, ingIDs.Count)];
-            isIngKnown[i] = Random.value > 1f - (ingredients[ings[i]].rarity / 1000f);
         }
+
+        bool[] isIngKnown = new bool[ingNum];
+        List<int> randomIndices = new List<int>(ingNum);
+        for (int i = 0; i < ingNum; i++)
+        {
+            randomIndices[i] = i;
+        } 
+
+        float isKnownAccum = Random.value;
+        while (randomIndices.Count > 0)
+        {
+            int randIndexIndex = Random.Range(0, randomIndices.Count);
+            int randIndex = randomIndices[randIndexIndex];
+            randomIndices.RemoveAt(randIndexIndex);
+
+            if (!ingredients[ings[randIndex]].isPotion)
+            {
+                isIngKnown[randIndex] = Random.value < .5f * isKnownAccum;
+                isKnownAccum *= .5f;
+            }
+            else
+            {
+                isIngKnown[randIndex] = true;
+            }
+        }
+
         Recipe rec = new Recipe(mistakes, ings, isIngKnown);
         if (rec.GetComplexity() > estimateComplexity || HasOverlaps(rec))
         {
@@ -278,6 +302,7 @@ public class DataController : MonoBehaviour
             }
         }
 
+        $"Trials for recipe generation: {1024 - trials}".Log();
         return rec;
     }
 

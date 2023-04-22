@@ -22,14 +22,17 @@ public class Recipe : GameDataEntry
     /// 0 - easiest recipe, L - hardest
     public float GetComplexity()
     {
-        int accum = 500 * ingredient_seq.Length;
+        const int unknownCost = 2000;
+        const float rarityCost = 1000f;
+
+        int accum = unknownCost * ingredient_seq.Length;
         for (int i = 0; i < ingredient_seq.Length; i++)
         {
             var ingId = ingredient_seq[i];
             accum += DataController.ingredients[ingId].rarity;
-            accum -= ingredient_known[i] ? 0 : 500;
+            accum -= ingredient_known[i] ? 0 : unknownCost;
         }
-        return (1f - (float) accum / (1500f * ingredient_seq.Length)) * ingredient_seq.Length;
+        return (1f - (float) accum / ((unknownCost + rarityCost) * ingredient_seq.Length)) * ingredient_seq.Length;
     }
 
     public int GetID()

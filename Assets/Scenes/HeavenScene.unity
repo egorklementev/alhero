@@ -3959,7 +3959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6ed2c3e829134b4295f564a553b3615, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  locationName: FOREST
+  locationName: HEAVEN
   debugGeneral:
     seed: 0
     locationGenerations: 0
@@ -4282,9 +4282,9 @@ MonoBehaviour:
   - {fileID: 8355833851556500975, guid: 132453291e92e014682ee150ba4fe161, type: 3}
   portal: {fileID: 2990814628135031580, guid: f80c579191d9667498bded619560c92f, type: 3}
   entities:
-  - {fileID: 6875907107526826960, guid: 0d9618c4abee26844b68dd6cd827c74a, type: 3}
-  - {fileID: 8146236249718156023, guid: 2bf8e5118cb392d4cb97dc98cc1d88c2, type: 3}
-  - {fileID: 5769453629339021603, guid: 63e362c6524d6244abadea97343d2d56, type: 3}
+  - {fileID: 6875907107526826960, guid: a4e1da0569741c343a8f3a369fff7e1a, type: 3}
+  - {fileID: 8146236249718156023, guid: 87ef1393aa511e747a3db3eed9f863f5, type: 3}
+  - {fileID: 5769453629339021603, guid: 6b529b9cf576c174aab156c258e46b8a, type: 3}
   containersGroup: {fileID: 1252894356}
   itemsGroup: {fileID: 1938610838}
   entitiesGroup: {fileID: 692997106}
@@ -4816,6 +4816,7 @@ GameObject:
   - component: {fileID: 1580482540}
   - component: {fileID: 1580482539}
   - component: {fileID: 1580482538}
+  - component: {fileID: 1580482541}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -4915,6 +4916,102 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!82 &1580482541
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580482536}
+  m_Enabled: 0
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 3368d5cfe3953b048826616bc0637de8, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &1634553658
 GameObject:
   m_ObjectHideFlags: 0
@@ -5301,14 +5398,18 @@ MonoBehaviour:
   - {fileID: 5544935011793249807, guid: 4d069df46fdad434f875d9d8e5d9ea47, type: 3}
   - {fileID: 5544935011793249807, guid: 4d069df46fdad434f875d9d8e5d9ea47, type: 3}
   - {fileID: 5544935011793249807, guid: 4d069df46fdad434f875d9d8e5d9ea47, type: 3}
-  trees: []
-  treeOffsts: []
+  trees:
+  - {fileID: 5354598908992202017, guid: 2741393c76dab5c43bfcebda01bbdb97, type: 3}
+  treeOffsts:
+  - 10
   floras: []
   floraOffsts: []
   traps: []
   trapOffsets: []
-  presets: []
-  presetsOffsets: []
+  presets:
+  - {fileID: 517862727380604478, guid: a3861de03d0e797468e7c92691e87d9b, type: 3}
+  presetsOffsets:
+  - 11
   unlockingKeys:
   - {fileID: 2221017872934947975, guid: a795f692080b7c9489adf2df7fa68ec1, type: 3}
   - {fileID: 2221017872934947975, guid: 47dfd59f9a97b304ca45517d27073461, type: 3}
@@ -5320,11 +5421,11 @@ MonoBehaviour:
     noiseOffset: {x: 470560, y: 1883632}
     scale: 4.7
     exponent: 0.2675
-    islandSizeThreshold: 16
+    islandSizeThreshold: 32
     bridgesAccuracy: 0.095
     blockSize: 3
-    forestVariety: 0
-    forestDensity: 0
+    forestVariety: 2
+    forestDensity: 0.003
     floraVariety: 0
     floraDensity: 0
     trapVariety: 0
@@ -5374,12 +5475,12 @@ MonoBehaviour:
       Color: {r: 0.74509805, g: 0.23251393, b: 0.22745098, a: 0.7176471}
       cookedPotionsRequired: 0
       appearanceChance: 1
-    oldmanName: oldman_hell
-    oldmanCowName: oldman_cow_hell
-    pigeonName: pigeon_hell
-    presetVariety: 0
-    presetDensity: 0
-    presetBlockSizes: 
+    oldmanName: oldman_heaven
+    oldmanCowName: oldman_cow_heaven
+    pigeonName: pigeon_heaven
+    presetVariety: 1
+    presetDensity: 0.0005
+    presetBlockSizes: 04000000
     randomSeed: -1910974801
     blockColors:
     - {r: 0.7264151, g: 0.7264151, b: 0.7264151, a: 1}
