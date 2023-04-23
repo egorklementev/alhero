@@ -400,4 +400,15 @@ public class Cauldron : MonoBehaviour
         }
         return alpha / ingredients.Length;
     }
+
+    private int AverageRarity(int[] ingredients)
+    {
+        float rarity = 0f;
+        foreach (int id in ingredients)
+        {
+            rarity += DataController.ingredients[id].rarity;
+        }
+
+        return (int)(rarity / ingredients.Length);
+    }
 }

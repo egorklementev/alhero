@@ -12,7 +12,7 @@ public class HeroMoveController : MonoBehaviour
     [Header("Controls")]
     [Space(20f)]
     public float fingerEpsilon = 100f;
-    [Range(0f, 100f)]
+    [Range(0f, 1000f)]
     public float movementSpeed = 1.5f;
     [Range(1f, 100f)]
     public float maxSpeed = 5f;

@@ -272,7 +272,7 @@ public class DataController : MonoBehaviour
         List<int> randomIndices = new List<int>(ingNum);
         for (int i = 0; i < ingNum; i++)
         {
-            randomIndices[i] = i;
+            randomIndices.Add(i);
         } 
 
         float isKnownAccum = Random.value;
@@ -301,8 +301,12 @@ public class DataController : MonoBehaviour
                 rec = GenerateRandomRecipe(estimateComplexity, ingNum, trials - 1);
             }
         }
+        else
+        {
+            $"Trials for recipe generation: {1024 - trials}".Log();
+            $"Recipe final complexity: {rec.GetComplexity()}, estimated: {estimateComplexity}".Log();
+        }
 
-        $"Trials for recipe generation: {1024 - trials}".Log();
         return rec;
     }
 

@@ -10455,8 +10455,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944255601}
   serializedVersion: 2
-  m_Mass: 0.75
-  m_Drag: 5
+  m_Mass: 2.5
+  m_Drag: 1
   m_AngularDrag: 0
   m_UseGravity: 0
   m_IsKinematic: 0
@@ -10470,7 +10470,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944255601}
-  m_Material: {fileID: 13400000, guid: 26df85b0a24708c46a6a67dfefe7eece, type: 2}
+  m_Material: {fileID: 13400000, guid: 63370324db01e9d49844f8fb0700aa1f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.66
@@ -10511,7 +10511,7 @@ MonoBehaviour:
   mainCamera: {fileID: 1304254236}
   anim: {fileID: 1946960780}
   fingerEpsilon: 25
-  movementSpeed: 100
+  movementSpeed: 250
   maxSpeed: 18
   minTapTime: 0.2
   maxTapTime: 0.8

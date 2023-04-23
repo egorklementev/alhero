@@ -6535,7 +6535,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 172676652}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 8709a6933b40a554aa0b0f21fcb1a7bc, type: 3}
@@ -6830,7 +6830,7 @@ MonoBehaviour:
   mainCamera: {fileID: 963194225}
   anim: {fileID: 1047802906}
   fingerEpsilon: 25
-  movementSpeed: 100
+  movementSpeed: 200
   maxSpeed: 18
   minTapTime: 0.2
   maxTapTime: 0.8
@@ -6863,8 +6863,8 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219118631}
   serializedVersion: 2
-  m_Mass: 0.75
-  m_Drag: 5
+  m_Mass: 2.5
+  m_Drag: 1
   m_AngularDrag: 0
   m_UseGravity: 1
   m_IsKinematic: 0
@@ -6878,7 +6878,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 219118631}
-  m_Material: {fileID: 13400000, guid: 26df85b0a24708c46a6a67dfefe7eece, type: 2}
+  m_Material: {fileID: 13400000, guid: 63370324db01e9d49844f8fb0700aa1f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.66

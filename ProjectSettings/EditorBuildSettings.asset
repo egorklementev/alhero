@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/HellScene.unity
     guid: 993273f707a6a1d4ab00b9c785003622
+  - enabled: 1
+    path: Assets/Scenes/HeavenScene.unity
+    guid: 1c6555a51a48fc042aa3229512276d48
   m_configObjects: {}

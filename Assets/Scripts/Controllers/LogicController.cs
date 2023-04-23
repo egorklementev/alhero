@@ -18,6 +18,9 @@ public class LogicController : MonoBehaviour
     public DataController data;
     public MapGenerator mapGen;
 
+    [Space(20f)]
+    [SerializeField] private string[] debugItemsToSpawn;
+
     private static int playerInvSize = 3; // Inverntory size
     private static bool newGameStarted = false;
     private static string checkpointToSpawn = "Initial";
@@ -165,13 +168,9 @@ public class LogicController : MonoBehaviour
 
     public void SpawnIngredientsDebug()
     {
-        string[] items = new string[]
-        {
-            "flower", "horseshoe", "meat", "salt", "wine"
-        };
-        Vector3 pos = new Vector3(2f, 1f, 2f * items.Length / 2f);
+        Vector3 pos = new Vector3(2f, 1f, 2f * debugItemsToSpawn.Length / 2f);
         pos = player.transform.position + pos;
-        foreach (string name in items)
+        foreach (string name in debugItemsToSpawn)
         {
             spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, spawner.itemsGroup);
             pos -= new Vector3(0f, 0f, 3f);
