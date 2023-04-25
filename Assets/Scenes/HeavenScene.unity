@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 8900000, guid: 25b9a70c67dba7448ada5b16c656d760, type: 3}
   m_Sun: {fileID: 411133215}
-  m_IndirectSpecularColor: {r: 0.08269525, g: 0.51042044, b: 0.5066471, a: 1}
+  m_IndirectSpecularColor: {r: 0.588329, g: 0.6957876, b: 0.69576216, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: e9cf648f610889643ab574681e33cd14,
+  m_LightingDataAsset: {fileID: 112000000, guid: 13a48b3d27a09e4488963a54af2bdda2,
     type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 9a4c0fa3b971e2c4ea1e42055ee51caa,
     type: 2}
@@ -1288,6 +1288,7 @@ MonoBehaviour:
   ui: {fileID: 246611966}
   data: {fileID: 1410969494}
   mapGen: {fileID: 1809899273}
+  debugItemsToSpawn: []
 --- !u!4 &283488801
 Transform:
   m_ObjectHideFlags: 0
@@ -6281,7 +6282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 2
   outlineColor: {r: 0.4350834, g: 0, b: 1, a: 0.28235295}
-  outlineWidth: 4.66
+  outlineWidth: 7
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 2959467708922500008, guid: 419a88237fb42614eae7b7860ead074f, type: 3}

@@ -1250,6 +1250,7 @@ MonoBehaviour:
   ui: {fileID: 246611966}
   data: {fileID: 1410969494}
   mapGen: {fileID: 1809899273}
+  debugItemsToSpawn: []
 --- !u!4 &283488801
 Transform:
   m_ObjectHideFlags: 0
@@ -4095,6 +4096,7 @@ MonoBehaviour:
   - {fileID: 8146236249718156023, guid: 5caa56d4543cb2e469c3ed8cde9e4fd4, type: 3}
   - {fileID: 5769453629339021603, guid: ad3f5083b90599f47863118907966eab, type: 3}
   - {fileID: 6875907107526826960, guid: 7eeec924a8bf82445bade15d77611a78, type: 3}
+  - {fileID: 4806590716555925131, guid: 143ab69211f523f45bf3a08cfd127b8b, type: 3}
   containersGroup: {fileID: 1252894356}
   itemsGroup: {fileID: 1938610838}
   entitiesGroup: {fileID: 692997106}
@@ -4696,7 +4698,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1580482536}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 209ac93e720027944a40e6b01c1acb56, type: 3}
@@ -4991,7 +4993,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 317.99948, y: -146}
+  m_AnchoredPosition: {x: 317.99945, y: -146}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1758510422
@@ -5214,8 +5216,9 @@ MonoBehaviour:
     - 0.3
     - 0.15
     - 0.1
-    entitiesForSpawn: []
-    entNumRange: {x: 0, y: 0}
+    entitiesForSpawn:
+    - snowman
+    entNumRange: {x: 7, y: 12}
     neighborLocations:
     - SceneToLoad: DesertScene
       LabelToShow: Desert
@@ -5227,7 +5230,7 @@ MonoBehaviour:
       LabelToShow: Hell
       Checkpoint: none
       Color: {r: 0.5754717, g: 0.16579396, b: 0.14875397, a: 0.5803922}
-      cookedPotionsRequired: 0
+      cookedPotionsRequired: 100
       appearanceChance: 1
     - SceneToLoad: ForestScene
       LabelToShow: Forest
@@ -10820,7 +10823,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 2
   outlineColor: {r: 0.4350834, g: 0, b: 1, a: 0.28235295}
-  outlineWidth: 4.66
+  outlineWidth: 7
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 2959467708922500008, guid: 419a88237fb42614eae7b7860ead074f, type: 3}

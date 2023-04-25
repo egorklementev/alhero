@@ -1250,6 +1250,7 @@ MonoBehaviour:
   ui: {fileID: 246611966}
   data: {fileID: 1410969494}
   mapGen: {fileID: 1809899273}
+  debugItemsToSpawn: []
 --- !u!4 &283488801
 Transform:
   m_ObjectHideFlags: 0
@@ -4272,6 +4273,8 @@ MonoBehaviour:
   - {fileID: 8146236249718156023, guid: 2e6fd50e4ba9d8a4ab66912859d5404c, type: 3}
   - {fileID: 5769453629339021603, guid: c6d4886c2db928f48a1aaef2c878208d, type: 3}
   - {fileID: 583081754698530398, guid: f25d48dcebcf5e54b9fe6fc014086a04, type: 3}
+  - {fileID: 5410309880267617955, guid: 017014f61fd59c14d912efffa5c3ed9f, type: 3}
+  - {fileID: 1427238829017062063, guid: 55d8e7aed83bdfe4eb99ae1b4ffe26a5, type: 3}
   containersGroup: {fileID: 1252894356}
   itemsGroup: {fileID: 1938610838}
   entitiesGroup: {fileID: 692997106}
@@ -5404,7 +5407,9 @@ MonoBehaviour:
     - 0.15
     entitiesForSpawn:
     - desert_mouse
-    entNumRange: {x: 5, y: 9}
+    - scorpion
+    - OgreDesert
+    entNumRange: {x: 8, y: 14}
     neighborLocations:
     - SceneToLoad: ForestScene
       LabelToShow: Forest
@@ -5416,7 +5421,7 @@ MonoBehaviour:
       LabelToShow: Winter Forest
       Checkpoint: none
       Color: {r: 0.5548416, g: 0.6446107, b: 0.6886792, a: 0.5803922}
-      cookedPotionsRequired: 0
+      cookedPotionsRequired: 45
       appearanceChance: 1
     oldmanName: oldman_desert
     oldmanCowName: oldman_cow_desert
@@ -6221,7 +6226,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 2
   outlineColor: {r: 0.4350834, g: 0, b: 1, a: 0.28235295}
-  outlineWidth: 4.66
+  outlineWidth: 7
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 2959467708922500008, guid: 419a88237fb42614eae7b7860ead074f, type: 3}

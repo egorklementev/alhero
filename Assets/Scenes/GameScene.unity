@@ -8638,6 +8638,7 @@ MonoBehaviour:
   ui: {fileID: 99111274}
   data: {fileID: 324854745}
   mapGen: {fileID: 0}
+  debugItemsToSpawn: []
 --- !u!1 &472018342
 GameObject:
   m_ObjectHideFlags: 0
@@ -12813,7 +12814,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 2
   outlineColor: {r: 0.4350834, g: 0, b: 1, a: 0.28235295}
-  outlineWidth: 4.66
+  outlineWidth: 7.01
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 2959467708922500008, guid: 419a88237fb42614eae7b7860ead074f, type: 3}

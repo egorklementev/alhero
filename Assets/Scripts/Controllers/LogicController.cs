@@ -28,6 +28,13 @@ public class LogicController : MonoBehaviour
     public static Container curContainer { get; set; } = null;
     public static ItemWorld[] PickedItems { get; set; } = new ItemWorld[playerInvSize];
     public static List<int> ItemsToSpawnInTheLab { get; set; } = new List<int>();
+    public static List<int> itemsNotToTransit = new List<int>
+        {
+            "key_bronze".Hash(),
+            "key_silver".Hash(),
+            "key_gold".Hash(),
+            "bomb".Hash(),
+        };
 
     private static int[] _pickedItemsIDs = new int[playerInvSize];
 
@@ -41,10 +48,14 @@ public class LogicController : MonoBehaviour
             Vector3.up * 2.5f + Vector3.left * 2f + Vector3.back * 2f, 
             Vector3.up * 2.5f + Vector3.back * 2f, 
         };
+
         for (int i = 0; i < _pickedItemsIDs.Length; i++)
         {
-            StartCoroutine(
-                DelayedItemSpawn(_pickedItemsIDs[i], player.transform.position + itemPos[i], .25f));
+            if (!itemsNotToTransit.Contains(_pickedItemsIDs[i]))
+            {
+                StartCoroutine(
+                    DelayedItemSpawn(_pickedItemsIDs[i], player.transform.position + itemPos[i], .25f));
+            }
             _pickedItemsIDs[i] = 0; // Reset picked items
         }
 

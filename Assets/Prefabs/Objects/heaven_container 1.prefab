@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  container_name: 
+  container_name: Holy chest
   isUnlocked: 0
   unlockingKeyId: 0
   unlockingKeyVisualsPrefab: {fileID: 0}

@@ -34,8 +34,14 @@ public class PigeonAI : SomeAI
     {
         if (other.collider.CompareTag("Item"))
         {
-            _aiManager.Transition("Flying");    
             ItemWorld item = other.collider.GetComponent<ItemWorld>();
+
+            if (LogicController.itemsNotToTransit.Contains(item.id))
+            {
+                return;
+            }
+
+            _aiManager.Transition("Flying");    
             item.SetPickedUp(true, 0, gameObject);
             LogicController.ItemsToSpawnInTheLab.Add(item.id);
             _item = item;

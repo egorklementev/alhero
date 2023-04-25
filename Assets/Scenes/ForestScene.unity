@@ -1288,6 +1288,7 @@ MonoBehaviour:
   ui: {fileID: 246611966}
   data: {fileID: 1410969494}
   mapGen: {fileID: 1809899273}
+  debugItemsToSpawn: []
 --- !u!4 &283488801
 Transform:
   m_ObjectHideFlags: 0
@@ -5507,7 +5508,7 @@ MonoBehaviour:
       LabelToShow: Desert
       Checkpoint: none
       Color: {r: 0.745283, g: 0.6255677, b: 0.22780348, a: 0.49803922}
-      cookedPotionsRequired: 0
+      cookedPotionsRequired: 15
       appearanceChance: 1
     oldmanName: oldman
     oldmanCowName: oldman_cow
@@ -6313,7 +6314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 2
   outlineColor: {r: 0.4350834, g: 0, b: 1, a: 0.28235295}
-  outlineWidth: 4.66
+  outlineWidth: 7
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 2959467708922500008, guid: 419a88237fb42614eae7b7860ead074f, type: 3}

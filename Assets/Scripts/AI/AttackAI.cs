@@ -4,9 +4,16 @@ public class AttackAI : SomeAI
 {
     public float attackDuration;
     public float attackRange;
+    public Vector2 projOffset;
+    public float shootForce = 20f;
+    public string[] immuneEntities;
+
+    [Range(0f, 359f)]
+    public float angleShift = 0f;
 
     private AIManager _target = null;
     private float _currentAttackDuration;
+    private GameObject _projectile = null;
 
     public override void PrepareAction()
     {
@@ -23,15 +30,40 @@ public class AttackAI : SomeAI
             if (_target == null) // The target is already dead
                 return;
 
-            float distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
-            if (distanceToTarget < attackRange)
+            if (_projectile != null)
             {
-                _target.Transition("Death");
+                GameObject proj = Instantiate(
+                    _projectile, 
+                    transform.position + new Vector3(
+                        projOffset.x * Mathf.Sin((transform.rotation.eulerAngles.y + angleShift) / 180f * Mathf.PI), 
+                        projOffset.y, 
+                        projOffset.x * Mathf.Cos((transform.rotation.eulerAngles.y + angleShift) / 180f * Mathf.PI)), 
+                    Quaternion.identity);
+
+                if (proj.TryGetComponent<Rigidbody>(out Rigidbody body))
+                {
+                    Vector3 throwVector = Vector3.MoveTowards(transform.position, _target.transform.position, shootForce); // TODO:
+                    body.AddForce(throwVector - transform.position, ForceMode.Impulse);
+                }
+
+                if (proj.TryGetComponent<Projectile>(out Projectile projScript))
+                {
+                    projScript.GetComponent<Projectile>().SetImmune(immuneEntities);
+                }
             }
             else
             {
-                $"out of range: ({distanceToTarget}/{attackRange})".Log(this);
+                float distanceToTarget = Vector3.Distance(_target.transform.position, transform.position);
+                if (distanceToTarget < attackRange)
+                {
+                    _target.Transition("Death");
+                }
+                else
+                {
+                    $"out of range: ({distanceToTarget}/{attackRange})".Log(this);
+                }
             }
+
         }
         else
         {
@@ -47,5 +79,10 @@ public class AttackAI : SomeAI
     public void SetTarget(AIManager target)
     {
         _target = target;
+    }
+
+    public void SetProjectile(GameObject projectile)
+    {
+        _projectile = projectile;
     }
 }

@@ -39,7 +39,7 @@ public class MeleeAttackAI : SomeAI
         if (_alertTimer < 0f)
         {
             _alertTimer = alertPeridiocity;
-            AIManager someAI = FindSomeEnemy(alertRadius);
+            AIManager someAI = FindSomeEnemy();
             if (someAI != null)
             {
                 _aiManager.Transition("MeleeAttack");
@@ -48,11 +48,9 @@ public class MeleeAttackAI : SomeAI
         }
     }
 
-    private AIManager FindSomeEnemy(float radius)
+    private AIManager FindSomeEnemy()
     {
-        AIManager ai = _aiManager.logic.GetClosestEntity(_aiManager, entitiesToExclude: entitiesToExclude);
-        return (
-            ai == null ? null : (Vector3.Distance(ai.transform.position, transform.position) > radius ? null : ai)
-        );
+        AIManager ai = _aiManager.logic.GetClosestEntity(_aiManager, alertRadius, entitiesToExclude: entitiesToExclude);
+        return ai;
     }
 }

@@ -40,7 +40,7 @@ public class Cauldron : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
+    private void OnDisable()
     {
         // Save inventory before exiting
         DataController.genData.cauldronInventory = new int[inventory.Count];

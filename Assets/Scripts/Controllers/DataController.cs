@@ -255,7 +255,25 @@ public class DataController : MonoBehaviour
         return ids[index];
     }
 
-    public static Recipe GenerateRandomRecipe(float estimateComplexity, int ingNum = 0, int trials = 1024)
+    public static Recipe GenerateRandomRecipe(float estimateComplexity, int ingNum = 0, int maxTrials = 1024)
+    {
+        int trials = 0;
+        Recipe rec = GetRandomRecipe(estimateComplexity, ingNum);
+        while ((Math.Abs(rec.GetComplexity() - estimateComplexity) > .1f * estimateComplexity || HasOverlaps(rec)) && trials++ < maxTrials)
+        {
+            if (trials > 0)
+            {
+                rec = GetRandomRecipe(estimateComplexity, ingNum);
+            }
+        }
+
+        $"Trials for recipe generation: {trials}".Log();
+        $"Recipe final complexity: {rec.GetComplexity()}, estimated: {estimateComplexity}".Log();
+
+        return rec;
+    }
+
+    private static Recipe GetRandomRecipe(float estimateComplexity, int ingNum = 0) 
     {
         int maxIngredients = ingNum == 0 ? (int)(estimateComplexity * 2f) : ingNum;
         ingNum = Random.Range(2, maxIngredients + 1);
@@ -268,6 +286,7 @@ public class DataController : MonoBehaviour
             ings[i] = ingIDs[Random.Range(0, ingIDs.Count)];
         }
 
+        // int maxUnknowns = Mathf.CeilToInt(ingNum * .2f);
         bool[] isIngKnown = new bool[ingNum];
         List<int> randomIndices = new List<int>(ingNum);
         for (int i = 0; i < ingNum; i++)
@@ -284,8 +303,8 @@ public class DataController : MonoBehaviour
 
             if (!ingredients[ings[randIndex]].isPotion)
             {
-                isIngKnown[randIndex] = Random.value < .5f * isKnownAccum;
-                isKnownAccum *= .5f;
+                isIngKnown[randIndex] = Random.value > isKnownAccum;
+                isKnownAccum *= .7f;
             }
             else
             {
@@ -293,21 +312,7 @@ public class DataController : MonoBehaviour
             }
         }
 
-        Recipe rec = new Recipe(mistakes, ings, isIngKnown);
-        if (rec.GetComplexity() > estimateComplexity || HasOverlaps(rec))
-        {
-            if (trials > 0)
-            {
-                rec = GenerateRandomRecipe(estimateComplexity, ingNum, trials - 1);
-            }
-        }
-        else
-        {
-            $"Trials for recipe generation: {1024 - trials}".Log();
-            $"Recipe final complexity: {rec.GetComplexity()}, estimated: {estimateComplexity}".Log();
-        }
-
-        return rec;
+        return new Recipe(mistakes, ings, isIngKnown);
     }
 
     private static bool HasOverlaps(Recipe rec)
@@ -400,6 +405,7 @@ public class DataController : MonoBehaviour
         }
         Random.InitState(genData.seed);
 
+        // Initial game values
         genData.locationGenerations = 0;
         genData.raccoonRequestedItem = 0;
         genData.oldmanItemsForSale = new int[2];
@@ -417,8 +423,8 @@ public class DataController : MonoBehaviour
         }
 
         // Randomize ingredient values
-        ingredients.Clear();
         // The stuff below basically means removal of all generated potions
+        ingredients.Clear();
         spawner.absItems.RemoveAll(item => item.IsPotion() && (
             (item as PotionUI == null ? (item as PotionWorld).potionData.recipe_id != 0 : (item as PotionUI).potionData.recipe_id != 0)
         ));
@@ -452,7 +458,7 @@ public class DataController : MonoBehaviour
 
         // Add initial recipe
         recipes.Clear();
-        CreateNewRecipe(GenerateRandomRecipe(1f, 3));
+        CreateNewRecipe(GenerateRandomRecipe(2f));
 
         // Unconditional autosave
         Autosave();
