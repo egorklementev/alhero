@@ -4286,6 +4286,10 @@ MonoBehaviour:
   - {fileID: 6875907107526826960, guid: a4e1da0569741c343a8f3a369fff7e1a, type: 3}
   - {fileID: 8146236249718156023, guid: 87ef1393aa511e747a3db3eed9f863f5, type: 3}
   - {fileID: 5769453629339021603, guid: 6b529b9cf576c174aab156c258e46b8a, type: 3}
+  - {fileID: 583081754698530398, guid: 07579fe1cf9797b41b715e64bccb59a9, type: 3}
+  - {fileID: 1271252247946232047, guid: 8fec9a34ae1e21b498eced9f18d2082f, type: 3}
+  - {fileID: 1427238829017062063, guid: 905754b907a110d4ca9f02f0300cec9c, type: 3}
+  - {fileID: 5410309880267617955, guid: f08ac07adf563a34c855d2fd6fd79b6d, type: 3}
   containersGroup: {fileID: 1252894356}
   itemsGroup: {fileID: 1938610838}
   entitiesGroup: {fileID: 692997106}
@@ -5457,8 +5461,12 @@ MonoBehaviour:
     - 0.1
     - 0.07
     - 0.03
-    entitiesForSpawn: []
-    entNumRange: {x: 0, y: 0}
+    entitiesForSpawn:
+    - desert_mouse_heaven
+    - MagpieHeaven
+    - OgreHeaven
+    - scorpion_heaven
+    entNumRange: {x: 20, y: 30}
     neighborLocations:
     - SceneToLoad: WinterForestScene
       LabelToShow: WinterForest

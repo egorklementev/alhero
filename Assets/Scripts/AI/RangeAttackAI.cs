@@ -19,8 +19,11 @@ public class RangeAttackAI : SomeAI
         if (_currentEnemy != null)
         {
             Vector3 destVector = (_currentEnemy.transform.position - transform.position) / 2.5f;
-            wai.SetDestination(transform.position + destVector);
-            wai.SetNextState("Attack");
+            if (wai != null)
+            {
+                wai.SetDestination(transform.position + destVector);
+                wai.SetNextState("Attack");
+            }
             aai.SetProjectile(projectile);
             aai.SetTarget(_currentEnemy);
         }
@@ -31,7 +34,7 @@ public class RangeAttackAI : SomeAI
         if (_currentEnemy != null)
         {
             if (Vector3.SqrMagnitude(_currentEnemy.transform.position - transform.position)
-                > shootingDistance * shootingDistance)
+                > shootingDistance * shootingDistance && wai != null)
             {
                 _aiManager.Transition("Walking");
             }

@@ -17193,7 +17193,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -23383,7 +23383,7 @@ ParticleSystem:
   serializedVersion: 8
   lengthInSec: 5
   simulationSpeed: 1
-  stopAction: 2
+  stopAction: 0
   cullingMode: 0
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
@@ -28435,6 +28435,8 @@ MonoBehaviour:
   - {fileID: 6875907107526826960, guid: 0d9618c4abee26844b68dd6cd827c74a, type: 3}
   - {fileID: 8146236249718156023, guid: 2bf8e5118cb392d4cb97dc98cc1d88c2, type: 3}
   - {fileID: 5769453629339021603, guid: 63e362c6524d6244abadea97343d2d56, type: 3}
+  - {fileID: 7978638781680478425, guid: ceea079b513e644419e01c30971e04c8, type: 3}
+  - {fileID: 7456918633154701816, guid: 56925c24e2bdac743a7fe82d4ac512be, type: 3}
   containersGroup: {fileID: 1252894356}
   itemsGroup: {fileID: 1938610838}
   entitiesGroup: {fileID: 692997106}
@@ -34486,8 +34488,10 @@ MonoBehaviour:
     - 0.63
     - 0.1
     - 0.07
-    entitiesForSpawn: []
-    entNumRange: {x: 0, y: 0}
+    entitiesForSpawn:
+    - demon
+    - satan
+    entNumRange: {x: 12, y: 18}
     neighborLocations:
     - SceneToLoad: WinterForestScene
       LabelToShow: WinterForest
