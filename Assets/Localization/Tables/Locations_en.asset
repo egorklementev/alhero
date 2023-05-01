@@ -1,0 +1,47 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Locations_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 228de1c3b286fe740869d245119d6cb6, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 8179884032
+    m_Localized: Forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 140682141696
+    m_Localized: Heaven
+    m_Metadata:
+      m_Items: []
+  - m_Id: 131651805184
+    m_Localized: Hell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69458665472
+    m_Localized: Winter forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48961101824
+    m_Localized: Desert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31630237696
+    m_Localized: Laboratory
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

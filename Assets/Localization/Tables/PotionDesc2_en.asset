@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: PotionDesc2_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: f09b3ea3da8f47f4b835ff35267120ee, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 161863514923008
+    m_Localized: innocent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 161888747855872
+    m_Localized: tearing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 161898579304448
+    m_Localized: satisfying
+    m_Metadata:
+      m_Items: []
+  - m_Id: 161908519804928
+    m_Localized: aspiring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 161930447626240
+    m_Localized: blaming
+    m_Metadata:
+      m_Items: []
+  - m_Id: 161956389396480
+    m_Localized: blushing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 161968628375552
+    m_Localized: floral
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162012416909312
+    m_Localized: petrified
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162035640770560
+    m_Localized: stubborn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162046919254016
+    m_Localized: prickly
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162055869898752
+    m_Localized: dried up
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162078657552384
+    m_Localized: wet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162110462959616
+    m_Localized: pouring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162240863870976
+    m_Localized: stinging
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162262011551744
+    m_Localized: lost
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162278214148096
+    m_Localized: fallen off
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162292961320960
+    m_Localized: snowy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162304210444288
+    m_Localized: melting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162341053210624
+    m_Localized: alive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162315883192320
+    m_Localized: childish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162356551163904
+    m_Localized: secretive
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162375429726208
+    m_Localized: dirty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162395801460736
+    m_Localized: boiled
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162410057900032
+    m_Localized: dead
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162468224507904
+    m_Localized: protecting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162490756308992
+    m_Localized: demonic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162525078298624
+    m_Localized: burning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162548159553536
+    m_Localized: molten
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162564265680896
+    m_Localized: soaring
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162583886635008
+    m_Localized: golden
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162600340889600
+    m_Localized: heating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162609186676736
+    m_Localized: resurrecting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162636936192000
+    m_Localized: sharp
+    m_Metadata:
+      m_Items: []
+  - m_Id: 162652337676288
+    m_Localized: rejuvenating
+    m_Metadata:
+      m_Items: []
+  - m_Id: 163072313335808
+    m_Localized: tasty
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

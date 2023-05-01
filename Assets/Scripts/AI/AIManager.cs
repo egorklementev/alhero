@@ -28,6 +28,11 @@ public class AIManager : MonoBehaviour
     void FixedUpdate() 
     {
         _ais[_currentState.Name].Act();
+
+        if (transform.position.y < -15f)
+        {
+            Transition("Death");
+        }
     }
 
     public AIState GetState()

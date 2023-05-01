@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public class ItemWorld : AbstractItem
 {
@@ -112,14 +113,19 @@ public class ItemWorld : AbstractItem
                 int coinNum = ((CoinWorld)this).Count;
                 id = "picked_coin".Hash();
                 DataController.genData.coins += coinNum;
-                UIController.SpawnSideLine($"Picked {coinNum} coins", 3f);
+                UIController.SpawnSideLine("coins_picked", new object[] { coinNum }, 3f);
                 Destroy();
             }
             else if (slot != -1 && id != "picked_coin".Hash())
             {
                 SetPickedUp(true, slot, other.gameObject, 1.5f);
                 LogicController.PickedItems[slot] = this;
-                UIController.SpawnSideLine($"{item_name} picked.", 3f);
+                UIController.SpawnSideLine($"item_picked", new object[] 
+                { 
+                    IsPotion() 
+                        ? (this as PotionWorld).potionData 
+                        : LocalizationSettings.StringDatabase.GetLocalizedString("Ingredients", item_name) 
+                }, 3f);
             }
         }
         else if (

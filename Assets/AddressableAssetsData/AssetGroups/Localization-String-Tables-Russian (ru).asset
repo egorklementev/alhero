@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Localization-String-Tables-Russian (ru)
+  m_EditorClassIdentifier: 
+  m_GroupName: Localization-String-Tables-Russian (ru)
+  m_Data:
+    m_SerializedData: []
+  m_GUID: e28872eefcba85849b28ba6a008f7369
+  m_SerializeEntries:
+  - m_GUID: 4d337b5a08ff0944ea96fb0f35ef456e
+    m_Address: Ingredients_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  - m_GUID: 586a613fab2a1ee4ba46e90edd3b1d0e
+    m_Address: Objects_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  - m_GUID: 97bb93aa8c2426b448aa7cbe81394dce
+    m_Address: General_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  - m_GUID: 1dfd8f7ef02a7de429120036e3c7e907
+    m_Address: Locations_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  - m_GUID: 8527ad3400fd85f40ac3100e9684bc13
+    m_Address: Entities_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  - m_GUID: 5484439451353924f874332b85115112
+    m_Address: PotionDesc1_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  - m_GUID: 7af1e588aa235e44799a478f1a0315d7
+    m_Address: PotionDesc2_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  - m_GUID: fa6ff34a11a3d39418deaf32c80b2bb8
+    m_Address: PotionDesc3_ru
+    m_ReadOnly: 1
+    m_SerializedLabels:
+    - Locale-ru
+    - Preload
+  m_ReadOnly: 1
+  m_Settings: {fileID: 11400000, guid: 939b795dd2214e44dadca43aaac7b5c1, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: 189b8b6ead0840f47af603a4f864a457, type: 2}
+    - {fileID: 11400000, guid: 4098acf1d15332941a86370de7450479, type: 2}

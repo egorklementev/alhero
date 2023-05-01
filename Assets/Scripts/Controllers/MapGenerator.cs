@@ -103,7 +103,7 @@ public class MapGenerator : MonoBehaviour
             if (genAttempt++ > 4)
             {
                 "Map generator broke, have a great day, teleporting back...".Err(this);
-                UIController.SpawnSideLine("Map has failed to generate!");
+                UIController.SpawnSideLine("Map has failed to generate!", new object[] {});
                 logic.ChangeScene("GameScene");
             }
 
@@ -208,7 +208,7 @@ public class MapGenerator : MonoBehaviour
                                 }
                                 else if (dice > .67f)
                                 {
-                                    cont.unlockingKeyId = "key_broze".Hash();
+                                    cont.unlockingKeyId = "key_bronze".Hash();
                                     cont.unlockingKeyVisualsPrefab = unlockingKeys[0];
                                     cont.SetLocked(true);
                                 }

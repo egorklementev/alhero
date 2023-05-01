@@ -103,7 +103,7 @@ public class Cauldron : MonoBehaviour
                                     int bottleShape = Random.Range(1, DataController.bootleShapesNumber + 1);
                                     PotionWorld potion = spawner.SpawnItem<PotionWorld>(
                                         temp.GetID(),
-                                        (transform.parent.transform.position - new Vector3(4f, -2f, -4f)),
+                                        (transform.parent.transform.position - new Vector3(-6f, -2f, -6f)),
                                         Quaternion.identity);
 
                                     DataController.AddHistoryIngredient(temp.GetID());
@@ -128,16 +128,27 @@ public class Cauldron : MonoBehaviour
                                     potionData.recipe_id = potentialRecipe.GetID();
                                     potionData.bottle_shape = bottleShape;
                                     potionData.ingredients = new int[inventory.Count];
-                                    potionData.titleIDs = new int[Random.Range(0, 3) + 1];
+                                    potionData.titleIDs = new int[3];
                                     for (int i = 0; i < potionData.titleIDs.Length; i++)
                                     {
-                                        // TODO: think about it
                                         potionData.titleIDs[i] = Random.Range(0, inventory.Count);
                                     }
                                     inventory.CopyTo(potionData.ingredients);
 
                                     // Generated potion ID
                                     int newPotionID = potionData.GetID();
+                                    int genIdAttempts = 0;
+                                    while (DataController.ingredients.ContainsKey(newPotionID) && genIdAttempts < 32)
+                                    {
+                                        newPotionID = $"{newPotionID}".Hash(); // Workaround to have unique ID
+                                        genIdAttempts++;
+                                    }
+
+                                    if (genIdAttempts >= 32)
+                                    {
+                                        newPotionID = Random.Range(0, int.MaxValue); // Workaround #2 to have unique ID
+                                    }
+
                                     string newPotionName = potionData.GenerateNameDebug();
 
                                     potion.id = newPotionID;
@@ -174,7 +185,7 @@ public class Cauldron : MonoBehaviour
                                         newPotionName,
                                         AverageCooldown(potionData.ingredients),
                                         RandomBreakChance(potionData.ingredients),
-                                        Random.Range(1, 1000), // TODO:
+                                        AverageRarity(potionData.ingredients),
                                         RandomR(potionData.ingredients),
                                         RandomG(potionData.ingredients),
                                         RandomB(potionData.ingredients),
@@ -184,6 +195,11 @@ public class Cauldron : MonoBehaviour
 
                                     DataController.genData.potionsCooked++;
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
+
+                                    if (DataController.genData.potionsCooked % 13 == 0)
+                                    {
+                                        DataController.genData.maxPigeons++;
+                                    }
 
                                     if (DataController.genData.potionsCooked == 300)
                                     {

@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: General Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: General
+  m_TableCollectionNameGuidString: 48522f1eb02d47848b0190fa2a14850b
+  m_Entries:
+  - m_Id: 6774792192
+    m_Key: take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29891941572608
+    m_Key: unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31174501015552
+    m_Key: mistakes_and_failure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36532825038848
+    m_Key: common
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36547547045888
+    m_Key: uncommon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36563179216896
+    m_Key: sparse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36574134738944
+    m_Key: rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36602710532096
+    m_Key: unique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37730957336576
+    m_Key: ingredient_description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39098942169088
+    m_Key: recipes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39136191782912
+    m_Key: history
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39183914573824
+    m_Key: ingredients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39875643383808
+    m_Key: game_info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40361633193984
+    m_Key: seed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40574800306176
+    m_Key: enter_seed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40708040761344
+    m_Key: generate_seed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40834473861120
+    m_Key: start_new_game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47071533932544
+    m_Key: buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52005960622080
+    m_Key: coins_picked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52090199023616
+    m_Key: item_picked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326759258988544
+    m_Key: potion_of
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 3382805442621866016
+  references:
+    version: 2
+    RefIds:
+    - rid: 3382805442621866016
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1682855321374

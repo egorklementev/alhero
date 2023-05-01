@@ -141,7 +141,8 @@ public class HeroMoveController : MonoBehaviour
                     // Player tap
                     Ray raycast = Camera.main.ScreenPointToRay(touch.position);
                     RaycastHit raycastHit;
-                    if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity, 7))
+                    if (Physics.Raycast(raycast, out raycastHit, Mathf.Infinity, 
+                        LayerMask.NameToLayer("Ignore User Raycast") | LayerMask.NameToLayer("Baked")))
                     {
                         if (raycastHit.collider.CompareTag("Player"))
                         {

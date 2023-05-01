@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: General_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 48522f1eb02d47848b0190fa2a14850b, type: 2}
+  m_Metadata:
+    m_Items:
+    - rid: 3382805442621866023
+  m_TableData:
+  - m_Id: 6774792192
+    m_Localized: Take
+    m_Metadata:
+      m_Items: []
+  - m_Id: 29891941572608
+    m_Localized: Unknown
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31174501015552
+    m_Localized: 'Mistakes allowed: {0}
+
+
+      Chance of failure: {1:F1} %'
+    m_Metadata:
+      m_Items:
+      - rid: 3382805442621866023
+  - m_Id: 36532825038848
+    m_Localized: Common
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36547547045888
+    m_Localized: Uncommon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36563179216896
+    m_Localized: Sparse
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36574134738944
+    m_Localized: Rare
+    m_Metadata:
+      m_Items: []
+  - m_Id: 36602710532096
+    m_Localized: Unique
+    m_Metadata:
+      m_Items: []
+  - m_Id: 37730957336576
+    m_Localized: 'Cooldown: {0:F1} seconds
+
+
+      Stability: {1}'
+    m_Metadata:
+      m_Items:
+      - rid: 3382805442621866023
+  - m_Id: 39098942169088
+    m_Localized: Recipes
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39136191782912
+    m_Localized: History
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39183914573824
+    m_Localized: Ingredients
+    m_Metadata:
+      m_Items: []
+  - m_Id: 39875643383808
+    m_Localized: Game info
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40361633193984
+    m_Localized: Seed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40574800306176
+    m_Localized: Enter your seed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40708040761344
+    m_Localized: Generate new seed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 40834473861120
+    m_Localized: Start a new game
+    m_Metadata:
+      m_Items: []
+  - m_Id: 47071533932544
+    m_Localized: Buy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52005960622080
+    m_Localized: Picked {0} coins
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52090199023616
+    m_Localized: '"{0}" picked'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 326759258988544
+    m_Localized: potion of
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds:
+    - rid: 3382805442621866023
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00200f615a1c000000204fec50220000

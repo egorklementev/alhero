@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: PotionDesc1_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 8908a73a17a9fad4cb2d8560eec8c691, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 1326684512256
+    m_Localized: Warm
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1277539852288
+    m_Localized: Rigorious
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1265871298560
+    m_Localized: Delicate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1231696109568
+    m_Localized: Youthful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 993291870208
+    m_Localized: Holy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962719588352
+    m_Localized: Light
+    m_Metadata:
+      m_Items: []
+  - m_Id: 939864825856
+    m_Localized: Lovely
+    m_Metadata:
+      m_Items: []
+  - m_Id: 916171202560
+    m_Localized: Gloomy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 903949000704
+    m_Localized: Boiling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 857614524416
+    m_Localized: Energetic
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839117643776
+    m_Localized: Bright
+    m_Metadata:
+      m_Items: []
+  - m_Id: 810130808832
+    m_Localized: Scalding
+    m_Metadata:
+      m_Items: []
+  - m_Id: 782079303680
+    m_Localized: Smashing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 761653043200
+    m_Localized: Combat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699401183232
+    m_Localized: Misterious
+    m_Metadata:
+      m_Items: []
+  - m_Id: 671878160384
+    m_Localized: Funny
+    m_Metadata:
+      m_Items: []
+  - m_Id: 646498426880
+    m_Localized: Winter
+    m_Metadata:
+      m_Items: []
+  - m_Id: 629884788736
+    m_Localized: Mighty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 615137615872
+    m_Localized: Tearful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 595046899712
+    m_Localized: Desired
+    m_Metadata:
+      m_Items: []
+  - m_Id: 580404584448
+    m_Localized: Chilling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 477635747840
+    m_Localized: Dual
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441136914432
+    m_Localized: Withered
+    m_Metadata:
+      m_Items: []
+  - m_Id: 388812972032
+    m_Localized: Saving
+    m_Metadata:
+      m_Items: []
+  - m_Id: 363206746112
+    m_Localized: Nasty
+    m_Metadata:
+      m_Items: []
+  - m_Id: 349847887872
+    m_Localized: Dilapidated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338527461376
+    m_Localized: Antient
+    m_Metadata:
+      m_Items: []
+  - m_Id: 305363099648
+    m_Localized: Poisonous
+    m_Metadata:
+      m_Items: []
+  - m_Id: 265701761024
+    m_Localized: Beutiful
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252569395200
+    m_Localized: Befuddle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 229798518784
+    m_Localized: Lucky
+    m_Metadata:
+      m_Items: []
+  - m_Id: 218067050496
+    m_Localized: Fragrant
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207904251904
+    m_Localized: Brackish
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198383181824
+    m_Localized: Sinewy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 141265149952
+    m_Localized: Colored
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

@@ -186,7 +186,7 @@ public class LogicController : MonoBehaviour
             spawner.SpawnItem<ItemWorld>(name.Hash(), pos, Quaternion.identity, spawner.itemsGroup);
             pos -= new Vector3(0f, 0f, 3f);
         }
-        UIController.SpawnSideLine("Wow, you spawned some stuff!!!");
+        // UIController.SpawnSideLine("Wow, you spawned some stuff!!!");
     }
 
     public void StartNewGame()
@@ -198,7 +198,7 @@ public class LogicController : MonoBehaviour
 
         spawner.ClearContainers();
         data.StartNewGame();
-        player.transform.position = Vector3.zero;
+        TryTeleportGameObj(player, "Initial");
 
         // TODO: play some player animation or something
 

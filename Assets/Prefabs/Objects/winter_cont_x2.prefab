@@ -226,7 +226,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  container_name: Snowy barrel
+  container_name: snowy_barrel
   isUnlocked: 0
   unlockingKeyId: 0
   unlockingKeyVisualsPrefab: {fileID: 0}

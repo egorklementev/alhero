@@ -17,7 +17,7 @@ public class Portal : MonoBehaviour {
 
     private void Start() 
     {
-        label.text = LabelToShow;
+        LabelToShow.Localize("Locations", label);
         portalRender.material.SetColor("_Color", Color);
         portalRender.material.SetColor("_EmissionColor", Color);
         var colorOverLife = particles.colorOverLifetime;

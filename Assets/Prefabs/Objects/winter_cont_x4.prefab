@@ -244,7 +244,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  container_name: Snowy chest
+  container_name: snowy_chest
   isUnlocked: 0
   unlockingKeyId: 0
   unlockingKeyVisualsPrefab: {fileID: 0}

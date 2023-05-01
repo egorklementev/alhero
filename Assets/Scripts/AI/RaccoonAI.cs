@@ -1,6 +1,8 @@
 using System.Collections;
 using UnityEngine;
 using TMPro;
+using System.Linq;
+using UnityEngine.Localization.Settings;
 
 public class RaccoonAI : SomeAI
 {
@@ -56,17 +58,18 @@ public class RaccoonAI : SomeAI
                     _isTransportingItem = true;
                     _magAI.enabled = false;
 
-                    GenerateNewRequestItem();
-
-                    _aiManager.Transition("Walking");
-
-                    UpdateFields();
-
-                    _aiManager.logic.spawner.SpawnItem<CoinWorld>(
-                        "coin".Hash(), 
+                    var rewardItem = _aiManager.logic.spawner.SpawnItem<ItemWorld>(
+                        DataController.genData.raccoonRewardItem,
                         transform.position + new Vector3(-1.5f, 2f, -1.5f),
-                        Quaternion.identity)
-                        .Count = CalcualteReward(item);
+                        Quaternion.identity) ;
+                    if (rewardItem is CoinWorld coin)
+                    {
+                        coin.Count = CalcualteReward(item);
+                    }
+
+                    GenerateNewRequestItem();
+                    _aiManager.Transition("Walking");
+                    UpdateFields();
                 }
                 else
                 {
@@ -82,7 +85,7 @@ public class RaccoonAI : SomeAI
 
     public void GenerateNewRequestItem()
     {
-        DataController.UpdateRaccoonRequestItem();
+        DataController.UpdateRaccoonRequestItemAndReward();
     }
 
     public void UpdateFields() 
@@ -91,6 +94,7 @@ public class RaccoonAI : SomeAI
         {
             Destroy(t.gameObject);
         }
+
         ItemUI item = _aiManager.logic.spawner.SpawnItem<ItemUI>(DataController.genData.raccoonRequestedItem, potionSlot);
         Instantiate(
             item,
@@ -98,8 +102,29 @@ public class RaccoonAI : SomeAI
             Quaternion.identity,
             potionSlot
         );
-        potionDesc.text = item.item_name;
-        rewardText.text = $"Reward: {CalcualteReward(item)}";
+
+        if (item.IsPotion())
+        {
+            (item as PotionUI).potionData.LocalizePotion(potionDesc);
+        }
+        else
+        {
+            item.item_name.Localize("Ingredients", potionDesc);
+        }
+
+        if (DataController.genData.raccoonRewardItem == "coin".Hash())
+        {
+            "raccoon_reward_coins".Localize("Entities", rewardText, $"{CalcualteReward(item)}");
+        }
+        else
+        {
+            string itemName = _aiManager.logic.spawner.absItems
+                .Where(item => item.id == DataController.genData.raccoonRewardItem)
+                .ElementAt(0).item_name;
+            string itemNameLoc = LocalizationSettings.StringDatabase.GetLocalizedString("Ingredients", itemName);
+            "raccoon_reward".Localize("Entities", rewardText, itemNameLoc);
+        }
+
     }
 
     private int CalcualteReward(AbstractItem item)

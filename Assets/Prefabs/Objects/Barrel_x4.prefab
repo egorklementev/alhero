@@ -188,7 +188,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  container_name: Barrel
+  container_name: barrel
   isUnlocked: 0
   unlockingKeyId: 0
   unlockingKeyVisualsPrefab: {fileID: 0}

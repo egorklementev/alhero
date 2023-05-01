@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Objects_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 7287b84923a834f418121ca92a0a2f9c, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 21698125824
+    m_Localized: Barrel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 43551518826496
+    m_Localized: Recipe book
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51924947640320
+    m_Localized: Small barrel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 51997936918528
+    m_Localized: Holy chest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52016307970048
+    m_Localized: Hell box
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52032330211328
+    m_Localized: Snowy barrel
+    m_Metadata:
+      m_Items: []
+  - m_Id: 52051896639488
+    m_Localized: Snowy chest
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

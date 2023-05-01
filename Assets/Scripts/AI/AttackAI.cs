@@ -42,7 +42,7 @@ public class AttackAI : SomeAI
 
                 if (proj.TryGetComponent<Rigidbody>(out Rigidbody body))
                 {
-                    Vector3 throwVector = Vector3.MoveTowards(transform.position, _target.transform.position, shootForce); // TODO:
+                    Vector3 throwVector = Vector3.MoveTowards(transform.position, _target.transform.position, shootForce);
                     body.AddForce(throwVector - transform.position, ForceMode.Impulse);
                 }
 

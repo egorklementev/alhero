@@ -63,14 +63,30 @@ public class Container : MonoBehaviour
                 inventory[selectedItem].SetSelected(false);
                 selectedItem = slotNum;
                 uiItem.SetSelected(true);
-                ingredientLine.text = uiItem.item_name;
+
+                if (uiItem is PotionUI potionUI)
+                {
+                    potionUI.potionData.LocalizePotion(ingredientLine);
+                }
+                else
+                {
+                    uiItem.item_name.Localize("Ingredients", ingredientLine);
+                }
             }
             // When no item is selected - select
             else
             {
                 selectedItem = slotNum;
                 uiItem.SetSelected(true);
-                ingredientLine.text = uiItem.item_name;
+
+                if (uiItem is PotionUI potionUI)
+                {
+                    potionUI.potionData.LocalizePotion(ingredientLine);
+                }
+                else
+                {
+                    uiItem.item_name.Localize("Ingredients", ingredientLine);
+                }
             }
         }
     }

@@ -18,9 +18,9 @@ public class Recipe : GameDataEntry
         id = GetID();
     }
 
-    /// Range is from 0 to 2L where L is the number of ingredients. L: [2, inf]
-    /// 0 - easiest recipe, 2L - hardest
-    /// 0 means all ingredients are common, 2L means all ingredients are hidden & unique
+    /// Range is from 0 to 4L where L is the number of ingredients. L: [2, inf]
+    /// 0 - easiest recipe, 4L - hardest
+    /// 0 means all ingredients are common, 4L means all ingredients are hidden, unique & potions
     public float GetComplexity()
     {
         const float unknownCost = 1.5f;
@@ -31,16 +31,21 @@ public class Recipe : GameDataEntry
 
         float rarityAccum = 0f;
         float unknownAccum = 0f;
+        float potionsAccum = 0f;
         float mistakesAccum = mistakesCost * mistakes_allowed;
         for (int i = 0; i < ingNum; i++)
         {
             var ingId = ingredient_seq[i];
             rarityAccum += DataController.ingredients[ingId].rarity;
+            potionsAccum += DataController.ingredients[ingId].isPotion ? 2f : 0f;
             unknownAccum += ingredient_known[i] ? 0f : unknownCost;
         }
 
+        float overallIngsParam = .1f * DataController.ingredients.Count;
+
         // Nasty one
-        return (1f - rarityAccum / (ingNum * rarityCost)) * ingNum + unknownAccum - mistakesAccum;
+        return (1f - rarityAccum / (ingNum * rarityCost)) * ingNum 
+            + unknownAccum * overallIngsParam - mistakesAccum + potionsAccum;
     }
 
     public int GetID()

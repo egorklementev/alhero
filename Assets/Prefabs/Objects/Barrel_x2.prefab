@@ -48,17 +48,17 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8564081044f9854479a367ea9b57884d,
         type: 3}
       propertyPath: m_LocalScale.x
-      value: 1
+      value: 0.77903
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8564081044f9854479a367ea9b57884d,
         type: 3}
       propertyPath: m_LocalScale.y
-      value: 1
+      value: 0.77903
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8564081044f9854479a367ea9b57884d,
         type: 3}
       propertyPath: m_LocalScale.z
-      value: 1
+      value: 0.77903
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8564081044f9854479a367ea9b57884d,
         type: 3}
@@ -68,7 +68,7 @@ PrefabInstance:
     - target: {fileID: -8679921383154817045, guid: 8564081044f9854479a367ea9b57884d,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.41
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 8564081044f9854479a367ea9b57884d,
         type: 3}
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  container_name: Small barrel
+  container_name: small_barrel
   isUnlocked: 0
   unlockingKeyId: 0
   unlockingKeyVisualsPrefab: {fileID: 0}

@@ -55,7 +55,7 @@ public class UIController : MonoBehaviour
     private static bool triggerFadePanel = false;
     private static bool doNotFadeOut = false;
     private static float fadeSpeed = 1f;
-    private static List<(string, float)> requestedSideLines = new List<(string, float)>();
+    private static List<(string, float, object[])> requestedSideLines = new List<(string, float, object[])>();
     private static List<string> entityPanelsToSpawn = new List<string>();
     private static List<string> entityPanelsToDespawn = new List<string>();
 
@@ -138,11 +138,18 @@ public class UIController : MonoBehaviour
     {
         if (requestedSideLines.Count > 0)
         {
-            foreach ((string, float) line in requestedSideLines)
+            foreach ((string, float, object[]) line in requestedSideLines)
             {
                 GameObject sd = Instantiate(SideLine, SideLines);
-                sd.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -60f * RequestedLinesNum - SideLineOffset); 
-                sd.GetComponent<TextMeshProUGUI>().text = line.Item1;
+                sd.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -100f * RequestedLinesNum - SideLineOffset); 
+                if (line.Item3[0] is Potion pData)
+                {
+                    pData.LocalizePotion(sd.GetComponent<TextMeshProUGUI>());
+                }
+                else
+                {
+                    line.Item1.Localize("General", sd.GetComponent<TextMeshProUGUI>(), line.Item3);
+                }
                 sd.GetComponent<Animator>().SetFloat("Speed", line.Item2);
             }
             requestedSideLines.Clear();
@@ -282,15 +289,15 @@ public class UIController : MonoBehaviour
         FadeLoadScene.sceneToLoad = sceneName;
     }
 
-    public static void SpawnSideLine(params string[] text)
+    public static void SpawnSideLine(params (string key, object[] prms)[] text)
     {
-        requestedSideLines.AddRange(text.Select(t => (t, 1f)));
+        requestedSideLines.AddRange(text.Select(t => (t.key, 1f, t.prms)));
         RequestedLinesNum += text.Length;
     }
 
-    public static void SpawnSideLine(string text, float duration = 4.5f)
+    public static void SpawnSideLine(string text, object[] parameters, float duration = 4.5f)
     {
-        requestedSideLines.Add((text, 4.5f / duration)); // 4.5f - animation duration
+        requestedSideLines.Add((text, 4.5f / duration, parameters)); // 4.5f - animation duration
         RequestedLinesNum++;
     }
 

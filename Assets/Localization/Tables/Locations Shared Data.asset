@@ -1,0 +1,53 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: Locations Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: Locations
+  m_TableCollectionNameGuidString: 228de1c3b286fe740869d245119d6cb6
+  m_Entries:
+  - m_Id: 8179884032
+    m_Key: forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 31630237696
+    m_Key: lab
+    m_Metadata:
+      m_Items: []
+  - m_Id: 48961101824
+    m_Key: desert
+    m_Metadata:
+      m_Items: []
+  - m_Id: 69458665472
+    m_Key: winter_forest
+    m_Metadata:
+      m_Items: []
+  - m_Id: 131651805184
+    m_Key: hell
+    m_Metadata:
+      m_Items: []
+  - m_Id: 140682141696
+    m_Key: heaven
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 3382805442621866022
+  references:
+    version: 2
+    RefIds:
+    - rid: 3382805442621866022
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1682858822715

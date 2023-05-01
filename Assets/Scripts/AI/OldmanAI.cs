@@ -141,7 +141,15 @@ public class OldmanAI : SomeAI
 
             int itemId = DataController.genData.oldmanItemsForSale[i];
             _itemCosts[i].text = GetCost(i).ToString();
-            _itemNames[i].text = DataController.ingredients[itemId].ing_name;
+            if (DataController.ingredients[itemId].isPotion)
+            {
+                DataController.ingredients[itemId].potionData.LocalizePotion(_itemNames[i]);
+            }
+            else
+            {
+                DataController.ingredients[itemId].ing_name.Localize("Ingredients", _itemNames[i]);
+            }
+
 
             _aiManager.logic.spawner.SpawnItem<ItemUI>(
                 itemId, _itemSlots[i]

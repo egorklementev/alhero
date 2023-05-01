@@ -1,0 +1,163 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: PotionDesc3_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: e36875e84f18a934da44100900d753ac, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 166816153280512
+    m_Localized: loneliness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166825632407552
+    m_Localized: gourmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166833689665536
+    m_Localized: fate
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166841755312128
+    m_Localized: lesson
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166855302914048
+    m_Localized: experience
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166870360465408
+    m_Localized: union
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166891906605056
+    m_Localized: blessing
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166910927773696
+    m_Localized: fossils
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166926547361792
+    m_Localized: injection
+    m_Metadata:
+      m_Items: []
+  - m_Id: 166954326237184
+    m_Localized: unwillingness
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167016481628160
+    m_Localized: filling
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167050749091840
+    m_Localized: survival
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167135213985792
+    m_Localized: concern
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167187059777536
+    m_Localized: injury
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167230202388480
+    m_Localized: pleasure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167251207462912
+    m_Localized: secret
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167278013259776
+    m_Localized: gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167295650308096
+    m_Localized: horn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167307214004224
+    m_Localized: cold
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167355184259072
+    m_Localized: snow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167368081743872
+    m_Localized: holyday
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167391175581696
+    m_Localized: burning
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167406627397632
+    m_Localized: cooking
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167418262396928
+    m_Localized: horror
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167564308062208
+    m_Localized: fear
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167584033873920
+    m_Localized: pressure
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167607933018112
+    m_Localized: melting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167625813336064
+    m_Localized: burn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167637372837888
+    m_Localized: levitation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167649536319488
+    m_Localized: pursuit
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167669392154624
+    m_Localized: evaporation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167700169957376
+    m_Localized: assault
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167718897524736
+    m_Localized: rejuvenation
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167765928255488
+    m_Localized: appetite
+    m_Metadata:
+      m_Items: []
+  - m_Id: 167749637578752
+    m_Localized: wax
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

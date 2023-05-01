@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9620f8c34305754d8cc9a7e49e852d9, type: 3}
+  m_Name: Ingredients_en
+  m_EditorClassIdentifier: 
+  m_LocaleId:
+    m_Code: en
+  m_SharedData: {fileID: 11400000, guid: 9e17d2fb38a01ab408d5316d37ca41a3, type: 2}
+  m_Metadata:
+    m_Items: []
+  m_TableData:
+  - m_Id: 28778110976
+    m_Localized: Meat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 122709549056
+    m_Localized: Flower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 159162245120
+    m_Localized: Salt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 224769548288
+    m_Localized: Tulip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 246584123392
+    m_Localized: Lily
+    m_Metadata:
+      m_Items: []
+  - m_Id: 258152013824
+    m_Localized: Horseshoe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 422677782528
+    m_Localized: Wine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11955096985600
+    m_Localized: Sand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12162874417152
+    m_Localized: Apple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12161423187968
+    m_Localized: Nimbus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12160160702464
+    m_Localized: Youth elixir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12158768193536
+    m_Localized: Holy tree leaf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12157463764992
+    m_Localized: Holy arrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12156180307968
+    m_Localized: Goldern sword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12154846519296
+    m_Localized: Candle
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12152321548288
+    m_Localized: Skull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12151008731136
+    m_Localized: Lava
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12149796577280
+    m_Localized: Horned helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12148542480384
+    m_Localized: Fireflower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12147233857536
+    m_Localized: Demon horn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12145908457472
+    m_Localized: Coal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12144545308672
+    m_Localized: Cauldron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12141542187008
+    m_Localized: Winterberry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12140145483776
+    m_Localized: Snowball
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12138836860928
+    m_Localized: Lost gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12137398214656
+    m_Localized: Ice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12136018288640
+    m_Localized: Deer horn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12134529310720
+    m_Localized: Candy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12132956446720
+    m_Localized: Azalea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12123418599424
+    m_Localized: Oasis water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12121505996800
+    m_Localized: Dry lizard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12119618560000
+    m_Localized: Dino bone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12107278917632
+    m_Localized: Cactus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 12103550181376
+    m_Localized: Burr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 11991834894336
+    m_Localized: Scorpion sting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35780417232896
+    m_Localized: Coin
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35816182063104
+    m_Localized: Bomb
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35878224207872
+    m_Localized: Bronze key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35882779222016
+    m_Localized: Silver key
+    m_Metadata:
+      m_Items: []
+  - m_Id: 35883391590400
+    m_Localized: Golden key
+    m_Metadata:
+      m_Items: []
+  references:
+    version: 2
+    RefIds: []

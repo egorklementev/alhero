@@ -181,7 +181,7 @@ public class SpawnController : MonoBehaviour
 
         // Connect barrel to slots
         Container contScript = container.GetComponentInChildren<Container>();
-        uiGroup.transform.Find("Title").GetComponent<TextMeshProUGUI>().text = contScript.container_name;
+        contScript.container_name.Localize("Objects", uiGroup.transform.Find("Title").GetComponent<TextMeshProUGUI>());
         contScript.slots = new GameObject[contScript.invSize];
         for (int i = 0; i < contScript.invSize; i++)
         {

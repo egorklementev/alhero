@@ -2,6 +2,8 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Settings;
 
 public class RecipeBook : MonoBehaviour
 {
@@ -41,7 +43,7 @@ public class RecipeBook : MonoBehaviour
         bookAnim = GetComponentInChildren<Animator>();
         secondTitles = new string[]
         {
-            "Ingredients", "Recipes", "History", "Game Info"
+            "ingredients", "recipes", "history", "game_info"
         };
         //ChangePage(0);
     }
@@ -86,7 +88,7 @@ public class RecipeBook : MonoBehaviour
             buttons[3].SetActive(false); // Recipe back
         }
 
-        secondTitle.text = secondTitles[currentPage - 1];
+        secondTitles[currentPage - 1].Localize("General", secondTitle);
 
         // Clear previous content
         foreach (Transform t in scrollContent.transform)
@@ -111,15 +113,16 @@ public class RecipeBook : MonoBehaviour
                         if (uiPotion != null)
                         {
                             uiItemCopy = spawner.SpawnItem<PotionUI>(uiPotion.id, slot);
+                            uiPotion.potionData.LocalizePotion(ingEntry.transform.Find("Title").gameObject.GetComponent<TextMeshProUGUI>());
                         }
                         else
                         {
                             uiItemCopy = spawner.SpawnItem<ItemUI>(uiItem.id, slot);
+                            uiItem.item_name.Localize("Ingredients", ingEntry.transform.Find("Title").gameObject.GetComponent<TextMeshProUGUI>());
                         }
                         int ing_id = uiItemCopy.id;
                         slot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(ing_id));
                         uiItemCopy.SetSmall();
-                        ingEntry.transform.Find("Title").gameObject.GetComponent<TextMeshProUGUI>().text = uiItem.item_name;
                         index++;
                     }
                 }
@@ -139,19 +142,19 @@ public class RecipeBook : MonoBehaviour
                         int rec_id = rec.GetID();
                         slot.GetComponent<Button>().onClick.AddListener(() => OnRecipeClicked(rec_id));
                         uiPotionCopy.SetSmall();
-                        recEntry.transform.Find("Title").GetComponent<TextMeshProUGUI>().text = uiPotion.item_name;
-                        index++;
+                        uiPotion.potionData.LocalizePotion(recEntry.transform.Find("Title").GetComponent<TextMeshProUGUI>());
                     }
-                    else 
+                    else
                     {
                         Transform recEntry = Instantiate(bookItem, scrollContent.transform).transform;
                         Transform slot = recEntry.Find("Slot");
                         Instantiate(questionMark, slot);
                         int rec_id = rec.GetID();
                         slot.GetComponent<Button>().onClick.AddListener(() => OnRecipeClicked(rec_id));
-                        recEntry.transform.Find("Title").GetComponent<TextMeshProUGUI>().text = "Unknown";
-                        index++;
+                        "unknown".Localize("General", recEntry.transform.Find("Title").GetComponent<TextMeshProUGUI>());
                     }
+
+                    index++;
                 }
                 break;
 
@@ -163,6 +166,7 @@ public class RecipeBook : MonoBehaviour
                     histEntries[i] = Instantiate(historyItem, scrollContent.transform).transform;
                     histEntries[i].Find("EntryNumber").GetComponent<TextMeshProUGUI>().text = (i + 1).ToString() + ".";
                 }
+
                 i = 0;
                 foreach (HistoryEntry he in DataController.history)
                 {
@@ -186,6 +190,7 @@ public class RecipeBook : MonoBehaviour
                                 uiItem.SetSmall();
                                 if (j < he.ingredients.Length - 1)
                                 {
+                                    slot.Find("IngNumber").GetComponent<TextMeshProUGUI>().text = $"{j + 1}";
                                     lastText = Instantiate(recipeSignText, histContent).GetComponent<TextMeshProUGUI>();
                                     lastText.text = "+";
                                 }
@@ -199,6 +204,39 @@ public class RecipeBook : MonoBehaviour
                     }
                     i++;
                 }
+
+                if (DataController.currentHistoryIngs.Count > 0)
+                {
+                    int j = 0;
+                    Transform histContent10th = histEntries[DataController.history.Count]
+                        .Find("IngredientList")
+                        .Find("HViewport")
+                        .Find("HContent");
+                    TextMeshProUGUI lastText = null;
+                    foreach (int id in DataController.currentHistoryIngs)
+                    {
+                        Transform ingEntry = Instantiate(recipeIngItem, histContent10th).transform;
+                        Transform slot = ingEntry.Find("Slot");
+                        if (id == 0)
+                        {
+                            Instantiate(failCross, slot);
+                        }
+                        else
+                        {
+                            slot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(id));
+                            ItemUI uiItem = spawner.SpawnItem<ItemUI>(id, slot);
+                            uiItem.SetSmall();
+                            if (j < DataController.currentHistoryIngs.Count - 1)
+                            {
+                                slot.Find("IngNumber").GetComponent<TextMeshProUGUI>().text = $"{j + 1}";
+                                lastText = Instantiate(recipeSignText, histContent10th).GetComponent<TextMeshProUGUI>();
+                                lastText.text = "+";
+                            }
+                        }
+                        j++;
+                    }
+                }
+
                 break;
 
             case 4: // Game Info
@@ -220,57 +258,61 @@ public class RecipeBook : MonoBehaviour
 
         Ingredient ing = DataController.ingredients[uiItem.id];
 
-            // Clear previous content
-            foreach (Transform t in scrollContent.transform)
-            {
-                Destroy(t.gameObject);
-            }
+        // Clear previous content
+        foreach (Transform t in scrollContent.transform)
+        {
+            Destroy(t.gameObject);
+        }
 
-            // Hide paging buttons
-            buttons[0].SetActive(false);
-            buttons[1].SetActive(false);
-            buttons[2].SetActive(!fromRecipe);
-            buttons[3].SetActive(fromRecipe);
+        // Hide paging buttons
+        buttons[0].SetActive(false);
+        buttons[1].SetActive(false);
+        buttons[2].SetActive(!fromRecipe);
+        buttons[3].SetActive(fromRecipe);
 
-            Transform ingDescEntry = Instantiate(ingredientItem, scrollContent.transform).transform;
-            ItemUI uiItemCopy;
-            PotionUI uiPotion = uiItem as PotionUI;
-            Transform slot = ingDescEntry.Find("Slot");
-            if (uiPotion != null)
-            {
-                uiItemCopy = spawner.SpawnItem<PotionUI>(uiPotion.id, slot);
-            }
-            else
-            {
-                uiItemCopy = spawner.SpawnItem<ItemUI>(uiItem.id, slot);
-            }
-            uiItemCopy.SetSelected(true);
-            ingDescEntry.Find("Title").gameObject.GetComponent<TextMeshProUGUI>().text = uiItem.item_name;
+        Transform ingDescEntry = Instantiate(ingredientItem, scrollContent.transform).transform;
+        ItemUI uiItemCopy;
+        PotionUI uiPotion = uiItem as PotionUI;
+        Transform slot = ingDescEntry.Find("Slot");
+        if (uiPotion != null)
+        {
+            uiItemCopy = spawner.SpawnItem<PotionUI>(uiPotion.id, slot);
+            uiPotion.potionData.LocalizePotion(ingDescEntry.Find("Title").gameObject.GetComponent<TextMeshProUGUI>());
+        }
+        else
+        {
+            uiItemCopy = spawner.SpawnItem<ItemUI>(uiItem.id, slot);
+            uiItem.item_name.Localize("Ingredients", ingDescEntry.Find("Title").gameObject.GetComponent<TextMeshProUGUI>());
+        }
+        uiItemCopy.SetSelected(true);
 
-            ingDescEntry.Find("Description").gameObject.GetComponent<TextMeshProUGUI>().text =
-                $"Cooldown: {ing.cooldown:F1} seconds" +
-                $"{Environment.NewLine}{Environment.NewLine}" +
-                $"Stability: {((int)(ing.breakChance / .03f * 100f))}";
+        "ingredient_description".Localize(
+            "General",
+            ingDescEntry.Find("Description").gameObject.GetComponent<TextMeshProUGUI>(),
+            new object[] { ing.cooldown, ((int)(ing.breakChance / .03f * 100f)) });
 
-            (int rarity, string line, Color color)[] rareness = new (int, string, Color)[]
-            {
-                (200, "Unique", itemRarityColors[4]),
-                (400, "Rare", itemRarityColors[3]),
-                (600, "Sparse", itemRarityColors[2]),
-                (800, "Uncommon", itemRarityColors[1]),
-                (1001, "Common", itemRarityColors[0]),
-            };
+        (int rarity, string line, Color color)[] rareness = new (int, string, Color)[]
+        {
+                (200, "unique", itemRarityColors[4]),
+                (400, "rare", itemRarityColors[3]),
+                (600, "sparse", itemRarityColors[2]),
+                (800, "uncommon", itemRarityColors[1]),
+                (1001, "common", itemRarityColors[0]),
+        };
 
-            int i = 0;
-            string rarity = rareness[0].line;
-            while (rareness[i].rarity < ing.rarity)
-            {
-                i++;
-            }
+        int i = 0;
+        string rarity = rareness[0].line;
+        while (rareness[i].rarity < ing.rarity)
+        {
+            i++;
+        }
 
-            var rarityLine = ingDescEntry.Find("Rarity").gameObject.GetComponent<TextMeshProUGUI>();
-            rarityLine.text = ing.isPotion ? "" : $"{rareness[i].line}";
+        var rarityLine = ingDescEntry.Find("Rarity").gameObject.GetComponent<TextMeshProUGUI>();
+        if (!ing.isPotion)
+        {
             rarityLine.color = rareness[i].color;
+            rareness[i].line.Localize("General", rarityLine);
+        }
     }
 
     public void OnRecipeClicked(int id)
@@ -292,6 +334,7 @@ public class RecipeBook : MonoBehaviour
 
         float successChance = 1f;
         Transform lastText = null;
+        int index = 0;
         foreach (int ing_id in rec.ingredient_seq)
         {
             if (DataController.ingredients.ContainsKey(ing_id))
@@ -299,6 +342,7 @@ public class RecipeBook : MonoBehaviour
                 Ingredient i = DataController.ingredients[ing_id];
                 Transform ing = Instantiate(recipeIngItem, scrollContent.transform).transform;
                 Transform slot = ing.Find("Slot");
+                slot.Find("IngNumber").GetComponent<TextMeshProUGUI>().text = $"{index + 1}";
                 if (rec.IsIngredientKnown(ing_id))
                 {
                     slot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(ing_id, true));
@@ -317,6 +361,8 @@ public class RecipeBook : MonoBehaviour
             {
                 Debug.LogError($"[RecipeBook.OnRecipeClicked]: No ingredient with ID \"{ing_id}\"!!!");
             }
+
+            index++;
         }
         if (lastText != null)
         {
@@ -336,8 +382,10 @@ public class RecipeBook : MonoBehaviour
             // Additional recipe info
             float failureChance = (1f - successChance) * 100f;
             lastText = Instantiate(recipeDescText, scrollContent.transform).transform;
-            lastText.GetComponent<TextMeshProUGUI>().text = $"Mistakes allowed: {rec.mistakes_allowed}{Environment.NewLine}{Environment.NewLine}" +
-                $"Chance of failure: {failureChance:F1} %";
+            "mistakes_and_failure".Localize(
+                "General",
+                lastText.GetComponent<TextMeshProUGUI>(),
+                new object[] { rec.mistakes_allowed, failureChance });
         }
         else
         {
@@ -346,8 +394,10 @@ public class RecipeBook : MonoBehaviour
             Instantiate(questionMark, resSlot);
 
             lastText = Instantiate(recipeDescText, scrollContent.transform).transform;
-            lastText.GetComponent<TextMeshProUGUI>().text = $"Mistakes allowed: ?{Environment.NewLine}{Environment.NewLine}" +
-                $"Chance of failure: ? %";
+            "mistakes_and_failure".Localize(
+                "General",
+                lastText.GetComponent<TextMeshProUGUI>(),
+                new object[] { "?", "?" });
         }
     }
 

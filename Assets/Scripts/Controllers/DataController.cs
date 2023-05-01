@@ -12,6 +12,8 @@ public class DataController : MonoBehaviour
     public string locationName;
     public General debugGeneral;
 
+    [SerializeField] private RaccoonReward[] raccoonRewards;
+
     [Space(20f)]
     public Ingredient[] dIng;
 
@@ -39,25 +41,26 @@ public class DataController : MonoBehaviour
     public static Dictionary<int, LabContainerItems> labContainers;
     public static int newSeed = int.MaxValue;
     public static SysRandom random = new SysRandom();
-
+    public static List<int> currentHistoryIngs = new List<int>();
 
     public const int bootleShapesNumber = 4;
 
+    private static string[] dataFolders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
+    private static string[] dataFiles = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
+
     private float autoSaveTimer = 0f;
 
-    private static List<int> currentHistoryIngs = new List<int>();
     private static List<int> _notIngredientsList = new List<int>();
+    private static RaccoonReward[] rewards = new RaccoonReward[4];
 
     void Awake()
     {
         Application.targetFrameRate = 60;
         random = new SysRandom();
 
-        string[] folders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
-        string[] files = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
-        for (int i = 0; i < folders.Length; i++)
+        for (int i = 0; i < dataFolders.Length; i++)
         {
-            SetupDataFile(folders[i], files[i]);
+            SetupDataFile(dataFolders[i], dataFiles[i]);
         }
 
         genData = LoadDataFile<General>("General", "general.json");
@@ -87,6 +90,11 @@ public class DataController : MonoBehaviour
         }
 
         _notIngredientsList = new List<int>(genData.notIngredients);
+
+        if (raccoonRewards != null) 
+        {
+            Array.Copy(raccoonRewards, rewards, raccoonRewards.Length);
+        }
 
         if (genData.seed == 0)
         {
@@ -204,7 +212,7 @@ public class DataController : MonoBehaviour
 
     public static void AddHistoryEntry(HistoryEntry he)
     {
-        if (history.Count >= 10)
+        if (history.Count >= 9)
         {
             history.Dequeue();
         }
@@ -338,10 +346,26 @@ public class DataController : MonoBehaviour
         return false;
     }
 
-    public static void UpdateRaccoonRequestItem()
+    public static void UpdateRaccoonRequestItemAndReward()
     {
         genData.raccoonRequestedItem = GetWeightedIngredientFromList(
             ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList()).id;
+
+        float totalWeight = rewards.Sum(r => r.chance_weight);
+        float[] chances = rewards.Select(r => r.chance_weight / totalWeight).ToArray();
+        Array.Sort(chances);
+        float currentChance = chances[0];
+        float dice = Random.value;
+        $"Raccon reward dice: {dice}".Log();
+        int index = 0;
+        while (dice >= currentChance && index < chances.Length - 1)
+        {
+            currentChance += chances[index + 1];
+            index++;
+        }
+
+        var randomReward = rewards[index];
+        genData.raccoonRewardItem = randomReward.item_id.Hash();
     }
 
     public static void UpdateOldmanItems()
@@ -383,11 +407,34 @@ public class DataController : MonoBehaviour
             .ToList();
     }
 
+    public static string GetIngredientName(int id)
+    {
+        if (ingredients[id].isPotion)
+        {
+            // Nasty one
+            var ingLen = ingredients[id].potionData.ingredients.Length;
+            return GetIngredientName(ingredients[id].potionData.ingredients[ingredients[id].ing_name.Hash() % ingLen]);
+        }
+        else
+        {
+            return ingredients[id].ing_name;
+        }
+    }
+
     public void StartNewGame()
     {
         Environment.NewLine.Log(this);
         "Starting a new game...".Log(this);
         Environment.NewLine.Log(this);
+
+        // Remove all data files
+        for (int i = 0; i < dataFolders.Length; i++)
+        {
+            var folder = Path.Combine(Application.persistentDataPath, dataFolders[i]);
+            var file = Path.Combine(Application.persistentDataPath, dataFiles[i]);
+            Directory.Delete(folder, true);
+            SetupDataFile(folder, file);
+        }
         
         // In case of user set seed
         if (newSeed != int.MaxValue)
@@ -408,6 +455,7 @@ public class DataController : MonoBehaviour
         // Initial game values
         genData.locationGenerations = 0;
         genData.raccoonRequestedItem = 0;
+        genData.raccoonRewardItem = 0;
         genData.oldmanItemsForSale = new int[2];
         genData.coins = 0;
         genData.maxPigeons = 3;
@@ -415,11 +463,12 @@ public class DataController : MonoBehaviour
 
         history.Clear();
 
+        int cont_index = 0;
         foreach (LabContainerItems lci in labContainers.Values)
         {
             int size = lci.items.Length;
             lci.items = new LabContainerItem[size];
-            lci.isUnlocked = false;
+            lci.isUnlocked = cont_index++ == 0;
         }
 
         // Randomize ingredient values
@@ -569,5 +618,13 @@ public class DataController : MonoBehaviour
             string jsonData = request.downloadHandler.text;
             File.WriteAllText(Path.Combine(persPath, file), jsonData);
         }
+    }
+
+    [Serializable]
+    private struct RaccoonReward
+    {
+        public string item_id;
+        public int chance_weight;
+        public object data;
     }
 }

@@ -210,7 +210,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 0
-  container_name: Holy chest
+  container_name: holy_chest
   isUnlocked: 0
   unlockingKeyId: 0
   unlockingKeyVisualsPrefab: {fileID: 0}
@@ -219,6 +219,19 @@ MonoBehaviour:
   ingredientLine: {fileID: 0}
   spawner: {fileID: 0}
   _enterField: {fileID: 4850932082303565009}
+--- !u!65 &6074675406871656020
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7917162789935086838}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 4.445805, y: 5.539479, z: 2.037839}
+  m_Center: {x: 0.021179438, y: 1.4390428, z: -0.060352087}
 --- !u!1001 &6998031205918878538
 PrefabInstance:
   m_ObjectHideFlags: 0

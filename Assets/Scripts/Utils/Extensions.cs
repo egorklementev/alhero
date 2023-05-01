@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Localization.Settings;
 
 public static class Extensions
 {
@@ -7,7 +9,7 @@ public static class Extensions
     {
         return some.GetHashCode();
     }
-    
+
     public static void Err(this string msg, object obj = null, string method = "", params System.Type[] attrs)
     {
         string objName = "";
@@ -15,7 +17,7 @@ public static class Extensions
         {
             objName = mono.gameObject.name + "-";
         }
-        
+
         Debug.LogError($"[{objName}{obj?.GetType()}] => {obj?.GetType().GetMethod(method, attrs)}: " + msg);
     }
 
@@ -61,9 +63,9 @@ public static class Extensions
                 result = child;
                 return true;
             }
-            
+
         }
-        
+
         result = null;
         return false;
     }
@@ -81,5 +83,58 @@ public static class Extensions
     public static float Value(this System.Random random)
     {
         return (float)random.NextDouble();
+    }
+
+    public static void Localize(this string key, string table, TextMeshProUGUI label, params object[] parameters)
+    {
+        var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(table, key, parameters);
+        if (op.IsDone)
+        {
+            label.text = op.Result;
+        }
+        else
+        {
+            op.Completed += (op) => label.text = op.Result;
+        }
+    }
+
+    public static void LocalizePotion(this Potion pData, TextMeshProUGUI label)
+    {
+        string[] descs = new string[] { string.Empty, string.Empty, string.Empty };
+
+        var potionOfOp = LocalizationSettings.StringDatabase.GetLocalizedStringAsync("General", "potion_of");
+        string potionOf = string.Empty;
+        if (potionOfOp.IsDone)
+        {
+            potionOf = potionOfOp.Result;
+        }
+        else
+        {
+            potionOfOp.Completed += (op) =>
+            {
+                potionOf = op.Result;
+            };
+        }
+
+        for (int i = 0; i < 3; i++)
+        {
+            var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(
+                $"PotionDesc{i + 1}", 
+                DataController.GetIngredientName(pData.ingredients[pData.titleIDs[i]]));
+            if (op.IsDone)
+            {
+                descs[i] = op.Result;
+                label.text = $"{descs[0]} {potionOf} {descs[1]} {descs[2]}";
+            }
+            else
+            {
+                op.Completed += (op) =>
+                {
+                    descs[i] = op.Result;
+                    label.text = $"{descs[0]} {potionOf} {descs[1]} {descs[2]}";
+                };
+            }
+        }
+
     }
 }

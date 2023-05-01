@@ -1,0 +1,169 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b11a58205ec3474ca216360e9fa74a8, type: 3}
+  m_Name: PotionDesc1 Shared Data
+  m_EditorClassIdentifier: 
+  m_TableCollectionName: PotionDesc1
+  m_TableCollectionNameGuidString: 8908a73a17a9fad4cb2d8560eec8c691
+  m_Entries:
+  - m_Id: 141265149952
+    m_Key: flower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 198383181824
+    m_Key: meat
+    m_Metadata:
+      m_Items: []
+  - m_Id: 207904251904
+    m_Key: salt
+    m_Metadata:
+      m_Items: []
+  - m_Id: 218067050496
+    m_Key: lily
+    m_Metadata:
+      m_Items: []
+  - m_Id: 229798518784
+    m_Key: horseshoe
+    m_Metadata:
+      m_Items: []
+  - m_Id: 252569395200
+    m_Key: wine
+    m_Metadata:
+      m_Items: []
+  - m_Id: 265701761024
+    m_Key: tulip
+    m_Metadata:
+      m_Items: []
+  - m_Id: 305363099648
+    m_Key: scorpion_sting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 338527461376
+    m_Key: sand
+    m_Metadata:
+      m_Items: []
+  - m_Id: 349847887872
+    m_Key: dino_bone
+    m_Metadata:
+      m_Items: []
+  - m_Id: 363206746112
+    m_Key: burr
+    m_Metadata:
+      m_Items: []
+  - m_Id: 388812972032
+    m_Key: oasis_water
+    m_Metadata:
+      m_Items: []
+  - m_Id: 441136914432
+    m_Key: dry_lizard
+    m_Metadata:
+      m_Items: []
+  - m_Id: 477635747840
+    m_Key: cactus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 580404584448
+    m_Key: ice
+    m_Metadata:
+      m_Items: []
+  - m_Id: 595046899712
+    m_Key: candy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 615137615872
+    m_Key: lost_gift
+    m_Metadata:
+      m_Items: []
+  - m_Id: 629884788736
+    m_Key: deer_horn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 646498426880
+    m_Key: winterberry
+    m_Metadata:
+      m_Items: []
+  - m_Id: 671878160384
+    m_Key: snowball
+    m_Metadata:
+      m_Items: []
+  - m_Id: 699401183232
+    m_Key: azalea
+    m_Metadata:
+      m_Items: []
+  - m_Id: 761653043200
+    m_Key: horned_helmet
+    m_Metadata:
+      m_Items: []
+  - m_Id: 782079303680
+    m_Key: demon_horn
+    m_Metadata:
+      m_Items: []
+  - m_Id: 810130808832
+    m_Key: lava
+    m_Metadata:
+      m_Items: []
+  - m_Id: 839117643776
+    m_Key: fireflower
+    m_Metadata:
+      m_Items: []
+  - m_Id: 857614524416
+    m_Key: coal
+    m_Metadata:
+      m_Items: []
+  - m_Id: 903949000704
+    m_Key: cauldron
+    m_Metadata:
+      m_Items: []
+  - m_Id: 916171202560
+    m_Key: skull
+    m_Metadata:
+      m_Items: []
+  - m_Id: 939864825856
+    m_Key: holy_arrow
+    m_Metadata:
+      m_Items: []
+  - m_Id: 962719588352
+    m_Key: holy_tree_leaf
+    m_Metadata:
+      m_Items: []
+  - m_Id: 993291870208
+    m_Key: nimbus
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1231696109568
+    m_Key: youth_elixir
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1265871298560
+    m_Key: apple
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1277539852288
+    m_Key: golden_sword
+    m_Metadata:
+      m_Items: []
+  - m_Id: 1326684512256
+    m_Key: candle
+    m_Metadata:
+      m_Items: []
+  m_Metadata:
+    m_Items: []
+  m_KeyGenerator:
+    rid: 3382805442621866050
+  references:
+    version: 2
+    RefIds:
+    - rid: 3382805442621866050
+      type: {class: DistributedUIDGenerator, ns: UnityEngine.Localization.Tables,
+        asm: Unity.Localization}
+      data:
+        m_CustomEpoch: 1682894700294
