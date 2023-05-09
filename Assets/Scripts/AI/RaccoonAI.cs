@@ -64,8 +64,13 @@ public class RaccoonAI : SomeAI
                         Quaternion.identity) ;
                     if (rewardItem is CoinWorld coin)
                     {
-                        coin.Count = CalcualteReward(item);
+                        var reward = CalcualteReward(item);
+                        coin.Count = reward;
+                        DataController.genData.moneyEarned += reward;
                     }
+
+                    DataController.genData.itemsBrought++;
+                    DataController.UpdateTotalScore(200);
 
                     GenerateNewRequestItem();
                     _aiManager.Transition("Walking");
@@ -129,7 +134,7 @@ public class RaccoonAI : SomeAI
 
     private int CalcualteReward(AbstractItem item)
     {
-       return 10 - (int)(DataController.ingredients[item.id].rarity / 100f);
+       return 20 / (int)(DataController.ingredients[item.id].rarity / 125f + 1);
     }
 
     private IEnumerator TurnOnStaringAI(float sec)

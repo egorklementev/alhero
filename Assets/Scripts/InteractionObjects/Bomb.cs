@@ -6,6 +6,7 @@ public class Bomb : MonoBehaviour
     public GameObject blastParticles;
     public float blastRadius = 5f;
     public float blastTimer = 3f;
+    public Trap trapScript;
 
     private bool _isActivated = false;
     private float _timer = 0f;
@@ -37,11 +38,14 @@ public class Bomb : MonoBehaviour
         if (TryGetComponent<ItemWorld>(out var item)) 
         {
             item.logic.KillInRange(transform.position, blastRadius);
+            item.logic.PlaySound("explosion", .2f, transform.position);
         }
-        else if (TryGetComponent<Trap>(out var trap))
+        else if (trapScript != null)
         {
-            trap.logic.KillInRange(transform.position, blastRadius);
+            trapScript.logic.KillInRange(transform.position, blastRadius);
+            trapScript.logic.PlaySound("explosion", .2f, transform.position);
         }
+
         Instantiate(blastParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }

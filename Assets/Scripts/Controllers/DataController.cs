@@ -44,6 +44,7 @@ public class DataController : MonoBehaviour
     public static List<int> currentHistoryIngs = new List<int>();
 
     public const int bootleShapesNumber = 4;
+    public const int maximumRecipes = 200;
 
     private static string[] dataFolders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
     private static string[] dataFiles = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
@@ -263,15 +264,15 @@ public class DataController : MonoBehaviour
         return ids[index];
     }
 
-    public static Recipe GenerateRandomRecipe(float estimateComplexity, int ingNum = 0, int maxTrials = 1024)
+    public static Recipe GenerateRandomRecipe(float estimateComplexity, int maxTrials = 1024)
     {
         int trials = 0;
-        Recipe rec = GetRandomRecipe(estimateComplexity, ingNum);
+        Recipe rec = GetRandomRecipe(estimateComplexity);
         while ((Math.Abs(rec.GetComplexity() - estimateComplexity) > .1f * estimateComplexity || HasOverlaps(rec)) && trials++ < maxTrials)
         {
             if (trials > 0)
             {
-                rec = GetRandomRecipe(estimateComplexity, ingNum);
+                rec = GetRandomRecipe(estimateComplexity);
             }
         }
 
@@ -281,10 +282,9 @@ public class DataController : MonoBehaviour
         return rec;
     }
 
-    private static Recipe GetRandomRecipe(float estimateComplexity, int ingNum = 0) 
+    private static Recipe GetRandomRecipe(float estimateComplexity) 
     {
-        int maxIngredients = ingNum == 0 ? (int)(estimateComplexity * 2f) : ingNum;
-        ingNum = Random.Range(2, maxIngredients + 1);
+        int ingNum = Random.Range(2, 30); // Maximum 30 ingredients in a recipe
         int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
         int[] ings = new int[ingNum];
         List<int> ingIDs = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
@@ -294,7 +294,6 @@ public class DataController : MonoBehaviour
             ings[i] = ingIDs[Random.Range(0, ingIDs.Count)];
         }
 
-        // int maxUnknowns = Mathf.CeilToInt(ingNum * .2f);
         bool[] isIngKnown = new bool[ingNum];
         List<int> randomIndices = new List<int>(ingNum);
         for (int i = 0; i < ingNum; i++)
@@ -356,7 +355,7 @@ public class DataController : MonoBehaviour
         Array.Sort(chances);
         float currentChance = chances[0];
         float dice = Random.value;
-        $"Raccon reward dice: {dice}".Log();
+        // $"Raccon reward dice: {dice}".Log();
         int index = 0;
         while (dice >= currentChance && index < chances.Length - 1)
         {
@@ -374,6 +373,18 @@ public class DataController : MonoBehaviour
         {
             genData.oldmanItemsForSale[i] = GetWeightedIngredientFromList(
                 ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList()).id;
+        }
+    }
+
+    public static void UpdateTotalScore(int value)
+    {
+        if (genData.totalScore + value < 0)
+        {
+            genData.totalScore = 0;
+        }
+        else
+        {
+            genData.totalScore += value;
         }
     }
 
@@ -460,6 +471,17 @@ public class DataController : MonoBehaviour
         genData.coins = 0;
         genData.maxPigeons = 3;
         genData.potionsCooked = 0;
+        // ---
+        genData.totalScore = 0;
+        genData.deaths = 0;
+        genData.containersUnlocked = 0;
+        genData.ingsUsed = 0;
+        genData.itemsBought = 0;
+        genData.itemsBrought = 0;
+        genData.moneyCollected = 0;
+        genData.moneyEarned = 0;
+        genData.moneySpent = 0;
+        genData.potionsFailed = 0;
 
         history.Clear();
 
@@ -507,7 +529,7 @@ public class DataController : MonoBehaviour
 
         // Add initial recipe
         recipes.Clear();
-        CreateNewRecipe(GenerateRandomRecipe(2f));
+        CreateNewRecipe(GenerateRandomRecipe(4f));
 
         // Unconditional autosave
         Autosave();

@@ -42,6 +42,78 @@ MonoBehaviour:
     m_Localized: What do you want, my friend?
     m_Metadata:
       m_Items: []
+  - m_Id: 2150823954948096
+    m_Localized: Wise oldman
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2153021698940928
+    m_Localized: Ah, yet another hero arrived! You want to become the Potion Master
+      too, aren't you? Well, first of all, you have to know a few things.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2618100735221760
+    m_Localized: As you understand, you can pick up items by walking near to them.
+      Then you can take items and throw them whenever you want by tapping onto yourself.
+      It's simple.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2618550347833344
+    m_Localized: By rotating picked up items you select what item you want to throw.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3331364947435520
+    m_Localized: But why you should carry any items in the first place? To make potions
+      from them of course! You can think of them as ingredients for your potions.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3331552311189504
+    m_Localized: Here, in the laboratory, you can find the Recipe Book. It contains
+      all recipes you need to make a potion.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3331700152016896
+    m_Localized: When you know the desired recipe with it's ingredients, you have
+      to gain them. You should walk through the portal and collect all the necessary
+      items.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3333928006918144
+    m_Localized: Then return back to the lab and start making a potion following
+      the recipe you have chosen.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3334145125064704
+    m_Localized: Throw ingredients in right ordes to the cauldron to get a potion
+      out of it. Remember of cooking time for each ingredient. Wrong cooking time
+      may corrupt your potion.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3334774706872320
+    m_Localized: 'Ah, forgot to mention: when searching for ingredients you may face
+      certain "creatures"... Be careful!'
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3335054160764928
+    m_Localized: Here, in the lab, you may find you fellow friend Raccoon. He can
+      provide you an opportunity of earning some cash.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3335235635716096
+    m_Localized: Also, from my fellow friends other oldmans, I know that somewhere
+      in the world you may find travelling oldmans that can sell you some items for
+      cash.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3335463214456832
+    m_Localized: It's all I have for you, my young hero. Be brave and fear no one.
+      Be consistent and you find yourself as respectful Potion Master!
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3339496754978816
+    m_Localized: Also, in the foreign lands you may find pigeons. They are your friends,
+      as they can transfer some of your items to the lab.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

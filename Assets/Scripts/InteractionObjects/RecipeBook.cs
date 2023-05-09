@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using TMPro;
 using UnityEngine.Localization;
 using UnityEngine.Localization.Settings;
+using System.Collections.Generic;
+using System.Linq;
 
 public class RecipeBook : MonoBehaviour
 {
@@ -130,7 +132,8 @@ public class RecipeBook : MonoBehaviour
 
             case 2: // Recipes
                 index = 0;
-                foreach (Recipe rec in DataController.recipes.Values)
+                List<Recipe> backwardsRecipes = DataController.recipes.Values.Reverse().ToList();
+                foreach (Recipe rec in backwardsRecipes)
                 {
                     if (rec.is_unlocked)
                     {

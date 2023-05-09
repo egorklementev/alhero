@@ -10,6 +10,11 @@ public class EntityBlockerTrigger : MonoBehaviour
         PushBack(other);
     }
 
+    private void OnTriggerStay(Collider other) 
+    {
+        PushBack(other);
+    }
+
     private void PushBack(Collider other)
     {
         if (other.TryGetComponent<AIManager>(out var ai))
@@ -26,7 +31,7 @@ public class EntityBlockerTrigger : MonoBehaviour
             // force back
             if (ai.gameObject.TryGetComponent<Rigidbody>(out var body))
             {
-                body.AddForce(-1f * pushForce * body.velocity, ForceMode.Impulse);
+                body.AddForce(-1f * pushForce * body.velocity.normalized, ForceMode.Impulse);
             }
         }
     }

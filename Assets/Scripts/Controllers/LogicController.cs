@@ -20,6 +20,12 @@ public class LogicController : MonoBehaviour
 
     [Space(20f)]
     [SerializeField] private string[] debugItemsToSpawn;
+    [SerializeField] private GameObject closeButton;
+
+    [Space(20f)]
+    [SerializeField] private string[] soundsToPlayNames;
+    [SerializeField] private AudioClip[] soundsToPlay;
+    [SerializeField] private GameObject soundEffectPrefab;
 
     private static int playerInvSize = 3; // Inverntory size
     private static bool newGameStarted = false;
@@ -388,5 +394,44 @@ public class LogicController : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void PlaySound(string name, float volume, Vector3 position)
+    {
+        for (int i = 0; i < soundsToPlayNames.Length; i++)
+        {
+            if (soundsToPlayNames[i] == name)
+            {
+                var audio = Instantiate(soundEffectPrefab, position, Quaternion.identity)
+                    .GetComponent<AudioSource>(); 
+                audio.clip = soundsToPlay[i];
+                audio.volume = volume;
+                audio.Play();
+                break;
+            }
+        }
+    }
+
+    public void FinishTheGame()
+    {
+        "The game is finished, yaaay!!!".Log(this);
+
+        // Fill all the statistics
+        "stat_total_score".Localize("General", ui.StatTotalScore, DataController.genData.totalScore);
+        "stat_deaths".Localize("General", ui.StatDeaths, DataController.genData.deaths);
+        "stat_money".Localize("General", ui.StatMoneyCollected, DataController.genData.moneyCollected);
+        "stat_earnings".Localize("General", ui.StatMoneyEarned, DataController.genData.moneyEarned);
+        "stat_ingredients_used".Localize("General", ui.StatIngsUsed, DataController.genData.ingsUsed);
+        "stat_potions_failed".Localize("General", ui.StatPotionsFailed, DataController.genData.potionsFailed);
+        "stat_raccoon".Localize("General", ui.StatRaccoon, DataController.genData.itemsBrought);
+        "stat_money_spent".Localize("General", ui.StatMoneySpent, DataController.genData.moneySpent);
+        "stat_items_bought".Localize("General", ui.StatItemsBought, DataController.genData.itemsBought);
+        "stat_containers_unlocked".Localize("General", ui.StatContainers, DataController.genData.containersUnlocked);
+        "stat_locations_generated".Localize("General", ui.StatLocations, DataController.genData.locationGenerations);
+
+        DataController.genData.seed = 0;
+        closeButton.SetActive(false);
+        UIController.TriggerRightPanel();
+        UIController.ActivateUIGroup("winning_screen_group");
     }
 }

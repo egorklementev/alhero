@@ -152,6 +152,8 @@ public class Container : MonoBehaviour
                 SetLocked(false);
                 item.Destroy();
 
+                DataController.genData.containersUnlocked++;
+
                 if (DataController.labContainers.ContainsKey(id))
                 {
                     DataController.labContainers[id].isUnlocked = true;

@@ -5,6 +5,7 @@ using UnityEngine.Localization.Settings;
 public class ItemWorld : AbstractItem
 {
     public LogicController logic;
+    public AudioSource pickupSound;
 
     private bool isPickedUp = false;
     private GameObject owner = null;
@@ -75,6 +76,12 @@ public class ItemWorld : AbstractItem
         owner = newOwner;
         slot = newSlot;
         _vOffset = pickedUp ? offset : 0f;
+
+        if (pickedUp) 
+        {
+            pickupSound?.Play();
+        }
+
         if (owner != null)
         {
             transform.position = new Vector3(0f, _vOffset, 0f) + owner.transform.position;
@@ -113,6 +120,8 @@ public class ItemWorld : AbstractItem
                 int coinNum = ((CoinWorld)this).Count;
                 id = "picked_coin".Hash();
                 DataController.genData.coins += coinNum;
+                DataController.genData.moneyCollected += coinNum;
+                DataController.UpdateTotalScore(coinNum * 25);
                 UIController.SpawnSideLine("coins_picked", new object[] { coinNum }, 3f);
                 Destroy();
             }

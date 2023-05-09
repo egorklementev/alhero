@@ -5063,3 +5063,4 @@ MonoBehaviour:
     type: 3}
   blastRadius: 10
   blastTimer: 0.1
+  trapScript: {fileID: 7545938716515427095}

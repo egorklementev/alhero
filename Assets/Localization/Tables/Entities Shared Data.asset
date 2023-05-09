@@ -39,6 +39,62 @@ MonoBehaviour:
     m_Key: oldman_say
     m_Metadata:
       m_Items: []
+  - m_Id: 2150823954948096
+    m_Key: oldman_tutorial
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2153021698940928
+    m_Key: oldman_tutorial_text_1
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2618100735221760
+    m_Key: oldman_tutorial_text_2
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2618550347833344
+    m_Key: oldman_tutorial_text_3
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3331364947435520
+    m_Key: oldman_tutorial_text_4
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3331552311189504
+    m_Key: oldman_tutorial_text_5
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3331700152016896
+    m_Key: oldman_tutorial_text_6
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3333928006918144
+    m_Key: oldman_tutorial_text_7
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3334145125064704
+    m_Key: oldman_tutorial_text_8
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3334774706872320
+    m_Key: oldman_tutorial_text_9
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3335054160764928
+    m_Key: oldman_tutorial_text_10
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3335235635716096
+    m_Key: oldman_tutorial_text_11
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3335463214456832
+    m_Key: oldman_tutorial_text_12
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3339496754978816
+    m_Key: oldman_tutorial_text_111
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

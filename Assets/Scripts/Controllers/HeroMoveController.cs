@@ -24,6 +24,7 @@ public class HeroMoveController : MonoBehaviour
     public float maxTapTime = .666f;
     public float throwForce = 10f;
     public float lerpTimer = .1f;
+    public AudioSource throwSound;
 
     [Space(20f)]
     public UIController ui;
@@ -192,6 +193,7 @@ public class HeroMoveController : MonoBehaviour
         }
 
         anim.SetBool(walkParam, isMoving);
+        GetComponent<AIManager>().Transition(isMoving ? "Walking" : "Idle");
 
         mainCamera.transform.position = visualObj.transform.position + cameraOffset;
 
@@ -224,6 +226,7 @@ public class HeroMoveController : MonoBehaviour
             {
                 if (LogicController.PickedItems[0].TryGetComponent<Bomb>(out Bomb b))
                 {
+                    DataController.UpdateTotalScore(25);
                     b.Activate();
                 }
             }
@@ -236,6 +239,8 @@ public class HeroMoveController : MonoBehaviour
             {
                 logic.SwitchItems();
             }
+
+            throwSound.Play();
         }
         tapCounter = 0f;
     }

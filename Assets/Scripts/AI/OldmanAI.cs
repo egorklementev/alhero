@@ -104,6 +104,9 @@ public class OldmanAI : SomeAI
             // Reset both items
             SelectedItem = -1;
             DataController.UpdateOldmanItems();
+            DataController.genData.itemsBought++;
+            DataController.genData.moneySpent += GetCost(SelectedItem);
+            DataController.UpdateTotalScore(GetCost(SelectedItem) * 100);
             UpdateFields();
         }
     }
@@ -159,8 +162,8 @@ public class OldmanAI : SomeAI
 
     private int GetCost(int itemIndex)
     {
-        return 10 - (int)(
-            DataController.ingredients[DataController.genData.oldmanItemsForSale[itemIndex]].rarity / 100f);
+        return 30 / (int)(
+            DataController.ingredients[DataController.genData.oldmanItemsForSale[itemIndex]].rarity / 125f + 1);
     }
 
     private Transform FindRecursively(Transform @object, string name)

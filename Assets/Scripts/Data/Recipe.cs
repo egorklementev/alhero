@@ -18,34 +18,36 @@ public class Recipe : GameDataEntry
         id = GetID();
     }
 
-    /// Range is from 0 to 4L where L is the number of ingredients. L: [2, inf]
-    /// 0 - easiest recipe, 4L - hardest
-    /// 0 means all ingredients are common, 4L means all ingredients are hidden, unique & potions
+    /// Returns a value ranging from 0 to 8,75 * N 
+    /// (where N is the number of ingredients in the recipe)
+    /// that shows recipe's complexity.
     public float GetComplexity()
     {
-        const float unknownCost = 1.5f;
-        const float rarityCost = 1000f;
-        const float mistakesCost = 1f;
-
-        int ingNum = ingredient_seq.Length;
-
+        float ingN = ingredient_seq.Length / 2f;
         float rarityAccum = 0f;
-        float unknownAccum = 0f;
-        float potionsAccum = 0f;
-        float mistakesAccum = mistakesCost * mistakes_allowed;
-        for (int i = 0; i < ingNum; i++)
+        float hiddenAccum = 0f;
+        float stableAccum = 0f;
+        float potionAccum = 0f;
+        float mistakeAccum = -mistakes_allowed;
+
+        for (int i = 0; i < ingredient_seq.Length; i++)
         {
-            var ingId = ingredient_seq[i];
-            rarityAccum += DataController.ingredients[ingId].rarity;
-            potionsAccum += DataController.ingredients[ingId].isPotion ? 2f : 0f;
-            unknownAccum += ingredient_known[i] ? 0f : unknownCost;
+            int id = ingredient_seq[i];
+            if (DataController.ingredients[id].isPotion)
+            {
+                potionAccum += 5f;
+            }
+            else
+            {
+                rarityAccum += 3f / ((DataController.ingredients[id].rarity / 250f) + 1f);
+            }
+
+            stableAccum += .25f * (DataController.ingredients[id].breakChance / .03f);
+
+            hiddenAccum += ingredient_known[i] ? 0f : 3f;
         }
 
-        float overallIngsParam = .1f * DataController.ingredients.Count;
-
-        // Nasty one
-        return (1f - rarityAccum / (ingNum * rarityCost)) * ingNum 
-            + unknownAccum * overallIngsParam - mistakesAccum + potionsAccum;
+        return ingN + rarityAccum + hiddenAccum + stableAccum + potionAccum + mistakeAccum;
     }
 
     public int GetID()

@@ -10,6 +10,8 @@ public class Cauldron : MonoBehaviour
     public GameObject[] particles;
     public Animator spoonAnim;
     public GameObject finishBubbles;
+    public AudioSource cookedSound;
+    public Transform cookedPotionAnchor;
 
     [Space(10f)]
     public UIController ui;
@@ -63,11 +65,14 @@ public class Cauldron : MonoBehaviour
             int id = worldItem.id;
             inventory.Add(id);
             DataController.AddHistoryIngredient(id); // Anyway
+            DataController.genData.ingsUsed++;
+
             if (cooldown > 0f)
             {
                 cooldownMistakes++;
                 cooldown = 0f;
             }
+
             Recipe potentialRecipe = InventoryHasPotential();
             if (potentialRecipe != null)
             {
@@ -78,6 +83,7 @@ public class Cauldron : MonoBehaviour
                 {
                     $"No ingredient with name \"{id}\"!!!".Warn(this);
                     DestroyCurrentRecipe();
+                    DataController.genData.potionsFailed++;
                 }
                 else
                 {
@@ -87,6 +93,8 @@ public class Cauldron : MonoBehaviour
                     if (Random.Range(0f, 1f) < curIng.breakChance)
                     {
                         DestroyCurrentRecipe();
+                        DataController.genData.potionsFailed++;
+                        UIController.SpawnSideLine(("cauldron_ingredient_break", new object[] {}));
                     }
                     else
                     {
@@ -107,6 +115,7 @@ public class Cauldron : MonoBehaviour
                                         Quaternion.identity);
 
                                     DataController.AddHistoryIngredient(temp.GetID());
+                                    DataController.UpdateTotalScore(100);
                                 }
                                 else
                                 {
@@ -120,7 +129,7 @@ public class Cauldron : MonoBehaviour
                                     int bottleShape = Random.Range(1, DataController.bootleShapesNumber + 1);
                                     PotionWorld potion = spawner.SpawnItem<PotionWorld>(
                                         ("potion_" + bottleShape).Hash(),
-                                        (transform.parent.transform.position - new Vector3(4f, -2f, -4f)),
+                                        cookedPotionAnchor.position,
                                         Quaternion.identity);
 
                                     // Transfer all necessary data
@@ -195,26 +204,39 @@ public class Cauldron : MonoBehaviour
 
                                     DataController.genData.potionsCooked++;
                                     DataController.recipes[potentialRecipe.GetID()].is_unlocked = true;
+                                    DataController.UpdateTotalScore(500);
 
-                                    if (DataController.genData.potionsCooked % 13 == 0)
+                                    if (potentialRecipe.id == DataController.genData.winningRecipeId)
                                     {
+                                        spawner.logic.FinishTheGame();
+                                    }
+
+                                    if (DataController.genData.potionsCooked % (DataController.maximumRecipes / 13) == 0)
+                                    {
+                                        UIController.SpawnSideLine(("new_pigeon_available", new object[] {}));
                                         DataController.genData.maxPigeons++;
                                     }
 
-                                    if (DataController.genData.potionsCooked == 300)
+                                    if (DataController.genData.potionsCooked == DataController.maximumRecipes)
                                     {
                                         // Generate final potion
-                                        // TODO: set this recipe as winning condition
-                                        DataController.CreateNewRecipe(DataController.GenerateRandomRecipe(50f));
+                                        var winRecipe = DataController.CreateNewRecipe(DataController.GenerateRandomRecipe(100f));
+                                        DataController.genData.winningRecipeId = winRecipe.id;
                                         DataController.genData.potionsCooked++;
+
+                                        UIController.SpawnSideLine("final_potion", new object[] {}, 10f);
                                     }
-                                    else if (DataController.genData.potionsCooked < 300)
+                                    else if (DataController.genData.potionsCooked < DataController.maximumRecipes)
                                     {
                                         DataController.CreateNewRecipe(DataController.GenerateRandomRecipe(
-                                            2f + (DataController.genData.potionsCooked / 300f * 23f)));
+                                            4f + (DataController.genData.potionsCooked 
+                                                / (float)(DataController.maximumRecipes)) * 46f));
                                     }
 
                                     DataController.AddHistoryIngredient(newPotionID);
+
+                                    cookedSound.Play();
+                                    ui.UpdateLabLabels();
                                 }
 
                                 DestroyCurrentRecipe(true);
@@ -222,6 +244,7 @@ public class Cauldron : MonoBehaviour
                             else
                             {
                                 DestroyCurrentRecipe();
+                                DataController.genData.potionsFailed++;
                             }
                         }
                         else
@@ -246,6 +269,7 @@ public class Cauldron : MonoBehaviour
             }
             else
             {
+                DataController.genData.potionsFailed++;
                 DestroyCurrentRecipe();
             }
             worldItem.Destroy();
@@ -317,6 +341,7 @@ public class Cauldron : MonoBehaviour
 
         if (!success)
         {
+            UIController.SpawnSideLine(("cauldron_bad_hero", new object[] {}));
             DataController.AddHistoryIngredient(0); // Fail
         }
         DataController.AddHistoryEntry(new HistoryEntry()); // Update potion cooking history

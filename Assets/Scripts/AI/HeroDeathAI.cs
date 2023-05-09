@@ -6,6 +6,8 @@ public class HeroDeathAI : SomeAI
     {
         UIController.HideActiveGroups();
         HeroMoveController.uiTookControl = true;
+        DataController.genData.deaths++;
+        DataController.UpdateTotalScore(-100);
 
         foreach (ItemWorld item in LogicController.PickedItems)
         {

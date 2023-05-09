@@ -41,6 +41,23 @@ public class UIController : MonoBehaviour
     [FormerlySerializedAs("sideLineOffset")]
     public float SideLineOffset = 0f;
 
+    [Space(15f)]
+    public TextMeshProUGUI AvailablePigeonsLabel;
+    public TextMeshProUGUI PotionsLeftLabel;
+
+    [Space(20f)]
+    public TextMeshProUGUI StatTotalScore;
+    public TextMeshProUGUI StatDeaths;
+    public TextMeshProUGUI StatIngsUsed;
+    public TextMeshProUGUI StatPotionsFailed;
+    public TextMeshProUGUI StatMoneyCollected;
+    public TextMeshProUGUI StatMoneyEarned;
+    public TextMeshProUGUI StatMoneySpent;
+    public TextMeshProUGUI StatRaccoon;
+    public TextMeshProUGUI StatItemsBought;
+    public TextMeshProUGUI StatContainers;
+    public TextMeshProUGUI StatLocations;
+
     public static string ActiveGroup = "none";
     public static int RequestedLinesNum = 0;
 
@@ -66,6 +83,8 @@ public class UIController : MonoBehaviour
             doNotFadeOut = false; // Reset
             FadePanelAnim.SetBool("DoNotFadeOut", true);
         }
+
+        UpdateLabLabels();
     }
 
     void Update()
@@ -79,6 +98,22 @@ public class UIController : MonoBehaviour
         UpdateRequestedLines();
 
         UpdateEntityPanels();
+    }
+
+    public void UpdateLabLabels()
+    {
+        if (AvailablePigeonsLabel != null)
+        {
+            "pigeons_available".Localize("General", AvailablePigeonsLabel, DataController.genData.maxPigeons);
+        }
+
+        if (PotionsLeftLabel != null)
+        {
+            "potions_left".Localize(
+                "General", 
+                PotionsLeftLabel, 
+                DataController.maximumRecipes - DataController.genData.potionsCooked);
+        }
     }
 
     private void UpdateLines()

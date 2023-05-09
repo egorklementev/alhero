@@ -99,6 +99,86 @@ MonoBehaviour:
     m_Key: potion_of
     m_Metadata:
       m_Items: []
+  - m_Id: 2186621320372224
+    m_Key: potions_left
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2187305507823616
+    m_Key: pigeons_available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2187460172783616
+    m_Key: new_pigeon_available
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2189160543625216
+    m_Key: final_potion
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2317079119077376
+    m_Key: congratulations
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2318385808351232
+    m_Key: statistics
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2318636485124096
+    m_Key: stat_total_score
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2318745016934400
+    m_Key: stat_deaths
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2318878420967424
+    m_Key: stat_money
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2318978555781120
+    m_Key: stat_earnings
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2319200002449408
+    m_Key: stat_entities_killed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2319330566938624
+    m_Key: stat_ingredients_used
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2319552634363904
+    m_Key: stat_potions_failed
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2320224410869760
+    m_Key: stat_raccoon
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2320410780573696
+    m_Key: stat_money_spent
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2320558596235264
+    m_Key: stat_items_bought
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2324826673848320
+    m_Key: stat_containers_unlocked
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2324980931960832
+    m_Key: stat_locations_generated
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3376988845711360
+    m_Key: cauldron_bad_hero
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3377090695995392
+    m_Key: cauldron_ingredient_break
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
