@@ -177,7 +177,7 @@ public class UIController : MonoBehaviour
             {
                 GameObject sd = Instantiate(SideLine, SideLines);
                 sd.GetComponent<RectTransform>().anchoredPosition = new Vector2(0f, -100f * RequestedLinesNum - SideLineOffset); 
-                if (line.Item3[0] is Potion pData)
+                if (line.Item3.Length > 0 && line.Item3[0] is Potion pData)
                 {
                     pData.LocalizePotion(sd.GetComponent<TextMeshProUGUI>());
                 }

@@ -102,11 +102,11 @@ public class OldmanAI : SomeAI
             _aiManager.Transition("ItemOwner");
 
             // Reset both items
-            SelectedItem = -1;
-            DataController.UpdateOldmanItems();
-            DataController.genData.itemsBought++;
             DataController.genData.moneySpent += GetCost(SelectedItem);
             DataController.UpdateTotalScore(GetCost(SelectedItem) * 100);
+            DataController.genData.itemsBought++;
+            SelectedItem = -1;
+            DataController.UpdateOldmanItems();
             UpdateFields();
         }
     }
@@ -150,7 +150,7 @@ public class OldmanAI : SomeAI
             }
             else
             {
-                DataController.ingredients[itemId].ing_name.Localize("Ingredients", _itemNames[i]);
+                DataController.ingredients[itemId].ing_name.LocalizeProcedural("Ingredients", _itemNames[i]);
             }
 
 

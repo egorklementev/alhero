@@ -292,7 +292,7 @@ public class RecipeBook : MonoBehaviour
         "ingredient_description".Localize(
             "General",
             ingDescEntry.Find("Description").gameObject.GetComponent<TextMeshProUGUI>(),
-            new object[] { ing.cooldown, ((int)(ing.breakChance / .03f * 100f)) });
+            new object[] { ing.cooldown, ((int)(100f - ing.breakChance / .03f * 100f)) });
 
         (int rarity, string line, Color color)[] rareness = new (int, string, Color)[]
         {
@@ -346,7 +346,7 @@ public class RecipeBook : MonoBehaviour
                 Transform ing = Instantiate(recipeIngItem, scrollContent.transform).transform;
                 Transform slot = ing.Find("Slot");
                 slot.Find("IngNumber").GetComponent<TextMeshProUGUI>().text = $"{index + 1}";
-                if (rec.IsIngredientKnown(ing_id))
+                if (rec.IsIngredientKnown(index))
                 {
                     slot.GetComponent<Button>().onClick.AddListener(() => OnIngredientClicked(ing_id, true));
                     ItemUI uiItem = spawner.SpawnItem<ItemUI>(ing_id, slot);

@@ -1409,6 +1409,19 @@ MonoBehaviour:
   CoinLine: {fileID: 1538345096}
   Delay: 0.5
   SideLineOffset: 50
+  AvailablePigeonsLabel: {fileID: 0}
+  PotionsLeftLabel: {fileID: 0}
+  StatTotalScore: {fileID: 0}
+  StatDeaths: {fileID: 0}
+  StatIngsUsed: {fileID: 0}
+  StatPotionsFailed: {fileID: 0}
+  StatMoneyCollected: {fileID: 0}
+  StatMoneyEarned: {fileID: 0}
+  StatMoneySpent: {fileID: 0}
+  StatRaccoon: {fileID: 0}
+  StatItemsBought: {fileID: 0}
+  StatContainers: {fileID: 0}
+  StatLocations: {fileID: 0}
 --- !u!1 &282133854
 GameObject:
   m_ObjectHideFlags: 0
@@ -1535,10 +1548,13 @@ MonoBehaviour:
   data: {fileID: 1410969494}
   mapGen: {fileID: 1809899273}
   debugItemsToSpawn: []
+  closeButton: {fileID: 0}
   soundsToPlayNames:
   - explosion
+  - coin_pick
   soundsToPlay:
   - {fileID: 8300000, guid: 2a9d91f42b7bb4943b88ccd7e326d58e, type: 3}
+  - {fileID: 8300000, guid: 21109d3d474632d4c965dfb680dec046, type: 3}
   soundEffectPrefab: {fileID: 7995548136727597746, guid: 355bf8ebeefc26843a02895d872f2859,
     type: 3}
 --- !u!4 &283488801
@@ -3059,7 +3075,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 75, y: -55}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 150, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &764864524
 MonoBehaviour:
@@ -3145,7 +3161,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 5, y: 0, z: 5, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -3331,7 +3347,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
   m_AnchoredPosition: {x: 75, y: -55}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 150, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &803710330
 MonoBehaviour:
@@ -3417,7 +3433,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 5, y: 0, z: 5, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -4475,6 +4491,16 @@ MonoBehaviour:
     oldmanItemsForSale: 
     maxPigeons: 0
     winningRecipeId: 0
+    totalScore: 0
+    deaths: 0
+    ingsUsed: 0
+    potionsFailed: 0
+    moneyCollected: 0
+    moneyEarned: 0
+    moneySpent: 0
+    itemsBought: 0
+    itemsBrought: 0
+    containersUnlocked: 0
   raccoonRewards: []
   dIng:
   - id: 0
@@ -5739,7 +5765,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 317.9999, y: -146}
+  m_AnchoredPosition: {x: 317.99994, y: -146}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!1 &1758510422
@@ -5988,12 +6014,12 @@ MonoBehaviour:
     - salt
     - lily
     - tulip
-    ingNumRange: {x: 25, y: 35}
+    ingNumRange: {x: 50, y: 70}
     nonIngredients:
     - coin
     - bomb
     - key_bronze
-    nonIngNumRange: {x: 8, y: 12}
+    nonIngNumRange: {x: 16, y: 32}
     nonIngredientsRates:
     - 0.25
     - 0.6
@@ -6424,6 +6450,7 @@ GameObject:
   - component: {fileID: 1944255608}
   - component: {fileID: 1944255609}
   - component: {fileID: 1944255610}
+  - component: {fileID: 1944255611}
   m_Layer: 0
   m_Name: hero
   m_TagString: Player
@@ -6523,7 +6550,7 @@ MonoBehaviour:
   ui: {fileID: 246611966}
   logic: {fileID: 283488800}
   data: {fileID: 1410969494}
-  cameraOffset: {x: -20, y: 25, z: -20}
+  cameraOffset: {x: -23, y: 25, z: -23}
 --- !u!114 &1944255607
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6667,6 +6694,14 @@ MonoBehaviour:
   - Death
   Duration: 1
   NextState: Idle
+--- !u!81 &1944255611
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944255601}
+  m_Enabled: 1
 --- !u!1001 &1946960777
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7165,10 +7200,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _aiManager: {fileID: 1944255607}
-  states:
-  - Walking
-  audioClips:
-  - {fileID: 1946960784}
+  soundsMap:
+  - state: Walking
+    audioSources:
+    - {fileID: 1946960784}
   delays: []
 --- !u!82 &1946960784
 AudioSource:
@@ -7182,7 +7217,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2403edbd9c44fe44e88f3bf5020fcc6d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7266,14 +7301,6 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
---- !u!81 &1946960785
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1946960779}
-  m_Enabled: 1
 --- !u!1 &2083248304
 GameObject:
   m_ObjectHideFlags: 0

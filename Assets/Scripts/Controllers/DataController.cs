@@ -85,6 +85,7 @@ public class DataController : MonoBehaviour
             }
         }
 
+        currentHistoryIngs.Clear();
         foreach (int id in genData.cauldronInventory)
         {
             currentHistoryIngs.Add(id);
@@ -264,16 +265,28 @@ public class DataController : MonoBehaviour
         return ids[index];
     }
 
-    public static Recipe GenerateRandomRecipe(float estimateComplexity, int maxTrials = 1024)
+    public static Recipe GenerateRandomRecipe(float estimateComplexity, int maxTrials = 128)
     {
         int trials = 0;
+        Recipe closestRecipe = null;
         Recipe rec = GetRandomRecipe(estimateComplexity);
-        while ((Math.Abs(rec.GetComplexity() - estimateComplexity) > .1f * estimateComplexity || HasOverlaps(rec)) && trials++ < maxTrials)
+        float complexityDiff = Math.Abs(rec.GetComplexity() - estimateComplexity);
+        while ((complexityDiff > .1f * estimateComplexity || HasOverlaps(rec)) && trials++ < maxTrials)
         {
-            if (trials > 0)
+            rec = GetRandomRecipe(estimateComplexity);
+            complexityDiff = Math.Abs(rec.GetComplexity() - estimateComplexity);
+
+            if ((closestRecipe == null) || (complexityDiff < Math.Abs(closestRecipe.GetComplexity() - estimateComplexity)))
             {
-                rec = GetRandomRecipe(estimateComplexity);
+                $"Complexity of new recipe: ({rec.GetComplexity()}).".Log();
+                closestRecipe = rec;
             }
+        }
+
+        if (trials >= maxTrials)
+        {
+            "Selecting closest recipe.".Log();
+            rec = closestRecipe;
         }
 
         $"Trials for recipe generation: {trials}".Log();
@@ -284,8 +297,9 @@ public class DataController : MonoBehaviour
 
     private static Recipe GetRandomRecipe(float estimateComplexity) 
     {
-        int ingNum = Random.Range(2, 30); // Maximum 30 ingredients in a recipe
-        int mistakes = Random.Range(0, Mathf.FloorToInt(.333f * ingNum) + 1);
+        // Every 4 potions coocked increase maximum number of ingredients in a recipe
+        int ingNum = Random.Range(2, 3 + genData.potionsCooked / 4);
+        int mistakes = Random.Range(0, Mathf.FloorToInt(.666f * ingNum) + 1);
         int[] ings = new int[ingNum];
         List<int> ingIDs = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
 
@@ -301,7 +315,7 @@ public class DataController : MonoBehaviour
             randomIndices.Add(i);
         } 
 
-        float isKnownAccum = Random.value;
+        float isKnownAccum = .2f * Random.value;
         while (randomIndices.Count > 0)
         {
             int randIndexIndex = Random.Range(0, randomIndices.Count);
@@ -311,12 +325,13 @@ public class DataController : MonoBehaviour
             if (!ingredients[ings[randIndex]].isPotion)
             {
                 isIngKnown[randIndex] = Random.value > isKnownAccum;
-                isKnownAccum *= .7f;
             }
             else
             {
                 isIngKnown[randIndex] = true;
             }
+
+            isKnownAccum *= .7f;
         }
 
         return new Recipe(mistakes, ings, isIngKnown);
@@ -424,7 +439,7 @@ public class DataController : MonoBehaviour
         {
             // Nasty one
             var ingLen = ingredients[id].potionData.ingredients.Length;
-            return GetIngredientName(ingredients[id].potionData.ingredients[ingredients[id].ing_name.Hash() % ingLen]);
+            return GetIngredientName(ingredients[id].potionData.ingredients[Math.Abs(ingredients[id].ing_name.Hash() % ingLen)]);
         }
         else
         {
@@ -510,7 +525,7 @@ public class DataController : MonoBehaviour
                         item.item_name,
                         Random.Range(0f, 6f),
                         Random.value * .03f,
-                        Random.Range(0, 1000),
+                        (int) (417.0 * Math.Log((Random.Range(0, 1000) / 100.0) + 1.0)),
                         2f * (Random.value - .5f),
                         2f * (Random.value - .5f),
                         2f * (Random.value - .5f),
@@ -522,6 +537,7 @@ public class DataController : MonoBehaviour
         }
 
         // Make forest items discovered, so that the DataController can produce recipes 
+        // foreach (int id in ingredients.Keys)
         foreach (int id in GetIngredientsByLocation(AbstractItem.ItemLocation.FOREST))
         {
             ingredients[id].hasBeenDiscovered = true;
@@ -529,7 +545,11 @@ public class DataController : MonoBehaviour
 
         // Add initial recipe
         recipes.Clear();
-        CreateNewRecipe(GenerateRandomRecipe(4f));
+        for (int i = 0; i < 1; i++) 
+        {
+            CreateNewRecipe(GenerateRandomRecipe(4f + i));
+            // genData.potionsCooked += 1;
+        }
 
         // Unconditional autosave
         Autosave();

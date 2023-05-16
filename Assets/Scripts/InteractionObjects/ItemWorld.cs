@@ -123,6 +123,7 @@ public class ItemWorld : AbstractItem
                 DataController.genData.moneyCollected += coinNum;
                 DataController.UpdateTotalScore(coinNum * 25);
                 UIController.SpawnSideLine("coins_picked", new object[] { coinNum }, 3f);
+                logic.PlaySound("coin_pick", .3f, transform.position);
                 Destroy();
             }
             else if (slot != -1 && id != "picked_coin".Hash())

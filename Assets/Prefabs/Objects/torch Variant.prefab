@@ -77,6 +77,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -60
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c707cc24a6ab4da43a57d1fab2d987ce,
+        type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: c707cc24a6ab4da43a57d1fab2d987ce,
+        type: 3}
+      propertyPath: m_ReceiveShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: c707cc24a6ab4da43a57d1fab2d987ce,
         type: 3}
       propertyPath: m_Name
@@ -115,12 +125,12 @@ PrefabInstance:
     - target: {fileID: 4901304919081396944, guid: 317fa2bfaf3a01243a92cba2aeefa21a,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.41
+      value: -3.94
       objectReference: {fileID: 0}
     - target: {fileID: 4901304919081396944, guid: 317fa2bfaf3a01243a92cba2aeefa21a,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.78
+      value: 0.36
       objectReference: {fileID: 0}
     - target: {fileID: 4901304919081396944, guid: 317fa2bfaf3a01243a92cba2aeefa21a,
         type: 3}
@@ -166,6 +176,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: torch_light
+      objectReference: {fileID: 0}
+    - target: {fileID: 4901304919081396947, guid: 317fa2bfaf3a01243a92cba2aeefa21a,
+        type: 3}
+      propertyPath: m_ShadowRadius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4901304919081396947, guid: 317fa2bfaf3a01243a92cba2aeefa21a,
+        type: 3}
+      propertyPath: m_Shadows.m_Type
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 317fa2bfaf3a01243a92cba2aeefa21a, type: 3}

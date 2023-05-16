@@ -45,6 +45,7 @@ public class Cauldron : MonoBehaviour
     private void OnDisable()
     {
         // Save inventory before exiting
+        "Saving cauldron inventory...".Log(this);
         DataController.genData.cauldronInventory = new int[inventory.Count];
         inventory.CopyTo(DataController.genData.cauldronInventory);
     }
@@ -111,7 +112,7 @@ public class Cauldron : MonoBehaviour
                                     int bottleShape = Random.Range(1, DataController.bootleShapesNumber + 1);
                                     PotionWorld potion = spawner.SpawnItem<PotionWorld>(
                                         temp.GetID(),
-                                        (transform.parent.transform.position - new Vector3(-6f, -2f, -6f)),
+                                        cookedPotionAnchor.position,
                                         Quaternion.identity);
 
                                     DataController.AddHistoryIngredient(temp.GetID());
@@ -194,7 +195,7 @@ public class Cauldron : MonoBehaviour
                                         newPotionName,
                                         AverageCooldown(potionData.ingredients),
                                         RandomBreakChance(potionData.ingredients),
-                                        AverageRarity(potionData.ingredients),
+                                        AverageRarity(potionData.ingredients) / 2, // To balance potions
                                         RandomR(potionData.ingredients),
                                         RandomG(potionData.ingredients),
                                         RandomB(potionData.ingredients),
@@ -278,6 +279,8 @@ public class Cauldron : MonoBehaviour
 
     private Recipe InventoryHasPotential()
     {
+        Recipe potential = null;
+        int minMistakes = int.MaxValue;
         foreach (Recipe rec in DataController.recipes.Values)
         {
             if (inventory.Count <= rec.ingredient_seq.Length)
@@ -290,13 +293,16 @@ public class Cauldron : MonoBehaviour
                         mistakes++;
                     }
                 }
-                if (mistakes <= rec.mistakes_allowed)
+
+                if (mistakes <= rec.mistakes_allowed && mistakes < minMistakes)
                 {
-                    return rec;
+                    potential = rec;
+                    minMistakes = mistakes;
                 }
             }
         }
-        return null;
+
+        return potential;
     }
 
     private bool IsInventoryValid(Recipe recipe)

@@ -18,14 +18,14 @@ public class Recipe : GameDataEntry
         id = GetID();
     }
 
-    /// Returns a value ranging from 0 to 8,75 * N 
-    /// (where N is the number of ingredients in the recipe)
+    /// Returns a value ranging from 0 to x 
+    /// (where x is the complexity parameter)
     /// that shows recipe's complexity.
     public float GetComplexity()
     {
         float ingN = ingredient_seq.Length / 2f;
         float rarityAccum = 0f;
-        float hiddenAccum = 0f;
+        float hiddenAccum = 7f;
         float stableAccum = 0f;
         float potionAccum = 0f;
         float mistakeAccum = -mistakes_allowed;
@@ -35,16 +35,19 @@ public class Recipe : GameDataEntry
             int id = ingredient_seq[i];
             if (DataController.ingredients[id].isPotion)
             {
-                potionAccum += 5f;
+                var potionComplexity = 
+                    DataController.recipes[DataController.ingredients[id].potionData.recipe_id]
+                    .GetComplexity() / 1.5f;
+                potionAccum += potionComplexity;
             }
             else
             {
-                rarityAccum += 3f / ((DataController.ingredients[id].rarity / 250f) + 1f);
+                rarityAccum += 3f / ((DataController.ingredients[id].rarity / 25f) + 1f);
             }
 
-            stableAccum += .25f * (DataController.ingredients[id].breakChance / .03f);
+            stableAccum += 1f * (DataController.ingredients[id].breakChance / .03f);
 
-            hiddenAccum += ingredient_known[i] ? 0f : 3f;
+            hiddenAccum *= ingredient_known[i] ? 1f : (i + 1); // Incomplete factorial
         }
 
         return ingN + rarityAccum + hiddenAccum + stableAccum + potionAccum + mistakeAccum;
@@ -60,8 +63,8 @@ public class Recipe : GameDataEntry
         return id.Hash();
     }
 
-    public bool IsIngredientKnown(int ingId)
+    public bool IsIngredientKnown(int ingIndex)
     {
-        return ingredient_known[Array.IndexOf(ingredient_seq, ingId)];
+        return ingredient_known[ingIndex];
     }
 }

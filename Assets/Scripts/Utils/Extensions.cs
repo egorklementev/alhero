@@ -98,6 +98,11 @@ public static class Extensions
         }
     }
 
+    public static void LocalizeProcedural(this string key, string table, TextMeshProUGUI label, params object[] parameters)
+    {
+        label.text = LocalizationSettings.StringDatabase.GetLocalizedString(table, key, parameters);
+    }
+
     public static void LocalizePotion(this Potion pData, TextMeshProUGUI label)
     {
         string[] descs = new string[] { string.Empty, string.Empty, string.Empty };
