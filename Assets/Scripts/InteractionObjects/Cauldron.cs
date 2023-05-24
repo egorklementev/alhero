@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class Cauldron : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class Cauldron : MonoBehaviour
     public GameObject finishBubbles;
     public AudioSource cookedSound;
     public Transform cookedPotionAnchor;
+    [SerializeField] private Color successColor;
 
     [Space(10f)]
     public UIController ui;
@@ -42,7 +45,7 @@ public class Cauldron : MonoBehaviour
         }
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         // Save inventory before exiting
         "Saving cauldron inventory...".Log(this);
@@ -52,7 +55,7 @@ public class Cauldron : MonoBehaviour
 
     public void ClearInventory()
     {
-        StartCoroutine(FadeWaterColor(Color.cyan, Color.white, 1f));
+        // StartCoroutine(FadeWaterColor(Color.cyan, Color.white, 1f));
         DataController.genData.cauldronInventory = new int[] { };
         inventory.Clear();
         SetRecipeCooking(false);
@@ -64,6 +67,12 @@ public class Cauldron : MonoBehaviour
         {
             ItemWorld worldItem = other.gameObject.GetComponent<ItemWorld>();
             int id = worldItem.id;
+
+            if (Array.Exists(DataController.genData.notIngredients, nId => nId == id))
+            {
+                return; // Do not count non-ingredients
+            }
+
             inventory.Add(id);
             DataController.AddHistoryIngredient(id); // Anyway
             DataController.genData.ingsUsed++;
@@ -330,7 +339,7 @@ public class Cauldron : MonoBehaviour
     private void DestroyCurrentRecipe(bool success = false)
     {
         float delay = success ? 6f : 3f;
-        Color color = success ? new Color(.3089f, .1244f, .5667f) : Color.black;
+        Color color = success ? successColor : Color.black;
 
         GameObject fb = Instantiate(finishBubbles, transform);
         ParticleSystem fbPS = fb.GetComponent<ParticleSystem>();

@@ -16,7 +16,8 @@ MonoBehaviour:
     m_Code: en
   m_SharedData: {fileID: 11400000, guid: 9e17d2fb38a01ab408d5316d37ca41a3, type: 2}
   m_Metadata:
-    m_Items: []
+    m_Items:
+    - rid: 9067235185425645570
   m_TableData:
   - m_Id: 28778110976
     m_Localized: Meat
@@ -178,6 +179,27 @@ MonoBehaviour:
     m_Localized: Golden key
     m_Metadata:
       m_Items: []
+  - m_Id: 6181646328864768
+    m_Localized: Mushroom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6181717556535296
+    m_Localized: Cattail
+    m_Metadata:
+      m_Items:
+      - rid: 9067235185425645570
+  - m_Id: 6181686657097728
+    m_Localized: Log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6181698782830592
+    m_Localized: Brich bark
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
-    RefIds: []
+    RefIds:
+    - rid: 9067235185425645570
+      type: {class: SmartFormatTag, ns: UnityEngine.Localization.Metadata, asm: Unity.Localization}
+      data:
+        m_Entries: 00200f473df61500

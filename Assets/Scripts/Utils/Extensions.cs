@@ -123,19 +123,21 @@ public static class Extensions
 
         for (int i = 0; i < 3; i++)
         {
+            int iCopy = i;
             var op = LocalizationSettings.StringDatabase.GetLocalizedStringAsync(
-                $"PotionDesc{i + 1}", 
+                $"PotionDesc{iCopy + 1}", 
                 DataController.GetIngredientName(pData.ingredients[pData.titleIDs[i]]));
             if (op.IsDone)
             {
-                descs[i] = op.Result;
+                descs[iCopy] = op.Result;
                 label.text = $"{descs[0]} {potionOf} {descs[1]} {descs[2]}";
             }
             else
             {
                 op.Completed += (op) =>
                 {
-                    descs[i] = op.Result;
+                    $"descs len: {descs.Length}, iCopy: {iCopy}".Log();
+                    descs[iCopy] = op.Result;
                     label.text = $"{descs[0]} {potionOf} {descs[1]} {descs[2]}";
                 };
             }

@@ -175,6 +175,22 @@ MonoBehaviour:
     m_Key: key_gold
     m_Metadata:
       m_Items: []
+  - m_Id: 6181646328864768
+    m_Key: mushroom
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6181686657097728
+    m_Key: log
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6181698782830592
+    m_Key: birch_bark
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6181717556535296
+    m_Key: cattail
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:

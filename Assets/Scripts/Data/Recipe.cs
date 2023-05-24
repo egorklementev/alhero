@@ -25,7 +25,7 @@ public class Recipe : GameDataEntry
     {
         float ingN = ingredient_seq.Length / 2f;
         float rarityAccum = 0f;
-        float hiddenAccum = 7f;
+        float hiddenAccum = 0f;
         float stableAccum = 0f;
         float potionAccum = 0f;
         float mistakeAccum = -mistakes_allowed;
@@ -42,12 +42,20 @@ public class Recipe : GameDataEntry
             }
             else
             {
-                rarityAccum += 3f / ((DataController.ingredients[id].rarity / 25f) + 1f);
+                rarityAccum += 7f / ((DataController.ingredients[id].rarity / 25f) + 1f);
             }
 
             stableAccum += 1f * (DataController.ingredients[id].breakChance / .03f);
 
-            hiddenAccum *= ingredient_known[i] ? 1f : (i + 1); // Incomplete factorial
+            if (!ingredient_known[i])
+            {
+                if (hiddenAccum == 0f)
+                {
+                    hiddenAccum = 7f;
+                }
+
+                hiddenAccum *= (i + 1); // Incomplete factorial
+            }
         }
 
         return ingN + rarityAccum + hiddenAccum + stableAccum + potionAccum + mistakeAccum;

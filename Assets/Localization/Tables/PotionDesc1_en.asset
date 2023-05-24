@@ -158,6 +158,22 @@ MonoBehaviour:
     m_Localized: Colored
     m_Metadata:
       m_Items: []
+  - m_Id: 6017345811062784
+    m_Localized: Handy
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6017331005169664
+    m_Localized: Marsh
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6017317851832320
+    m_Localized: Woody
+    m_Metadata:
+      m_Items: []
+  - m_Id: 6017299824713728
+    m_Localized: Hypnotizing
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds: []

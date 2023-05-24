@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,9 @@ public class LogicController : MonoBehaviour
     [SerializeField] private string[] soundsToPlayNames;
     [SerializeField] private AudioClip[] soundsToPlay;
     [SerializeField] private GameObject soundEffectPrefab;
+
+    [Space(20f)]
+    [SerializeField] private Transform[] initialItems;
 
     private static int playerInvSize = 3; // Inverntory size
     private static bool newGameStarted = false;
@@ -86,6 +90,18 @@ public class LogicController : MonoBehaviour
 
         if (newGameStarted)
         {
+            newGameStarted = false;
+            var list = DataController.ingredients
+                .Where(ing => ing.Value.hasBeenDiscovered)
+                .Select(ing => ing.Key)
+                .ToList();
+            foreach (Transform anchor in initialItems)
+            {
+                spawner.SpawnItem<ItemWorld>(
+                    DataController.GetWeightedIngredientFromList(list).id, 
+                    anchor.position, 
+                    Quaternion.identity);
+            }
         }
     }
 

@@ -1519,6 +1519,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 21109d3d474632d4c965dfb680dec046, type: 3}
   soundEffectPrefab: {fileID: 7995548136727597746, guid: 355bf8ebeefc26843a02895d872f2859,
     type: 3}
+  initialItems: []
 --- !u!4 &283488801
 Transform:
   m_ObjectHideFlags: 0
@@ -4615,6 +4616,14 @@ MonoBehaviour:
   - {fileID: 3639953085000846316, guid: afbf8e639078988479599041737bb552, type: 3}
   - {fileID: 3639953085000846316, guid: 8be4965ae82450740b54ecfc7d4596a4, type: 3}
   - {fileID: 3639953085000846316, guid: 2125e6b53deb3f944a63bcf88eefbbb7, type: 3}
+  - {fileID: 2341945816938905521, guid: e855e4e199365ee4183d341640db2c95, type: 3}
+  - {fileID: 3639953085000846316, guid: 527d63f88dba0944da324dff6390a420, type: 3}
+  - {fileID: 3639953085000846316, guid: ac4add7f11dca8a44a61562607db6b50, type: 3}
+  - {fileID: 2341945816938905521, guid: b1a4f46c3df75774ca49e962de8af9a4, type: 3}
+  - {fileID: 3639953085000846316, guid: 766769644b5c1d44f8649e584636b337, type: 3}
+  - {fileID: 2341945816938905521, guid: 1c71c74fa771bc749b71d902c8098337, type: 3}
+  - {fileID: 2341945816938905521, guid: 762b94ee22fbb7c44bcfc8c6024b6680, type: 3}
+  - {fileID: 3639953085000846316, guid: 60d4e71e9bd87ec40ba4bd59554c905e, type: 3}
   sidePanel: {fileID: 899273532}
   containerUIGroups:
   - {fileID: 635291360127474127, guid: 1f55cdc139cfbc0448cd68147cde6768, type: 3}

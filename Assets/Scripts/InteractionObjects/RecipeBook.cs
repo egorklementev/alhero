@@ -281,6 +281,8 @@ public class RecipeBook : MonoBehaviour
         {
             uiItemCopy = spawner.SpawnItem<PotionUI>(uiPotion.id, slot);
             uiPotion.potionData.LocalizePotion(ingDescEntry.Find("Title").gameObject.GetComponent<TextMeshProUGUI>());
+
+            slot.GetComponent<Button>().onClick.AddListener(() => OnRecipeClicked(id));
         }
         else
         {

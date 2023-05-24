@@ -102,7 +102,20 @@ public class DataController : MonoBehaviour
         {
             logic.StartNewGame();
         }
-        Random.InitState(genData.seed + genData.locationGenerations++);
+
+        if (locationName != "lab")
+        {
+            genData.locationGenerations++;
+        }
+
+        if (genData.locationGenerations % 10 == 0)
+        {
+            UpdateOldmanItems();
+            UpdateRaccoonRequestItemAndReward();
+            genData.locationGenerations++;
+        }
+
+        Random.InitState(genData.seed + genData.locationGenerations);
     }
 
     void Update()
@@ -278,14 +291,14 @@ public class DataController : MonoBehaviour
 
             if ((closestRecipe == null) || (complexityDiff < Math.Abs(closestRecipe.GetComplexity() - estimateComplexity)))
             {
-                $"Complexity of new recipe: ({rec.GetComplexity()}).".Log();
+                // $"Complexity of new recipe: ({rec.GetComplexity()}).".Log();
                 closestRecipe = rec;
             }
         }
 
         if (trials >= maxTrials)
         {
-            "Selecting closest recipe.".Log();
+            // "Selecting closest recipe.".Log();
             rec = closestRecipe;
         }
 
@@ -298,7 +311,7 @@ public class DataController : MonoBehaviour
     private static Recipe GetRandomRecipe(float estimateComplexity) 
     {
         // Every 4 potions coocked increase maximum number of ingredients in a recipe
-        int ingNum = Random.Range(2, 3 + genData.potionsCooked / 4);
+        int ingNum = Random.Range(3, 4 + genData.potionsCooked / 4);
         int mistakes = Random.Range(0, Mathf.FloorToInt(.666f * ingNum) + 1);
         int[] ings = new int[ingNum];
         List<int> ingIDs = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
@@ -362,8 +375,8 @@ public class DataController : MonoBehaviour
 
     public static void UpdateRaccoonRequestItemAndReward()
     {
-        genData.raccoonRequestedItem = GetWeightedIngredientFromList(
-            ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList()).id;
+        var lst = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
+        genData.raccoonRequestedItem = lst[Random.Range(0, lst.Count)];
 
         float totalWeight = rewards.Sum(r => r.chance_weight);
         float[] chances = rewards.Select(r => r.chance_weight / totalWeight).ToArray();
@@ -386,8 +399,11 @@ public class DataController : MonoBehaviour
     {
         for (int i = 0; i < OldmanAI.ITEMS_TO_SELL; i++)
         {
-            genData.oldmanItemsForSale[i] = GetWeightedIngredientFromList(
-                ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList()).id;
+            var lst = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
+            var randId = Random.Range(0, lst.Count);
+            genData.oldmanItemsForSale[i] = lst[randId];
+            lst.Remove(randId);
+            
         }
     }
 
@@ -545,10 +561,9 @@ public class DataController : MonoBehaviour
 
         // Add initial recipe
         recipes.Clear();
-        for (int i = 0; i < 1; i++) 
+        for (int i = 0; i < 3; i++) 
         {
-            CreateNewRecipe(GenerateRandomRecipe(4f + i));
-            // genData.potionsCooked += 1;
+            CreateNewRecipe(GenerateRandomRecipe(4f));
         }
 
         // Unconditional autosave
