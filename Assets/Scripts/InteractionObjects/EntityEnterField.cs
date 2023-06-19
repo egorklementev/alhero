@@ -10,7 +10,7 @@ public class EntityEnterField : EnterField
     protected override void OnTriggerStay(Collider other)
     {
         base.OnTriggerStay(other);         
-        if (!UIController.ActiveGroup.Equals("none"))
+        if (other.gameObject.CompareTag("Player") && !UIController.ActiveGroup.Equals("none"))
         {
             UIController.TryToDespawnEntityPanel(groupToActivate);
         }
@@ -19,6 +19,9 @@ public class EntityEnterField : EnterField
     protected override void OnTriggerExit(Collider other)
     {
         base.OnTriggerExit(other);
-        UIController.TryToDespawnEntityPanel(groupToActivate);
+        if (other.gameObject.CompareTag("Player"))
+        {
+            UIController.TryToDespawnEntityPanel(groupToActivate);
+        }
     }
 }

@@ -78,7 +78,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41c59fa33746c354b9bc413f6c6290ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
+  id: -1206651217
   item_name: birch_bark
   arcanumMaterialIndex: 2
   location: 1
@@ -96,7 +96,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 170bac706fd1bda48af8ea87a602e6aa, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

@@ -70,10 +70,16 @@ public class MinimapController : MonoBehaviour
 
                 if (map.GetBlock(w, h).CntmntType == Block.ContainmentType.PORTAL)
                 {
+                    var locData = (LocationData) map.GetBlock(w, h).Cntmnt;
+
                     GameObject marker = Instantiate(portalMarkerPref, transform as RectTransform);
                     (marker.transform as RectTransform).anchoredPosition = new Vector2(
                         ((float)w / map.Width)  * mapSize + markersOffset.x,
                         ((float)h / map.Height) * mapSize + markersOffset.y);
+                    var portalIconColor = new Color(locData.Color.r, locData.Color.g, locData.Color.b, 1f);
+                    marker.transform.Find("PortalMask")
+                        .GetComponent<MeshRenderer>()
+                        .material.SetColor("_Color", portalIconColor);
                     portalMarkers.Add(marker);
                 }
             }

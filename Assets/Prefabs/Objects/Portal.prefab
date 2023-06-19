@@ -1411,37 +1411,28 @@ ParticleSystem:
     curve:
       serializedVersion: 2
       minMaxState: 1
-      scalar: 1
+      scalar: 2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
         - serializedVersion: 3
           time: 0
-          value: 0
-          inSlope: 2
-          outSlope: 2
+          value: 0.21506578
+          inSlope: 0.08457853
+          outSlope: 0.08457853
           tangentMode: 0
           weightedMode: 0
           inWeight: 0
-          outWeight: 0
-        - serializedVersion: 3
-          time: 0.36507124
-          value: 0.55704826
-          inSlope: 0
-          outSlope: 0
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0
-          outWeight: 0
+          outWeight: 0.18542995
         - serializedVersion: 3
           time: 1
-          value: 1
-          inSlope: 3.0997782
-          outSlope: 3.0997782
-          tangentMode: 0
-          weightedMode: 0
-          inWeight: 0.047058407
+          value: 0.47768232
+          inSlope: 0.8509855
+          outSlope: 0.9607779
+          tangentMode: 1
+          weightedMode: 2
+          inWeight: 0.08612174
           outWeight: 0
         m_PreInfinity: 2
         m_PostInfinity: 2
@@ -1932,8 +1923,8 @@ ParticleSystem:
     enabled: 1
     x:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
+      minMaxState: 1
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -1985,8 +1976,8 @@ ParticleSystem:
         m_RotationOrder: 4
     y:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: 0
+      minMaxState: 1
+      scalar: 1
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2038,8 +2029,8 @@ ParticleSystem:
         m_RotationOrder: 4
     z:
       serializedVersion: 2
-      minMaxState: 0
-      scalar: -1
+      minMaxState: 1
+      scalar: 2
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -2055,12 +2046,12 @@ ParticleSystem:
           outWeight: 0.33333334
         - serializedVersion: 3
           time: 1
-          value: 0
-          inSlope: 0
-          outSlope: 0
+          value: -1
+          inSlope: -2.2258854
+          outSlope: -2.2258854
           tangentMode: 0
           weightedMode: 0
-          inWeight: 0.33333334
+          inWeight: 0.13823372
           outWeight: 0.33333334
         m_PreInfinity: 2
         m_PostInfinity: 2

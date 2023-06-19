@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackAI : SomeAI 
@@ -7,6 +9,7 @@ public class AttackAI : SomeAI
     public Vector2 projOffset;
     public float shootForce = 20f;
     public string[] immuneEntities;
+    public List<Action> postAttackActions = new List<Action>();
 
     [Range(0f, 359f)]
     public float angleShift = 0f;
@@ -48,7 +51,9 @@ public class AttackAI : SomeAI
 
                 if (proj.TryGetComponent<Projectile>(out Projectile projScript))
                 {
-                    projScript.GetComponent<Projectile>().SetImmune(immuneEntities);
+                    projScript.SetImmune(immuneEntities);
+                    projScript.onProjectileCollision.AddListener(
+                        () => _aiManager.logic.PlaySound(projScript.onCollisionClipName, .5f, proj.transform.position));
                 }
             }
             else
@@ -64,6 +69,10 @@ public class AttackAI : SomeAI
                 }
             }
 
+            foreach (Action act in postAttackActions)
+            {
+                act.Invoke();
+            }
         }
         else
         {

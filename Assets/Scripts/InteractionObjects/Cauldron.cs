@@ -13,7 +13,11 @@ public class Cauldron : MonoBehaviour
     public Animator spoonAnim;
     public GameObject finishBubbles;
     public AudioSource cookedSound;
+    public AudioSource failedSound;
     public Transform cookedPotionAnchor;
+    public List<int> inventory; // Current recipe
+
+    [SerializeField] private Color regularColor;
     [SerializeField] private Color successColor;
 
     [Space(10f)]
@@ -22,12 +26,12 @@ public class Cauldron : MonoBehaviour
     private Material waterMat;
     private float cooldown = 0f;
     private int cooldownMistakes = 0;
-    private List<int> inventory; // Current recipe
 
     private void Start()
     {
         inventory = new List<int>();
         inventory.AddRange(DataController.genData.cauldronInventory);
+        $"Adding inventory: {string.Join(", ", inventory)}".Log(this, "Start()");
 
         if (inventory.Count > 0)
         {
@@ -45,16 +49,10 @@ public class Cauldron : MonoBehaviour
         }
     }
 
-    private void OnDestroy()
-    {
-        // Save inventory before exiting
-        "Saving cauldron inventory...".Log(this);
-        DataController.genData.cauldronInventory = new int[inventory.Count];
-        inventory.CopyTo(DataController.genData.cauldronInventory);
-    }
-
     public void ClearInventory()
     {
+        $"Clearing own inventory: {string.Join(", ", inventory)}".Log(this, "ClearInventory()");
+        $"Clearing data inventory: {string.Join(", ", DataController.genData.cauldronInventory)}".Log(this, "ClearInventory()");
         // StartCoroutine(FadeWaterColor(Color.cyan, Color.white, 1f));
         DataController.genData.cauldronInventory = new int[] { };
         inventory.Clear();
@@ -93,7 +91,6 @@ public class Cauldron : MonoBehaviour
                 {
                     $"No ingredient with name \"{id}\"!!!".Warn(this);
                     DestroyCurrentRecipe();
-                    DataController.genData.potionsFailed++;
                 }
                 else
                 {
@@ -103,8 +100,6 @@ public class Cauldron : MonoBehaviour
                     if (Random.Range(0f, 1f) < curIng.breakChance)
                     {
                         DestroyCurrentRecipe();
-                        DataController.genData.potionsFailed++;
-                        UIController.SpawnSideLine(("cauldron_ingredient_break", new object[] {}));
                     }
                     else
                     {
@@ -221,7 +216,7 @@ public class Cauldron : MonoBehaviour
                                         spawner.logic.FinishTheGame();
                                     }
 
-                                    if (DataController.genData.potionsCooked % (DataController.maximumRecipes / 13) == 0)
+                                    if (DataController.genData.potionsCooked % (DataController.maximumRecipes / 14) == 0)
                                     {
                                         UIController.SpawnSideLine(("new_pigeon_available", new object[] {}));
                                         DataController.genData.maxPigeons++;
@@ -245,6 +240,7 @@ public class Cauldron : MonoBehaviour
 
                                     DataController.AddHistoryIngredient(newPotionID);
 
+                                    cookedSound.pitch = 1f;
                                     cookedSound.Play();
                                     ui.UpdateLabLabels();
                                 }
@@ -254,7 +250,6 @@ public class Cauldron : MonoBehaviour
                             else
                             {
                                 DestroyCurrentRecipe();
-                                DataController.genData.potionsFailed++;
                             }
                         }
                         else
@@ -272,6 +267,9 @@ public class Cauldron : MonoBehaviour
                                 potentialRecipe.ingredient_known[inventory.Count - 1] = true;
                             }
 
+                            cookedSound.pitch = .5f + inventory.Count * .025f;
+                            cookedSound.Play();
+
                             "Waiting for the next ingredient...".Log(this);
                         }
                     }
@@ -279,7 +277,6 @@ public class Cauldron : MonoBehaviour
             }
             else
             {
-                DataController.genData.potionsFailed++;
                 DestroyCurrentRecipe();
             }
             worldItem.Destroy();
@@ -336,7 +333,7 @@ public class Cauldron : MonoBehaviour
         spoonAnim.SetBool("IsCooking", isCooking);
     }
 
-    private void DestroyCurrentRecipe(bool success = false)
+    private void DestroyCurrentRecipe(bool success = false, bool bad_ingredient = false)
     {
         float delay = success ? 6f : 3f;
         Color color = success ? successColor : Color.black;
@@ -348,7 +345,7 @@ public class Cauldron : MonoBehaviour
         settings.duration = delay;
         fbPS.Play();
 
-        StartCoroutine(FadeWaterColor(color, Color.white, delay));
+        StartCoroutine(FadeWaterColor(color, regularColor, delay));
         SetRecipeCooking(false);
         inventory.Clear();
         cooldown = 0f;
@@ -356,7 +353,18 @@ public class Cauldron : MonoBehaviour
 
         if (!success)
         {
-            UIController.SpawnSideLine(("cauldron_bad_hero", new object[] {}));
+            failedSound.Play();
+            DataController.genData.potionsFailed++;
+
+            if (bad_ingredient)
+            {
+                UIController.SpawnSideLine(("cauldron_ingredient_break", new object[] {}));
+            }
+            else
+            {
+                UIController.SpawnSideLine(("cauldron_bad_hero", new object[] {}));
+            }
+
             DataController.AddHistoryIngredient(0); // Fail
         }
         DataController.AddHistoryEntry(new HistoryEntry()); // Update potion cooking history

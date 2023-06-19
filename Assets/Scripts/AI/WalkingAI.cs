@@ -52,15 +52,12 @@ public abstract class WalkingAI : SomeAI
 
         size /= 2f;
 
-        /*
-        Debug.DrawLine(position + Vector3.down * ratio * size,
-            position + Vector3.down * ratio * size + direction * distance,
-            new Color(1f, .5f, 0f, .5f), 5f);
-        */
 
 
         foreach (Vector3 v in dirsToCheck)
         {
+            // Debug.DrawLine(position + v * size, position + v * size + direction * distance, new Color(1f, .5f, 0f, .5f), 5f);
+
             if (Physics.CheckSphere(position + v * size, 0f)
                 || Physics.Raycast(position + v * size, direction, distance))
                 return true;

@@ -12,6 +12,7 @@ public class General
     public int[] oldmanItemsForSale;
     public int maxPigeons = 0;
     public int winningRecipeId = 0;
+    public int locGensBeforBuyItemsUpdate = 5;
 
     // ---
 

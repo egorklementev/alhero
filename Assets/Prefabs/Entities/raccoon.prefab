@@ -164,6 +164,7 @@ MonoBehaviour:
   - Walking
   memoryTime: 5
   threatRadius: 12
+  entitiesToExclude: []
 --- !u!114 &1058604141596638289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -235,9 +236,12 @@ MonoBehaviour:
   adjacentStates:
   - Idle
   - ItemOwner
+  - Threatening
   moveSpeed: 50
   colliderBounds: 3
+  colliderHeight: 4
   Body: {fileID: 1058604141596638299}
+  stuckEps: 0.33333
   RangeEnhancement: 16
 --- !u!1001 &1058604141349273319
 PrefabInstance:

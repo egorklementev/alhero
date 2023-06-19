@@ -10,6 +10,7 @@ public class MeleeAttackAI : SomeAI
 
     private AIManager _currentEnemy = null;
     private float _alertTimer = 0f;
+    private bool _goingToAttack = false;
 
     public override void PrepareAction()
     {
@@ -18,6 +19,11 @@ public class MeleeAttackAI : SomeAI
             wai.SetDestination(_currentEnemy.transform.position);
             wai.SetNextState("Attacking");
             aai.SetTarget(_currentEnemy);
+            aai.postAttackActions.Add(() => 
+            {
+                _goingToAttack = false;
+            });
+            _goingToAttack = true;
         }
     }
 
@@ -40,7 +46,7 @@ public class MeleeAttackAI : SomeAI
         {
             _alertTimer = alertPeridiocity;
             AIManager someAI = FindSomeEnemy();
-            if (someAI != null)
+            if (someAI != null && !_goingToAttack)
             {
                 _aiManager.Transition("MeleeAttack");
                 _currentEnemy = someAI;

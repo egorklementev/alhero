@@ -1557,6 +1557,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 21109d3d474632d4c965dfb680dec046, type: 3}
   soundEffectPrefab: {fileID: 7995548136727597746, guid: 355bf8ebeefc26843a02895d872f2859,
     type: 3}
+  initialItems: []
 --- !u!4 &283488801
 Transform:
   m_ObjectHideFlags: 0
@@ -4491,6 +4492,7 @@ MonoBehaviour:
     oldmanItemsForSale: 
     maxPigeons: 0
     winningRecipeId: 0
+    locGensBeforSellItemsUpdate: 5
     totalScore: 0
     deaths: 0
     ingsUsed: 0
@@ -4501,7 +4503,15 @@ MonoBehaviour:
     itemsBought: 0
     itemsBrought: 0
     containersUnlocked: 0
-  raccoonRewards: []
+  raccoonRewards:
+  - item_id: key_gold
+    chance_weight: 50
+  - item_id: key_silver
+    chance_weight: 75
+  - item_id: key_bronze
+    chance_weight: 100
+  - item_id: coin
+    chance_weight: 775
   dIng:
   - id: 0
     ing_name: flower
@@ -4672,6 +4682,7 @@ MonoBehaviour:
   debugMode: 0
   debugButtons: []
   itemLerpTimer: 0.5
+  cauldron: {fileID: 0}
   spawner: {fileID: 1415301579}
   logic: {fileID: 283488800}
 --- !u!4 &1410969495
@@ -5472,7 +5483,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 3368d5cfe3953b048826616bc0637de8, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.2
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -6576,7 +6587,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 7f948781932afaa4cb88fb448b26b922, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.2
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -7201,7 +7212,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 2403edbd9c44fe44e88f3bf5020fcc6d, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 0.5
+  m_Volume: 0.6
   m_Pitch: 1
   Loop: 0
   Mute: 0

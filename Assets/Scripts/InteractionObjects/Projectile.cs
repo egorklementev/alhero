@@ -4,7 +4,8 @@ using UnityEngine.Events;
 
 public class Projectile : MonoBehaviour 
 {
-    [SerializeField] UnityEvent onProjectileCollision;
+    public UnityEvent onProjectileCollision;
+    public string onCollisionClipName;
 
     private List<string> _immuneEntities = new List<string>();
 

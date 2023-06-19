@@ -31,6 +31,7 @@ public class DataController : MonoBehaviour
     public float itemLerpTimer = .1f;
 
     [Space(20f)]
+    public Cauldron cauldron;
     public SpawnController spawner;
     public LogicController logic;
 
@@ -44,7 +45,7 @@ public class DataController : MonoBehaviour
     public static List<int> currentHistoryIngs = new List<int>();
 
     public const int bootleShapesNumber = 4;
-    public const int maximumRecipes = 200;
+    public const int maximumRecipes = 100;
 
     private static string[] dataFolders = new string[] { "General", "Ingredients", "Recipes", "LabContainers", "History" };
     private static string[] dataFiles = new string[] { "general.json", "ingredients.json", "recipes.json", "lab_containers.json", "history.json" };
@@ -53,6 +54,7 @@ public class DataController : MonoBehaviour
 
     private static List<int> _notIngredientsList = new List<int>();
     private static RaccoonReward[] rewards = new RaccoonReward[4];
+    private static int locGensBeforBuyItemsUpdate = 5;
 
     void Awake()
     {
@@ -86,6 +88,7 @@ public class DataController : MonoBehaviour
         }
 
         currentHistoryIngs.Clear();
+        $"Adding current hist ings: {string.Join(", ", genData.cauldronInventory)}".Log(this, "Awake()");
         foreach (int id in genData.cauldronInventory)
         {
             currentHistoryIngs.Add(id);
@@ -106,13 +109,14 @@ public class DataController : MonoBehaviour
         if (locationName != "lab")
         {
             genData.locationGenerations++;
+            UpdateTotalScore(-250);
         }
 
-        if (genData.locationGenerations % 10 == 0)
+        if (locGensBeforBuyItemsUpdate-- <= 0)
         {
-            UpdateOldmanItems();
+            // UpdateOldmanItems();
             UpdateRaccoonRequestItemAndReward();
-            genData.locationGenerations++;
+            locGensBeforBuyItemsUpdate = 5;
         }
 
         Random.InitState(genData.seed + genData.locationGenerations);
@@ -146,6 +150,14 @@ public class DataController : MonoBehaviour
         else
         {
             "Autosaving...".Log(this);
+
+            if (cauldron != null)
+            {
+                $"Saving own cauldron inventory: {string.Join(", ", cauldron.inventory)}".Log(this, "OnDestroy()");
+                DataController.genData.cauldronInventory = new int[cauldron.inventory.Count];
+                cauldron.inventory.CopyTo(DataController.genData.cauldronInventory);
+                $"Saving data cauldron inventory: {string.Join(", ", DataController.genData.cauldronInventory)}".Log(this, "OnDestroy()");
+            }
             
             genData.notIngredients = _notIngredientsList.ToArray();
             SaveToDataFile<General>(genData, "General", "general.json");
@@ -311,7 +323,7 @@ public class DataController : MonoBehaviour
     private static Recipe GetRandomRecipe(float estimateComplexity) 
     {
         // Every 4 potions coocked increase maximum number of ingredients in a recipe
-        int ingNum = Random.Range(3, 4 + genData.potionsCooked / 4);
+        int ingNum = Random.Range(3, 4 + genData.potionsCooked / 10);
         int mistakes = Random.Range(0, Mathf.FloorToInt(.666f * ingNum) + 1);
         int[] ings = new int[ingNum];
         List<int> ingIDs = ingredients.Where(ing => ing.Value.hasBeenDiscovered).Select(ing => ing.Key).ToList();
@@ -393,6 +405,7 @@ public class DataController : MonoBehaviour
 
         var randomReward = rewards[index];
         genData.raccoonRewardItem = randomReward.item_id.Hash();
+        genData.locGensBeforBuyItemsUpdate = 5;
     }
 
     public static void UpdateOldmanItems()
@@ -502,6 +515,7 @@ public class DataController : MonoBehaviour
         genData.coins = 0;
         genData.maxPigeons = 3;
         genData.potionsCooked = 0;
+        genData.locGensBeforBuyItemsUpdate = 5;
         // ---
         genData.totalScore = 0;
         genData.deaths = 0;

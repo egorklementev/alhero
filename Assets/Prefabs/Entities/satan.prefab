@@ -159,8 +159,8 @@ MonoBehaviour:
   Name: MeleeAttack
   adjacentStates:
   - Walking
-  alertRadius: 50
-  alertPeridiocity: 5
+  alertRadius: 90
+  alertPeridiocity: 1.5
   entitiesToExclude:
   - satan
   - demon
@@ -181,7 +181,6 @@ MonoBehaviour:
   Name: Attacking
   adjacentStates:
   - Idle
-  - MeleeAttack
   - Death
   attackDuration: 1
   attackRange: 15
@@ -223,10 +222,10 @@ MonoBehaviour:
   - Attacking
   - Death
   moveSpeed: 300
-  colliderBounds: 8
-  colliderHeight: 16
+  colliderBounds: 7.5
+  colliderHeight: 15
   Body: {fileID: 7456918633154701819}
-  stuckEps: 0.33333
+  stuckEps: 0.76
   RangeEnhancement: 8
 --- !u!1001 &4375387713208177572
 PrefabInstance:

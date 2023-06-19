@@ -38,12 +38,12 @@ public class Bomb : MonoBehaviour
         if (TryGetComponent<ItemWorld>(out var item)) 
         {
             item.logic.KillInRange(transform.position, blastRadius);
-            item.logic.PlaySound("explosion", .2f, transform.position);
+            item.logic.PlaySound("explosion", .6f, transform.position);
         }
         else if (trapScript != null)
         {
             trapScript.logic.KillInRange(transform.position, blastRadius);
-            trapScript.logic.PlaySound("explosion", .2f, transform.position);
+            trapScript.logic.PlaySound("explosion", .6f, transform.position);
         }
 
         Instantiate(blastParticles, transform.position, Quaternion.identity);

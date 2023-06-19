@@ -55,7 +55,7 @@ public class KingWalkingAI : WalkingAI
         }
 
         _open.Add(_map[_startTile.x, _startTile.y]);
-        int maxFramePathBuilds = 8;
+        int maxFramePathBuilds = 4; // Greatly affects game's performance. Choose wisely.
         int framePathBuilds = 0;
         while (true) 
         {
@@ -64,7 +64,7 @@ public class KingWalkingAI : WalkingAI
                 break;
             }
 
-            if (framePathBuilds++ > maxFramePathBuilds)
+            if (++framePathBuilds >= maxFramePathBuilds)
             {
                 framePathBuilds = 0;
                 yield return null;

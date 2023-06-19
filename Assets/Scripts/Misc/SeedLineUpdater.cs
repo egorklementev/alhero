@@ -23,7 +23,10 @@ public class SeedLineUpdater : MonoBehaviour
         else
         {
             GetComponent<TMP_InputField>().text = "Incorrect seed!!!";
-            StartCoroutine(ChangeSeedDelayed());
+            if (gameObject.activeInHierarchy) 
+            {
+                StartCoroutine(ChangeSeedDelayed());
+            }
         }
     }
 

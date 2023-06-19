@@ -117,7 +117,7 @@ MonoBehaviour:
       m_Items:
       - rid: 3382805442621866023
   - m_Id: 2187305507823616
-    m_Localized: '{0} / 16 pigeons available'
+    m_Localized: '{0} / 10 pigeons available'
     m_Metadata:
       m_Items:
       - rid: 3382805442621866023
